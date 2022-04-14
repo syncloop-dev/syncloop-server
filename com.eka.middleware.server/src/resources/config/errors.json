@@ -1,0 +1,9 @@
+{
+"EKA_MWS_1000":{"reason":"Configuration file not found."},
+"EKA_MWS_1001":{"reason":"Error while reading profile configuration."},
+"EKA_MWS_1003":{"reason":"Could not reset the resource javaScript class binding."},
+"EKA_MWS_1004":{"reason":"Unable to start Eka middleware server."},
+"EKA_MWS_1005":{"reason":"Error while reading server configuration."},
+"EKA_MWS_1006":{"reason":"Stream cannot be closed."},
+"EKA_MWS_1007":{"reason":"Failed to write Configuration file"}
+}

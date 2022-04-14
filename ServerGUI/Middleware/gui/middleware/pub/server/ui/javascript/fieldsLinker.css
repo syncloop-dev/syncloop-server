@@ -1,0 +1,57 @@
+.fieldsLinker div {
+    font-weight: bold;
+}
+
+.fieldsLinker ul {
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 0px;
+    font-weight: normal;
+}
+
+tr td  {
+    padding-left: 10px;
+}
+
+tr td:not(:last-child)  {
+    border-right: 1px solid grey;
+}
+
+.fieldsLinker li {
+    border: solid 1px grey;
+    padding: 5px 2px 5px 8px;
+    margin-top: 7px;
+    margin-bottom: 8px;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    cursor: pointer;
+    background-color: #fff;
+    background: linear-gradient(#ffffff, #e9e9e9);
+    color: black;
+    border-radius: 0px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.fieldsLinker li.selected {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);    
+}
+
+.fieldsLinker li[data-mandatory='true'] {
+    background-color: #D7504C;
+    background: linear-gradient(#D7504C, #C12F2B);
+    color: white;
+}
+
+.fieldsLinker li.inactive {
+    opacity: 0.5;
+}
+
+.fieldsLinker li.linkOver {
+    border: solid 2px transparent; /*plus 1px*/
+    padding: 4px 1px 4px 7px; /* minus 1px*/
+}
+

@@ -1,0 +1,612 @@
+{
+  "input" : [ {
+    "id" : "j1_1",
+    "text" : "url",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j1_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "string"
+  }, {
+    "id" : "j1_9",
+    "text" : "method",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j1_9"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_9_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "string"
+  }, {
+    "id" : "j1_8",
+    "text" : "payload",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j1_8"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_8_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "string"
+  }, {
+    "id" : "j1_2",
+    "text" : "headers",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "li_attr" : {
+      "id" : "j1_2"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_2_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : true,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "document"
+  }, {
+    "id" : "j1_17",
+    "text" : "uriParameters",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "li_attr" : {
+      "id" : "j1_17"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_17_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "document"
+  }, {
+    "id" : "j1_3",
+    "text" : "urlParameters",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "li_attr" : {
+      "id" : "j1_3"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_3_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "document"
+  }, {
+    "id" : "j1_4",
+    "text" : "auth",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "li_attr" : {
+      "id" : "j1_4"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_4_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : true,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "document"
+  }, {
+    "id" : "j1_5",
+    "text" : "basic",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "li_attr" : {
+      "id" : "j1_5"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_5_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : true,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_4",
+    "type" : "document"
+  }, {
+    "id" : "j1_6",
+    "text" : "username",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j1_6"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_6_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_5",
+    "type" : "string"
+  }, {
+    "id" : "j1_7",
+    "text" : "password",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j1_7"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_7_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_5",
+    "type" : "string"
+  }, {
+    "id" : "j1_11",
+    "text" : "awsSignature",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "li_attr" : {
+      "id" : "j1_11"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_11_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : true,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_4",
+    "type" : "document"
+  }, {
+    "id" : "j1_12",
+    "text" : "AccessKey",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j1_12"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_12_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_11",
+    "type" : "string"
+  }, {
+    "id" : "j1_13",
+    "text" : "SecretKey",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j1_13"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_13_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_11",
+    "type" : "string"
+  }, {
+    "id" : "j1_14",
+    "text" : "region",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j1_14"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_14_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_11",
+    "type" : "string"
+  }, {
+    "id" : "j1_15",
+    "text" : "service",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j1_15"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_15_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_11",
+    "type" : "string"
+  }, {
+    "id" : "j1_16",
+    "text" : "host",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j1_16"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_16_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_11",
+    "type" : "string"
+  }, {
+    "id" : "j1_24",
+    "text" : "signPayload",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.png",
+    "li_attr" : {
+      "id" : "j1_24"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_24_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_11",
+    "type" : "boolean"
+  }, {
+    "id" : "j1_10",
+    "text" : "formData",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "li_attr" : {
+      "id" : "j1_10"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_10_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "document"
+  }, {
+    "id" : "j1_18",
+    "text" : "respHandling",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "li_attr" : {
+      "id" : "j1_18"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_18_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : true,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "document"
+  }, {
+    "id" : "j1_19",
+    "text" : "contentType",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j1_19"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_19_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_18",
+    "type" : "string"
+  }, {
+    "id" : "j1_20",
+    "text" : "enableStreaming",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.png",
+    "li_attr" : {
+      "id" : "j1_20"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_20_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_18",
+    "type" : "boolean"
+  }, {
+    "id" : "j1_21",
+    "text" : "binaryData",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "li_attr" : {
+      "id" : "j1_21"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_21_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : true,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "document"
+  }, {
+    "id" : "j1_22",
+    "text" : "bytes",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/byteArr.png",
+    "li_attr" : {
+      "id" : "j1_22"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_22_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_21",
+    "type" : "byteList"
+  }, {
+    "id" : "j1_23",
+    "text" : "inputStream",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.png",
+    "li_attr" : {
+      "id" : "j1_23"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_23_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_21",
+    "type" : "javaObject"
+  } ],
+  "output" : [ {
+    "id" : "j2_2",
+    "text" : "respHeaders",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "li_attr" : {
+      "id" : "j2_2"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j2_2_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "document"
+  }, {
+    "id" : "j2_1",
+    "text" : "respPayload",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j2_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j2_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "string"
+  }, {
+    "id" : "j2_3",
+    "text" : "error",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j2_3"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j2_3_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "string"
+  }, {
+    "id" : "j2_4",
+    "text" : "bytes",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/byteArr.png",
+    "li_attr" : {
+      "id" : "j2_4"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j2_4_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "byteList"
+  }, {
+    "id" : "j2_5",
+    "text" : "inputStream",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.png",
+    "li_attr" : {
+      "id" : "j2_5"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j2_5_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "javaObject"
+  }, {
+    "id" : "j2_6",
+    "text" : "statusCode",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "li_attr" : {
+      "id" : "j2_6"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j2_6_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "string"
+  } ],
+  "package" : "cGFja2FnZSBwYWNrYWdlcy5taWRkbGV3YXJlLnB1Yi5jbGllbnQuaHR0cDs=",
+  "imports" : "aW1wb3J0IGphdmEuaW8uRmlsZTsKaW1wb3J0IGphdmEuaW8uSW5wdXRTdHJlYW07CmltcG9ydCBqYXZhLnV0aWwuSGFzaE1hcDsKaW1wb3J0IGphdmEudXRpbC5NYXA7CmltcG9ydCBqYXZhLnV0aWwuU2V0OwppbXBvcnQgamF2YS51dGlsLlRyZWVNYXA7CgppbXBvcnQgY29tLmVrYS5taWRkbGV3YXJlLnB1Yi51dGlsLnJlc3QuQ2xpZW50OwppbXBvcnQgY29tLmVrYS5taWRkbGV3YXJlLnNlcnZpY2UuRGF0YVBpcGVsaW5lOwppbXBvcnQgY29tLmVrYS5taWRkbGV3YXJlLnRlbXBsYXRlLlNuaXBwZXRFeGNlcHRpb247CmltcG9ydCBjb20uZWthLm1pZGRsZXdhcmUucHViLnV0aWwuYXV0aC5BV1NWNEF1dGg7CmltcG9ydCBqYXZhLnV0aWwuVHJlZU1hcDs=",
+  "main" : "CQl0cnkgewoJCQlTdHJpbmcgbWV0aG9kID0gZGF0YVBpcGVsaW5lLmdldFN0cmluZygibWV0aG9kIik7CgkJCVN0cmluZyB1cmwgPSBkYXRhUGlwZWxpbmUuZ2V0U3RyaW5nKCJ1cmwiKTsKLy8gICAgICAgICAgICBTeXN0ZW0ub3V0LnByaW50bG4odXJsKTsKCQkJTWFwPFN0cmluZywgU3RyaW5nPiByZXFIZWFkZXJzID0gZGF0YVBpcGVsaW5lLmdldEFzTWFwKCJoZWFkZXJzIik7CgkJCU1hcDxTdHJpbmcsIFN0cmluZz4gdXJsUGFyYW1ldGVycyA9IGRhdGFQaXBlbGluZS5nZXRBc01hcCgidXJsUGFyYW1ldGVycyIpOwoJCQlNYXA8U3RyaW5nLCBTdHJpbmc+IHBhdGhQYXJhbWV0ZXJzID0gZGF0YVBpcGVsaW5lLmdldEFzTWFwKCJ1cmlQYXJhbWV0ZXJzIik7CgkJCU1hcDxTdHJpbmcsIE9iamVjdD4gcmVzcEhhbmRsaW5nID0gZGF0YVBpcGVsaW5lLmdldEFzTWFwKCJyZXNwSGFuZGxpbmciKTsKCQkJTWFwPFN0cmluZywgTWFwPFN0cmluZywgU3RyaW5nPj4gYXV0aCA9IGRhdGFQaXBlbGluZS5nZXRBc01hcCgiYXV0aCIpOwoJCQlNYXA8U3RyaW5nLCBPYmplY3Q+IGZvcm1EYXRhID0gZGF0YVBpcGVsaW5lLmdldEFzTWFwKCJmb3JtRGF0YSIpOwoJCQlNYXA8U3RyaW5nLCBPYmplY3Q+IGJpbmFyeURhdGEgPSBkYXRhUGlwZWxpbmUuZ2V0QXNNYXAoImJpbmFyeURhdGEiKTsKCgkJCWlmIChyZXFIZWFkZXJzID09IG51bGwpCgkJCQlyZXFIZWFkZXJzID0gbmV3IEhhc2hNYXA8U3RyaW5nLCBTdHJpbmc+KCk7CgkJCVN0cmluZyBwYXlsb2FkID0gZGF0YVBpcGVsaW5lLmdldFN0cmluZygicGF5bG9hZCIpOwoJCQlGaWxlIGJpbmFyeSA9IG51bGw7CiAgICAgICAgICAgIE1hcDxTdHJpbmcsIFN0cmluZz4gaGVhZGVycz1uZXcgSGFzaE1hcDxTdHJpbmcsIFN0cmluZz4oKTsKCQkJLy9kYXRhUGlwZWxpbmUubG9nKHVybCk7CgoJCQlpZiAocGF0aFBhcmFtZXRlcnMgIT0gbnVsbCkgewoJCQkJU2V0IHNldCA9IHBhdGhQYXJhbWV0ZXJzLmtleVNldCgpOwoJCQkJaWYgKHNldC5zaXplKCkgPiAwKSB7CgkJCQkJZm9yIChPYmplY3Qgb2JqIDogc2V0KSB7CgkJCQkJCVN0cmluZyBwYXJhbSA9IChTdHJpbmcpIG9iajsKCQkJCQkJU3RyaW5nIHZhbCA9IChTdHJpbmcpIHBhdGhQYXJhbWV0ZXJzLmdldChwYXJhbSk7CgkJCQkJCXVybCA9IHVybC5yZXBsYWNlKCJ7IiArIHBhcmFtICsgIn0iLCB2YWwpOwoJCQkJCX0KCQkJCX0KCQkJfQoJCQlieXRlW10gcGF5bG9hZEJ5dGVzID0gbnVsbDsKCQkJSW5wdXRTdHJlYW0gcGF5bG9hZElTID0gbnVsbDsKCQkJaWYgKGJpbmFyeURhdGEgIT0gbnVsbCkgewoJCQkJaWYgKGJpbmFyeURhdGEuZ2V0KCJieXRlcyIpICE9IG51bGwpCgkJCQkJcGF5bG9hZEJ5dGVzID0gKGJ5dGVbXSkgYmluYXJ5RGF0YS5nZXQoImJ5dGVzIik7CgkJCQllbHNlIGlmIChiaW5hcnlEYXRhLmdldCgiaW5wdXRTdHJlYW0iKSAhPSBudWxsKSB7CgkJCQkJcGF5bG9hZElTID0gKElucHV0U3RyZWFtKSBiaW5hcnlEYXRhLmdldCgiaW5wdXRTdHJlYW0iKTsKCQkJCX0KCQkJfQoKCQkJU3RyaW5nIGZ1bGxVcmxJbmNsdWRpbmdQYXJhbXMgPSB1cmw7CgkJCWlmICh1cmxQYXJhbWV0ZXJzICE9IG51bGwpIHsKCQkJCVNldCBzZXQgPSB1cmxQYXJhbWV0ZXJzLmtleVNldCgpOwoJCQkJaWYgKHNldC5zaXplKCkgPiAwKSB7CgkJCQkJZnVsbFVybEluY2x1ZGluZ1BhcmFtcyArPSAiPyI7CgkJCQkJZm9yIChPYmplY3Qgb2JqIDogc2V0KSB7CgkJCQkJCVN0cmluZyBwYXJhbSA9IChTdHJpbmcpIG9iajsKCQkJCQkJU3RyaW5nIHZhbCA9IChTdHJpbmcpIHVybFBhcmFtZXRlcnMuZ2V0KHBhcmFtKTsKCQkJCQkJZnVsbFVybEluY2x1ZGluZ1BhcmFtcyArPSBwYXJhbSArICI9IiArIHZhbCArICImIjsKCQkJCQl9CiAgICAgICAgICAgICAgICAgIGZ1bGxVcmxJbmNsdWRpbmdQYXJhbXM9KGZ1bGxVcmxJbmNsdWRpbmdQYXJhbXMrIiNfIikucmVwbGFjZSgiJiNfIiwiIik7CgkJCQl9CgkJCX0KLy8JCQlkYXRhUGlwZWxpbmUubG9nKGZ1bGxVcmxJbmNsdWRpbmdQYXJhbXMpOwoJCQlTdHJpbmcgYmFzaWNBdXRoVXNlciA9IG51bGw7CgkJCVN0cmluZyBiYXNpY0F1dGhQYXNzID0gbnVsbDsKCQkJLy9oZWFkZXJzLnB1dCgiY29udGVudC1sZW5ndGgiLCgocGF5bG9hZD09bnVsbD8wOnBheWxvYWQubGVuZ3RoKCkpKyhwYXlsb2FkQnl0ZXM9PW51bGw/MDpwYXlsb2FkQnl0ZXMubGVuZ3RoKSkrIiIpOwoJCQlpZiAoYXV0aCAhPSBudWxsICYmIGF1dGguZ2V0KCJiYXNpYyIpICE9IG51bGwpIHsKCQkJCWJhc2ljQXV0aFVzZXIgPSBhdXRoLmdldCgiYmFzaWMiKS5nZXQoInVzZXJuYW1lIik7CgkJCQliYXNpY0F1dGhQYXNzID0gYXV0aC5nZXQoImJhc2ljIikuZ2V0KCJwYXNzd29yZCIpOwoJCQl9IGVsc2UgaWYgKGF1dGghPW51bGwgJiYgYXV0aC5nZXQoImF3c1NpZ25hdHVyZSIpICE9IG51bGwpIHsKCQkJCU1hcDxTdHJpbmcsIFN0cmluZz4gYXdzSGVhZGVycyA9IG5ldyBUcmVlTWFwPFN0cmluZywgU3RyaW5nPigpOwoJCQkJU3RyaW5nIGhvc3QgPSBhdXRoLmdldCgiYXdzU2lnbmF0dXJlIikuZ2V0KCJob3N0Iik7CgkJCQkvL2hlYWRlcnMuZm9yRWFjaCgoayx2KS0+YXdzSGVhZGVycy5wdXQoayx2KSk7CiAgICAgICAgICAgICAgICBhd3NIZWFkZXJzLnB1dCgiaG9zdCIsIGhvc3QpOwogICAgICAgICAgICAgICAgCgkJCQlTdHJpbmcgQWNjZXNzS2V5ID0gYXV0aC5nZXQoImF3c1NpZ25hdHVyZSIpLmdldCgiQWNjZXNzS2V5Iik7CgkJCQlTdHJpbmcgU2VjcmV0S2V5ID0gYXV0aC5nZXQoImF3c1NpZ25hdHVyZSIpLmdldCgiU2VjcmV0S2V5Iik7CgkJCQlTdHJpbmcgcmVnaW9uID0gYXV0aC5nZXQoImF3c1NpZ25hdHVyZSIpLmdldCgicmVnaW9uIik7CgkJCQlTdHJpbmcgc2VydmljZSA9IGF1dGguZ2V0KCJhd3NTaWduYXR1cmUiKS5nZXQoInNlcnZpY2UiKTsKCQkJCVN0cmluZyBzaWduUGF5bG9hZCA9IGF1dGguZ2V0KCJhd3NTaWduYXR1cmUiKS5nZXQoInNpZ25QYXlsb2FkIik7CgkJCQlTdHJpbmcgdXJpVG9rZW5zW10gPSB1cmwuc3BsaXQoaG9zdCk7CgkJCQlTdHJpbmcgY2Fub25pY2FsVVJJID0gIiI7CgkJCQlpZiAodXJpVG9rZW5zLmxlbmd0aCA9PSAyKQoJCQkJCWNhbm9uaWNhbFVSSSA9IHVybC5zcGxpdChob3N0KVsxXTsKLy8gICAgICAgICAgICAgIGRhdGFQaXBlbGluZS5sb2coIioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioiK2Nhbm9uaWNhbFVSSSk7Ci8vCQkJCWRhdGFQaXBlbGluZS5sb2coaGVhZGVycy50b1N0cmluZygpKTsKICAgICAgICAgICAgICAKCQkJCWlmIChzaWduUGF5bG9hZCAhPSBudWxsICYmIHNpZ25QYXlsb2FkLnRvTG93ZXJDYXNlKCkuZXF1YWxzKCJ0cnVlIikpIHsKCQkJCQlpZiAocGF5bG9hZCA9PSBudWxsKQoJCQkJCQlwYXlsb2FkID0gIiI7CgkJCQkJQVdTVjRBdXRoLmFkZEF3c0hlYWRlcnMoYXdzSGVhZGVycywgbWV0aG9kLCB1cmxQYXJhbWV0ZXJzLCBjYW5vbmljYWxVUkksIEFjY2Vzc0tleSwgU2VjcmV0S2V5LAoJCQkJCQkJcmVnaW9uLCBzZXJ2aWNlLCBwYXlsb2FkLCBwYXlsb2FkQnl0ZXMpOwoJCQkJfSBlbHNlIHsKCQkJCQlBV1NWNEF1dGguYWRkQXdzSGVhZGVycyhhd3NIZWFkZXJzLCBtZXRob2QsIHVybFBhcmFtZXRlcnMsIGNhbm9uaWNhbFVSSSwgQWNjZXNzS2V5LCBTZWNyZXRLZXksCgkJCQkJCQlyZWdpb24sIHNlcnZpY2UsIG51bGwsIG51bGwpOwoJCQkJfQogICAgICAgICAgICAgIGhlYWRlcnM9YXdzSGVhZGVyczsKCQkJfQogICAgICAgICAgICBmaW5hbCBNYXA8U3RyaW5nLFN0cmluZz4gaGVhZGVyPWhlYWRlcnM7CiAgICAgICAgICAgIHJlcUhlYWRlcnMuZm9yRWFjaCgoayx2KS0+aGVhZGVyLnB1dChrLHYpKTsKCgkJCXJlc3BIYW5kbGluZyA9IENsaWVudC5pbnZva2VSRVNUKDAsIGZ1bGxVcmxJbmNsdWRpbmdQYXJhbXMsIG1ldGhvZCwgaGVhZGVycywgZm9ybURhdGEsIHBheWxvYWQsIGJpbmFyeSwKCQkJCQliYXNpY0F1dGhVc2VyLCBiYXNpY0F1dGhQYXNzLCByZXNwSGFuZGxpbmcsIHBheWxvYWRCeXRlcywgcGF5bG9hZElTKTsKCQkJLy8gZGF0YVBpcGVsaW5lLnB1dCgicmVzcFBheWxvYWQiLHJlc3BIYW5kbGluZy5nZXQoImJvZHkiKSk7CgkJCS8vIGlmKHJlc3BIYW5kbGluZy5nZXQoImJ5dGVzIikhPW51bGwpCiAgICAgICAgICAgIGRhdGFQaXBlbGluZS5wdXQoInN0YXR1c0NvZGUiLCByZXNwSGFuZGxpbmcuZ2V0KCJzdGF0dXNDb2RlIikpOwoJCQlkYXRhUGlwZWxpbmUucHV0KCJieXRlcyIsIHJlc3BIYW5kbGluZy5nZXQoImJ5dGVzIikpOwoJCQlkYXRhUGlwZWxpbmUucHV0KCJyZXNwUGF5bG9hZCIsIHJlc3BIYW5kbGluZy5nZXQoInJlc3BQYXlsb2FkIikpOwoJCQlkYXRhUGlwZWxpbmUucHV0KCJpbnB1dFN0cmVhbSIsIHJlc3BIYW5kbGluZy5nZXQoImlucHV0U3RyZWFtIikpOwoJCQlkYXRhUGlwZWxpbmUucHV0KCJyZXNwSGVhZGVycyIsIGhlYWRlcnMpOwoKCQl9IGNhdGNoIChFeGNlcHRpb24gZSkgewoJCQlkYXRhUGlwZWxpbmUuY2xlYXIoKTsKCQkJZGF0YVBpcGVsaW5lLnB1dCgiZXJyb3IiLCBlLmdldE1lc3NhZ2UoKSk7CgkJCW5ldyBTbmlwcGV0RXhjZXB0aW9uKGRhdGFQaXBlbGluZSwgIlNuZXBwZXQgZXhjZXB0aW9uIiwgbmV3IEV4Y2VwdGlvbihlKSk7CgkJfQ==",
+  "staticWorkspace" : "",
+  "version" : "v1",
+  "consumers" : "",
+  "developers" : "",
+  "lockedByUser" : "@Vineet"
+}

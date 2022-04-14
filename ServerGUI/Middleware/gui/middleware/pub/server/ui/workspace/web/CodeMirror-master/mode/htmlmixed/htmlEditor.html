@@ -1,0 +1,88 @@
+<!doctype html>
+
+<title>CodeMirror: HTML mixed mode</title>
+<meta charset="utf-8"/>
+<link rel=stylesheet href="../../doc/docs.css">
+
+<link rel="stylesheet" href="../../lib/codemirror.css">
+<script src="../../lib/codemirror.js"></script>
+<script src="../../addon/selection/selection-pointer.js"></script>
+<script src="../xml/xml.js"></script>
+<script src="../javascript/javascript.js"></script>
+<script src="../css/css.js"></script>
+<script src="../vbscript/vbscript.js"></script>
+<script src="htmlmixed.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+<style>.CodeMirror {height:96%;width:100%}</style>
+<html>
+<body style="width:100%;height:100%;">
+<div class="navbar">  
+   <div class="dropdown">
+    <button class="dropbtn">HTML 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="#" onclick="save();">Save</a>
+      <a href="#" onclick="location.reload();">Reload</a>
+    </div>
+  </div>
+</div>
+<textarea id="code" name="code">
+<html style="color: green">
+  <head>
+    <title>title</title>
+    <style>
+      h1 {font-family: comic sans; color: #f0f;}
+      div {background: yellow !important;}
+      body {
+        max-width: 50em;
+        margin: 1em 2em 1em 5em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Heading h1</h1>
+    <script>
+      function jsFunc(arg1, arg2) {
+        if (arg1 && arg2) document.body.innerHTML = "achoo";
+      }
+    </script>
+  </body>
+</html>
+</textarea>
+    <script>
+      // Define an extended mixed-mode that understands vbscript and
+      // leaves mustache/handlebars embedded templates in html mode
+	loadFile=getUrlParam("loadFile");
+	var response=syncRestRequest("/"+loadFile, "GET", "");
+	if(response.status==200){
+	response=response.payload;
+	$("#code").val(response);
+	}else{
+		alert(response.payload);
+	}
+      var mixedMode = {
+        name: "htmlmixed",
+        scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
+                       mode: null},
+                      {matches: /(text|application)\/(x-)?vb(a|script)/i,
+                       mode: "vbscript"}]
+      };
+      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        mode: mixedMode,
+        selectionPointer: true
+      });
+	  function save(){
+		data=editor.getValue();
+		var response=syncRestRequest("/"+loadFile, "POST", data,"application/text","application/text");
+		if(response.status==200){
+			//localStorage.setItem(loadFile, "");
+			alert("Saved");
+		}else
+		alert(JSON.parse(response.payload).error);
+	}
+    </script></body></html>
+

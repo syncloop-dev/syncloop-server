@@ -1,0 +1,2 @@
+EKAMW_HOME="$PWD"
+$EKAMW_HOME/jdk-11-linux/bin/java -Xmx2048m -Djdk.httpclient.allowRestrictedHeaders=host,connection,content-length,expect,upgrade -Djava.awt.headless=true -cp "$EKAMW_HOME/lib/*:$EKAMW_HOME/ekamw.jar" com.eka.middleware.server.MiddlewareServer file:$EKAMW_HOME/resources/config/
