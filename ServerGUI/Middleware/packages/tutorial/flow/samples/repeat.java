@@ -16,7 +16,7 @@ public final class repeat {
 	static JsonObject mainflowJsonObject=null;
 	static final String syncBlock=new String("sync");
 	public static final void main(DataPipeline dataPipeline) throws SnippetException{
-		String path="D:/Middleware/packages/testFlowServices/services/flow/simpleFlow.flow";
+//		String path="D:/Middleware/packages/testFlowServices/services/flow/simpleFlow.flow";
 		try{
 		  if(mainflowJsonObject==null)
 			synchronized(syncBlock){

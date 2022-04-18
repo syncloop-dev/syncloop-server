@@ -14,6 +14,9 @@ try{
   InputStream is=dataPipeline.getFile("file");
   String fileName=dataPipeline.getFileName("file");
   String location = ServiceUtils.getPackagesPath()+folder+"/dependency/jars/"+fileName;
+  File dir=new File(ServiceUtils.getPackagesPath()+folder+"/dependency/jars/");
+  if(!dir.exists())
+    dir.mkdirs();
   IOUtils.copy(is,new FileOutputStream(new File(location)));
   dataPipeline.clear();
   dataPipeline.put("status", "Saved");

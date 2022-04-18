@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipOutputStream;
 import org.apache.commons.io.FileUtils;
+import com.eka.middleware.template.MultiPart;
 public final class createBuild{
 	public static final void main(DataPipeline dataPipeline) throws SnippetException{
 try{
@@ -94,8 +95,11 @@ try{
         fos.close();
         //dataPipeline.log(fileToZip.getAbsolutePath());
         FileUtils.deleteDirectory(fileToZip);
+        //new MultiPart(dataPipeline, new File(buildsDirPath+buildName+".zip"));
+        dataPipeline.clear();
+        dataPipeline.put("url","/files/builds/"+buildName+".zip");
 	  }
-  dataPipeline.clear();
+  //dataPipeline.clear();
   dataPipeline.put("msg","Success");
 }catch(Exception e){
 	//dataPipeline.clear();

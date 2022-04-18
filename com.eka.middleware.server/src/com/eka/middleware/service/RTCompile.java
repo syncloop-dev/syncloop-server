@@ -44,9 +44,9 @@ public class RTCompile {
 
 		String currentPath = System.getProperty("java.class.path");
 		
-		LOGGER.info("Path Jars: "+currentPath);
-		LOGGER.info("Package Jars: "+localJarsPath);
-		LOGGER.info("Global Jars: "+globalJarsPath);
+		LOGGER.trace("Path Jars: "+currentPath);
+		LOGGER.trace("Package Jars: "+localJarsPath);
+		LOGGER.trace("Global Jars: "+globalJarsPath);
 		String paths[] = ServiceUtils.getJarPaths(localJarsPath);
 		//URL localURLs[] = ServiceUtils.getJarURLs(localJarsPath);
 		//URL currentURLs[]=ServiceUtils.getClassesURLs(currentPath);
@@ -68,7 +68,7 @@ public class RTCompile {
 			}
 		options.add(localJarsPath + globalJarsPath + currentPath);
 		//System.setProperty("java.class.path", localJarsPath + globalJarsPath + currentPath);
-		LOGGER.info("newClassPath: "+localJarsPath+globalJarsPath+currentPath);
+		LOGGER.trace("newClassPath: "+localJarsPath+globalJarsPath+currentPath);
 		options.add(path);
 
 		int result = 0;

@@ -1,46 +1,71 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap'); */
+
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap'); */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap');
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif; */
+      font-family: 'Inter', sans-serif;
   height:100%;
   width:100%;
-  background: white;
+  background: #fff;
+  font-size:13px;
 }
 .row {
     margin-right: 0px;
     margin-left: 0px; 
 }
+
+span.glyphicon.glyphicon-log-in {
+    margin-right: 5px;
+    color: #7e7e7e;
+}
+
 .jstree-default .jstree-node {
 	margin-left: 5px;
 	min-height: 18px;
 	line-height: 18px;
 }
 
+.jstree-default > .jstree-wholerow-ul .jstree-hovered, .jstree-default > .jstree-wholerow-ul .jstree-clicked {
+  color: #0d7cef !important;
+}
+
 .jstree-default .jstree-icon:empty {
 	width: 16px;
 	height: 22px;
 	line-height: 22px;
 }
 
+#currentServiceName {
+  color: #6e6f81c4;
+  padding-top: 15px !important;
+}
+
 .jstree-default .jstree-anchor {
-	line-height: 22px;
-	height: 22px;
+	line-height: 30px;
+	height: 30px;
 	flex: 0 1 content;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
     text-align:left;
+	color:#444444;
 }
 
 
 
 .jstree-default .jstree-wholerow {
-	height: 22px;
+	height: 30px;
 }
 
 .jstree-default .jstree-icon:empty {
-	width: 16px;
+	width: 18px;
 	height: 22px;
 	line-height: 22px;
+	margin-top: 4px;
 }
 
 div.jstree-table-cell-root-flowDesignerJsTree {
@@ -225,17 +250,26 @@ width:100%;
 
 .navbar {
   overflow: hidden;
-  background-color: #999;
+  background-color: #f9f9f9;
+  border-bottom: solid 1px #eaebed;
   min-height: 15px;
   margin-bottom: 0px;
   line-height: normal;
-  border:0px;
   border-radius: 0px;
+  border-right: solid 1px #eee;
+}
+
+.eka_logo:hover{
+	border:none !important;
+}
+
+#mostRecentlyOpened a {
+  border-bottom: solid 2px transparent;
 }
 
 .navbar a {
   float: left;
-  font-size: 16px;
+  font-size: 13px;
   color: white;
   text-align: center;
   padding: 4px 6px;
@@ -248,18 +282,26 @@ width:100%;
 }
 
 .dropdown .dropbtn {
-  font-size: 16px;  
+  font-size: 13px;  
   border: none;
   outline: none;
-  color: white;
-  padding: 4px 6px;
+  color: #979ca4;
+  padding: 14px 10px;
   background-color: inherit;
+  text-transform: capitalize;
   font-family: inherit;
   margin: 0;
+  font-weight: 500;
 }
 
-.navbar a:hover, .dropdown:hover .dropbtn {
+/* .navbar a:hover, .dropdown:hover .dropbtn {
   background-color: #666;
+} */
+
+div#mostRecentlyOpened a:hover {
+    /* background: #1d1d2ee3;
+    border-radius: 10px 10px 0px 0px; */
+	border-bottom: solid 2px #f6c774;
 }
 
 .dropdown-content {
@@ -453,3 +495,158 @@ div::-webkit-scrollbar-track {
 div::-webkit-scrollbar-thumb {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
+
+/* new css start here 05 april 2022 */
+#input_schema_editor_jsTree_container {
+  background: #f9f9f9;
+  /* padding-top: 15px !important;  */
+  border-right: solid 1px #eaebed;
+}
+#flowDesignerJsTreeContainer {
+  background: #fff;
+}
+#output_schema_editor_jsTree_container {
+  background: #f9f9f9;
+  padding-top: 15px !important;
+}
+#iframe_container {
+  background: #fbfbfb;
+}
+#packageManagerJsTree {
+  background: #f9f9f9;
+  border-right: solid 1px #eaebed;
+  padding-top: 15px !important;
+}
+.jstree-anchor i {
+  margin-left: 6px !important;
+  margin-right: 6px !important;
+}
+#packageManagerJsTree ul li ul li {
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+#packageManagerJsTree .jstree-anchor{color:#444444;}
+
+#input_schema_editor_jsTree_container ul li ul li {
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+#output_schema_editor_jsTree_container ul li ul li {
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.jstree-default .jstree-wholerow-clicked {
+  background: #eeeeee;
+}
+
+#flowDesignerJsTreeContainer .jstree-wholerow-clicked {
+  background: transparent;
+}
+
+#input_schema_editor_jsTree_container .jstree-default .jstree-wholerow-clicked {
+  background:#eeeeee;
+}
+
+#packageManagerJsTree .jstree-wholerow-hovered {
+ background:#eeeeee !important;
+}
+
+#packageManagerJsTree ul li {
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+/* #packageManagerJsTree {
+  background-image: url("/files/gui/middleware/pub/server/ui/icons/eka-bg.png");
+  background-position: bottom center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+} */
+
+#flowDesignerJsTree ul li {
+  /* background: #fff; */
+  /* margin-bottom: 5px; */
+}
+
+#flowDesignerJsTree ul li ul li {
+  border-top: solid 1px #e9ebec;
+  margin: 0px;
+}
+
+#flowDesignerJsTree ul li .jstree-anchor{color:#040d21;}
+
+#flowDesignerJsTree .jstree-anchor{
+	line-height:45px;
+	height:45px;
+}
+
+#flowDesignerJsTree .jstree-striped {
+  min-width: 94%;
+  margin: 3%;
+  border: solid 1px #eaebed;
+    border-left-color: rgb(234, 235, 237);
+    border-left-style: solid;
+    border-left-width: 1px;
+  border-radius: 4px;
+  border-left: solid 2px #0d7cef;
+  background-image: linear-gradient(to bottom, #f9f9f9, #f4f4f4, #f9f9f9, #fbfbfb, #fff);
+}
+
+#flowDesignerJsTree .jstree-wholerow{height:45px;}
+#flowDesignerJsTree .jstree-icon:empty{margin-top:11px;}
+
+#flowDesignerJsTree {
+  background: #fff;
+}
+#plainMapping {
+  background: #fff;
+}
+
+.glyphicon {
+  color: #0d7cef;
+}
+#rightSideTools, #leftSideTools {
+  background: #f9f9f9;
+}
+#centerServiceName{height:22px; background:#f9f9f9; height:35px; line-height:35px;}
+
+.jstree-default > .jstree-striped{background:none;}
+
+.eka_logo img {
+  margin: 6px 0px 0px;
+}
+
+.eka_logo {
+  width: 205px;
+  text-align: left !important;
+}
+
+#launching_arrow_jsTree {
+  background: #fff;
+}
+#landing_arrow_jsTree {
+  background: #fff;
+}
+.dropbtn.nw {
+  background: #e5e5e5;
+  border-radius: 4px;
+  margin: 7px 0px 7px 15px;
+  height: 30px;
+  padding: 6px 10px;
+  color: #000;
+}
+
+#map {
+  border: none !important;
+}
+
+#flowDesignerJsTree #j1_2 {
+  border-top: solid 1px #eee;
+}
+
+#input_schema_editor_jsTree {
+  padding-top: 15px !important;
+}
+/* new css start here 05 april 2022 */

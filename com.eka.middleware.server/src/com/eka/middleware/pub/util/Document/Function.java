@@ -25,8 +25,12 @@ public class Function {
 		if(data==null)
 			return false;
 		Boolean isRequired = Boolean.parseBoolean(data.get("isRequiredField"));
-		if (obj == null && isRequired != null && isRequired == true)
-			throw new SnippetException(dp,"Required validation failure", new Exception("Required field('" + pointer + "') missing. " + data.get("fieldDescription")));
+		if (obj == null && isRequired != null && isRequired == true) {
+			String description=data.get("fieldDescription");
+			if(description!=null && description.length()>0)
+				description=new String(Base64.getDecoder().decode(description));
+			throw new SnippetException(dp,"Required validation failure", new ValidationException("Required field('" + pointer + "') missing. " + description));
+		}
 		return isRequired;
 	}
 

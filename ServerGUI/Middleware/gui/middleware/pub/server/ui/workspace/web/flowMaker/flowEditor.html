@@ -17,7 +17,7 @@
 		<div class="row" style="margin: 0px; padding:0px;">
 			<div class="navbar">  
                      <div class="dropdown">
-                      <button class="dropbtn">Service 
+                      <button class="dropbtn nw">Service 
                         <i class="fa fa-caret-down"></i>
                       </button>
                       <div class="dropdown-content">
@@ -31,7 +31,7 @@
                       </div>
                     </div>
                     <div class="dropdown">
-                      <button class="dropbtn">Search 
+                      <button class="dropbtn nw">Search 
                         <i class="fa fa-caret-down"></i>
                       </button>
                       <div class="dropdown-content">
@@ -55,14 +55,14 @@
 
 <div class="col-md-12" id="flowDesignerJsTreeContainer" style="width:70%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">    
   <div id="flowDesignerJsTree" class="jstree jstree-1 jstree-default"
-								style="margin: 0px;padding:0px; height: 55%; width: 100%; overflow: scroll;"
+								style="margin: 0px;padding:0px; height: 55%; width: 100%; overflow: scroll; overflow-x: hidden;"
 								role="tree" aria-multiselectable="true" tabindex="0"
      aria-activedescendant="j1_2" aria-busy="false"></div>
   
   
   <div id="mappingArea" style="margin: 0px;padding:0px; height: 45%; width: 100%; overflow: hidden; display:none;">
-    <div style="margin: 0px;padding:0px; height: 20px; width: 100%; overflow: hidden;">
-      <div id="rightSideTools" style="position:relative;float:left;width:20%;">
+    <div style="margin: 0px;padding:0px; height: 35px; width: 100%; overflow: hidden;">
+      <div id="rightSideTools" style="position:relative;float:left;width:20%; padding: 10px 0px;">
         <center>
           <a style="text-decoration: none;color:red;margin-left:10px;" href="#" onclick="mapperObj.deleteSelectedLines();mapperObj.deleteSelectedFromCreateList();mapperObj.deleteSelectedFromDropList();"><span class="glyphicon glyphicon-remove"></span></a>
           <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="showMapLinePropertiesModelDialog();"><span class="glyphicon glyphicon-random"></span></a>
@@ -71,8 +71,8 @@
           <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="mapperObj.reMap();"><span class="glyphicon glyphicon-refresh"></span></a>
         </center>
       </div>
-      <div id="centerServiceName" style="position:relative;float:left;width:60%; text-align:center;"></div>
-      <div id="leftSideTools" style="position:relative;float:right;width:20%">
+      <div id="centerServiceName" style="position:relative;float:left;width:59%; text-align:center;"></div>
+      <div id="leftSideTools" style="position:relative;float:right;width:21%; padding: 10px 0px;">
         <center>
           <a style="text-decoration: none;color:red;margin-left:10px;" href="#" onclick="mapperObj.deleteSelectedLines();mapperObj.deleteSelectedFromCreateList();mapperObj.deleteSelectedFromDropList();"><span class="glyphicon glyphicon-remove"></span></a>
           <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="showMapLinePropertiesModelDialog();"><span class="glyphicon glyphicon-random"></span></a>
@@ -205,7 +205,12 @@
               <input type="radio" id="element_LocalVariable" name="setValueTag">
               <label for="element_LocalVariable">Evaluate local configuration variables</label>
             </div>
-
+          
+			<div>
+              <input type="radio" id="element_PackageVariable" name="setValueTag">
+              <label for="element_PackageVariable">Evaluate package configuration variables</label>
+            </div>
+          
             <div>
               <input type="radio" id="element_GlobalVariable" name="setValueTag">
               <label for="element_GlobalVariable">Evaluate global configuration variables</label>
@@ -615,7 +620,130 @@ $("#flowDesignerJsTree").on('changed.jstree', function (e, data) {
  // alert("saved to local");
 });
     
-
+var asyncInDoc=[{
+      "id" : "j2_1",
+      "text" : "asyncInputDoc",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+      "li_attr" : {
+        "id" : "j2_1"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j2_1_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : true,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ {
+        "id" : "j2_2",
+        "text" : "*metaData",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+        "li_attr" : {
+          "id" : "j2_2"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j2_2_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : false,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : { },
+        "children" : [ ],
+        "type" : "document"
+      } ],
+      "type" : "document"
+    }];
+    
+    var asyncOutDoc=[{
+      "id" : "j3_1",
+      "text" : "asyncOutputDoc",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+      "li_attr" : {
+        "id" : "j3_1"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j3_1_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : true,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ {
+        "id" : "j3_2",
+        "text" : "*metaData",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+        "li_attr" : {
+          "id" : "j3_2"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j3_2_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : true,
+          "selected" : true,
+          "disabled" : false
+        },
+        "data" : { },
+        "children" : [ {
+          "id" : "j3_3",
+          "text" : "batchId",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+          "li_attr" : {
+            "id" : "j3_3"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j3_3_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : { },
+          "children" : [ ],
+          "type" : "string"
+        }, {
+          "id" : "j3_4",
+          "text" : "status",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+          "li_attr" : {
+            "id" : "j3_4"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j3_4_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : { },
+          "children" : [ ],
+          "type" : "string"
+        } ],
+        "type" : "document"
+      } ],
+      "type" : "document"
+    }];
+    
 $("#flowDesignerJsTree").on('select_node.jstree', function (e, data) {
         mapperObj.clean();
   		$("#mappingArea").css("display","none");
@@ -645,9 +773,27 @@ $("#flowDesignerJsTree").on('select_node.jstree', function (e, data) {
               	if(data.node.data.serviceType=="flow")
                   response=response.latest;
                 var inData=response.input;
-              	modifyJsTreeIds(inData,"funcInput");
                 var outData=response.output;
-                modifyJsTreeIds(outData,"funcOutput");
+                var randomId=Math.floor(Math.random() * 10000);
+                modifyJsTreeIds(inData,randomId+"_funcInput");
+                modifyJsTreeIds(outData,randomId+"_funcOutput");
+                
+              	if(data.node.data.requestMethod=="async"){
+                    //console.log(asyncInDoc);
+                    modifyJsTreeIds(asyncInDoc,randomId+"_async_funcInput");
+                    modifyJsTreeIds(asyncOutDoc,randomId+"_async_funcOutput");
+                    inData.push(asyncInDoc[0].children[0]);
+                    asyncInDoc[0].children=inData;
+
+                    outData.push(asyncOutDoc[0].children[0]);
+                    asyncOutDoc[0].children=outData;
+                  
+                	inData=asyncInDoc;
+                    outData=asyncOutDoc;
+                  
+                }
+              	
+              	
           		launching_arrow_jsTree_function_ref.settings.core.data=outData;
           		launching_arrow_jsTree_function_ref.refresh();
                 landing_arrow_jsTree_function_ref.settings.core.data=inData;
@@ -710,6 +856,7 @@ function modifyJsTreeIds(jsonObject, postFix){
 jQuery.each(jsonObject, function(i, val) {
   				if(val.id && val.id!='#'){
                   val.id=val.id+"_"+postFix+"_";
+                  //console.log(val);
                   val.a_attr.id=val.id+"_anchor";
                   val.li_attr.id=val.id;
                   if(val.parent && val.parent!='#')

@@ -120,13 +120,13 @@ public class FlowUtils {
 					break;
 				case "EEV": // Evaluate Expression Variable
 					for (String expressionKey : expressions) {
-						String expressionValue = dp.getString(expressionKey);
+						String expressionValue = dp.getAsString(expressionKey);
 						map.put(expressionKey, expressionValue);
 					}
 					break;
 				case "EPV": // Evaluate Package Variable
 					for (String expressionKey : expressions) {
-						String expressionValue = dp.getString(expressionKey);
+						String expressionValue = dp.getMyPackageConfig(expressionKey);
 						map.put(expressionKey, expressionValue);
 					}
 					break;

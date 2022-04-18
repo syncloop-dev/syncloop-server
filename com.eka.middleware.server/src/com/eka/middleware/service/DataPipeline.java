@@ -3,7 +3,6 @@ package com.eka.middleware.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.logging.log4j.Level;
@@ -402,6 +404,10 @@ public class DataPipeline {
 		}
 		return null;
 	}
+	
+	public Map<String,Object> getMap(){
+		return payloadStack.get(currentResource);
+	}
 
 	public String toYaml() {
 		try {
@@ -564,6 +570,8 @@ public class DataPipeline {
 
 	public void apply(String fqnOfMethod) throws SnippetException {
 		fqnOfMethod = fqnOfMethod.replace("/", ".");
+		if(!fqnOfMethod.endsWith(".main"))
+			fqnOfMethod+=".main";
 		if (payloadStack.get(fqnOfMethod) != null) {
 			Exception e = new Exception("Can not apply method.");
 			e.setStackTrace(Thread.currentThread().getStackTrace());
@@ -584,7 +592,65 @@ public class DataPipeline {
 			currentResource = curResourceBkp;
 			refresh();
 		}
-
+	}
+	
+	public void applyAsync(String fqnOfMethod) throws SnippetException {
+		fqnOfMethod= fqnOfMethod.replace("/", ".");
+		if(!fqnOfMethod.endsWith(".main"))
+			fqnOfMethod+=".main";
+		final String fqnOfFunction =fqnOfMethod;
+		String curResourceBkp = currentResource;
+		currentResource = fqnOfFunction;
+		resourceStack.add(currentResource);
+		
+		final String correlationID=this.getCorrelationId();
+		final Map<String, Object> asyncInputDoc=this.getAsMap("asyncInputDoc");
+		final Map<String, Object> asyncOutputDoc=new HashMap<String, Object>();
+		final Map<String, String> metaData=new HashMap<String, String>();
+		asyncOutputDoc.put("*metaData", metaData);
+			ExecutorService executor = Executors.newSingleThreadExecutor();
+			final Future<Map<String, Object>> futureMap= executor.submit(() -> {
+				try {
+					final String uuidAsync = ServiceUtils.generateUUID("Async operation: "+fqnOfFunction + System.nanoTime());
+					metaData.put("batchId", uuidAsync);
+					metaData.put("status", "Active");
+			        final RuntimePipeline rpAsync = RuntimePipeline.create(uuidAsync, correlationID, null, fqnOfFunction, "");
+			        final DataPipeline dpAsync=rpAsync.dataPipeLine;
+			        String json=null;
+			        if(asyncInputDoc!=null && asyncInputDoc.size()>0) {
+			        	Object mtdt=asyncInputDoc.get("*metaData");
+			        	if(mtdt!=null) {
+			        		Map<String, String> mtdtMap=(Map<String, String>) mtdt;
+				        	if(mtdtMap!=null && mtdtMap.size()>0) {
+				        		mtdtMap.forEach((k,v)->{
+				        			if(v!=null && !("batchId".equals(k) || "status".equals(k)))
+				        				metaData.put(k, v);
+				        		});
+				        	}
+			        	}
+			        	json=ServiceUtils.toJson(asyncInputDoc);
+				        Map<String,Object> mapIn=ServiceUtils.jsonToMap(json);
+				        if(mapIn!=null && mapIn.size()>0)
+				        	mapIn.forEach((k,v)->{dpAsync.put(k, v);});
+			        }
+			        //dpAsync.put("asyncInputDoc", asyncInputDoc);
+			        ServiceUtils.execute(fqnOfFunction, dpAsync);
+			        Map<String, Object> asyncOut=dpAsync.getMap();
+			        asyncOut.forEach((k,v)->{asyncOutputDoc.put(k, v);});
+			        metaData.put("status", "Completed");
+	            return asyncOutputDoc;
+				} catch (Exception e) {
+					ServiceUtils.printException("Exception caused on async operation correlationID: "+correlationID+". Batch Id: "+metaData.get("batchId"), e);
+					metaData.put("status", "Failed");
+					asyncOutputDoc.put("error", e.getMessage());
+					throw e;
+				} finally {
+					asyncOutputDoc.put("*metaData", metaData);
+				}
+	        });
+			currentResource = curResourceBkp;
+			refresh();
+			put("asyncOutputDoc",asyncOutputDoc);
 	}
 	
 	public String getMyConfig(String key) throws SnippetException {

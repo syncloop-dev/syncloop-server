@@ -22,6 +22,7 @@ public class Invoke {
 	private JsonObject data=null;
 	private JsonArray createList;
 	private JsonArray dropList;
+	private String requestMethod;
 	
 	public Invoke(JsonObject jo) {
 		invoke=jo;	
@@ -32,6 +33,7 @@ public class Invoke {
 		label=data.getString("label",null);
 		evaluateCondition=data.getBoolean("evaluate",false);
 		comment=data.getString("comment",null);
+		requestMethod=data.getString("requestMethod","sync");
 //		System.out.println(data.isNull("transformers"));
 		if(!data.isNull("transformers"))
 			transformers=data.getJsonArray("transformers");
@@ -45,12 +47,14 @@ public class Invoke {
 			return;
     	if(createList!=null)
 			FlowUtils.setValue(createList, dp);
-    	
 		if(transformers!=null)
 			FlowUtils.map(transformers, dp);
 		String text=invoke.getString("text",null);
 		if(text!=null && text.trim().length()>8) {
-			dp.apply(text.trim()+".main");
+			if("async".equals(requestMethod))
+				dp.applyAsync(text.trim()+".main");
+			else
+				dp.apply(text.trim()+".main");
 			if(transformers!=null)
 				FlowUtils.map(transformers, dp);
 		}

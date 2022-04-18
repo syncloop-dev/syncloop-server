@@ -1,0 +1,88 @@
+package com.eka.middleware;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.cronutils.model.CronType;
+import com.cronutils.model.definition.CronDefinition;
+import com.cronutils.model.definition.CronDefinitionBuilder;
+import com.cronutils.model.time.ExecutionTime;
+import com.cronutils.parser.CronParser;
+
+import io.timeandspace.cronscheduler.CronScheduler;
+
+
+public class test {
+
+	private static final Map<String,Map<String,String>> jobMapData=new ConcurrentHashMap<String,Map<String,String>>();
+	private static Thread schedulerThread=new Thread(new Runnable() {
+	
+	@Override
+	public void run() {
+		while(jobMapData!=null) {
+			try {
+				Set<String> jobIds=jobMapData.keySet();
+				for (final String jobId : jobIds) {
+					Map<String, String> jobData=jobMapData.get(jobId);
+					String cronExpression=jobData.get("cronExpression");
+					final String serviceFqn=jobData.get("serviceFqn");
+					Instant nextInst = getNextInstant(cronExpression);
+					ZonedDateTime now = ZonedDateTime.now();
+					if(nextInst.toEpochMilli()-now.toInstant().toEpochMilli()<1000l) {
+						Duration syncPeriod = Duration.ofSeconds(5);
+						CronScheduler cron = CronScheduler.create(syncPeriod);
+						cron.scheduleAt(nextInst, new Runnable() {
+							@Override
+							public void run() {
+								
+								
+							}
+						});
+					}
+				}
+				Thread.sleep(1000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	  }
+   });
+
+	public static void main(String[] args) throws Exception {
+		
+		
+		if(!schedulerThread.isAlive())
+			schedulerThread.start();
+		
+		//Thread.sleep(10000000);
+	}
+
+	public static Instant getNextInstant(String cronExpression) {
+		CronDefinition cronDefinition = CronDefinitionBuilder.instanceDefinitionFor(CronType.UNIX);
+		CronParser parser = new CronParser(cronDefinition);
+
+		Calendar cal = Calendar.getInstance();
+		Date currTime = cal.getTime();
+		ZonedDateTime now = ZonedDateTime.now();
+		// Get date for last execution
+		// DateTime now = DateTime.now();
+		ExecutionTime executionTime = ExecutionTime.forCron(parser.parse(cronExpression));
+		// DateTime lastExecution = executionTime.lastExecution(currTime));
+
+		// Get date for next execution
+		Optional<ZonedDateTime> zdt = executionTime.nextExecution(now);
+
+		ZonedDateTime next = zdt.get();
+		Instant inst = next.toInstant();
+
+		return inst;
+	}
+
+}

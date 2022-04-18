@@ -42,7 +42,7 @@ public class Switch {
 				Scope scope=new Scope(jsonValue.asJsonObject());
 				scope.process(dp);
 				return;
-			}else if(xPathValue.equals(caseLabel)) {
+			}else if(xPathValue!=null && xPathValue.equals(caseLabel)) {
 				Scope scope=new Scope(jsonValue.asJsonObject());
 				scope.process(dp);
 				return;

@@ -18,7 +18,7 @@ try {
 			dataPipeline.clear();
 			dataPipeline.put("Location", location);
 			File file = new File(location);
-  			System.out.println("Saving "+location);
+  			//System.out.println("Saving "+location);
 			if(!file.exists()) {
 				file.getParentFile().mkdirs();
 				file.createNewFile();

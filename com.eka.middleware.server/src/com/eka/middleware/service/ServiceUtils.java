@@ -61,6 +61,18 @@ public class ServiceUtils {
 	public static boolean isWindows() {
         return (OS.indexOf("win") >= 0);
     }
+	
+	public static List<String> searchEndpoints(final String keyword){
+		Set endpoints=urlMappings.keySet();
+		final List<String> endpointList=new ArrayList<>();
+		endpoints.forEach((k)->{
+			String key=k+"";
+			String value=urlMappings.getProperty(key,"");
+			if(keyword==null || keyword.trim().length()==0 || value.toLowerCase().contains(keyword.toLowerCase()) || key.toLowerCase().trim().contains(keyword.toLowerCase()))
+				endpointList.add(key+" : "+value);
+		});
+		return endpointList;
+	}
 
     public static boolean isMac() {
         return (OS.indexOf("mac") >= 0);
@@ -228,6 +240,8 @@ public class ServiceUtils {
 	}
 
 	public static final void execute(String fqn, DataPipeline dataPipeLine) throws SnippetException {
+		if(!fqn.endsWith(".main"))
+			fqn+=".main";
 		ServiceManager.invokeJavaMethod(fqn, dataPipeLine);
 	}
 

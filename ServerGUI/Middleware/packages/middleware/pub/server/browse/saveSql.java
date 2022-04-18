@@ -80,17 +80,17 @@ try {
 	}
 public static void generateJavaClass(File file,String flowRef, DataPipeline dataPipeline)throws Exception {
 	String sqlJavaTemplatePath=MiddlewareServer.getConfigFolderPath()+"sqlJava.template";
-    System.out.println("sqlJavaTemplatePath: "+sqlJavaTemplatePath);
+    //System.out.println("sqlJavaTemplatePath: "+sqlJavaTemplatePath);
   	String className=file.getName().replace(".sql", "");
-  	URL url = new URL(sqlJavaTemplatePath);
+  	//URL url = new URL(sqlJavaTemplatePath);
   	String fullCode="";
   	String pkg=flowRef.replace("/"+file.getName(),"").replace("/",".");
-	List<String> lines = FileUtils.readLines(new File(url.toURI()), "UTF-8");
+	List<String> lines = FileUtils.readLines(new File(sqlJavaTemplatePath), "UTF-8");
     for (String line: lines) {
       String codeLine=(line.replace("#flowRef",flowRef).replace("#package",pkg).replace("#className",className));
       fullCode+=codeLine+"\n";
-      dataPipeline.log("\n");
-      dataPipeline.log(codeLine);
+      //dataPipeline.log("\n");
+      //dataPipeline.log(codeLine);
     }
   	dataPipeline.log("\n");
   	//return fullCode;
@@ -104,13 +104,13 @@ public static void generateJavaClass(File file,String flowRef, DataPipeline data
 		if (!javaFile.exists()) {
 			javaFile.createNewFile();
 		}
-		System.out.println(javaFilePath);
+		//System.out.println(javaFilePath);
 		FileOutputStream fos = new FileOutputStream(javaFile);
 		fos.write(fullCode.getBytes());
 		fos.flush();
 		fos.close();
 		String fqn=pkg.replace("package ", "").replace(";","")+"."+className+".main";
-  		dataPipeline.log("fqn: "+fqn);
+  		//dataPipeline.log("fqn: "+fqn);
 		ServiceUtils.compileJavaCode(fqn, dataPipeline);
 	}
 	

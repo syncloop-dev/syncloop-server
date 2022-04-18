@@ -345,74 +345,18 @@ public static String bytesToHex_1(byte[] bytes) {
              return URLEncoder.encode(param);
          }
      }
-    
+     /*
      public static void main(String[] args) throws Exception {
- 		
- 		Map<String, String> queryParametes = new HashMap<>();
- 		
- 		//queryParametes.put("MessageBody", "MessageBody");
- 		queryParametes.put("Action", "GetQueueUrl");
- 		queryParametes.put("QueueName", "ekmwq");
- 		
- 		TreeMap<String, String> awsHeaders = new TreeMap<>();
- 		awsHeaders.put("host", "sqs.ap-south-1.amazonaws.com");
- 	
- 		
- 		main("https://sqs.ap-south-1.amazonaws.com", 
- 				queryParametes, awsHeaders, 
- 				"ap-south-1", "sqs", "GET", "AKIAITT6PDEYBC4BLOFQ", "R8negk5pXjfQuQZW32eeB8YnRbVifG+2esa6CXPZ");
- 		
- 	}
-
- 	public static void main(String urlString,
- 			Map<String, String> queryParametes,
- 			TreeMap<String, String> header,
- 			String region,
- 			String serviceName, 
- 			String method, 
- 			String AccessKey,
- 			String SecretKey) throws SnippetException {
-
- 		try {
-
- 			URL url = new URL(urlString);
-
- 			AWSV4Auth aWSV4Auth = new AWSV4Auth();
-
- 			//TreeMap<String, String> header = new TreeMap<>(); 
- 					aWSV4Auth.addAwsHeaders(header, method, queryParametes, url.getPath(), AccessKey, SecretKey, region, serviceName, null, null);
- 			header.put("Accept", "application/json");
- 			
- 			String fullUrlIncludingParams = url.toString();
- 			if (queryParametes != null) {
- 				Set<String> set = queryParametes.keySet();
- 				if (set.size() > 0) {
- 					fullUrlIncludingParams += "?";
- 					for (Object obj : set) {
- 						String param = (String) obj;
- 						String val = (String) queryParametes.get(param);
- 						fullUrlIncludingParams += param + "=" + val + "&";
- 					}
- 	              fullUrlIncludingParams=(fullUrlIncludingParams+"#_").replace("&#_","");
- 				}
- 			}
- 			header.forEach((k,v) -> System.out.println(k +" : "+ v));
- 			//header.remove("host");
- 			System.out.println(fullUrlIncludingParams);
- 			
- 			HttpRequest.Builder builder = HttpRequest.newBuilder().uri(URI.create(fullUrlIncludingParams));
- 			
- 			header.entrySet().forEach(m -> builder.header(m.getKey(), m.getValue()));
- 			
- 			HttpRequest request = builder.method(method, HttpRequest.BodyPublishers.noBody())
- 					.build();
- 			
- 			
- 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
- 			System.out.println(response.body());
- 			
- 		} catch (Exception e) {
- 		}
-
- 	}
+    	 String contentSha256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
+    	 uk.co.lucasweb.aws.v4.signer.HttpRequest request = new uk.co.lucasweb.aws.v4.signer.HttpRequest("GET", new URI("https://examplebucket.s3.amazonaws.com?max-keys=2&prefix=J"));
+    	 String signature = Signer.builder()
+    	         .awsCredentials(new AwsCredentials("", ""))
+    	         .header("Host", "examplebucket.s3.amazonaws.com")
+    	         .header("x-amz-date", "20130524T000000Z")
+    	         .header("x-amz-content-sha256", contentSha256)
+    	         .buildS3(request, contentSha256)
+    	         .getSignature();
+	}
+	*/
+     
 }

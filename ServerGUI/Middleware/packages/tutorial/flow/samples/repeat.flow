@@ -1,1 +1,233 @@
-{"latest":{"createdTS":"","input":[],"output":[{"id":"j3_1","text":"count","icon":"/files/gui/middleware/pub/server/ui/icons/text.png","li_attr":{"id":"j3_1"},"a_attr":{"href":"#","id":"j3_1_anchor"},"state":{"loaded":true,"opened":false,"selected":false,"disabled":false},"data":{},"children":[],"type":"string"}],"flow":[{"id":"j1_1","text":"SEQUENCE","icon":"/files/gui/middleware/pub/server/ui/icons/sequence.png","li_attr":{"id":"j1_1"},"a_attr":{"href":"#","id":"j1_1_anchor"},"state":{"loaded":true,"opened":true,"selected":false,"disabled":false},"data":{"evaluate":false,"comment":"Repeat on failure demo. It can be used to handle transient errors"},"children":[{"id":"j1_4","text":"MAP","icon":"/files/gui/middleware/pub/server/ui/icons/map.png","li_attr":{"id":"j1_4"},"a_attr":{"href":"#","id":"j1_4_anchor"},"state":{"loaded":true,"opened":false,"selected":false,"disabled":false},"data":{"lines":[],"transformers":[],"dropList":[],"createList":[{"path":"count","value":"0","evaluate":null,"typePath":"integer"}],"comment":"Initialize variables"},"children":[],"type":"map"},{"id":"j1_2","text":"REPEAT","icon":"/files/gui/middleware/pub/server/ui/icons/repeat.png","li_attr":{"id":"j1_2"},"a_attr":{"href":"#","id":"j1_2_anchor"},"state":{"loaded":true,"opened":true,"selected":false,"disabled":false},"data":{"comment":"Retry every 5 secs. Max retry 5 times","interval":"5","repeat":"5","repeatOn":"error"},"children":[{"id":"j1_3","text":"MAP","icon":"/files/gui/middleware/pub/server/ui/icons/map.png","li_attr":{"id":"j1_3"},"a_attr":{"href":"#","id":"j1_3_anchor"},"state":{"loaded":true,"opened":false,"selected":true,"disabled":false},"data":{"lines":[{"inputPath":"count","outputPath":"count","inpJsTree":"#launching_arrow_jsTree","outpJsTree":"#landing_arrow_jsTree","INPath":"count","OUTPath":"count","op":"copy","line":0,"dashedLine":false,"inType":"integer","outType":"integer","applyFunction":"custom","condition":"#{count}<3","jsFunction":"var resp=val+1;\nreturn resp;","jsFunctionSig":"","inTypePath":"integer","outTypePath":"integer"}],"transformers":[{"op":"copy","from":"/count","to":"/count","condition":"#{count}<3","applyFunction":"custom","jsFunction":"var resp=val+1;\nreturn resp;","jsFunctionSig":"","inTypePath":"integer","outTypePath":"integer"}],"dropList":[],"createList":[],"comment":"Added a condition to sum if count<3. jsFunction is added to increament count"},"children":[],"type":"map"},{"id":"j1_5","text":"SEQUENCE","icon":"/files/gui/middleware/pub/server/ui/icons/sequence.png","li_attr":{"id":"j1_5"},"a_attr":{"href":"#","id":"j1_5_anchor"},"state":{"loaded":true,"opened":true,"selected":false,"disabled":false},"data":{"comment":"Enabling condition evaluation","evaluate":true},"children":[{"id":"j1_6","text":"SEQUENCE","icon":"/files/gui/middleware/pub/server/ui/icons/sequence.png","li_attr":{"id":"j1_6"},"a_attr":{"href":"#","id":"j1_6_anchor"},"state":{"loaded":true,"opened":false,"selected":false,"disabled":false},"data":{"comment":"Condition not added to make it fail"},"children":[],"type":"sequence"}],"type":"sequence"}],"type":"repeat"}],"type":"sequence"}],"lockedByUser":"saurabh"},"consumers":"","developers":"rnd"}
+{
+  "latest" : {
+    "createdTS" : "",
+    "input" : [ {
+      "id" : "j2_1",
+      "text" : "test",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+      "li_attr" : {
+        "id" : "j2_1"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j2_1_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : {
+        "isRequiredField" : true,
+        "fieldDescription" : "VGVzdCBpcyByZXF1aXJlZCB2YXJpYWJsZQ=="
+      },
+      "children" : [ ],
+      "type" : "string"
+    } ],
+    "output" : [ {
+      "id" : "j3_1",
+      "text" : "count",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+      "li_attr" : {
+        "id" : "j3_1"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j3_1_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ ],
+      "type" : "string"
+    } ],
+    "flow" : [ {
+      "id" : "j1_1",
+      "text" : "SEQUENCE",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+      "li_attr" : {
+        "id" : "j1_1"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j1_1_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : true,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : {
+        "evaluate" : false,
+        "comment" : "Repeat on failure demo. It can be used to handle transient errors"
+      },
+      "children" : [ {
+        "id" : "j1_4",
+        "text" : "MAP",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+        "li_attr" : {
+          "id" : "j1_4"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j1_4_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : false,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : {
+          "lines" : [ ],
+          "transformers" : [ ],
+          "dropList" : [ ],
+          "createList" : [ {
+            "path" : "count",
+            "value" : "0",
+            "evaluate" : null,
+            "typePath" : "integer"
+          } ],
+          "comment" : "Initialize variables"
+        },
+        "children" : [ ],
+        "type" : "map"
+      }, {
+        "id" : "j1_2",
+        "text" : "REPEAT",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/repeat.png",
+        "li_attr" : {
+          "id" : "j1_2"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j1_2_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : true,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : {
+          "comment" : "Retry every 5 secs. Max retry 5 times",
+          "interval" : "5",
+          "repeat" : "5",
+          "repeatOn" : "error"
+        },
+        "children" : [ {
+          "id" : "j1_3",
+          "text" : "MAP",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+          "li_attr" : {
+            "id" : "j1_3"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_3_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "lines" : [ {
+              "inputPath" : "count",
+              "outputPath" : "count",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree",
+              "INPath" : "count",
+              "OUTPath" : "count",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "integer",
+              "outType" : "integer",
+              "applyFunction" : "custom",
+              "condition" : "#{count}<3",
+              "jsFunction" : "var resp=val+1;\nreturn resp;",
+              "jsFunctionSig" : "",
+              "inTypePath" : "integer",
+              "outTypePath" : "integer"
+            } ],
+            "transformers" : [ {
+              "op" : "copy",
+              "from" : "/count",
+              "to" : "/count",
+              "condition" : "#{count}<3",
+              "applyFunction" : "custom",
+              "jsFunction" : "var resp=val+1;\nreturn resp;",
+              "jsFunctionSig" : "",
+              "inTypePath" : "integer",
+              "outTypePath" : "integer"
+            } ],
+            "dropList" : [ ],
+            "createList" : [ ],
+            "comment" : "Added a condition to sum if count<3. jsFunction is added to increament count"
+          },
+          "children" : [ ],
+          "type" : "map"
+        }, {
+          "id" : "j1_5",
+          "text" : "SEQUENCE",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "li_attr" : {
+            "id" : "j1_5"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_5_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : true,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "comment" : "Enabling condition evaluation",
+            "evaluate" : true
+          },
+          "children" : [ {
+            "id" : "j1_6",
+            "text" : "SEQUENCE",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+            "li_attr" : {
+              "id" : "j1_6"
+            },
+            "a_attr" : {
+              "href" : "#",
+              "id" : "j1_6_anchor"
+            },
+            "state" : {
+              "loaded" : true,
+              "opened" : false,
+              "selected" : false,
+              "disabled" : false
+            },
+            "data" : {
+              "comment" : "Condition not added to make it fail"
+            },
+            "children" : [ ],
+            "type" : "sequence"
+          } ],
+          "type" : "sequence"
+        } ],
+        "type" : "repeat"
+      } ],
+      "type" : "sequence"
+    } ],
+    "lockedByUser" : "@Vineet"
+  },
+  "consumers" : "",
+  "developers" : "rnd",
+  "enableServiceDocumentValidation" : true
+}

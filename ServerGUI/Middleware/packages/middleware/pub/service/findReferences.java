@@ -21,6 +21,7 @@ try {
   		String packageDirectory=ServiceManager.packagePath+"packages/";
   		File dir=new File(packageDirectory);
   		List<String> list=parseDirectory(dir,serviceFqn,"|");
+        dataPipeline.clear();
   		dataPipeline.put("list",list);
         //dataPipeline.log("***********************************************\n"+list);
         
@@ -48,18 +49,18 @@ private static List<String> parseDirectory(File dir,String keyWord,String paddin
 		File[] list=dir.listFiles();
 		for (File file : list) {
 			if(file.isDirectory()) {
-              paths.add(padding+"packages"+(file.getAbsolutePath().split("packages")[1]));
+              paths.add((padding+"packages"+(file.getAbsolutePath().split("packages")[1])).replace("\\","/"));
               List<String> ref=parseDirectory(file,keyWord,padding+"-");
               if(ref.size()>0){
                 references.addAll(paths);
 			  	references.addAll(ref);
               }
               paths.clear();
-			}else{
+			}else if(!file.getName().endsWith(".class")){
               //System.out.println(file.getAbsolutePath());
               int count=searchStream(file,keyWord);
               if(count>0){
-                references.add(padding+"packages"+(file.getAbsolutePath().split("packages")[1])+" : "+count+" times");
+                references.add((padding+"packages"+(file.getAbsolutePath().split("packages")[1])).replace("\\","/")+" : "+count+" times");
               }
             }
 		}

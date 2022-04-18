@@ -1,6 +1,7 @@
 <html style="min-height: 100% !important;">
 <head>
   <title>Workspace</title>
+  <link rel="shortcut icon" href="/files/gui/middleware/pub/server/ui/icons/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/dist/themes/default/style.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -12,12 +13,13 @@
 
   <body style="width:100%;height:100%;">
 
-<div class="navbar" style="background-color:slategray;left:0px;top:0px;">
+<div class="navbar" style="background-color:#fff;left:0px;top:0px;">
   <div id="mostRecentlyOpened" class="dropdown">
-    <a class="dropbtn">Unsaved: </a>
+    <a class="eka_logo"><img src="/files/gui/middleware/pub/server/ui/icons/eka_logo.png"></a>
+	<a class="dropbtn">Unsaved: </a>
   </div>
   <div class="dropdown navbar-right">
-    <a href="#" onclick="localStorage.clear();sessionStorage.clear();deleteAllCookies();location.reload(true);" class="dropbtn"><span class="glyphicon glyphicon-log-in"></span> Log out</a>
+    <a href="#" onclick="localStorage.clear();sessionStorage.clear();deleteAllCookies();location.reload(true);" class="dropbtn"><span class="glyphicon glyphicon-log-in"></span> Clear cache</a>
   </div>
 </div>    
 
@@ -28,7 +30,7 @@
 <div class="row" style="margin: 0px; padding:0px;">
 			<div class="navbar">  
               		<div class="dropdown">
-                      <button class="dropbtn">New 
+                      <button class="dropbtn nw">New 
                         <i class="fa fa-caret-down"></i>
                       </button>
                       <div class="dropdown-content">
@@ -38,10 +40,11 @@
                         <a href="#" onclick="createSchema('service',packageManagerJsTreeRef);">Service</a>
                         <a href="#" onclick="createSchema('jdbc',packageManagerJsTreeRef);">JDBC</a>
                         <a href="#" onclick="createSchema('sql',packageManagerJsTreeRef);">SQL</a>
+                        <a href="#" onclick="createSchema('properties',packageManagerJsTreeRef);">Properties</a>
                       </div>
                     </div>
               <div class="dropdown">
-                <button class="dropbtn">Tools 
+                <button class="dropbtn nw">Tools 
                   <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
@@ -73,6 +76,7 @@
 		<div class="modal-content" style="width:650px;height:auto;">
 			<span id="closeExportBuildModelDialog" class="close" >&times;</span>
 			<h3>Configure build</h3>
+          <div style="display:none">
             <input type="checkbox" id="includeDependencies" name="includeDependencies"
 				value="true">
 			<label style="min-width: 100px;" for="includeDependencies"> Include all dependent services?</label><br>
@@ -82,7 +86,7 @@
             <input type="checkbox" id="includeLocalProperties" name="includeLocalProperties"
 				value="false">
 			<label style="min-width: 100px;" for="includeLocalProperties"> Include local properties?</label><br>
-          
+          </div>
           	<input type="checkbox" id="includeEndpoint" name="includeEndpoint"
 				value="false">
 			<label style="min-width: 100px;" for="includeEndpoint"> Include endpoint?</label><br>
@@ -98,16 +102,7 @@
 </div>
 </body>
   <script>    
-function deleteAllCookies() {
-    var cookies = document.cookie.split(";");
 
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i];
-        var eqPos = cookie.indexOf("=");
-        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
-}
     var packageManagerJsTreeRef=createPackageJstree('#packageManagerJsTree');
     $("#packageManagerJsTree").on('click',
 											function(e, data) {

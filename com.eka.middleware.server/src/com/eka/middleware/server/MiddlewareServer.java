@@ -79,6 +79,8 @@ public class MiddlewareServer {
 			LOGGER.info("Please provide the path config folder(format:- D:\\server\\config\\)");
 		}else { // */
 			configFolderPath = args[0];
+			File file=new File(configFolderPath);
+			configFolderPath=file.getAbsolutePath();
 			configureLog4j();
 		}
 		String ip=ServiceUtils.getServerProperty("middleware.server.remote_ip");
@@ -90,13 +92,13 @@ public class MiddlewareServer {
 	
 	private static void configureLog4j() throws Exception {
 		LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
-		URL url = new URL(getConfigFolderPath()+"log4j2.xml");
+		URL url = new File(getConfigFolderPath()+"log4j2.xml").toURL();
 		// this will force a reconfiguration
 		context.setConfigLocation(url.toURI());
 	}
 
 	public static String getConfigFolderPath() {
-		return configFolderPath;
+		return configFolderPath+"/";
 	}
 	
 	private static HttpHandler addSecurity(final HttpHandler toWrap, final IdentityManager identityManager) {
@@ -113,8 +115,8 @@ public class MiddlewareServer {
 		try {
 			Long lastModified=lastModifiedMap.get(fileName);
 			String profileFilePath = MiddlewareServer.getConfigFolderPath() + fileName;
-			URL url = new URL(profileFilePath);
-			File file = new File(url.toURI());
+			//URL url = new URL(profileFilePath);
+			File file = new File(profileFilePath);
 			if(lastModified==null || lastModified<file.lastModified()) {
 				byte[] bytes=null;
 				synchronized (lastModifiedMap) {
@@ -135,8 +137,8 @@ public class MiddlewareServer {
 	public static final void writeConfigurationFile(String fileName,byte data[]) throws SystemException {
 		try {
 			String profileFilePath = MiddlewareServer.getConfigFolderPath() + fileName;
-			URL url = new URL(profileFilePath);
-			File file = new File(url.toURI());
+			//URL url = new URL(profileFilePath);
+			File file = new File(profileFilePath);
 			FileOutputStream fos=new FileOutputStream(file);
 			fos.write(data);
 			fos.flush();

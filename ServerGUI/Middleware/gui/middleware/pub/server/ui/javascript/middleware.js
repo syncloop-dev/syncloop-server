@@ -726,61 +726,11 @@ function packagesContextMenu(node, id)
               if(elemId==null)
                 alert("Please select Tools>Build first");
               else{
-                //var includeAllDependencies=confirm("Do you want to export the build with all the dependencies?");
-                //exportBuild('includeDependencies','includeGlobalProperties','includeLocalProperties','includeEndpoint','buildNameInput')
-               	var includeDependencies=$("#includeDependencies").prop("checked");//prompt("Please create your build name:", "myBuild");
-                if(includeDependencies)
-                  includeDependencies=true;
-                else
-                  includeDependencies=false;
-                
-                var includeGlobalProperties=$("#includeGlobalProperties").prop("checked");
-                if(includeGlobalProperties)
-                  includeGlobalProperties=true;
-                else
-                  includeGlobalProperties=false;
-                
-                var includeLocalProperties=$("#includeLocalProperties").prop("checked");
-                if(includeLocalProperties)
-                  includeLocalProperties=true;
-                else
-                  includeLocalProperties=false;
-                
-                var includeEndpoint=$("#includeEndpoint").prop("checked");
-                if(includeEndpoint)
-                  includeEndpoint=true;
-                else
-                  includeEndpoint=false;
-                
-                var buildName=$("#buildNameInput").val();
+               	var buildName=prompt("Please create your build name:", "myBuild");
                 if(buildName!=null && buildName.trim().length>0){
                   	var data =tree.get_json('#', {'flat': true});
-                    var selected=[];
-                    var counter=0;
-                    for(var index in data) {
-                        var map=data[index];
-                        var elemNode=$("#"+map.id);
-                        var elemChecked=elemNode.attr('checked');
-                        
-                        //alert(JSON.stringify(map)+" : "+elemChecked);
-                      	if(elemChecked){
-                          //alert(JSON.stringify(map));
-                          var elemTreeNode=tree.get_node(map.id);
-                          //alert(elemTreeNode);
-                          var nodePath=tree.get_path(elemTreeNode, '/');
-                          //alert(nodePath);
-                          var artifact={"type":"","asset":""};
-                          artifact.type=map.type;
-                          artifact.asset=nodePath;
-                          selected.push(artifact);
-                          //selected[counter++].nodePath;
-                        }
-					} 
-                  	var content=JSON.stringify(selected);
-                   // alert(content);
-                    var qp="buildName="+buildName+"&includeDependencies="+includeDependencies+"&includeGlobalProperties="+includeGlobalProperties
-                    +"&includeLocalProperties="+includeLocalProperties+"&includeEndpoints="+includeEndpoint;
-                	var response=syncRestRequest("/build?"+qp, "POST", content,"application/json","application/json");
+                  	var content=JSON.stringify(data);
+                	var response=syncRestRequest("/build?name="+buildName, "POST", content,"application/json","application/json");
                     if(response.status==200){
                     	alert(response.payload);
                     }
@@ -911,7 +861,7 @@ function createPackageJstree(id) {
 												"folder" : {
 													"icon" : "/files/gui/middleware/pub/server/ui/icons/filesystem/folder.png",
 													"valid_children" : [
-														"folder", "service","package","flow","map","html","js","css","jar","jdbc","sql"]
+														"folder", "service","package","flow","map","html","js","css","jar"]
 												},"service" : {
 													"icon" : "/files/gui/middleware/pub/server/ui/icons/filesystem/cog.png",
 													"valid_children" : []
@@ -938,12 +888,6 @@ function createPackageJstree(id) {
 													"valid_children" : []
 												},"jar" : {
 													"icon" : "/files/gui/middleware/pub/server/ui/icons/jar.png",
-													"valid_children" : []
-												},"jdbc" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/jdbc.png",
-													"valid_children" : []
-												},"sql" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/sql.png",
 													"valid_children" : []
 												}
 											},
@@ -1010,7 +954,7 @@ for (i = 0; i < v.length && i < v.length; i++) {
 
 var currentSelectedSchemaJStreeID=null;
 					function createSchema(type,ref,selected,text) {
-						//alert(type);
+						
 						//console.log($(currentSelectedSchemaJStreeID));
 						//var ref = $(currentSelectedSchemaJStreeID).jstree(true), 
 						var sel = ref.get_selected();
@@ -1072,9 +1016,7 @@ currentSelectedJSONObject={};
 							var alias=$("#serviceAliasValue").val();
 							if(alias.trim().length>1){
 								//alert("loadFile: "+loadFile);
-                                var urlLoadFile=loadFile.trim()+"$";
-								var packageName=("/"+urlLoadFile).replace("/files/","alias?fqn=").replace(".service$",".main").replace(".flow$",".main").replace(".sql$",".main");
-								//var packageName=("/"+loadFile).replace("/files/","alias?fqn=").replace(".service",".main").replace(".flow",".main");
+								var packageName=("/"+loadFile).replace("/files/","alias?fqn=").replace(".service",".main").replace(".flow",".main");
 								
 								packageName=packageName.split("/").join(".");
 								//alert("packageName: "+packageName);
@@ -1097,10 +1039,7 @@ currentSelectedJSONObject={};
 							
 							var properties=$("#servicePropertiesFile").val();
 							if(properties!=null && properties.trim().length>0){
-								var urlLoadFile=loadFile.trim()+"$";
-								var propertyPath=urlLoadFile.replace(".service$",".properties").replace(".flow$",".properties").replace(".sql$",".properties");
-                                //alert(propertyPath);
-                              //var propertyPath=loadFile.replace(".service",".properties").replace(".flow",".properties");//).replace("/files","alias?fqn=packages").replace(".service",".main");
+								var propertyPath=loadFile.replace(".service",".properties").replace(".flow",".properties");//).replace("/files","alias?fqn=packages").replace(".service",".main");
 								var propFileName=(propertyPath.split("/").join(".")).replace("files.","");
 								var propURLPath=("/files/packages/"+propertyPath.split("/")[2]+"/dependency/config/"+propFileName);
 								//alert(propURLPath);
@@ -1115,12 +1054,10 @@ currentSelectedJSONObject={};
 							
 						}
 						modal.style.display = "block";
-						var urlLoadFile=loadFile.trim()+"$";
-						var packageName=("/"+urlLoadFile).replace("/files/","alias?fqn=").replace(".service$",".main").replace(".flow$",".main").replace(".sql$",".main");
-						//var packageName=("/"+loadFile).replace("/files/","alias?fqn=").replace(".service",".main").replace(".flow",".main");
+						
+						var packageName=("/"+loadFile).replace("/files/","alias?fqn=").replace(".service",".main").replace(".flow",".main");
 						packageName=packageName.split("/").join(".");
-						//alert(packageName);
-                        var urlPath="/"+packageName;
+						var urlPath="/"+packageName;
 						//urlPath=urlPath.replace("/files","/alias");
 						var response=syncRestRequest(urlPath, "GET", "");
 						if(response.status==200){
@@ -1141,9 +1078,7 @@ currentSelectedJSONObject={};
 						}else
 							alert(JSON.stringify(response));
 						//alert(JSON.stringify(response));
-                        var urlLoadFile=loadFile.trim()+"$";
-						var propertyPath=urlLoadFile.replace(".service$",".properties").replace(".flow$",".properties").replace(".sql$",".properties");
-						//var propertyPath=loadFile.replace(".service",".properties").replace(".flow",".properties");//).replace("/files","alias?fqn=packages").replace(".service",".main");
+						var propertyPath=loadFile.replace(".service",".properties").replace(".flow",".properties");//).replace("/files","alias?fqn=packages").replace(".service",".main");
 						//alert("propFilePath: "+propertyPath);
 						var propFileName=(propertyPath.split("/").join(".")).replace("files.","");
 						//alert("propFileName: "+propFileName);
@@ -1155,22 +1090,6 @@ currentSelectedJSONObject={};
 						else
 							alert(JSON.stringify(responseProps));
 					}
-
-function openBuildConfigurationForm(){
-  var modal = document.getElementById("exportBuildModelDialog");
-  var span = document.getElementById("closeExportBuildModelDialog");
-  var selectArtifactsButton = document.getElementById("selectArtifactsButton");
-  modal.style.display = "block";
-  span.onclick = function() {
-	  modal.style.display = "none";
-	  //$(".elementProperty").css("display","none");
-  }
-  
-  selectArtifactsButton.onclick = function() {
-      addCheckBoxOnJSTree('#packageManagerJsTree');
-	  modal.style.display = "none";
-  }
-}
 					function openForm(jsTreeId,sel){
 					// Get the modal
 					var modal = document.getElementById("elementPropertyModalDialog");
@@ -1191,7 +1110,6 @@ function openBuildConfigurationForm(){
 					sel = ref.get_selected()[0];
 					currentNodePath=ref.get_path(sel, '/');
 					currentSelectedJSONObject.node=sel;
-                    currentSelectedJSONObject.selNode=ref.get_node(sel);
 					currentSelectedJSONObject.jsTreeId=jsTreeId;
 					currentSelectedJSONObject.ref=ref;
 					currentSelectedJSONObject.nodeType=ref.get_type(sel);
@@ -1201,6 +1119,7 @@ function openBuildConfigurationForm(){
 						$("#isArray").prop('checked', true);
 					else
 						$("#isArray").prop('checked', false);
+					
 					var elemType=currentSelectedJSONObject.nodeType.replace("List","");
 					$("#elementType").prop("value",elemType);
 					showProperties(elemType);
@@ -1221,20 +1140,7 @@ function openBuildConfigurationForm(){
 					}
 					
 					function showProperties(elementType){
-                        var curDataNode=currentSelectedJSONObject.selNode;
-                        for(var key in curDataNode.data) {
-                          var value=curDataNode.data[key];
-                          if(key.endsWith('Description') || key.endsWith('regex'))
-                        	value=atob(value);
-                          //alert(key+":"+value);
-                          if(key=="isRequiredField" && value==true){
-                            //alert(key+":"+value);
-                            //alert($("#"+key));
-                            $("#"+key).prop( "checked", true );
-                          }
-                          else
-     					  	$("#"+key).val(value);
-						} 
+						
 						$(".elementProperty").css("display","none");
 						$("#"+elementType+"Properties").css("display","block");
 						if(currentSelectedJSONObject.nodeType==elementType)
@@ -1242,14 +1148,6 @@ function openBuildConfigurationForm(){
 						currentSelectedJSONObject.nodeType=elementType;
 						changeCurrentNodeType($("#isArray").prop('checked'));
 					}
-					function updateDataField(field,value){
-                      var curDataNode=currentSelectedJSONObject.selNode;
-                      if(curDataNode.data==null)
-                        curDataNode.data={};
-                      if(field.endsWith('Description') || field.endsWith('regex'))
-                        value=btoa(value);
-                      curDataNode.data[field]=value;
-                    }
 
  function addDblclickClickListener(id,callback){
    $(id).dblclick(function(event) {
