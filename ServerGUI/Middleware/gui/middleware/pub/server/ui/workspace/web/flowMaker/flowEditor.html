@@ -2,8 +2,10 @@
 <head>
 <title>Flow Designer</title>
 <link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui/css/jstree.style.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
 <script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
 <script src="/files/gui/middleware/pub/server/ui/javascript/leader-line.min.js"></script>
@@ -18,7 +20,7 @@
 			<div class="navbar">  
                      <div class="dropdown">
                       <button class="dropbtn nw">Service 
-                        <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-angle-down"></i>
                       </button>
                       <div class="dropdown-content">
                         <a href="#" onclick="save();">Save</a>
@@ -32,11 +34,11 @@
                     </div>
                     <div class="dropdown">
                       <button class="dropbtn nw">Search 
-                        <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-angle-down"></i>
                       </button>
                       <div class="dropdown-content">
                                               <input type="text" value=""
-                                                  style="box-shadow: inset 0 0 4px #eee; width: 120px; margin: 2px; padding: 2px; border-radius: 0px; border: 1px solid silver; font-size: .8em;"
+                                                  style="box-shadow: inset 0 0 4px #eee; width: 124px; margin: 2px; padding: 2px; border-radius: 0px; border: 1px solid silver; font-size: .8em;"
                                                   id="search_q" placeholder="Search">
                       </div>
                     </div> 
@@ -157,7 +159,7 @@
 			<h4>Apply logic on value</h4>
 			<div id="methodSelectionBox" style="margin-top:10px;">
 			<label style="min-width: 100px;" for="jsFunction">Method: </label> 
-				<select id="jsFunction">
+				<select id="jsFunction" class="form-control">
                     <option value="none">none</option>
 					<option value="trim">trim</option>
 					<option value="emptyToNull">emptyToNull</option>
@@ -170,12 +172,12 @@
 			</div>
             <div id="conditionConfigurationBox" style="margin-top:10px;">
 			<label style="min-width: 100px;" for="mappingCondition">Condition: </label> 
-				<input type="text" id="mappingCondition" style="with:400px;">
+				<input class="form-control" type="text" id="mappingCondition">
               <br>
 			</div>
 			<div>
 				<label for="functionJSDef" id="jsFunctionSig">function(val)</label>
-                {<br><textarea id="functionJSDef" rows="15" cols="50" value="" style="width:600px">return val;</textarea><br>}
+                {<br><textarea class="form-control" id="functionJSDef" rows="15" cols="50" value="">return val;</textarea><br>}
 			</div>
 		</div>
 </div>
@@ -187,7 +189,7 @@
             <h5>Set</h5>
             <div style="margin-top:10px;">
 			<label style="min-width: 100px;" for="elementValueInput">Value: </label> 
-				<input type="text" id="elementSetValueInput" style="with:400px;">
+				<input class="form-control" type="text" id="elementSetValueInput" style="with:400px;">
               <br>
 			</div>
           
@@ -224,36 +226,49 @@
 		<div class="modal-content" style="width:650px;height:auto;">
 			<span id="closeConfigurePropertiesModelDialog" class="close">&times;</span>
 			<h3>Configure properties</h3>
-			<div id="serviceHTTPMethod" style="margin-top:10px;">
-			<label style="min-width: 100px;" for="serviceHTTPMethodValue">Method: </label> 
-				<select
-				name="serviceHTTPMethodValue" id="serviceHTTPMethodValue">
-					<option value="GET">GET</option>
-					<option value="POST">POST</option>
-					<option value="DELETE">DELETE</option>
-					<option value="PUT">PUT</option>
-					<option value="PATCH">PATCH</option>
-				</select><br>
-			</div>
-            <input type="checkbox" id="enableServiceDocumentValidation" name="enableServiceDocumentValidation"
+			<div class="row">
+			    <div class="col-md-6" style="padding-left:0px;">
+				    <div id="serviceHTTPMethod" style="margin-top:10px;">
+			        <label style="min-width: 100px;" for="serviceHTTPMethodValue">Method: </label> 
+					<select
+					name="serviceHTTPMethodValue" id="serviceHTTPMethodValue" class="form-control">
+						<option value="GET">GET</option>
+						<option value="POST">POST</option>
+						<option value="DELETE">DELETE</option>
+						<option value="PUT">PUT</option>
+						<option value="PATCH">PATCH</option>
+					</select><br>
+			        </div>
+				</div>
+			    <div class="col-md-6">
+				    <div class="en_ck">
+				    <input type="checkbox" id="enableServiceDocumentValidation" name="enableServiceDocumentValidation"
 				value="false">
-			<label style="min-width: 100px;" for="enableServiceDocumentValidation"> Enable Validation</label><br>
+			        <label style="min-width: 100px;" for="enableServiceDocumentValidation"> Enable Validation</label>
+					</div>
+				</div>
+			</div>
+			
+			
+            
 			<div id="serviceAlias" style="margin-top:10px;">
-				<label for="serviceAliasValue">Alias: </label> <input type="text"
-					id="serviceAliasValue" name="serviceAliasValue" value="" style="width:600px"><br>
+				<label for="serviceAliasValue">Alias: </label> <input class="form-control" type="text"
+					id="serviceAliasValue" name="serviceAliasValue" value=""><br>
 			</div>
           	<div id="serviceConsumersDiv" style="margin-top:10px;">
-				<label for="serviceConsumers">Consumers: </label> <input type="text" title="Add comma separated groups without spaces."
-					id="serviceConsumers" name="serviceConsumers" value="" style="width:600px"><br>
+				<label for="serviceConsumers">Consumers: </label> <input class="form-control" type="text" title="Add comma separated groups without spaces."
+					id="serviceConsumers" name="serviceConsumers" value=""><br>
 			</div>
           	<div id="serviceDevelopersDiv" style="margin-top:10px;">
-				<label for="serviceDevelopers">Developers: </label> <input type="text" title="Add comma separated groups without spaces."
-					id="serviceDevelopers" name="serviceDevelopers" value="" style="width:600px"><br>
+				<label for="serviceDevelopers">Developers: </label> <input class="form-control" type="text" title="Add comma separated groups without spaces."
+					id="serviceDevelopers" name="serviceDevelopers" value=""><br>
 			</div>
 			<div id="serviceProperties" style="margin-top:10px;">
-				<label for="servicePropertiesFile">Configuration Properties: </label> <textarea rows="15" cols="50"
-					id="servicePropertiesFile" name="servicePropertiesFile" value="" style="width:600px"></textarea><br>
+				<label for="servicePropertiesFile">Configuration Properties: </label> <textarea class="form-control" rows="10" cols="50"
+					id="servicePropertiesFile" name="servicePropertiesFile" value=""></textarea><br>
 			</div>
+			
+			 
 		</div>
 </div>
    <div id="flowElementPropertyModalDialog" class="modal">
@@ -264,13 +279,13 @@
        		<div id="elementStatus" class="elementStatus" style="padding-bottom:10px;">
               <label style="min-width: 100px;" for="elementStatusInput">Status: </label> <select
                   name="elementStatusInput" id="elementStatusInput"
-                  onChange="setFlowElemAttribOnSelected('status',this.value);">
+                  onChange="setFlowElemAttribOnSelected('status',this.value);" class="form-control">
                   <option value="enabled">Enabled</option>
                   <option value="disabled">Disabled</option>
               </select>
        		</div>
        		<div id="elementComment" class="elementComment" style="padding-bottom:10px;">
-				<label for="elementCommentInput">Comment: </label> <input style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('comment',this.value);" 
+				<label for="elementCommentInput">Comment: </label> <input class="form-control" type="text" onChange="setFlowElemAttribOnSelected('comment',this.value);" 
 					id="elementCommentInput" name="elementCommentInput" value="comment here"><br>
 			</div>
        		<div id="elementSequence" class="elementSequence" style="padding-bottom:10px;display:none;">
@@ -779,17 +794,18 @@ $("#flowDesignerJsTree").on('select_node.jstree', function (e, data) {
                 modifyJsTreeIds(outData,randomId+"_funcOutput");
                 
               	if(data.node.data.requestMethod=="async"){
-                    //console.log(asyncInDoc);
-                    modifyJsTreeIds(asyncInDoc,randomId+"_async_funcInput");
-                    modifyJsTreeIds(asyncOutDoc,randomId+"_async_funcOutput");
-                    inData.push(asyncInDoc[0].children[0]);
-                    asyncInDoc[0].children=inData;
+                    var asyncTempInDoc=JSON.parse(JSON.stringify(asyncInDoc));
+                    var asyncTempOutDoc=JSON.parse(JSON.stringify(asyncOutDoc));
+                    modifyJsTreeIds(asyncTempInDoc,randomId+"_async_funcInput");
+                    modifyJsTreeIds(asyncTempOutDoc,randomId+"_async_funcOutput");
+                    inData.push(asyncTempInDoc[0].children[0]);
+                    asyncTempInDoc[0].children=inData;
 
-                    outData.push(asyncOutDoc[0].children[0]);
-                    asyncOutDoc[0].children=outData;
+                    outData.push(asyncTempOutDoc[0].children[0]);
+                    asyncTempOutDoc[0].children=outData;
                   
-                	inData=asyncInDoc;
-                    outData=asyncOutDoc;
+                	inData=asyncTempInDoc;
+                    outData=asyncTempOutDoc;
                   
                 }
               	
