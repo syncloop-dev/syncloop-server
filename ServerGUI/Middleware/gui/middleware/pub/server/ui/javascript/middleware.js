@@ -1088,7 +1088,7 @@ currentSelectedJSONObject={};
 						if(responseProps.status==200)
 							$("#servicePropertiesFile").val(responseProps.payload);
 						else
-							alert(JSON.stringify(responseProps));
+							swal("Error", JSON.stringify(responseProps), "error")
 					}
 					function openForm(jsTreeId,sel){
 					// Get the modal

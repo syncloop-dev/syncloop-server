@@ -5,11 +5,15 @@
   <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui/css/style.min.css">
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/sweetalert.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
   <script src="/files/gui/middleware/pub/server/ui/javascript/jstreetable.js"></script>
 <script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.min.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/---sweetalert.init.js"></script>
 <link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+
   </head>
 
   <body style="width:100%;height:100%;">
@@ -102,6 +106,13 @@
 		</div>
 </div>
 </body>
+
+<script>
+document.querySelector('.sweet-success').onclick = function(){
+    swal("Hey, Good job !!", "You clicked the button !!", "success")
+};
+</script>
+
   <script>    
 
     var packageManagerJsTreeRef=createPackageJstree('#packageManagerJsTree');

@@ -10,7 +10,11 @@
 <script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
 <script src="/files/gui/middleware/pub/server/ui/javascript/leader-line.min.js"></script>
 <script src="/files/gui/middleware/pub/server/ui/javascript/mapping.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.min.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.init.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/mapping.js"></script>
 <link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/sweetalert.css">
   </head>
 
   <body style="width:100%;height:100%;">
@@ -25,7 +29,8 @@
                       <div class="dropdown-content">
                         <a href="#" onclick="save();">Save</a>
                         <a href="#" onclick="reload();">Reload</a>
-                        <a href="#" onclick="alert('Inprogress')">Test</a>
+                        <!-- <a href="#" onclick="alert('Inprogress')">Test</a> -->
+						<a href="#" onclick="swal('Inprogress', '', 'warning')">Test</a>
                         <a href="#" onclick="openConfigurationProprties()">Configuration</a>
                         <a href="#" onclick="lockArtifact()">Lock</a>
                         <a href="#" onclick="unLockArtifact()">unLock</a>
@@ -34,7 +39,7 @@
                     </div>
                     <div class="dropdown">
                       <button class="dropbtn nw">Search 
-                        <i class="fa fa-angle-down"></i>
+                        <!-- <i class="-fa fa-angle-down"></i> -->
                       </button>
                       <div class="dropdown-content">
                                               <input type="text" value=""
@@ -794,18 +799,17 @@ $("#flowDesignerJsTree").on('select_node.jstree', function (e, data) {
                 modifyJsTreeIds(outData,randomId+"_funcOutput");
                 
               	if(data.node.data.requestMethod=="async"){
-                    var asyncTempInDoc=JSON.parse(JSON.stringify(asyncInDoc));
-                    var asyncTempOutDoc=JSON.parse(JSON.stringify(asyncOutDoc));
-                    modifyJsTreeIds(asyncTempInDoc,randomId+"_async_funcInput");
-                    modifyJsTreeIds(asyncTempOutDoc,randomId+"_async_funcOutput");
-                    inData.push(asyncTempInDoc[0].children[0]);
-                    asyncTempInDoc[0].children=inData;
+                    //console.log(asyncInDoc);
+                    modifyJsTreeIds(asyncInDoc,randomId+"_async_funcInput");
+                    modifyJsTreeIds(asyncOutDoc,randomId+"_async_funcOutput");
+                    inData.push(asyncInDoc[0].children[0]);
+                    asyncInDoc[0].children=inData;
 
-                    outData.push(asyncTempOutDoc[0].children[0]);
-                    asyncTempOutDoc[0].children=outData;
+                    outData.push(asyncOutDoc[0].children[0]);
+                    asyncOutDoc[0].children=outData;
                   
-                	inData=asyncTempInDoc;
-                    outData=asyncTempOutDoc;
+                	inData=asyncInDoc;
+                    outData=asyncOutDoc;
                   
                 }
               	
@@ -968,18 +972,22 @@ function unLockArtifact(){
   	var response=syncRestRequest(("/flow/"+loadFile).replace("/flow/files/","/artifact/unlock/"), "POST");
 	if(response.status==200){
 		localStorage.setItem(loadFile, "");
-		alert(JSON.parse(response.payload).status);
+		//alert(JSON.parse(response.payload).status);
+		swal('Accepted', JSON.parse(response.payload).status, 'success');
 	}else
-		alert(JSON.parse(response.payload).error);
+		//alert(JSON.parse(response.payload).error);
+		swal('Rejected', JSON.parse(response.payload).error, 'error');
 }
       
 function lockArtifact(){
   	var response=syncRestRequest(("/flow/"+loadFile).replace("/flow/files/","/artifact/lock/"), "POST");
 	if(response.status==200){
 		localStorage.setItem(loadFile, "");
-		alert(JSON.parse(response.payload).status);
+		//alert(JSON.parse(response.payload).status);
+		swal('Accepted', JSON.parse(response.payload).status, 'success');
 	}else
-		alert(JSON.parse(response.payload).error);
+		//alert(JSON.parse(response.payload).error);
+		swal('Rejected', JSON.parse(response.payload).error, 'error');
 }
 
     
@@ -1019,12 +1027,12 @@ function save(servicePath){
 		var response=syncRestRequest(("/flow/"+servicePath).replace("/flow/files/","/flow/"), "POST", data);
 		if(response.status==200){
 			localStorage.setItem(loadFile, "");
-			alert("Saved");
-          	reload();
+			 swal("Accepted", "Your all changed have been saved successfully", "success", function(){reload();})
+          	
 		}else
-			alert(JSON.parse(response.payload).error);
+			swal("Accepted", JSON.parse(response.payload).error, "error");
 	}else
-		alert("No changes to save");
+		swal("Rejected", "No changes to save", "error");
 }
 function reload(){
     localStorage.setItem(loadFile, "");
@@ -1096,7 +1104,8 @@ function openSelectServiceModalDialog(jsTreeId,sel){
   var ref = $(jsTreeId).jstree(true); 
   var sel = ref.get_selected();
   if(!sel.length){
-      alert("Select an element first");
+      //alert("Select an element first");
+	  swal("Warning !!", "Select an element first" , "warning");
       return;
   }else if(sel.length>1){
       alert("Select only one element");

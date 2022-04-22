@@ -1,0 +1,1577 @@
+<html style="min-height: 100% !important;">
+<head>
+<title>Flow Designer</title>
+<link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+<link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui/css/jstree.style.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/leader-line.min.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/mapping.js"></script>
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+  </head>
+
+  <body style="width:100%;height:100%;">
+<div id="content" style="max-width: 100%; min-height:500px;padding: 0px; margin: 0px;height:96%;">
+	<div class="row" id="demo" style="display: block;padding: 0px; margin: 0px;">
+		<div class="row" style="margin: 0px; padding:0px;">
+			<div class="navbar">  
+                     <div class="dropdown">
+                      <button class="dropbtn">Service 
+                        <i class="fa fa-caret-down"></i>
+                      </button>
+                      <div class="dropdown-content">
+                        <a href="#" onclick="save();">Save</a>
+                        <a href="#" onclick="reload();">Reload</a>
+                        <a href="#" onclick="alert('Inprogress')">Test</a>
+                        <a href="#" onclick="openConfigurationProprties()">Configuration</a>
+                        <a href="#" onclick="lockArtifact()">Lock</a>
+                        <a href="#" onclick="unLockArtifact()">unLock</a>
+                         <a href="#" onclick="cloneThisService()">Clone</a>
+                      </div>
+                    </div>
+                    <div class="dropdown">
+                      <button class="dropbtn">Search 
+                        <i class="fa fa-caret-down"></i>
+                      </button>
+                      <div class="dropdown-content">
+                                              <input type="text" value=""
+                                                  style="box-shadow: inset 0 0 4px #eee; width: 120px; margin: 2px; padding: 2px; border-radius: 0px; border: 1px solid silver; font-size: .8em;"
+                                                  id="search_q" placeholder="Search">
+                      </div>
+                    </div> 
+            <div style="text-align:center; width:100%;height:20px;padding-top:4px;" id="currentServiceName"></div>  
+          	</div>				
+      </div></div>
+<div class="row" id="demo" style="display: block;padding: 0px; margin: 0px;width:100%;height:100%">
+
+<div class="col-md-12" id="input_schema_editor_jsTree_container" style="width:15%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">
+<div id="input_schema_editor_jsTree"
+								class="jstree jstree-1 jstree-default"
+								style="margin: 0px;padding:0px; height: 100%; width: 100%; overflow: scroll;"
+								role="tree" aria-multiselectable="true" tabindex="0"
+     aria-activedescendant="j1_1" aria-busy="false"></div>
+</div>
+
+<div class="col-md-12" id="flowDesignerJsTreeContainer" style="width:70%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">    
+  <div id="flowDesignerJsTree" class="jstree jstree-1 jstree-default"
+								style="margin: 0px;padding:0px; height: 55%; width: 100%; overflow: scroll;"
+								role="tree" aria-multiselectable="true" tabindex="0"
+     aria-activedescendant="j1_2" aria-busy="false"></div>
+  
+  
+  <div id="mappingArea" style="margin: 0px;padding:0px; height: 45%; width: 100%; overflow: hidden; display:none;">
+    <div style="margin: 0px;padding:0px; height: 20px; width: 100%; overflow: hidden;">
+      <div id="rightSideTools" style="position:relative;float:left;width:20%;">
+        <center>
+          <a style="text-decoration: none;color:red;margin-left:10px;" href="#" onclick="mapperObj.deleteSelectedLines();mapperObj.deleteSelectedFromCreateList();mapperObj.deleteSelectedFromDropList();"><span class="glyphicon glyphicon-remove"></span></a>
+          <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="showMapLinePropertiesModelDialog();"><span class="glyphicon glyphicon-random"></span></a>
+          <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="dropElement();"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+          <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="openSetValueModelDialog();"><span class="glyphicon glyphicon-pencil"></span></a>
+          <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="mapperObj.reMap();"><span class="glyphicon glyphicon-refresh"></span></a>
+        </center>
+      </div>
+      <div id="centerServiceName" style="position:relative;float:left;width:60%; text-align:center;"></div>
+      <div id="leftSideTools" style="position:relative;float:right;width:20%">
+        <center>
+          <a style="text-decoration: none;color:red;margin-left:10px;" href="#" onclick="mapperObj.deleteSelectedLines();mapperObj.deleteSelectedFromCreateList();mapperObj.deleteSelectedFromDropList();"><span class="glyphicon glyphicon-remove"></span></a>
+          <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="showMapLinePropertiesModelDialog();"><span class="glyphicon glyphicon-random"></span></a>
+          <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="dropElement();"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+          <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="openSetValueModelDialog();"><span class="glyphicon glyphicon-pencil"></span></a>
+          <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="mapperObj.reMap();"><span class="glyphicon glyphicon-refresh"></span></a>
+        </center>
+      </div>
+    </div>
+        <div class="col-md-12" id="launching_arrow_jsTree_container" style="width:20%; min-height:100%; float: left;height:100%;margin: 0px; padding:0px;">
+          <div id="launching_arrow_jsTree_tp" style="margin:0px;padding:0px; height: 0px; width: 100%;"></div>
+          <div id="launching_arrow_jsTree"
+                                          class="jstree jstree-1 jstree-default"
+                                          style="margin: 0px;padding:0px; height: 92%; width: 100%; overflow: scroll;"
+                                          role="tree" aria-multiselectable="true" tabindex="0"
+               aria-activedescendant="j_m_in_1" aria-busy="false"></div>
+          <div id="launching_arrow_jsTree_bp" style="margin:0px;padding:0px; height: 0px; width: 100%;"></div>
+        </div>
+
+        <div id="plainMapping" class="col-md-12" style="width:60%; min-height:100%; float: left;height:100%;margin: 0px; padding:0px;overflow: scroll;display:none;">
+        </div>
+
+        <div id="serviceMapping" class="col-md-12" style="width:60%; min-height:100%; float: left;height:100%;margin: 0px; padding:0px;display:none;">
+          <div id="serviceMappingArea" style="margin: 0px;padding:0px; height: 100%; width: 100%; overflow: hidden;">
+          	<div class="col-md-12" id="landing_arrow_jsTree_function_container" style="width:50%; min-height:100%; float: left;height:100%;margin: 0px; padding:0px;">
+              <div id="landing_arrow_jsTree_function_tp" style="margin:0px;padding:0px; height: 0px; width: 100%;"></div>
+              <div id="landing_arrow_jsTree_function"
+                                            class="jstree jstree-1 jstree-default"
+                                            style="margin: 0px;padding:0px; height: 100%; width: 100%; overflow: scroll;"
+                                            role="tree" aria-multiselectable="true" tabindex="0"
+                 aria-activedescendant="j1_1" aria-busy="false"></div>
+               <div id="landing_arrow_jsTree_function_bp" style="margin:0px;padding:0px; height: 0px; width: 100%;"></div>
+        	</div>
+            <div class="col-md-12" id="launching_arrow_jsTree_function_container" style="width:50%; min-height:100%; float: left;height:100%;margin: 0px; padding:0px;">
+              <div id="launching_arrow_jsTree_function_tp" style="margin:0px;padding:0px; height: 0px; width: 100%;"></div>
+              <div id="launching_arrow_jsTree_function"
+                                            class="jstree jstree-1 jstree-default"
+                                            style="margin: 0px;padding:0px; height: 100%; width: 100%; overflow: scroll;"
+                                            role="tree" aria-multiselectable="true" tabindex="0"
+                 aria-activedescendant="j1_1" aria-busy="false"></div>
+              <div id="launching_arrow_jsTree_function_bp" style="margin:0px;padding:0px; height: 0px; width: 100%;"></div>
+        	</div>
+            
+          </div>
+        </div>
+
+        <div class="col-md-12" id="landing_arrow_jsTree_container" style="width:20%; min-height:100%; float: left;height:100%;margin: 0px; padding:0px;">
+          <div id="landing_arrow_jsTree_tp" style="margin:0px;padding:0px; height: 0px; width: 100%;"></div>
+          <div id="landing_arrow_jsTree"
+                                          class="jstree jstree-1 jstree-default"
+                                          style="margin: 0px;padding:0px; height: 92%; width: 100%; overflow: scroll;"
+                                          role="tree" aria-multiselectable="true" tabindex="0"
+               aria-activedescendant="j_m_out_1" aria-busy="false"></div>
+          <div id="landing_arrow_jsTree_bp" style="margin:0px;padding:0px; height: 0px; width: 100%;"></div>
+        </div>
+  </div>
+  
+  
+</div>
+  
+<div class="col-md-12" id="output_schema_editor_jsTree_container" style="width:15%; min-height:100%; float: left;height:100%;margin: 0px; padding:0px;">
+<div id="output_schema_editor_jsTree"
+								class="jstree jstree-1 jstree-default"
+								style="margin: 0px;padding:0px; height: 100%; width: 100%; overflow: scroll;"
+								role="tree" aria-multiselectable="true" tabindex="0"
+     aria-activedescendant="j1_3" aria-busy="false"></div>
+</div>
+  
+</div>
+</div>
+    
+    
+<div id="configureMapLinePropertiesModelDialog" class="modal">
+		<!-- Modal content -->
+		<div class="modal-content" style="width:650px;height:auto;">
+			<span id="closeMapLinePropertiesModelDialog" class="close">&times;</span>
+          	<h4>Path</h4>
+            <h5>From:</h5>
+          	<p id="srcPath">/<input type="text"></p>
+            <h5>To:</h5>
+          	<p id="targetPath">/<input type="text"></p>
+			<h4>Apply logic on value</h4>
+			<div id="methodSelectionBox" style="margin-top:10px;">
+			<label style="min-width: 100px;" for="jsFunction">Method: </label> 
+				<select id="jsFunction">
+                    <option value="none">none</option>
+					<option value="trim">trim</option>
+					<option value="emptyToNull">emptyToNull</option>
+					<option value="emptyToBlank">emptyToBlank</option>
+					<option value="numberToString">numberToString</option>
+					<option value="stringToDate">stringToDate</option>
+                  	<option value="custom">custom</option>
+				</select>
+              <br>
+			</div>
+            <div id="conditionConfigurationBox" style="margin-top:10px;">
+			<label style="min-width: 100px;" for="mappingCondition">Condition: </label> 
+				<input type="text" id="mappingCondition" style="with:400px;">
+              <br>
+			</div>
+			<div>
+				<label for="functionJSDef" id="jsFunctionSig">function(val)</label>
+                {<br><textarea id="functionJSDef" rows="15" cols="50" value="" style="width:600px">return val;</textarea><br>}
+			</div>
+		</div>
+</div>
+    
+<div id="configureSetValueModelDialog" class="modal">
+		<!-- Modal content -->
+		<div class="modal-content" style="width:400px;height:auto;">
+			<span id="closeSetValueModelDialog" class="close">&times;</span>
+            <h5>Set</h5>
+            <div style="margin-top:10px;">
+			<label style="min-width: 100px;" for="elementValueInput">Value: </label> 
+				<input type="text" id="elementSetValueInput" style="with:400px;">
+              <br>
+			</div>
+          
+          	<div>
+              <input type="radio" id="element_NoneVariable" name="setValueTag" checked=true>
+              <label for="element_NoneVariable">none</label>
+            </div>  
+          
+            <div>
+              <input type="radio" id="element_ExpressionVariable" name="setValueTag">
+              <label for="element_ExpressionVariable">Evaluate expressions</label>
+            </div>
+
+            <div>
+              <input type="radio" id="element_LocalVariable" name="setValueTag">
+              <label for="element_LocalVariable">Evaluate local configuration variables</label>
+            </div>
+
+            <div>
+              <input type="radio" id="element_GlobalVariable" name="setValueTag">
+              <label for="element_GlobalVariable">Evaluate global configuration variables</label>
+            </div>
+          </div>
+  </div>
+    
+<div id="configurePropertiesModelDialog" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content" style="width:650px;height:auto;">
+			<span id="closeConfigurePropertiesModelDialog" class="close">&times;</span>
+			<h3>Configure properties</h3>
+			<div id="serviceHTTPMethod" style="margin-top:10px;">
+			<label style="min-width: 100px;" for="serviceHTTPMethodValue">Method: </label> 
+				<select
+				name="serviceHTTPMethodValue" id="serviceHTTPMethodValue">
+					<option value="GET">GET</option>
+					<option value="POST">POST</option>
+					<option value="DELETE">DELETE</option>
+					<option value="PUT">PUT</option>
+					<option value="PATCH">PATCH</option>
+				</select><br>
+			</div>
+            <input type="checkbox" id="enableServiceDocumentValidation" name="enableServiceDocumentValidation"
+				value="false">
+			<label style="min-width: 100px;" for="enableServiceDocumentValidation"> Enable Validation</label><br>
+			<div id="serviceAlias" style="margin-top:10px;">
+				<label for="serviceAliasValue">Alias: </label> <input type="text"
+					id="serviceAliasValue" name="serviceAliasValue" value="" style="width:600px"><br>
+			</div>
+          	<div id="serviceConsumersDiv" style="margin-top:10px;">
+				<label for="serviceConsumers">Consumers: </label> <input type="text" title="Add comma separated groups without spaces."
+					id="serviceConsumers" name="serviceConsumers" value="" style="width:600px"><br>
+			</div>
+          	<div id="serviceDevelopersDiv" style="margin-top:10px;">
+				<label for="serviceDevelopers">Developers: </label> <input type="text" title="Add comma separated groups without spaces."
+					id="serviceDevelopers" name="serviceDevelopers" value="" style="width:600px"><br>
+			</div>
+			<div id="serviceProperties" style="margin-top:10px;">
+				<label for="servicePropertiesFile">Configuration Properties: </label> <textarea rows="15" cols="50"
+					id="servicePropertiesFile" name="servicePropertiesFile" value="" style="width:600px"></textarea><br>
+			</div>
+		</div>
+</div>
+   <div id="flowElementPropertyModalDialog" class="modal">
+		<!-- Modal content -->
+	 <div class="modal-content" style="width:500px;">
+       <span id="closeflowElementProperties" class="close">&times;</span>
+			<p id="currentflowElementPath">Properties: -</p>
+       		<div id="elementStatus" class="elementStatus" style="padding-bottom:10px;">
+              <label style="min-width: 100px;" for="elementStatusInput">Status: </label> <select
+                  name="elementStatusInput" id="elementStatusInput"
+                  onChange="setFlowElemAttribOnSelected('status',this.value);">
+                  <option value="enabled">Enabled</option>
+                  <option value="disabled">Disabled</option>
+              </select>
+       		</div>
+       		<div id="elementComment" class="elementComment" style="padding-bottom:10px;">
+				<label for="elementCommentInput">Comment: </label> <input style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('comment',this.value);" 
+					id="elementCommentInput" name="elementCommentInput" value="comment here"><br>
+			</div>
+       		<div id="elementSequence" class="elementSequence" style="padding-bottom:10px;display:none;">
+              	<input type="checkbox" id="elementSequenceInput" name="elementSequenceInput" checked=false
+				 onChange="setFlowElemAttribOnSelected('evaluate',this.checked);">
+				<label style="min-width: 100px;" for="elementSequenceInput"> Enable Condition evaluation</label><br>
+			</div>
+       		<div id="elementCase" class="elementCase" style="padding-bottom:10px;display:none;">
+				<label for="elementCaseInput">Case: </label> <input type="text" onChange="setFlowElemAttribOnSelected('case',this.value);"
+					id="elementCaseInput" name="elementCaseInput" value="xyz"><br>
+			</div>
+       		<div id="elementCondition" class="elementCondition" style="padding-bottom:10px;display:none;">
+				<label for="elementConditionInput">Condition: </label> <input style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('condition',this.value);"
+					id="elementConditionInput" name="elementConditionInput" value="%myVar/Path/string%=='xyz'"><br>
+			</div>
+       		<div id="elementRepeatInterval" class="elementRepeat" style="padding-bottom:10px;display:none;">
+				<label for="elementRepeatIntervalInput">Interval: </label> <input type="number" min="0" max="300" onChange="setFlowElemAttribOnSelected('interval',this.value);"
+					id="elementRepeatIntervalInput" name="elementRepeatIntervalInput" value="0"><br>
+			</div>
+       		<div id="elementRepeatTimes" class="elementRepeat" style="padding-bottom:10px;display:none;">
+				<label for="elementRepeatTimesInput">Repeat: </label> <input type="number" min="-1" max="50000" onChange="setFlowElemAttribOnSelected('repeat',this.value);"
+					id="elementRepeatTimesInput" name="elementRepeatTimesInput" title="Set -1 to repeat based on condition" value="-1"><br>
+			</div>
+       		<div id="elementRepeatOn" class="elementRepeat" style="padding-bottom:10px;display:none;">
+              <label style="min-width: 100px;" for="elementRepeatOnInput">Repeat on: </label> <select
+                  name="elementRepeatOnInput" id="elementRepeatOnInput"
+                  onChange="setFlowElemAttribOnSelected('repeatOn',this.value);">
+                  <option value="error">Error</option>
+                  <option value="success">Success</option>
+              </select>
+       		</div>
+       		<div id="elementLoopInputArray" class="elementLoop" style="padding-bottom:10px;display:none;">
+				<label for="elementLoopInputArrayInput">Input Array: </label> <input style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('inArray',this.value);"
+					id="elementLoopInputArrayInput" name="elementLoopInputArrayInput" title="Set the path of array you want to loop over"><br>
+			</div>
+       		<div id="elementLoopOutputArray" class="elementLoop" style="padding-bottom:10px;display:none;">
+				<label for="elementLoopOutputArrayInput">Output Array: </label> <input style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('outArray',this.value);"
+					id="elementLoopOutputArrayInput" name="elementLoopOutputArrayInput" title="Set the path of array you want to map through loop"><br>
+			</div>
+       
+       		<div id="elementSwitch" class="elementSwitch" style="padding-bottom:10px;display:none;">
+				<label for="elementSwitchInput">Switch: </label> <input type="text" onChange="setFlowElemAttribOnSelected('switch',this.value);"
+					id="elementSwitchInput" name="elementSwitchInput" title="Set the path of element on which you want to switch on case"><br>
+			</div>
+       		<div id="invokeRequestMethod" class="elementInvoke" style="padding-bottom:10px;display:none;">
+              <label style="min-width: 100px;" for="invokeRequestMethodInput">Status: </label> <select
+                  name="invokeRequestMethodInput" id="invokeRequestMethodInput"
+                  onChange="setFlowElemAttribOnSelected('requestMethod',this.value,'','preFix');">
+                  <option value="async">Asynchronous</option>
+                  <option value="sync">Synchronous</option>
+              </select>
+       		</div>
+     </div>
+    </div>
+    
+    <div id="selectServiceModalDialog" class="modal">
+		<!-- Modal content -->
+	 <div class="modal-content" style="width:400px;">
+       <span id="closeSelectServiceModalDialog" class="close">&times;</span>
+       <p>Select the service from the packages on left side.</p>
+       <button id="updateSelectedServiceId" style="margin-left:160px;">Done</button>      		
+     </div>
+    </div>
+    
+    <div id="configureInputJSONSchemaTextDialog" class="modal">
+		<!-- Modal content -->
+	 <div class="modal-content" style="width:400px;">
+       <span id="closeInputJSONSchemaTextDialog" class="close">&times;</span>
+       <p>Past the Json Schema below:-</p>
+       <textarea id="inputJSONSchemaText" rows=15 cols=51></textarea>      		
+     </div>
+    </div>
+    
+    
+    
+  <div id="elementPropertyModalDialog" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content" style="width:350px;height:450px">
+			<span id="closeNodeProperties" class="close">&times;</span>
+			<p id="currentNodePath"></p>
+
+			<label style="min-width: 100px;" for="elementType">Type: </label> <select
+				name="elementType" id="elementType"
+				onChange="showProperties(this.value);">
+				<option value="document">Document</option>
+				<option value="javaObject">Object</option>
+				<option value="ref">#ref</option>
+				<option value="string">String</option>
+				<option value="integer">Integer</option>
+				<option value="boolean">Boolean</option>
+				<option value="number">number</option>
+				<option value="byte">Byte</option>
+				<option value="date">Date</option>
+			</select><br> 
+			<input type="checkbox" id="isArray" name="isArray"
+				value="false" onChange="changeCurrentNodeType(this.checked)">
+			<label style="min-width: 100px;" for="isArray"> It's an array</label><br>
+			<div>
+				<label>Additional properties: </label>
+			</div>
+            <input type="checkbox" id="isRequiredField" name="isRequiredField"
+				value="false" onChange="updateDataField('isRequiredField',this.checked);">
+			<label style="min-width: 100px;" for="isRequiredField"> Required</label><br>
+			<div id="javaObjectProperties" class="elementProperty">
+				<label for="javaObjectWrapper">Java Wrapper: </label> <input type="text" onChange="updateDataField('javaObjectWrapper',this.value);"
+					id="javaObjectWrapper" name="javaObjectWrapper" value="java.lang.Object"><br>
+			</div>
+			<div id="refProperties" class="elementProperty">
+				<label for="reference">Reference: </label> <input type="text" onChange="updateDataField('reference',this.value);"
+					id="reference" name="reference" value=""><br>
+			</div>
+			<div id="stringProperties" class="elementProperty">
+				<label for="stringValidation">Validation: </label> <select
+					name="stringValidation" id="stringValidation"
+                    onChange="updateDataField('stringValidation',this.value);">
+					<option value=""></option>
+					<option value="email">Email</option>
+					<option value="url">URL</option>
+				</select><br> 
+                <label for="regex">Override regex: </label> <input type="text" onChange="updateDataField('regex',this.value);"
+					id="regex" name="regex" value=""><br>
+                <label for="minLength">Min size: </label> <input onChange="updateDataField('minLength',this.value);"
+					type="text" id="minLength" name="minLength" value=""><br>
+				<label for="maxLength">Max size: </label> <input type="text" onChange="updateDataField('maxLength',this.value);"
+					id="maxLength" name="maxLength" value=""><br>
+			</div>
+
+			<div id="intProperties" class="elementProperty">
+				<label for="minimumInteger">minimum: </label> <input type="text" onChange="updateDataField('minimumInteger',this.value);"
+					id="minimumInteger" name="minimumInteger" value=""><br>
+				<label for="maximumInteger">maximum: </label> <input type="text" onChange="updateDataField('maximumInteger',this.value);"
+					id="maximumInteger" name="maximumInteger" value=""><br>
+			</div>
+
+
+			<div id="numberProperties" class="elementProperty">
+				<label for="minimumNumber">minimum: </label> <input type="text" onChange="updateDataField('minimumNumber',this.value);"
+					id="minimumNumber" name="minimumNumber" value=""><br>
+				<label for="maximumNumber">maximum: </label> <input type="text" onChange="updateDataField('maximumNumber',this.value);"
+					id="maximumNumber" name="maximumNumber" value=""><br>
+                <label for="decimalFormat">Decimal format: </label> <input type="text" onChange="updateDataField('decimalFormat',this.value);"
+					id="decimalFormat" name="decimalFormat" value="0.00"><br>
+			</div>
+
+			<div id="dateProperties" class="elementProperty">
+				<label for="dateFormat">Date format: </label> <input type="text" onChange="updateDataField('dateFormat',this.value);"
+					id="dateFormat" name="dateFormat" value=""><br>
+                <label for="toDateFormat">To date format: </label> <input type="text" onChange="updateDataField('toDateFormat',this.value);"
+					id="toDateFormat" name="toDateFormat" value=""><br>
+                <label for="startDate">Start date: </label> <input type="date" onChange="updateDataField('startDate',this.value);"
+					id="endDate" name="startDate" value=""><br> 
+                <label for="endDate">End date: </label> <input type="date" id="endDate" onChange="updateDataField('endDate',this.value);"
+					name="endDate" value=""><br>
+			</div>
+            <div style="margin-top:10px;">
+				<label for="fieldDescription">Description: </label> <textarea rows="5" cols="35" onChange="updateDataField('fieldDescription',this.value);"
+					id="fieldDescription" name="fieldDescription" value="" style="width:310px;height:125px"></textarea><br>
+			</div>
+
+		</div>
+
+	</div>
+    
+    <ul id="input_schema_editor_jsTree_contextMenu" class="menu dropdown-content">
+      <li class="menu-item">Input Schema</li>
+      <li class="menu-separator"></li>
+      <li class="menu-item submenu"><a>New</a>
+        <ul class="menu">
+          <li class="menu-item" ><a href="#" onclick="createSchema('document',currentJstreeRef);">Document</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('string',currentJstreeRef);">String</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('integer',currentJstreeRef);">Integer</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('number',currentJstreeRef);">Number</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('date',currentJstreeRef);">Date</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('boolean',currentJstreeRef);">Boolean</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('byte',currentJstreeRef);">Byte</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('javaObject',currentJstreeRef);">Object</a></li>
+          <li class="menu-item submenu"><a>From</a>
+          	<ul class="menu">
+              	<li class="menu-item" ><a href="#" onclick="alert('Inprogress');">Ref</a></li>
+          		<li class="menu-item" ><a href="#" onclick="showInputJSONSchemaTextDialog(currentJstreeRef);">JSON Schema</a></li>
+                <li class="menu-item" ><a href="#" onclick="alert('Inprogress');">XML</a></li>
+            </ul>
+          </li>
+        </ul>     
+      </li>
+	</ul>
+    
+    <ul id="output_schema_editor_jsTree_contextMenu" class="menu dropdown-content">
+       <li class="menu-item">Output Schema</li>
+      <li class="menu-separator"></li>
+      <li class="menu-item submenu"><a>New</a>
+        <ul class="menu">
+          <li class="menu-item" ><a href="#" onclick="createSchema('document',currentJstreeRef);">Document</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('string',currentJstreeRef);">String</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('integer',currentJstreeRef);">Integer</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('number',currentJstreeRef);">Number</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('date',currentJstreeRef);">Date</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('boolean',currentJstreeRef);">Boolean</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('byte',currentJstreeRef);">Byte</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('javaObject',currentJstreeRef);">Object</a></li>
+          <li class="menu-item submenu"><a>From</a>
+          	<ul class="menu">
+          		<li class="menu-item" ><a href="#" onclick="alert('Inprogress');">Ref</a></li>
+              	<li class="menu-item" ><a href="#" onclick="showInputJSONSchemaTextDialog(currentJstreeRef);">JSON Schema</a></li>
+                <li class="menu-item" ><a href="#" onclick="alert('Inprogress');">XML</a></li>
+            </ul>
+          </li>
+        </ul>     
+      </li>
+	</ul>
+    
+    <ul id="flowDesignerJsTree_contextMenu" class="menu dropdown-content">
+       <li class="menu-item">Flow designer</li>
+      <li class="menu-separator"></li>
+      <li class="menu-item submenu"><a>New</a>
+        <ul class="menu">
+          <li class="menu-item" ><a href="#" onclick="createSchema('sequence',flowDesignerJsTreeRef);">Sequence</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('switch',flowDesignerJsTreeRef);">Switch</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('try-catch',flowDesignerJsTreeRef);">TCF-Block</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('loop',flowDesignerJsTreeRef);">Loop</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('repeat',flowDesignerJsTreeRef);">Repeat</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('map',flowDesignerJsTreeRef);">Map</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('invoke',flowDesignerJsTreeRef);">Service</a></li>
+        </ul>     
+      </li>
+	</ul>   
+    <svg id="map" width="0px" height="0px" version="1.1"
+		xmlns="http://www.w3.org/2000/svg"
+		style="position: absolute; float: none; left: 0px; top: 0px; overflow: visible; z-index:2500; border:1px solid black;"></svg>
+</body>
+  <script>
+
+
+loadFile=getUrlParam("loadFile");
+flowDesignerJsTreeRef=createFlowJstree('#flowDesignerJsTree');
+
+$("#flowDesignerJsTree").on('load_node.jstree', function (e, data) {
+	refreshFlowNodeData(data.node);
+});
+
+$("#flowDesignerJsTree").on('create_node.jstree', function (e, data) {
+	refreshFlowNodeData();
+});
+    
+$("#flowDesignerJsTree").on('delete_node.jstree', function (e, data) {
+	refreshFlowNodeData();
+});
+
+$("#flowDesignerJsTree").on('move_node.jstree', function (e, data) {
+	refreshFlowNodeData();
+});
+    
+$("#flowDesignerJsTree").on('paste_node.jstree', function (e, data) {
+	refreshFlowNodeData();
+});
+    
+$("#flowDesignerJsTree").on('open_node.jstree', function (e, data) {
+	refreshFlowNodeData(data.node);
+});
+
+function refreshFlowNodeData(node){
+  if(!node)
+  	node=flowDesignerJsTreeRef.get_node("#");
+  if(node.children_d.length>0){
+  	for(var i=0;i<node.children_d.length;i++){
+      setFlowElemProperty(node.children_d[i],"comment");
+      setFlowElemProperty(node.children_d[i],"switch");
+      setFlowElemProperty(node.children_d[i],"case");
+      setFlowElemProperty(node.children_d[i],"status");
+      setFlowElemProperty(node.children_d[i],"requestMethod");
+    }
+  }
+}
+    
+function setFlowElemProperty(nodeId,attribute,text,cls,pos,onlyUI){
+  if(!pos)
+    pos="postFix";
+  if(!onlyUI)
+    onlyUI=false;
+  if(!cls)
+    cls="";
+	var node=flowDesignerJsTreeRef.get_node(nodeId);
+      var nodeAnchor=$("#"+nodeId+"_anchor");
+  	  if(!node.data)
+        node.data={};
+  	  if(!onlyUI){
+        if(text==null)
+          text=node.data[attribute];
+        else{
+          //alert(text);
+          node.data[attribute]=text;
+          //alert(node.data[attribute]);
+        }
+  	  }
+  	  var attributeId=nodeId+"_"+attribute;
+  	  if(document.getElementById(attributeId)!=null)
+  	  	$("#"+attributeId).remove();
+      if(text!=null){
+      	if(attribute=="comment")
+          text="("+text+")";
+        else if(attribute=="case" || attribute=="switch")
+          text=": "+text;
+        else if(attribute=="status"){
+          if(text=="disabled")
+          	text=" -- DISABLED -- ";
+          else text=null;
+        }else if(attribute=="requestMethod"){
+        	if(text=="async"){
+          		text="  ";
+                cls="glyphicon glyphicon-transfer";
+              	pos="preFix";
+            }else text=null;
+        }else text=null;
+        if(text!=null)
+          	if(pos=="postFix")
+        		nodeAnchor.after( "<span id='"+attributeId+"' class='jstree-anchor "+cls+"'>"+text+"</span>" );
+        	else
+          		nodeAnchor.before( "<span id='"+attributeId+"' class='jstree-anchor "+cls+"'>"+text+"</span>" );
+      }else if(cls!=""){
+      		if(pos=="postFix")
+        		nodeAnchor.after( "<span id='"+attributeId+"' class='jstree-anchor "+cls+"'>"+text+"</span>" );
+        	else
+          		nodeAnchor.before( "<span id='"+attributeId+"' class='jstree-anchor "+cls+"'>"+text+"</span>" );
+      }
+}
+    
+function setFlowElemAttribOnSelected(attrib,text,cls,pos,onlyUI){
+  var sel = flowDesignerJsTreeRef.get_selected()[0];
+  
+  if(sel)
+  	setFlowElemProperty(sel,attrib,text,cls,pos,onlyUI);
+  else
+    alert("No element selected");
+}
+    
+function dropElement(){
+  mapperObj.drop();
+}
+    
+$("#flowDesignerJsTree").on('changed.jstree', function (e, data) {
+ // alert("Change");
+        flowJsTree_id=loadFile+"_flowJsTree";
+  		var data=flowDesignerJsTreeRef.get_json('#', {flat:true});
+  		localStorage.setItem(flowJsTree_id,JSON.stringify(data));
+  		setUnsavedChanges(loadFile);
+ // alert("saved to local");
+});
+    
+
+$("#flowDesignerJsTree").on('select_node.jstree', function (e, data) {
+        mapperObj.clean();
+  		$("#mappingArea").css("display","none");
+  
+  		$("#centerServiceName").html("");
+  		  launching_arrow_jsTree_ref.settings.core.data=[];
+		  launching_arrow_jsTree_ref.refresh();  
+		  landing_arrow_jsTree_ref.settings.core.data=[];
+		  landing_arrow_jsTree_ref.refresh(); 
+  
+  		if(data.node.type=='invoke'){
+          $("#plainMapping").css("display","none");
+          $("#serviceMapping").css("display","block");
+          $("#mappingArea").css("display","block");
+          //alert("");
+
+          //console.log(data.node.data.serviceType);
+          if(!data.node.data)
+            data.node.data={};
+          
+          if(data.node.data.serviceType){
+            var response=syncRestRequest("/files/"+data.node.text+"."+data.node.data.serviceType, "GET", "");
+            //console.log(response);
+            setTimeout(function(){
+            if(response.status==200 && response.payload){
+            	response=JSON.parse(response.payload);
+              	if(data.node.data.serviceType=="flow")
+                  response=response.latest;
+                var inData=response.input;
+              	modifyJsTreeIds(inData,"funcInput");
+                var outData=response.output;
+                modifyJsTreeIds(outData,"funcOutput");
+          		launching_arrow_jsTree_function_ref.settings.core.data=outData;
+          		launching_arrow_jsTree_function_ref.refresh();
+                landing_arrow_jsTree_function_ref.settings.core.data=inData;
+          		landing_arrow_jsTree_function_ref.refresh();  
+              	getAllVisibleInputs(data.node);
+                setTimeout(function(){mapperObj.init(data.node);
+                	setTimeout(function(){mapperObj.reMap();
+                    	//mapperObj.enableMappingOnJstree("#landing_arrow_jsTree_function");      
+                    },200);                     
+                },200);
+              	$("#centerServiceName").html(data.node.text+"."+data.node.data.serviceType);
+            }
+            },200);
+          }else{
+          	mapperObj.init(data.node);
+            setTimeout(function(){getAllVisibleInputs(data.node);},200);
+          }
+        }else if(data.node.type=='map'){
+          $("#serviceMapping").css("display","none");
+          $("#plainMapping").css("display","block");
+          $("#mappingArea").css("display","block");
+          
+          setTimeout(function(){
+            getAllVisibleInputs(data.node);
+            setTimeout(function(){mapperObj.init(data.node);
+            	setTimeout(function(){mapperObj.reMap();
+                	mapperObj.enableMappingOnJstree("#landing_arrow_jsTree_function");
+                },200);
+			},200);          	                     
+          },200);
+        }
+});
+
+inputJstreeRef=createSchemaJstree('#input_schema_editor_jsTree');
+
+$("#input_schema_editor_jsTree").on('changed.jstree', function (e, data) {
+        inputJsTree_id=loadFile+"_inputJsTree";
+  		var data=inputJstreeRef.get_json('#', {flat:true});
+  		localStorage.setItem(inputJsTree_id,JSON.stringify(data));
+  		setUnsavedChanges(loadFile);
+});
+    
+outputJstreeRef=createSchemaJstree('#output_schema_editor_jsTree');
+
+
+$("#output_schema_editor_jsTree").on('changed.jstree', function (e, data) {
+        outputJsTree_id=loadFile+"_outputJsTree";
+  		var data=outputJstreeRef.get_json('#', {flat:false});
+  		localStorage.setItem(outputJsTree_id,JSON.stringify(data));
+  		setUnsavedChanges(loadFile);
+});
+
+launching_arrow_jsTree_ref=createSchemaJstree('#launching_arrow_jsTree');
+landing_arrow_jsTree_ref=createSchemaJstree('#landing_arrow_jsTree');
+    
+launching_arrow_jsTree_function_ref=createSchemaJstree('#launching_arrow_jsTree_function');
+landing_arrow_jsTree_function_ref=createSchemaJstree('#landing_arrow_jsTree_function');
+var mapperObj=new mapper("#launching_arrow_jsTree","#landing_arrow_jsTree","#landing_arrow_jsTree_function","#launching_arrow_jsTree_function");
+function modifyJsTreeIds(jsonObject, postFix){
+jQuery.each(jsonObject, function(i, val) {
+  				if(val.id && val.id!='#'){
+                  val.id=val.id+"_"+postFix+"_";
+                  val.a_attr.id=val.id+"_anchor";
+                  val.li_attr.id=val.id;
+                  if(val.parent && val.parent!='#')
+                  val.parent=val.parent+"_"+postFix+"_";
+                }
+		  });
+}
+    
+function loadRemoteFile(overwrite){
+	if(overwrite==null)
+		overwrite=false;
+	inputJsTree_id=loadFile+"_inputJsTree";
+	outputJsTree_id=loadFile+"_outputJsTree";
+	flowJsTree_id=loadFile+"_flowJsTree";
+	if(loadFile!=false){
+	var response=syncRestRequest("/"+loadFile, "GET", "");
+	//console.log(response);
+	//alert(response.status);
+	if(response.status==200 && response.payload){
+      response=response.payload;
+      response=JSON.parse(response);
+      if(response.consumers)
+      	$("#serviceConsumers").val(response.consumers);
+      if(response.developers)
+      	$("#serviceDevelopers").val(response.developers)
+      if(response.enableServiceDocumentValidation)
+      	$("#enableServiceDocumentValidation").prop( "checked", response.enableServiceDocumentValidation);//val()
+      
+      response=response.latest;
+   //   console.log(window.atob(response.imports));
+
+
+      var inputJsTree_data=localStorage.getItem(inputJsTree_id);
+      if(inputJsTree_data==null || inputJsTree_data.trim().length==0 || overwrite){
+        var data=response.input;
+        if(data!=null){
+          var dataJson=JSON.stringify(data);
+          localStorage.setItem(inputJsTree_id,dataJson);
+        }
+      }
+		
+      var outputJsTree_data=localStorage.getItem(outputJsTree_id);
+      if(outputJsTree_data==null || outputJsTree_data.trim().length==0 || overwrite){
+        var data=response.output;
+        if(data!=null)
+          localStorage.setItem(outputJsTree_id,JSON.stringify(data));
+      }
+      
+      var flowJsTree_data=localStorage.getItem(flowJsTree_id);
+      if(flowJsTree_data==null || flowJsTree_data.trim().length==0 || overwrite){
+        var data=response.flow;
+        if(data!=null)
+          localStorage.setItem(flowJsTree_id,JSON.stringify(data));
+      }
+  }
+}  
+loadFromlocalstorage();
+}
+
+function loadFromlocalstorage(){
+  //alert("loaded");
+  localStorage.setItem("enableServiceSelectionMode",false);
+  inputJsTree_id=loadFile+"_inputJsTree";
+  outputJsTree_id=loadFile+"_outputJsTree";
+  flowJsTree_id=loadFile+"_flowJsTree";
+  var inputRef=inputJstreeRef;
+  var data=localStorage.getItem(inputJsTree_id);
+  if(data!=null && data.trim().length>0){
+    setUnsavedChanges(loadFile);
+    inputRef.settings.core.data=JSON.parse(data);
+    inputRef.refresh();
+  }
+
+  var outputRef=outputJstreeRef;
+  var data=localStorage.getItem(outputJsTree_id);
+  if(data!=null && data.trim().length>0){
+    setUnsavedChanges(loadFile);
+    outputRef.settings.core.data=JSON.parse(data);
+    outputRef.refresh();
+  }
+      
+  var flowRef=flowDesignerJsTreeRef;
+  var data=localStorage.getItem(flowJsTree_id);
+  if(data!=null && data.trim().length>0){
+    setUnsavedChanges(loadFile);
+    flowRef.settings.core.data=JSON.parse(data);
+    flowRef.refresh();  
+  }
+  $("#currentServiceName").html(loadFile);
+}
+      
+function unLockArtifact(){
+  	var response=syncRestRequest(("/flow/"+loadFile).replace("/flow/files/","/artifact/unlock/"), "POST");
+	if(response.status==200){
+		localStorage.setItem(loadFile, "");
+		alert(JSON.parse(response.payload).status);
+	}else
+		alert(JSON.parse(response.payload).error);
+}
+      
+function lockArtifact(){
+  	var response=syncRestRequest(("/flow/"+loadFile).replace("/flow/files/","/artifact/lock/"), "POST");
+	if(response.status==200){
+		localStorage.setItem(loadFile, "");
+		alert(JSON.parse(response.payload).status);
+	}else
+		alert(JSON.parse(response.payload).error);
+}
+
+    
+function cloneThisService(){
+  let newLocation = prompt("It will overwrite any existing file and It can create entire path including new package.\nSave As", ("#"+loadFile).replace("#files/packages/",""));
+  if (newLocation != null && newLocation.trim().length>0 && newLocation!=loadFile) {
+    save("files/packages/"+newLocation);
+  }
+}
+    
+function save(servicePath){
+  if(!servicePath)
+    servicePath=loadFile;
+	var dataJson={  "latest":{
+                    "createdTS":"",
+                    "input":[],
+                    "output":[],
+                    "flow":[]
+                  }
+				};
+	var version="latest";
+	dataJson[version].input=inputJstreeRef.get_json('#', {flat:false});
+	dataJson[version].output=outputJstreeRef.get_json('#', {flat:false});
+    dataJson[version].flow=flowDesignerJsTreeRef.get_json('#', {flat:false});
+    //console.log(dataJson[version].flow);
+ //   console.log(JSON.stringify(flowDesignerJsTreeRef.get_json('#', {flat:false})[10]));
+  //flowDesignerJsTreeRef.get_json('#', {flat:true});
+    dataJson.consumers=$("#serviceConsumers").val();
+    dataJson.developers=$("#serviceDevelopers").val();
+    dataJson.enableServiceDocumentValidation=$("#enableServiceDocumentValidation").prop("checked");
+  
+	var data=JSON.stringify(dataJson);
+
+  
+	if(data!=null && data.trim().length>0){
+      
+		var response=syncRestRequest(("/flow/"+servicePath).replace("/flow/files/","/flow/"), "POST", data);
+		if(response.status==200){
+			localStorage.setItem(loadFile, "");
+			alert("Saved");
+          	reload();
+		}else
+			alert(JSON.parse(response.payload).error);
+	}else
+		alert("No changes to save");
+}
+function reload(){
+    localStorage.setItem(loadFile, "");
+	loadRemoteFile(true);
+  	setUnsavedChanges(loadFile,false);
+	location.reload(true);
+  	//window.location = window.location.href+'?eraseCache=true';
+}
+      
+      
+loadRemoteFile(false);
+    
+menu = null;//document.getElementById('input_schema_editor_jsTree_contextMenu');
+
+function showMenu(x, y){
+    menu.style.left = x + 'px';
+    menu.style.top = y + 'px';
+    menu.style.display="block";
+  menu.classList.add('show-menu');
+}
+
+function hideMenu(){
+    menu.classList.remove('show-menu');
+  menu.style.display="none";
+}
+var currentJstreeRef=null;
+function onContextMenu(e){
+  console.log(e.target);
+  console.log(e.target.id);
+  if(menu!=null)
+    hideMenu();
+  menu=null;
+  if(e.target.id=="input_schema_editor_jsTree"){
+    currentJstreeRef=inputJstreeRef;
+    menu=document.getElementById('input_schema_editor_jsTree_contextMenu');
+  }else if(e.target.id=="output_schema_editor_jsTree"){
+    currentJstreeRef=outputJstreeRef;
+    menu=document.getElementById('output_schema_editor_jsTree_contextMenu');
+  }
+  else if(e.target.id=="launching_arrow_jsTree"){
+    currentJstreeRef=launching_arrow_jsTree_ref;
+    menu=document.getElementById('input_schema_editor_jsTree_contextMenu');
+  }else if(e.target.id=="landing_arrow_jsTree"){
+    currentJstreeRef=landing_arrow_jsTree_ref;
+    menu=document.getElementById('output_schema_editor_jsTree_contextMenu');
+  }
+  else if(e.target.id=="flowDesignerJsTree")
+   menu=document.getElementById('flowDesignerJsTree_contextMenu');
+//console.log("PageWidth="+window.innerWidth+", PageX="+e.pageX);
+  if(menu!=null){
+    e.preventDefault();
+    if(window.innerWidth<e.pageX+250)
+    	showMenu(e.pageX-150, e.pageY);
+    else
+    	showMenu(e.pageX, e.pageY);
+    document.addEventListener('click', onClick, false);
+  }
+}
+
+function onClick(e){
+    hideMenu();
+    document.removeEventListener('click', onClick);
+}
+
+document.addEventListener('contextmenu', onContextMenu, false);    
+    
+function openSelectServiceModalDialog(jsTreeId,sel){
+  var modal = document.getElementById("selectServiceModalDialog");
+  var ref = $(jsTreeId).jstree(true); 
+  var sel = ref.get_selected();
+  if(!sel.length){
+      alert("Select an element first");
+      return;
+  }else if(sel.length>1){
+      alert("Select only one element");
+      return;
+  }
+  modal.style.display = "block";
+  var span = document.getElementById("closeSelectServiceModalDialog");
+  span.onclick = function() {
+	  modal.style.display = "none";
+  }
+  var updateSelectedService = document.getElementById("updateSelectedServiceId");
+  updateSelectedService.onclick = function() {
+	var node=ref.get_node(sel);
+    var nodeText=localStorage.getItem("currentSelectedService");
+    if(node.text!=nodeText){
+      mapperObj.clean();
+      node.data.lines=null;
+      node.data.transformers=null;
+      launching_arrow_jsTree_function_ref.settings.core.data=[];
+      launching_arrow_jsTree_function_ref.refresh();
+      landing_arrow_jsTree_function_ref.settings.core.data=[];
+      landing_arrow_jsTree_function_ref.refresh();
+      ref.rename_node(node,nodeText);
+      node.data.serviceType=localStorage.getItem("currentSelectedService_type");
+      ref.select_node(node.id);
+    }
+   // node.text=
+    localStorage.setItem("enableServiceSelectionMode",false);
+    //alert(localStorage.getItem("currentSelectedService"));
+    //ref.refresh();
+    modal.style.display = "none";
+  }
+  localStorage.setItem("enableServiceSelectionMode",true);
+}
+    
+function openSetValueModelDialog(){
+	var modal = document.getElementById("configureSetValueModelDialog");
+  	var span = document.getElementById("closeSetValueModelDialog");
+	modal.style.display = "block";
+  	let createItem=mapperObj.getValue(landing_arrow_jsTree_ref);
+    if(createItem){
+      //alert(createItem.value);
+      	$("#element_NoneVariable").prop("checked",true);
+    	$("#elementSetValueInput").val(createItem.value);
+        if(createItem.evaluate=="EEV")
+          $("#element_ExpressionVariable").prop("checked",true);
+        if(createItem.evaluate=="ELV")
+            $("#element_LocalVariable").prop("checked",true);
+        if(createItem.evaluate=="EGV")
+            $("#element_GlobalVariable").prop("checked",true);
+    }
+    
+	span.onclick = function() {
+      var value=$("#elementSetValueInput").val();
+    var evaluate=null;
+    var eev=$("#element_ExpressionVariable").prop("checked");
+    if(eev==true)
+      evaluate="EEV";
+    var elv=$("#element_LocalVariable").prop("checked");
+    if(elv==true)
+        evaluate="ELV";
+    var egv=$("#element_GlobalVariable").prop("checked");
+    if(egv==true)
+        evaluate="EGV";
+	modal.style.display = "none";
+    mapperObj.setValue(landing_arrow_jsTree_ref,value,evaluate);
+    $("#element_NoneVariable").prop("checked",true);
+    $("#elementSetValueInput").val("");
+    };
+}
+    
+    
+function showInputJSONSchemaTextDialog(jsTreeRef){
+  var modal = document.getElementById("configureInputJSONSchemaTextDialog");
+  	var span = document.getElementById("closeInputJSONSchemaTextDialog");
+	modal.style.display = "block";
+    $("#inputJSONSchemaText").val("");
+	span.onclick = function() {
+      var jsonSchema=$("#inputJSONSchemaText").val();
+      //console.log(jsonSchema);
+      var jsTreeData=getJstreeFromSchema(jsonSchema);
+      console.log(jsTreeData);
+      jsTreeRef.settings.core.data=jsTreeData;
+      jsTreeRef.refresh();
+	  modal.style.display = "none";
+    };
+}
+
+function showMapLinePropertiesModelDialog(){
+  	var modal = document.getElementById("configureMapLinePropertiesModelDialog");
+  	var span = document.getElementById("closeMapLinePropertiesModelDialog");
+	modal.style.display = "block";
+  	//srcPath
+  	console.log(mapperObj.selectedLines);
+    var lines=mapperObj.selectedLines;
+    if(lines==null || lines.length!=1){
+      alert("Please ensure that only one mapping line is red.")
+      modal.style.display="none";
+      return;
+    }
+    var line=lines[0];
+  	var indexes=line.INPath.match(/#\d+/g);
+  	var html="";
+    var index=null;
+    if(indexes!=null){
+      for(var i=0;i<indexes.length;i++){
+          index=indexes[i];
+          //alert(index);
+          var pPath=line.INPath.split("/"+index+"/")[0];
+          html+=pPath+"/#<input type='text' id='index_in_"+i+"' value='"+index.replace('#','')+"' style='width:30px;border:0px; padding:0px; margin:0px;text-aligh:center;'>/";
+      }
+      //if(index!=null){
+          var pPath=line.INPath.split("/"+index+"/")[1];
+          html+=pPath;
+          $("#srcPath").html(html);
+      //}
+    }else
+      $("#srcPath").html(line.INPath);
+
+    indexes=line.OUTPath.match(/#\d+/g);
+    html="";
+    index=null;
+    if(indexes!=null){
+      for(var i=0;i<indexes.length;i++){
+          index=indexes[i];
+          //alert(index);
+          var pPath=line.OUTPath.split("/"+index+"/")[0];
+          html+=pPath+"/#<input type='text' id='index_out_"+i+"' value='"+index.replace('#','')+"' style='width:30px;border:0px; padding:0px; margin:0px;text-aligh:center;'>/";
+      }
+    //  if(index!=null){
+          var pPath=line.OUTPath.split("/"+index+"/")[1];
+          html+=pPath;
+          $("#targetPath").html(html);
+     // }
+    }else
+      $("#targetPath").html(line.INPath);
+  	
+  	$("#mappingCondition").val(line.condition);
+    
+    $("#jsFunction").val(line.applyFunction);
+  
+  	$("#functionJSDef").val(line.jsFunction);
+  
+    $("#jsFunctionSig").val(line.jsFunctionSig);
+  
+	span.onclick = function() {
+	  modal.style.display = "none";
+      indexes=line.INPath.match(/#\d+/g);
+      var newPath="";
+      var ending="";
+      if(indexes!=null){
+        for(var i=0;i<indexes.length;i++){
+            index=indexes[i];
+            var pPath=line.INPath.split("/"+index+"/");
+            newPath+=pPath[0]+"/#"+$("#index_in_"+i).val()+"/";
+            ending=pPath[1];
+        }
+        if(ending!=null)
+          newPath+=ending;
+        line.INPath=newPath
+      }
+      
+      indexes=line.OUTPath.match(/#\d+/g);
+      newPath="";
+      ending="";
+      if(indexes!=null){
+        for(var i=0;i<indexes.length;i++){
+            index=indexes[i];
+            var pPath=line.OUTPath.split("/"+index+"/");
+            newPath+=pPath[0]+"/#"+$("#index_out_"+i).val()+"/";
+            ending=pPath[1];
+        }
+        if(ending!=null)
+          newPath+=ending;
+        line.OUTPath=newPath
+      }
+      line.applyFunction=$("#jsFunction").val();
+      line.condition=$("#mappingCondition").val();  
+  	  line.jsFunction=$("#functionJSDef").val();
+      line.jsFunctionSig=$("#jsFunctionSig").val();
+      mapperObj.refresh();
+    };
+}
+    
+    
+function openFlowElementProperties(jsTreeId,sel){
+	// Get the modal
+	var modal = document.getElementById("flowElementPropertyModalDialog");
+	var ref = $(jsTreeId).jstree(true); 
+	var sel = ref.get_selected();
+	if(!sel.length){
+		alert("Select an element first");
+		return;
+	}else if(sel.length>1){
+		alert("Select only one element");
+		return;
+	}
+	
+	sel = ref.get_selected()[0];
+  	var node=ref.get_node(sel);
+    var nodeType=node.type;
+  	var nodeParent=ref.get_node(node.parent);
+  	var nodeParentType=nodeParent.type;
+  	
+    if(node.data){
+      
+      var evaluate=node.data["evaluate"];
+      if(evaluate){
+      	//alert(evaluate);
+        $("#elementSequenceInput").prop("checked",evaluate);
+      }
+      else
+      	$("#elementSequenceInput").prop("checked",false);
+      
+      var caseVal=node.data["case"];
+      if(caseVal)
+      	$("#elementCaseInput").val(caseVal);
+      else
+        $("#elementCaseInput").val(null);
+      
+      var condition=node.data["condition"];
+      if(condition)
+      	$("#elementConditionInput").val(condition);
+      else
+        $("#elementConditionInput").val(null);
+      
+      var interval=node.data["interval"];
+      if(interval)
+      	$("#elementRepeatIntervalInput").val(interval);
+      else
+        $("#elementRepeatIntervalInput").val(0);
+      
+      var repeat=node.data["repeat"];
+      if(repeat)
+      	$("#elementRepeatTimesInput").val(repeat);
+	  else
+        $("#elementRepeatTimesInput").val(0);
+      
+      var repeatOn=node.data["repeatOn"];
+      if(repeatOn)
+      	$("#elementRepeatOnInput").val(repeatOn);
+      else
+        $("#elementRepeatOnInput").val("error");
+      
+      var inArray=node.data["inArray"];
+      if(inArray)
+      	$("#elementLoopInputArrayInput").val(inArray);
+	  else
+        $("#elementLoopInputArrayInput").val(null);
+      
+      var outArray=node.data["outArray"];
+      if(outArray)
+      	$("#elementLoopOutputArrayInput").val(outArray);
+      else
+        $("#elementLoopOutputArrayInput").val(null);
+      
+      var switchCase=node.data["switch"];
+      if(switchCase)
+      	$("#elementSwitchInput").val(switchCase);
+      else
+        $("#elementSwitchInput").val(null);
+      
+      var status=node.data["status"];
+      if(status)
+      	$("#elementStatusInput").val(status);
+      else
+        $("#elementStatusInput").val("enabled");
+      
+      var requestMethod=node.data["requestMethod"];
+      if(requestMethod)
+      	$("#invokeRequestMethodInput").val(requestMethod);
+      else
+        $("#invokeRequestMethodInput").val("sync");
+      
+      var comment=node.data["comment"];
+      if(comment)
+      	$("#elementCommentInput").val(comment);
+      else
+        $("#elementCommentInput").val(null);
+    }
+  	if(nodeType=="repeat")
+      $(".elementRepeat").css("display","block");
+    if(nodeType=="loop")
+      $(".elementLoop").css("display","block");
+    if(nodeType=="switch")
+      $(".elementSwitch").css("display","block");
+  	
+  	if(nodeType=="sequence")
+      $(".elementSequence").css("display","block");
+  
+    if(nodeParentType=="sequence" && nodeParent.data["evaluate"]==true){
+      $(".elementCondition").css("display","block");
+    }
+  
+  	if(nodeParentType=="switch" && nodeType=="sequence"){
+      $(".elementCase").css("display","block");
+    }
+  
+  	if(nodeType=="invoke")
+      $(".elementInvoke").css("display","block");
+  
+	var elemPath=ref.get_path(sel, '/');
+	var span = document.getElementById("closeflowElementProperties");
+	modal.style.display = "block";
+	span.onclick = function() {
+	  modal.style.display = "none";
+	  $(".elementRepeat").css("display","none");
+      $(".elementLoop").css("display","none");
+      $(".elementSwitch").css("display","none");
+      $(".elementCondition").css("display","none");
+      $(".elementSequence").css("display","none");
+      $(".elementCase").css("display","none");
+      $(".elementInvoke").css("display","none");
+	}
+}
+    
+
+    
+    
+function getAllVisibleInputs(node){ 
+ 
+  var flowData=flowDesignerJsTreeRef.get_json('#', {flat:true});
+  var createInputPaths=[];
+  var createOutputPaths=[];
+  var dropPaths={};
+  var loopPaths=[];
+  var parents=node.parents;
+  //jQuery.each(flowData, function(i, nodeData)
+  
+  for(var i=0;i<flowData.length;i++) {
+    var nodeData=flowData[i];
+    if(node.id==nodeData.id)
+      break;
+    if(node.id!=nodeData.id && (nodeData.type=="invoke" || nodeData.type=="map")){
+      var dropList = nodeData.data.dropList;
+      jQuery.each(dropList, function(i, map) {
+      	var dropPath=mapperObj.hashCode(map.path);
+        //dropPath.typePath=map.typePath;
+        dropPaths[dropPath]={};
+        dropPaths[dropPath].path=map.path;
+        dropPaths[dropPath].dropped=true;
+      });
+    }
+    if(node.id!=nodeData.id && nodeData.type=="loop"){
+      var inArray = nodeData.data.inArray;
+      var outArray = nodeData.data.outArray;
+      if(inArray!=null && inArray.trim().length>0){
+      	inArray="//"+inArray;
+        inArray=inArray.replace("///","").replace("//","");
+        let isParent=false;
+        jQuery.each(parents, function(i, parent) {
+        	if(parent==nodeData.id)
+              isParent=true;
+        });
+        if(isParent){
+        	loopPaths.push(inArray);
+            if(outArray!=null && outArray.trim().length>0)
+            	loopPaths.push(outArray);
+        }
+      }
+    }
+  }
+  //console.log(nodeData);
+  //console.log(loopPaths);
+  
+  for(var i=0;i<flowData.length;i++) {
+    var nodeData=flowData[i];
+    
+    if(nodeData.type=="invoke" || nodeData.type=="map"){
+      var lines = nodeData.data.lines;
+      if(lines)
+      jQuery.each(lines, function(j, line) {
+        //console.log(line);
+        var dropPath=mapperObj.hashCode(line.outputPath);
+        if(!dropPaths[dropPath]){
+          var dropped=mapperObj.findInDropList(dropPaths,line.outputPath);
+          if(dropped==true){
+            dropPaths[dropPath]={};
+            dropPaths[dropPath].path=line.outputPath;
+            dropPaths[dropPath].dropped=true;
+          }
+        }
+        if(dropPaths[dropPath]==null || !dropPaths[dropPath].dropped){
+          var createPath={};
+          createPath.path=line.outputPath;
+          createPath.typePath=line.outTypePath;
+          
+          jQuery.each(loopPaths, function(k, loop) {
+          	if(createPath.path.startsWith(loop)){
+              	//console.log(loop);
+                //console.log(createPath.typePath);
+            	var types=createPath.typePath.split("/");
+              	var index=loop.split("/").length-1;
+              	if(types[index].endsWith("List")){
+                	types[index]=types[index].replace("List","");
+                	createPath.typePath=types.join("/");
+                }
+            }
+          });
+          if(node.id!=nodeData.id){
+          	createInputPaths.push(createPath);
+            //mapperObj.createNode("#launching_arrow_jsTree",createPath.path,createPath.typePath);
+          }
+          createOutputPaths.push(createPath);
+          //mapperObj.createNode("#landing_arrow_jsTree",createPath.path,createPath.typePath);
+        }
+      });
+      var createList = nodeData.data.createList;
+      if(createList)
+      jQuery.each(createList, function(j, map) {
+        //console.log(line);
+        var dropPath=mapperObj.hashCode(map.path);
+        if(!dropPaths[dropPath]){
+          var dropped=mapperObj.findInDropList(dropPaths,map.path);
+          if(dropped==true){
+            dropPaths[dropPath]={};
+            dropPaths[dropPath].path=map.path;
+            dropPaths[dropPath].dropped=true;
+          }
+        }
+        if(dropPaths[dropPath]==null || !dropPaths[dropPath].dropped){
+          var createPath={};
+          createPath.path=map.path;
+          createPath.typePath=map.typePath;
+          jQuery.each(loopPaths, function(k, loop) {
+            //console.log(loop);
+            //console.log(createPath.typePath);
+          	if(createPath.path.startsWith(loop)){
+              	//console.log(loop);
+                //console.log(createPath.typePath);
+            	var types=createPath.typePath.split("/");
+              	var index=loop.split("/").length-1;
+                if(types[index].endsWith("List")){
+                  types[index]=types[index].replace("List","");
+                  createPath.typePath=types.join("/");
+                }
+            }
+          });
+          if(node.id!=nodeData.id)
+          	createInputPaths.push(createPath);
+          createOutputPaths.push(createPath);
+          //mapperObj.createNode("#landing_arrow_jsTree",createPath.path,createPath.typePath);
+        }
+      });
+    }
+    if(node.id==nodeData.id)
+      break;
+  }
+   
+  var dpInput=inputJstreeRef.get_json('#', {flat:false});
+  var dpTemp=initDPInput(dpInput,dpTemp);
+ // console.log(dpInput);
+  jQuery.each(createInputPaths, function(j, createPath) {
+  	//mapperObj.createNode("#launching_arrow_jsTree",createPath.path,createPath.typePath);
+    var pathTokens=createPath.path.split("/");
+    var typeTokens=createPath.typePath.split("/");
+    var dpTempElem=dpTemp;
+    
+    //console.log(createPath);
+    //console.log(loopPaths[createPath]);
+    for(var i=0;i<pathTokens.length;i++){
+    	var text=pathTokens[i];
+      	var type=typeTokens[i];
+      	if(!dpTempElem[text]){
+            dpTempElem[text]={};
+            dpTempElem[text].type=type;
+            dpTempElem[text].text=text;
+            dpTempElem[text].children={};
+            dpTempElem=dpTempElem[text].children;
+        }else{
+        	dpTempElem=dpTempElem[text].children;
+        }
+    }
+    //console.log(JSON.stringify(dpTempElem));
+    // alert(JSON.stringify(createPath));
+  });
+  
+    jQuery.each(dropPaths, function(j, dropPath) {
+    //console.log("Drop: "+JSON.stringify(dropPath));
+    var pathTokens=dropPath.path.split("/");
+    var dpTempElem=dpTemp;
+    var canDrop=false;
+    var dropMe=null;
+    var text=null;
+    for(var i=0;i<pathTokens.length;i++){
+    	text=pathTokens[i];
+      	if(dpTempElem[text]==null){
+            break;
+        }else{
+            dropMe=dpTempElem;
+        	dpTempElem=dpTempElem[text].children;
+            canDrop=true;
+        }
+    }
+    if(canDrop)
+      delete dropMe[text];
+  });
+  
+  
+    jQuery.each(loopPaths, function(j, loopPath) {
+    //console.log(loopPath);
+    var pathTokens=loopPath.split("/");
+    var dpTempElem=dpTemp;
+    var canDrop=false;
+    var dropMe=null;
+    var text=null;
+    for(var i=0;i<pathTokens.length;i++){
+    	text=pathTokens[i];
+      	if(dpTempElem[text]){
+        	dpTempElem[text].type=dpTempElem[text].type.replace("List","");
+            dpTempElem=dpTempElem[text].children;
+        }
+    }
+  });
+  
+  var dpTempInput=JSON.parse(JSON.stringify(dpTemp));
+  var jsTreeJsonDPIn=generateJSTreeSchema(dpTempInput);
+  launching_arrow_jsTree_ref.settings.core.data=jsTreeJsonDPIn;
+  launching_arrow_jsTree_ref.refresh(); 
+  //console.log(jsTreeJsonDPIn);
+  jQuery.each(createOutputPaths, function(j, createPath) {
+  	//mapperObj.createNode("#landing_arrow_jsTree",createPath.path,createPath.typePath);
+    var pathTokens=createPath.path.split("/");
+    var typeTokens=createPath.typePath.split("/");
+    var dpTempElem=dpTemp;
+    for(var i=0;i<pathTokens.length;i++){
+    	var text=pathTokens[i];
+      	var type=typeTokens[i];
+      	if(!dpTempElem[text]){
+            dpTempElem[text]={};
+            dpTempElem[text].type=type;
+            dpTempElem[text].text=text;
+            dpTempElem[text].children={};
+        	dpTempElem=dpTempElem[text].children;
+        }else{
+        	dpTempElem=dpTempElem[text].children;
+        }
+    }
+   // alert(JSON.stringify(createPath));
+  });
+  
+  jQuery.each(dropPaths, function(j, dropPath) {
+    //console.log("Drop: "+JSON.stringify(dropPath));
+    var pathTokens=dropPath.path.split("/");
+    var dpTempElem=dpTemp;
+    var canDrop=false;
+    var dropMe=null;
+    var text=null;
+    for(var i=0;i<pathTokens.length;i++){
+    	text=pathTokens[i];
+      	if(dpTempElem[text]==null){
+            break;
+        }else{
+            dropMe=dpTempElem;
+        	dpTempElem=dpTempElem[text].children;
+            canDrop=true;
+        }
+    }
+    if(canDrop)
+      delete dropMe[text];
+  });
+  
+  jQuery.each(createOutputPaths, function(j, createPath) {
+        jQuery.each(loopPaths, function(k, loop) {
+          	if(createPath.path.startsWith(loop)){
+            	var types=createPath.typePath.split("/");
+              	var index=loop.split("/").length-1;
+                if(types[index].endsWith("List")){
+                  types[index]=types[index].replace("List","");
+                  createPath.typePath=types.join("/");
+                }
+            }
+          });
+    
+  var pathTokens=createPath.path.split("/");
+    var typeTokens=createPath.typePath.split("/");
+    var dpTempElem=dpTemp;
+    for(var i=0;i<pathTokens.length;i++){
+    	var text=pathTokens[i];
+      	var type=typeTokens[i];
+      	if(!dpTempElem[text]){
+            dpTempElem[text]={};
+            dpTempElem[text].type=type;
+            dpTempElem[text].text=text;
+            dpTempElem[text].children={};
+        	dpTempElem=dpTempElem[text].children;
+        }else{
+        	dpTempElem=dpTempElem[text].children;
+        }
+    }
+  	//mapperObj.createNode("#landing_arrow_jsTree",createPath.path,createPath.typePath);
+    //mapperObj.createNode("#launching_arrow_jsTree",createPath.path,createPath.typePath);
+   // alert(JSON.stringify(createPath));
+  });
+var jsTreeJsonDPOut=generateJSTreeSchema(dpTemp);
+landing_arrow_jsTree_ref.settings.core.data=jsTreeJsonDPOut;
+landing_arrow_jsTree_ref.refresh();
+//console.log(jsTreeJsonDPOut);
+  
+//console.log(dpTemp);
+}
+    
+function initDPInput(dpInput,dpTemp){
+  if(!dpTemp)
+    dpTemp={};
+  jQuery.each(dpInput, function(j, elem) {
+    //console.log(elem);
+    dpTemp[elem.text]={};
+  	dpTemp[elem.text].text=elem.text;
+  	dpTemp[elem.text].type=elem.type;
+    if(elem.children!=null && elem.children[0]!=null){
+      dpTemp[elem.text].children={};
+      initDPInput(elem.children,dpTemp[elem.text].children);
+    }
+  });
+  return dpTemp;
+}
+function generateJSTreeSchema(dpJson,jsTreeJson){
+//  console.log("+++++++++++++++++");
+//  console.log(JSON.stringify(dpJson));
+//  console.log(Object.keys(dpJson).length);
+    if(!jsTreeJson)
+      jsTreeJson=[];
+    $.each(dpJson, function (i, v) {
+      //console.log(v);
+      var elem={};
+          //var newElem=v;
+         // console.log(v);
+          elem.text=v.text;
+          elem.type=v.type;
+          elem.children=[];
+          jsTreeJson.push(elem);
+          if(v.children!=null)
+          	generateJSTreeSchema(v.children,elem.children);
+		  
+    });
+//  console.log("+++++++++++++++++");
+  return jsTreeJson;
+}
+</script>
+</html>

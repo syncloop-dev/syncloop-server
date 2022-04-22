@@ -1,0 +1,116 @@
+<html style="min-height: 100% !important;">
+<head>
+  <title>Workspace</title>
+  <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/dist/themes/default/style.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
+  <script src="/files/gui/middleware/pub/server/ui/javascript/jstreetable.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+  </head>
+
+  <body style="width:100%;height:100%;padding:0px;margin:0px;left:0px;top:0px;position:absolute;">
+
+<div class="navbar" style="background-color:slategray;left:0px;top:0px;">
+  <div class="dropdown">
+    <button class="dropbtn">Recent: </button>
+  </div>
+  <div class="dropdown navbar-right">
+    <a href="#" onclick="localStorage.clear();sessionStorage.clear();deleteAllCookies();location.reload(true);" class="dropbtn"><span class="glyphicon glyphicon-log-in"></span> Log out</a>
+  </div>
+</div>    
+
+<div id="content" style="max-width: 100%; min-height:500px;padding: 0px; margin: 0px;height:98%;">
+<div class="row" id="demo" style="display: block;padding: 0px; margin: 0px;width:100%;height:100%">
+
+<div class="col-md-12" id="packageManagerJsTreeContainer" style="width:15%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">  
+<div class="row" style="margin: 0px; padding:0px;">
+			<div class="navbar">  
+              <div class="dropdown">
+                      <button class="dropbtn">New 
+                        <i class="fa fa-caret-down"></i>
+                      </button>
+                      <div class="dropdown-content">
+                        <a href="#" onclick="createSchema('gui-app',packageManagerJsTreeRef);">GUI APP</a>
+                        <a href="#" onclick="createSchema('folder',packageManagerJsTreeRef);">Folder</a>
+                        <a href="#" onclick="createSchema('html',packageManagerJsTreeRef);">Html</a>
+                        <a href="#" onclick="createSchema('js',packageManagerJsTreeRef);">JavaScript</a>
+                        <a href="#" onclick="createSchema('css',packageManagerJsTreeRef);">Style</a>
+                      </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Tools 
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                                        <input type="text" value=""
+                                            style="box-shadow: inset 0 0 4px #eee; width: 120px; margin: 2px; padding: 2px; border-radius: 0px; border: 1px solid silver; font-size: .8em;"
+                                            id="launching_arrow_input_jsTree_q" placeholder="Search">
+                  <a href="#" onclick="addCheckBoxOnJSTree('#packageManagerJsTree');">Build</a>
+                </div>
+                </div> 
+              </div>				
+      </div>
+<div id="packageManagerJsTree" class="jstree jstree-1 jstree-default"
+								style="margin: 0px;padding:0px; height: 96%; width: 100%; overflow: scroll;"
+								role="tree" aria-multiselectable="true" tabindex="0"
+     aria-activedescendant="j1_1" aria-busy="false"></div>
+</div>
+
+<div class="col-md-12" id="iframe_container" style="width:85%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">
+<iframe id="middlewareCodeEditor" class="col-md-12" style="float: left; min-width:400px;min-height:600px;width:100%;height:100%;margin:0px;border:0px;padding:0px; overflow:hidden;overflow-x:hidden;overflow-y:hidden;" allowfullscreen frameborder="0" scrolling="no">
+</iframe>
+</div>
+  
+</div>
+</div>           
+</body>
+  <script>    
+
+    var packageManagerJsTreeRef=createPackageJstree('#packageManagerJsTree');
+
+    $("#packageManagerJsTree").on('click',
+											function(e, data) {
+											//console.log(e.target);
+											//$("#middlewareCodeEditor").
+											var ref = $("#packageManagerJsTree").jstree(true);
+											var type=ref.get_type(e.target);
+											if(type!="folder" && type!="root" && type!="package" && type!="default"){
+												var src=ref.get_path(e.target, '/');
+												src="files/"+src;
+												//alert(src);
+												var url=null;
+												if(type=="service"){
+													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/clike/serviceEditor.html";
+												}else if(type=="html"){
+													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/htmlmixed/htmlEditor.html";
+												}else if(type=="js"){
+													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/javascript/jsEditor.html";
+												}else if(type=="css"){
+													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/css/cssEditor.html";
+												}else if(type=="map"){
+													url="/files/gui/middleware/pub/server/ui/workspace/web/transformer.html";
+												}else if(type=="flow"){
+													url="/files/gui/middleware/pub/server/ui/workspace/web/flowMaker/flowEditor.html";
+												}else
+													url=null;
+												if(url!=null){
+                                                    //alert(url+"?loadFile="+src+"."+type);
+													$("#middlewareCodeEditor").attr('src',url+"?loadFile="+src+"."+type);
+												}
+											}
+										}).on('hover_node.jstree',
+											function(e, data) {
+											//console.log(e.target);
+											$("#"+data.node.id).prop('title', data.node.text);
+										});
+
+    var response=syncRestRequest("/gui/json", "GET", "");
+	if(response.status==200 && response.payload){
+      response=response.payload;
+      packageManagerJsTreeRef.settings.core.data=JSON.parse(response);
+      packageManagerJsTreeRef.refresh();
+    }
+    </script>
+</html>

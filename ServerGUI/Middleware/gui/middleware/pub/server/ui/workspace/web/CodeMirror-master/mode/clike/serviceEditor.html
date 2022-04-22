@@ -15,7 +15,9 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
 <script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.min.js"></script>
 <link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/sweetalert.css">
 <style>.CodeMirror {height:min-content;}</style>
 <html>
 <body style="width:100%;height:100%;">
@@ -30,7 +32,7 @@
                       <div class="dropdown-content">
                         <a href="#" onclick="save();">Save</a>
                         <a href="#" onclick="reload();">Reload</a>
-                        <a href="#" onclick="alert('Inprogress')">Test</a>
+                        <a href="#" onclick="swal('Inprogress', '', 'warning')">Test</a>
                         <a href="#" onclick="openConfigurationProprties()">Configuration</a>
                         <a href="#" onclick="lockArtifact()">Lock</a>
                         <a href="#" onclick="unLockArtifact()">unLock</a>
@@ -336,18 +338,18 @@ function unLockArtifact(){
 	var response=syncRestRequest("/"+loadFile.replace("files/","artifact/unlock/"), "POST");
 	if(response.status==200){
 		localStorage.setItem(loadFile, "");
-		alert(JSON.parse(response.payload).status);
+		swal('Accepted', JSON.parse(response.payload).status, 'success');
 	}else
-		alert(JSON.parse(response.payload).error);
+		swal('Rejected', JSON.parse(response.payload).error, 'error');
 }
       
 function lockArtifact(){
 	var response=syncRestRequest("/"+loadFile.replace("files/","artifact/lock/"), "POST");
 	if(response.status==200){
 		localStorage.setItem(loadFile, "");
-		alert(JSON.parse(response.payload).status);
+		swal('Accepted', JSON.parse(response.payload).status, 'success');
 	}else
-		alert(JSON.parse(response.payload).error);
+		swal('Rejected', JSON.parse(response.payload).error, 'error');
 }
       
 function save(){
@@ -399,11 +401,11 @@ function save(){
 		var response=syncRestRequest("/"+loadFile.replace("files/","service/"), "POST", data);
 		if(response.status==200){
 			localStorage.setItem(loadFile, "");
-			alert("Saved");
+			swal('Accepted', "Your changes has been saved successfully", 'success');
 		}else
-			alert(JSON.parse(response.payload).error);
+			swal('Rejected', JSON.parse(response.payload).error, 'error');
 	}else
-		alert("No changes to save");
+		swal('Rejected', "No changes to save", 'error');
 }
 function reload(){
 	loadRemoteFile(true);
