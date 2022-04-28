@@ -567,8 +567,32 @@ deleteSelectedFromCreateList(){
 					generateJSONPatch(lineMap){
 						let transformer={};
 						transformer.op=lineMap.op;
-						transformer.from="/"+lineMap.INPath;
-						transformer.to="/"+lineMap.OUTPath;
+                        var indexes=lineMap.INPath.match(/#\d+/g);
+                        if(indexes!=null){
+                            var from=null;
+                            for(var i=0;i<indexes.length;i++){
+                                var index=indexes[i];
+                                if(from==null)
+                                  from=lineMap.INPath;
+                                var val=index.replace("#","");
+                                from=from.replace("/"+index+"/","/"+val+"/");
+                            }
+                          transformer.from="/"+from;
+                        }else
+							transformer.from="/"+lineMap.INPath;
+                        indexes=lineMap.OUTPath.match(/#\d+/g);
+                        if(indexes!=null){
+                            var to=null;
+                            for(var i=0;i<indexes.length;i++){
+                                var index=indexes[i];
+                                if(to==null)
+                                  to=lineMap.OUTPath;
+                                var val=index.replace("#","");
+                                to=to.replace("/"+index+"/","/"+val+"/");
+                            }
+                          transformer.to="/"+to;
+                        }else
+							transformer.to="/"+lineMap.OUTPath;
 						if(lineMap.loop_Id!=null)
 							transformer.loop_Id=lineMap.loop_Id;
 						if(lineMap.follow!=null)

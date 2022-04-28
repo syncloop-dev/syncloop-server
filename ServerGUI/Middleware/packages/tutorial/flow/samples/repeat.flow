@@ -225,7 +225,7 @@
       } ],
       "type" : "sequence"
     } ],
-    "lockedByUser" : "@Vineet"
+    "lockedByUser" : "admin"
   },
   "consumers" : "",
   "developers" : "rnd",

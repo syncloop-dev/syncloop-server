@@ -531,19 +531,19 @@ div::-webkit-scrollbar-thumb {
   margin-right: 6px !important;
 }
 #packageManagerJsTree ul li ul li {
-  margin-top: 7px;
-  margin-bottom: 7px;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 #packageManagerJsTree .jstree-anchor{color:#444444;}
 
 #input_schema_editor_jsTree_container ul li ul li {
-  margin-top: 7px;
-  margin-bottom: 7px;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 #output_schema_editor_jsTree_container ul li ul li {
-  margin-top: 7px;
-  margin-bottom: 7px;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 .jstree-default .jstree-wholerow-clicked {
@@ -551,7 +551,7 @@ div::-webkit-scrollbar-thumb {
 }
 
 #flowDesignerJsTreeContainer .jstree-wholerow-clicked {
-  background: transparent;
+  background: #f2f2f2;
 }
 
 #input_schema_editor_jsTree_container .jstree-default .jstree-wholerow-clicked {
@@ -588,13 +588,13 @@ div::-webkit-scrollbar-thumb {
 #flowDesignerJsTree ul li .jstree-anchor{color:#040d21;}
 
 #flowDesignerJsTree .jstree-anchor{
-	line-height:45px;
-	height:45px;
+	line-height:25px;
+	height:25px;
 }
 
 #flowDesignerJsTree .jstree-striped {
-  min-width: 94%;
-  margin: 3%;
+  min-width: 98%;
+  margin: 1%;
   border: solid 1px #eaebed;
     border-left-color: rgb(234, 235, 237);
     border-left-style: solid;
@@ -605,8 +605,8 @@ div::-webkit-scrollbar-thumb {
   background-image: linear-gradient(to bottom, #fff, #fff, #f9f9f9, #f4f4f4, #f9f9f9);
 }
 
-#flowDesignerJsTree .jstree-wholerow{height:45px;}
-#flowDesignerJsTree .jstree-icon:empty{margin-top:11px;}
+#flowDesignerJsTree .jstree-wholerow{height:25px;}
+#flowDesignerJsTree .jstree-icon:empty{margin-top:1px;}
 
 #flowDesignerJsTree {
   background: #fff;
@@ -621,6 +621,7 @@ div::-webkit-scrollbar-thumb {
 #rightSideTools, #leftSideTools {
   background: #f9f9f9;
 }
+
 #centerServiceName{height:22px; background:#f9f9f9; height:35px; line-height:35px;}
 
 .jstree-default > .jstree-striped{background:none;}
@@ -676,5 +677,22 @@ div::-webkit-scrollbar-thumb {
 
 .form-control {
   box-shadow: none;
+}
+
+#flowDesignerJsTreeContainer .jstree .jstree-open > .jstree-children{padding-left:6px;}
+#mostRecentlyOpened a:nth-child(2):hover {
+  border: transparent;
+}
+
+span.glyphicon.glyphicon-pushpin.changeTag {
+    margin-top: 9px;
+}
+
+.glyphicon.glyphicon-thumbs-down.dropperTag {
+  margin-top: 9px;
+}
+
+.glyphicon.glyphicon-pencil.valueTag {
+  margin-top: 7px;
 }
 /* new css start here 05 april 2022 */

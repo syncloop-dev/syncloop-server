@@ -1,0 +1,1833 @@
+{
+  "latest" : {
+    "createdTS" : "",
+    "input" : [ ],
+    "output" : [ {
+      "id" : "j3_2",
+      "text" : "lastErrorDump",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+      "li_attr" : {
+        "id" : "j3_2"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j3_2_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ ],
+      "type" : "document"
+    } ],
+    "flow" : [ {
+      "id" : "j1_1",
+      "text" : "TCF-Block",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/try-catch.png",
+      "li_attr" : {
+        "id" : "j1_1"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j1_1_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : true,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : {
+        "status" : "enabled",
+        "comment" : "Try catch block"
+      },
+      "children" : [ {
+        "id" : "j1_2",
+        "text" : "TRY",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "li_attr" : {
+          "id" : "j1_2"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j1_2_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : true,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : {
+          "comment" : "Main Service Block"
+        },
+        "children" : [ {
+          "id" : "j1_40",
+          "text" : "SEQUENCE",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "li_attr" : {
+            "id" : "j1_40"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_40_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : true,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "comment" : "Initialize variables"
+          },
+          "children" : [ {
+            "id" : "j1_5",
+            "text" : "MAP",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+            "li_attr" : {
+              "id" : "j1_5"
+            },
+            "a_attr" : {
+              "href" : "#",
+              "id" : "j1_5_anchor"
+            },
+            "state" : {
+              "loaded" : true,
+              "opened" : false,
+              "selected" : false,
+              "disabled" : false
+            },
+            "data" : {
+              "transformers" : [ ],
+              "lines" : [ ],
+              "dropList" : [ ],
+              "createList" : [ {
+                "path" : "inBoundFile",
+                "value" : "D:\\ekamw\\sample_files\\inBound.json",
+                "evaluate" : null,
+                "typePath" : "string"
+              }, {
+                "path" : "outBoundFile",
+                "value" : "D:\\ekamw\\sample_files\\outBound.json",
+                "evaluate" : null,
+                "typePath" : "string"
+              } ],
+              "status" : "enabled",
+              "comment" : "Initialize IO file names"
+            },
+            "children" : [ ],
+            "type" : "map"
+          }, {
+            "id" : "j1_7",
+            "text" : "packages/middleware/pub/file/getBufferedReader",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+            "li_attr" : {
+              "id" : "j1_7"
+            },
+            "a_attr" : {
+              "href" : "#",
+              "id" : "j1_7_anchor"
+            },
+            "state" : {
+              "loaded" : true,
+              "opened" : false,
+              "selected" : false,
+              "disabled" : false
+            },
+            "data" : {
+              "transformers" : [ {
+                "op" : "copy",
+                "from" : "/bufferedReader",
+                "to" : "/br",
+                "inTypePath" : "javaObject",
+                "outTypePath" : "javaObject"
+              }, {
+                "op" : "copy",
+                "from" : "/inBoundFile",
+                "to" : "/filePathWithName",
+                "inTypePath" : "string",
+                "outTypePath" : "string"
+              } ],
+              "lines" : [ {
+                "inputPath" : "bufferedReader",
+                "outputPath" : "br",
+                "inpJsTree" : "#launching_arrow_jsTree_function",
+                "outpJsTree" : "#landing_arrow_jsTree",
+                "INPath" : "bufferedReader",
+                "OUTPath" : "br",
+                "op" : "copy",
+                "line" : 0,
+                "dashedLine" : false,
+                "inType" : "javaObject",
+                "outType" : "javaObject",
+                "inTypePath" : "javaObject",
+                "outTypePath" : "javaObject"
+              }, {
+                "inputPath" : "inBoundFile",
+                "outputPath" : "filePathWithName",
+                "inpJsTree" : "#launching_arrow_jsTree",
+                "outpJsTree" : "#landing_arrow_jsTree_function",
+                "INPath" : "inBoundFile",
+                "OUTPath" : "filePathWithName",
+                "op" : "copy",
+                "line" : 0,
+                "dashedLine" : false,
+                "inType" : "string",
+                "outType" : "string",
+                "inTypePath" : "string",
+                "outTypePath" : "string"
+              } ],
+              "dropList" : [ {
+                "path" : "inBoundFile",
+                "typePath" : "string"
+              }, {
+                "path" : "filePathWithName",
+                "typePath" : "string"
+              } ],
+              "createList" : [ ],
+              "serviceType" : "service",
+              "status" : "enabled"
+            },
+            "children" : [ ],
+            "type" : "invoke"
+          }, {
+            "id" : "j1_24",
+            "text" : "packages/middleware/pub/file/getBufferedWriter",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+            "li_attr" : {
+              "id" : "j1_24"
+            },
+            "a_attr" : {
+              "href" : "#",
+              "id" : "j1_24_anchor"
+            },
+            "state" : {
+              "loaded" : true,
+              "opened" : false,
+              "selected" : false,
+              "disabled" : false
+            },
+            "data" : {
+              "transformers" : [ {
+                "op" : "copy",
+                "from" : "/outBoundFile",
+                "to" : "/filePathWithName",
+                "inTypePath" : "string",
+                "outTypePath" : "string"
+              }, {
+                "op" : "copy",
+                "from" : "/bufferedWriter",
+                "to" : "/bw",
+                "inTypePath" : "javaObject",
+                "outTypePath" : "javaObject"
+              } ],
+              "lines" : [ {
+                "inputPath" : "outBoundFile",
+                "outputPath" : "filePathWithName",
+                "inpJsTree" : "#launching_arrow_jsTree",
+                "outpJsTree" : "#landing_arrow_jsTree_function",
+                "INPath" : "outBoundFile",
+                "OUTPath" : "filePathWithName",
+                "op" : "copy",
+                "line" : 0,
+                "dashedLine" : false,
+                "inType" : "string",
+                "outType" : "string",
+                "inTypePath" : "string",
+                "outTypePath" : "string"
+              }, {
+                "inputPath" : "bufferedWriter",
+                "outputPath" : "bw",
+                "inpJsTree" : "#launching_arrow_jsTree_function",
+                "outpJsTree" : "#landing_arrow_jsTree",
+                "INPath" : "bufferedWriter",
+                "OUTPath" : "bw",
+                "op" : "copy",
+                "line" : 0,
+                "dashedLine" : false,
+                "inType" : "javaObject",
+                "outType" : "javaObject",
+                "inTypePath" : "javaObject",
+                "outTypePath" : "javaObject"
+              } ],
+              "dropList" : [ {
+                "path" : "outBoundFile",
+                "typePath" : "string"
+              } ],
+              "createList" : [ ],
+              "serviceType" : "service"
+            },
+            "children" : [ ],
+            "type" : "invoke"
+          } ],
+          "type" : "sequence"
+        }, {
+          "id" : "j1_41",
+          "text" : "SEQUENCE",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "li_attr" : {
+            "id" : "j1_41"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_41_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : true,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "comment" : "Loop over file data and process documents"
+          },
+          "children" : [ {
+            "id" : "j1_9",
+            "text" : "REPEAT",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/repeat.png",
+            "li_attr" : {
+              "id" : "j1_9"
+            },
+            "a_attr" : {
+              "href" : "#",
+              "id" : "j1_9_anchor"
+            },
+            "state" : {
+              "loaded" : true,
+              "opened" : true,
+              "selected" : false,
+              "disabled" : false
+            },
+            "data" : {
+              "repeat" : "-1",
+              "repeatOn" : "success",
+              "status" : "enabled",
+              "interval" : "150",
+              "comment" : "Repeat until eof"
+            },
+            "children" : [ {
+              "id" : "j1_11",
+              "text" : "MAP",
+              "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+              "li_attr" : {
+                "id" : "j1_11"
+              },
+              "a_attr" : {
+                "href" : "#",
+                "id" : "j1_11_anchor"
+              },
+              "state" : {
+                "loaded" : true,
+                "opened" : false,
+                "selected" : false,
+                "disabled" : false
+              },
+              "data" : {
+                "transformers" : [ ],
+                "lines" : [ ],
+                "dropList" : [ ],
+                "createList" : [ {
+                  "path" : "numberOfLinesToRead",
+                  "value" : "100000",
+                  "evaluate" : null,
+                  "typePath" : "integer"
+                } ],
+                "comment" : "Initialize variables"
+              },
+              "children" : [ ],
+              "type" : "map"
+            }, {
+              "id" : "j1_8",
+              "text" : "packages/middleware/pub/file/readLines",
+              "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+              "li_attr" : {
+                "id" : "j1_8"
+              },
+              "a_attr" : {
+                "href" : "#",
+                "id" : "j1_8_anchor"
+              },
+              "state" : {
+                "loaded" : true,
+                "opened" : false,
+                "selected" : false,
+                "disabled" : false
+              },
+              "data" : {
+                "transformers" : [ {
+                  "op" : "copy",
+                  "from" : "/br",
+                  "to" : "/bufferedReader",
+                  "inTypePath" : "javaObject",
+                  "outTypePath" : "javaObject"
+                }, {
+                  "op" : "copy",
+                  "from" : "/lines",
+                  "to" : "/lines",
+                  "inTypePath" : "stringList",
+                  "outTypePath" : "stringList"
+                }, {
+                  "op" : "copy",
+                  "from" : "/numberOfLinesToRead",
+                  "to" : "/number",
+                  "inTypePath" : "integer",
+                  "outTypePath" : "integer"
+                } ],
+                "lines" : [ {
+                  "inputPath" : "br",
+                  "outputPath" : "bufferedReader",
+                  "inpJsTree" : "#launching_arrow_jsTree",
+                  "outpJsTree" : "#landing_arrow_jsTree_function",
+                  "INPath" : "br",
+                  "OUTPath" : "bufferedReader",
+                  "op" : "copy",
+                  "line" : 0,
+                  "dashedLine" : false,
+                  "inType" : "javaObject",
+                  "outType" : "javaObject",
+                  "inTypePath" : "javaObject",
+                  "outTypePath" : "javaObject"
+                }, {
+                  "inputPath" : "lines",
+                  "outputPath" : "lines",
+                  "inpJsTree" : "#launching_arrow_jsTree_function",
+                  "outpJsTree" : "#landing_arrow_jsTree",
+                  "INPath" : "lines",
+                  "OUTPath" : "lines",
+                  "op" : "copy",
+                  "line" : 0,
+                  "dashedLine" : false,
+                  "inType" : "stringList",
+                  "outType" : "stringList",
+                  "inTypePath" : "stringList",
+                  "outTypePath" : "stringList"
+                }, {
+                  "inputPath" : "numberOfLinesToRead",
+                  "outputPath" : "number",
+                  "inpJsTree" : "#launching_arrow_jsTree",
+                  "outpJsTree" : "#landing_arrow_jsTree_function",
+                  "INPath" : "numberOfLinesToRead",
+                  "OUTPath" : "number",
+                  "op" : "copy",
+                  "line" : 0,
+                  "dashedLine" : false,
+                  "inType" : "integer",
+                  "outType" : "integer",
+                  "inTypePath" : "integer",
+                  "outTypePath" : "integer"
+                } ],
+                "dropList" : [ {
+                  "path" : "bufferedReader",
+                  "typePath" : "javaObject"
+                }, {
+                  "path" : "numberOfLinesToRead",
+                  "typePath" : "integer"
+                }, {
+                  "path" : "number",
+                  "typePath" : "integer"
+                } ],
+                "createList" : [ ],
+                "serviceType" : "service",
+                "comment" : "Read lines"
+              },
+              "children" : [ ],
+              "type" : "invoke"
+            }, {
+              "id" : "j1_10",
+              "text" : "SWITCH",
+              "icon" : "/files/gui/middleware/pub/server/ui/icons/switch.png",
+              "li_attr" : {
+                "id" : "j1_10"
+              },
+              "a_attr" : {
+                "href" : "#",
+                "id" : "j1_10_anchor"
+              },
+              "state" : {
+                "loaded" : true,
+                "opened" : true,
+                "selected" : false,
+                "disabled" : false
+              },
+              "data" : {
+                "switch" : "lines",
+                "status" : "enabled",
+                "comment" : "Jump to Processor until eof"
+              },
+              "children" : [ {
+                "id" : "j1_12",
+                "text" : "CASE",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+                "li_attr" : {
+                  "id" : "j1_12"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_12_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : true,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "case" : "#null",
+                  "comment" : "EOF"
+                },
+                "children" : [ {
+                  "id" : "j1_15",
+                  "text" : "MAP",
+                  "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+                  "li_attr" : {
+                    "id" : "j1_15"
+                  },
+                  "a_attr" : {
+                    "href" : "#",
+                    "id" : "j1_15_anchor"
+                  },
+                  "state" : {
+                    "loaded" : true,
+                    "opened" : false,
+                    "selected" : false,
+                    "disabled" : false
+                  },
+                  "data" : {
+                    "transformers" : [ ],
+                    "lines" : [ ],
+                    "dropList" : [ ],
+                    "createList" : [ {
+                      "path" : "log",
+                      "value" : "File read completed",
+                      "evaluate" : null,
+                      "typePath" : "string"
+                    } ],
+                    "comment" : "Initialize variables for logging"
+                  },
+                  "children" : [ ],
+                  "type" : "map"
+                }, {
+                  "id" : "j1_6",
+                  "text" : "packages/middleware/pub/service/throwExecption",
+                  "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                  "li_attr" : {
+                    "id" : "j1_6"
+                  },
+                  "a_attr" : {
+                    "href" : "#",
+                    "id" : "j1_6_anchor"
+                  },
+                  "state" : {
+                    "loaded" : true,
+                    "opened" : false,
+                    "selected" : false,
+                    "disabled" : false
+                  },
+                  "data" : {
+                    "transformers" : [ {
+                      "op" : "copy",
+                      "from" : "/log",
+                      "to" : "/msg",
+                      "inTypePath" : "string",
+                      "outTypePath" : "string"
+                    } ],
+                    "lines" : [ {
+                      "inputPath" : "log",
+                      "outputPath" : "msg",
+                      "inpJsTree" : "#launching_arrow_jsTree",
+                      "outpJsTree" : "#landing_arrow_jsTree_function",
+                      "INPath" : "log",
+                      "OUTPath" : "msg",
+                      "op" : "copy",
+                      "line" : 0,
+                      "dashedLine" : false,
+                      "inType" : "string",
+                      "outType" : "string",
+                      "inTypePath" : "string",
+                      "outTypePath" : "string"
+                    } ],
+                    "dropList" : [ {
+                      "path" : "msg",
+                      "typePath" : "string"
+                    }, {
+                      "path" : "log",
+                      "typePath" : "string"
+                    } ],
+                    "createList" : [ ],
+                    "serviceType" : "service",
+                    "status" : "enabled",
+                    "comment" : "Break the repeat module as EOF is reached"
+                  },
+                  "children" : [ ],
+                  "type" : "invoke"
+                } ],
+                "type" : "sequence"
+              }, {
+                "id" : "j1_13",
+                "text" : "CASE",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+                "li_attr" : {
+                  "id" : "j1_13"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_13_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : true,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "case" : "#default",
+                  "comment" : "Process"
+                },
+                "children" : [ {
+                  "id" : "j1_14",
+                  "text" : "packages/middleware/pub/json/fromJsonList",
+                  "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                  "li_attr" : {
+                    "id" : "j1_14"
+                  },
+                  "a_attr" : {
+                    "href" : "#",
+                    "id" : "j1_14_anchor"
+                  },
+                  "state" : {
+                    "loaded" : true,
+                    "opened" : false,
+                    "selected" : false,
+                    "disabled" : false
+                  },
+                  "data" : {
+                    "transformers" : [ {
+                      "op" : "copy",
+                      "from" : "/root",
+                      "to" : "/output",
+                      "condition" : "",
+                      "applyFunction" : "",
+                      "jsFunction" : "",
+                      "jsFunctionSig" : "",
+                      "inTypePath" : "documentList",
+                      "outTypePath" : "documentList"
+                    }, {
+                      "op" : "copy",
+                      "from" : "/lines",
+                      "to" : "/lines",
+                      "inTypePath" : "stringList",
+                      "outTypePath" : "stringList"
+                    } ],
+                    "lines" : [ {
+                      "inputPath" : "root",
+                      "outputPath" : "output",
+                      "inpJsTree" : "#launching_arrow_jsTree_function",
+                      "outpJsTree" : "#landing_arrow_jsTree",
+                      "INPath" : "root",
+                      "OUTPath" : "output",
+                      "op" : "copy",
+                      "line" : 0,
+                      "dashedLine" : false,
+                      "inType" : "documentList",
+                      "outType" : "documentList",
+                      "applyFunction" : "",
+                      "condition" : "",
+                      "jsFunction" : "",
+                      "jsFunctionSig" : "",
+                      "inTypePath" : "documentList",
+                      "outTypePath" : "documentList"
+                    }, {
+                      "inputPath" : "lines",
+                      "outputPath" : "lines",
+                      "inpJsTree" : "#launching_arrow_jsTree",
+                      "outpJsTree" : "#landing_arrow_jsTree_function",
+                      "INPath" : "lines",
+                      "OUTPath" : "lines",
+                      "op" : "copy",
+                      "line" : 0,
+                      "dashedLine" : false,
+                      "inType" : "stringList",
+                      "outType" : "stringList",
+                      "inTypePath" : "stringList",
+                      "outTypePath" : "stringList"
+                    } ],
+                    "dropList" : [ {
+                      "path" : "lines",
+                      "typePath" : "documentList"
+                    } ],
+                    "createList" : [ ],
+                    "serviceType" : "service",
+                    "status" : "enabled",
+                    "comment" : "Convert lines to JSON docList"
+                  },
+                  "children" : [ ],
+                  "type" : "invoke"
+                }, {
+                  "id" : "j1_17",
+                  "text" : "packages/tutorial/flow/examples/modifyJson",
+                  "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                  "li_attr" : {
+                    "id" : "j1_17"
+                  },
+                  "a_attr" : {
+                    "href" : "#",
+                    "id" : "j1_17_anchor"
+                  },
+                  "state" : {
+                    "loaded" : true,
+                    "opened" : false,
+                    "selected" : false,
+                    "disabled" : false
+                  },
+                  "data" : {
+                    "transformers" : [ {
+                      "op" : "copy",
+                      "from" : "/output",
+                      "to" : "/asyncInputDoc/jsonList",
+                      "inTypePath" : "documentList",
+                      "outTypePath" : "document/documentList"
+                    }, {
+                      "op" : "copy",
+                      "from" : "/bw",
+                      "to" : "/asyncInputDoc/bw",
+                      "inTypePath" : "javaObject",
+                      "outTypePath" : "document/javaObject"
+                    }, {
+                      "op" : "copy",
+                      "from" : "/asyncOutputDoc",
+                      "to" : "/asyncOutputDoc",
+                      "inTypePath" : "document",
+                      "outTypePath" : "document"
+                    }, {
+                      "op" : "copy",
+                      "from" : "/asyncOutputDoc/*metaData/batchId",
+                      "to" : "/batchId",
+                      "inTypePath" : "document/document/string",
+                      "outTypePath" : "string"
+                    }, {
+                      "op" : "copy",
+                      "from" : "/asyncOutputDoc/*metaData/status",
+                      "to" : "/status",
+                      "inTypePath" : "document/document/string",
+                      "outTypePath" : "string"
+                    } ],
+                    "lines" : [ {
+                      "inputPath" : "output",
+                      "outputPath" : "asyncInputDoc/jsonList",
+                      "inpJsTree" : "#launching_arrow_jsTree",
+                      "outpJsTree" : "#landing_arrow_jsTree_function",
+                      "INPath" : "output",
+                      "OUTPath" : "asyncInputDoc/jsonList",
+                      "op" : "copy",
+                      "line" : 0,
+                      "dashedLine" : false,
+                      "inType" : "documentList",
+                      "outType" : "documentList",
+                      "inTypePath" : "documentList",
+                      "outTypePath" : "document/documentList"
+                    }, {
+                      "inputPath" : "bw",
+                      "outputPath" : "asyncInputDoc/bw",
+                      "inpJsTree" : "#launching_arrow_jsTree",
+                      "outpJsTree" : "#landing_arrow_jsTree_function",
+                      "INPath" : "bw",
+                      "OUTPath" : "asyncInputDoc/bw",
+                      "op" : "copy",
+                      "line" : 0,
+                      "dashedLine" : false,
+                      "inType" : "javaObject",
+                      "outType" : "javaObject",
+                      "inTypePath" : "javaObject",
+                      "outTypePath" : "document/javaObject"
+                    }, {
+                      "inputPath" : "asyncOutputDoc",
+                      "outputPath" : "asyncOutputDoc",
+                      "inpJsTree" : "#launching_arrow_jsTree_function",
+                      "outpJsTree" : "#landing_arrow_jsTree",
+                      "INPath" : "asyncOutputDoc",
+                      "OUTPath" : "asyncOutputDoc",
+                      "op" : "copy",
+                      "line" : 0,
+                      "dashedLine" : false,
+                      "inType" : "document",
+                      "outType" : "document",
+                      "inTypePath" : "document",
+                      "outTypePath" : "document"
+                    }, {
+                      "inputPath" : "asyncOutputDoc/*metaData/batchId",
+                      "outputPath" : "batchId",
+                      "inpJsTree" : "#launching_arrow_jsTree_function",
+                      "outpJsTree" : "#landing_arrow_jsTree",
+                      "INPath" : "asyncOutputDoc/*metaData/batchId",
+                      "OUTPath" : "batchId",
+                      "op" : "copy",
+                      "line" : 0,
+                      "dashedLine" : false,
+                      "inType" : "string",
+                      "outType" : "string",
+                      "inTypePath" : "document/document/string",
+                      "outTypePath" : "string"
+                    }, {
+                      "inputPath" : "asyncOutputDoc/*metaData/status",
+                      "outputPath" : "status",
+                      "inpJsTree" : "#launching_arrow_jsTree_function",
+                      "outpJsTree" : "#landing_arrow_jsTree",
+                      "INPath" : "asyncOutputDoc/*metaData/status",
+                      "OUTPath" : "status",
+                      "op" : "copy",
+                      "line" : 0,
+                      "dashedLine" : false,
+                      "inType" : "string",
+                      "outType" : "string",
+                      "inTypePath" : "document/document/string",
+                      "outTypePath" : "string"
+                    } ],
+                    "dropList" : [ {
+                      "path" : "asyncInputDoc",
+                      "typePath" : "document"
+                    }, {
+                      "path" : "output",
+                      "typePath" : "documentList"
+                    } ],
+                    "createList" : [ {
+                      "path" : "batchId",
+                      "value" : "Batch pushed. Batch ID: #{asyncOutputDoc/*metaData/batchId}",
+                      "evaluate" : "EEV",
+                      "typePath" : "string"
+                    }, {
+                      "path" : "status",
+                      "value" : "Batch Status: #{asyncOutputDoc/*metaData/status}",
+                      "evaluate" : "EEV",
+                      "typePath" : "string"
+                    } ],
+                    "serviceType" : "flow",
+                    "requestMethod" : "async",
+                    "status" : "enabled",
+                    "comment" : "Apply JSON operations in parallel threads"
+                  },
+                  "children" : [ ],
+                  "type" : "invoke"
+                }, {
+                  "id" : "j1_18",
+                  "text" : "packages/middleware/pub/service/debugLog",
+                  "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                  "li_attr" : {
+                    "id" : "j1_18"
+                  },
+                  "a_attr" : {
+                    "href" : "#",
+                    "id" : "j1_18_anchor"
+                  },
+                  "state" : {
+                    "loaded" : true,
+                    "opened" : false,
+                    "selected" : false,
+                    "disabled" : false
+                  },
+                  "data" : {
+                    "transformers" : [ {
+                      "op" : "copy",
+                      "from" : "/status",
+                      "to" : "/log",
+                      "inTypePath" : "string",
+                      "outTypePath" : "string"
+                    }, {
+                      "op" : "copy",
+                      "from" : "/batchId",
+                      "to" : "/msg",
+                      "inTypePath" : "string",
+                      "outTypePath" : "string"
+                    } ],
+                    "lines" : [ {
+                      "inputPath" : "status",
+                      "outputPath" : "log",
+                      "inpJsTree" : "#launching_arrow_jsTree",
+                      "outpJsTree" : "#landing_arrow_jsTree_function",
+                      "INPath" : "status",
+                      "OUTPath" : "log",
+                      "op" : "copy",
+                      "line" : 0,
+                      "dashedLine" : false,
+                      "inType" : "string",
+                      "outType" : "string",
+                      "inTypePath" : "string",
+                      "outTypePath" : "string"
+                    }, {
+                      "inputPath" : "batchId",
+                      "outputPath" : "msg",
+                      "inpJsTree" : "#launching_arrow_jsTree",
+                      "outpJsTree" : "#landing_arrow_jsTree_function",
+                      "INPath" : "batchId",
+                      "OUTPath" : "msg",
+                      "op" : "copy",
+                      "line" : 0,
+                      "dashedLine" : false,
+                      "inType" : "string",
+                      "outType" : "string",
+                      "inTypePath" : "string",
+                      "outTypePath" : "string"
+                    } ],
+                    "dropList" : [ {
+                      "path" : "msg",
+                      "typePath" : "string"
+                    }, {
+                      "path" : "status",
+                      "typePath" : "string"
+                    }, {
+                      "path" : "batchId",
+                      "typePath" : "string"
+                    }, {
+                      "path" : "log",
+                      "typePath" : "string"
+                    } ],
+                    "createList" : [ ],
+                    "serviceType" : "service",
+                    "comment" : "Log the batch Id's and status of future document"
+                  },
+                  "children" : [ ],
+                  "type" : "invoke"
+                }, {
+                  "id" : "j1_20",
+                  "text" : "packages/middleware/pub/docList/addDoc",
+                  "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                  "li_attr" : {
+                    "id" : "j1_20"
+                  },
+                  "a_attr" : {
+                    "href" : "#",
+                    "id" : "j1_20_anchor"
+                  },
+                  "state" : {
+                    "loaded" : true,
+                    "opened" : false,
+                    "selected" : false,
+                    "disabled" : false
+                  },
+                  "data" : {
+                    "transformers" : [ {
+                      "op" : "copy",
+                      "from" : "/asyncOutputDoc",
+                      "to" : "/addDoc",
+                      "inTypePath" : "document",
+                      "outTypePath" : "document"
+                    }, {
+                      "op" : "copy",
+                      "from" : "/docList",
+                      "to" : "/docList",
+                      "inTypePath" : "documentList",
+                      "outTypePath" : "documentList"
+                    } ],
+                    "lines" : [ {
+                      "inputPath" : "asyncOutputDoc",
+                      "outputPath" : "addDoc",
+                      "inpJsTree" : "#launching_arrow_jsTree",
+                      "outpJsTree" : "#landing_arrow_jsTree_function",
+                      "INPath" : "asyncOutputDoc",
+                      "OUTPath" : "addDoc",
+                      "op" : "copy",
+                      "line" : 0,
+                      "dashedLine" : false,
+                      "inType" : "document",
+                      "outType" : "document",
+                      "inTypePath" : "document",
+                      "outTypePath" : "document"
+                    }, {
+                      "inputPath" : "docList",
+                      "outputPath" : "docList",
+                      "inpJsTree" : "#launching_arrow_jsTree_function",
+                      "outpJsTree" : "#landing_arrow_jsTree",
+                      "INPath" : "docList",
+                      "OUTPath" : "docList",
+                      "op" : "copy",
+                      "line" : 0,
+                      "dashedLine" : false,
+                      "inType" : "documentList",
+                      "outType" : "documentList",
+                      "inTypePath" : "documentList",
+                      "outTypePath" : "documentList"
+                    } ],
+                    "dropList" : [ {
+                      "path" : "addDoc",
+                      "typePath" : "document"
+                    }, {
+                      "path" : "asyncOutputDoc",
+                      "typePath" : "document"
+                    } ],
+                    "createList" : [ ],
+                    "serviceType" : "service",
+                    "comment" : "Add future documents to List"
+                  },
+                  "children" : [ ],
+                  "type" : "invoke"
+                } ],
+                "type" : "sequence"
+              } ],
+              "type" : "switch"
+            } ],
+            "type" : "repeat"
+          } ],
+          "type" : "sequence"
+        }, {
+          "id" : "j1_39",
+          "text" : "SEQUENCE",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "li_attr" : {
+            "id" : "j1_39"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_39_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : true,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "comment" : "Wait for threads to complete the task"
+          },
+          "children" : [ {
+            "id" : "j1_47",
+            "text" : "MAP",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+            "li_attr" : {
+              "id" : "j1_47"
+            },
+            "a_attr" : {
+              "href" : "#",
+              "id" : "j1_47_anchor"
+            },
+            "state" : {
+              "loaded" : true,
+              "opened" : false,
+              "selected" : false,
+              "disabled" : false
+            },
+            "data" : {
+              "transformers" : [ ],
+              "lines" : [ ],
+              "dropList" : [ ],
+              "createList" : [ ],
+              "comment" : "Dropper"
+            },
+            "children" : [ ],
+            "type" : "map"
+          }, {
+            "id" : "j1_19",
+            "text" : "REPEAT",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/repeat.png",
+            "li_attr" : {
+              "id" : "j1_19"
+            },
+            "a_attr" : {
+              "href" : "#",
+              "id" : "j1_19_anchor"
+            },
+            "state" : {
+              "loaded" : true,
+              "opened" : true,
+              "selected" : false,
+              "disabled" : false
+            },
+            "data" : {
+              "repeatOn" : "success",
+              "interval" : "1",
+              "repeat" : "-1",
+              "comment" : "Repeat until threads are Active"
+            },
+            "children" : [ {
+              "id" : "j1_25",
+              "text" : "packages/middleware/pub/docList/listSize",
+              "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+              "li_attr" : {
+                "id" : "j1_25"
+              },
+              "a_attr" : {
+                "href" : "#",
+                "id" : "j1_25_anchor"
+              },
+              "state" : {
+                "loaded" : true,
+                "opened" : false,
+                "selected" : false,
+                "disabled" : false
+              },
+              "data" : {
+                "transformers" : [ {
+                  "op" : "copy",
+                  "from" : "/size",
+                  "to" : "/size",
+                  "inTypePath" : "integer",
+                  "outTypePath" : "integer"
+                }, {
+                  "op" : "copy",
+                  "from" : "/docList",
+                  "to" : "/docList",
+                  "inTypePath" : "documentList",
+                  "outTypePath" : "documentList"
+                } ],
+                "lines" : [ {
+                  "inputPath" : "size",
+                  "outputPath" : "size",
+                  "inpJsTree" : "#launching_arrow_jsTree_function",
+                  "outpJsTree" : "#landing_arrow_jsTree",
+                  "INPath" : "size",
+                  "OUTPath" : "size",
+                  "op" : "copy",
+                  "line" : 0,
+                  "dashedLine" : false,
+                  "inType" : "integer",
+                  "outType" : "integer",
+                  "inTypePath" : "integer",
+                  "outTypePath" : "integer"
+                }, {
+                  "inputPath" : "docList",
+                  "outputPath" : "docList",
+                  "inpJsTree" : "#launching_arrow_jsTree",
+                  "outpJsTree" : "#landing_arrow_jsTree_function",
+                  "INPath" : "docList",
+                  "OUTPath" : "docList",
+                  "op" : "copy",
+                  "line" : 0,
+                  "dashedLine" : false,
+                  "inType" : "documentList",
+                  "outType" : "documentList",
+                  "inTypePath" : "documentList",
+                  "outTypePath" : "documentList"
+                } ],
+                "dropList" : [ ],
+                "createList" : [ ],
+                "serviceType" : "service",
+                "comment" : "Get size of list of future documents"
+              },
+              "children" : [ ],
+              "type" : "invoke"
+            }, {
+              "id" : "j1_22",
+              "text" : "MAP",
+              "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+              "li_attr" : {
+                "id" : "j1_22"
+              },
+              "a_attr" : {
+                "href" : "#",
+                "id" : "j1_22_anchor"
+              },
+              "state" : {
+                "loaded" : true,
+                "opened" : false,
+                "selected" : false,
+                "disabled" : false
+              },
+              "data" : {
+                "transformers" : [ {
+                  "op" : "copy",
+                  "from" : "/docList",
+                  "to" : "/loopDoc",
+                  "inTypePath" : "documentList",
+                  "outTypePath" : "documentList"
+                } ],
+                "lines" : [ {
+                  "inputPath" : "docList",
+                  "outputPath" : "loopDoc",
+                  "inpJsTree" : "#launching_arrow_jsTree",
+                  "outpJsTree" : "#landing_arrow_jsTree",
+                  "INPath" : "docList",
+                  "OUTPath" : "loopDoc",
+                  "op" : "copy",
+                  "line" : 0,
+                  "dashedLine" : false,
+                  "inType" : "documentList",
+                  "outType" : "documentList",
+                  "inTypePath" : "documentList",
+                  "outTypePath" : "documentList"
+                } ],
+                "dropList" : [ ],
+                "createList" : [ {
+                  "path" : "logMsg",
+                  "value" : "Waiting for threads to complete the task. Number of active threads: #{size}",
+                  "evaluate" : "EEV",
+                  "typePath" : "string"
+                } ],
+                "comment" : "Prepare to loop over future documents to check status"
+              },
+              "children" : [ ],
+              "type" : "map"
+            }, {
+              "id" : "j1_48",
+              "text" : "packages/middleware/pub/service/debugLog",
+              "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+              "li_attr" : {
+                "id" : "j1_48"
+              },
+              "a_attr" : {
+                "href" : "#",
+                "id" : "j1_48_anchor"
+              },
+              "state" : {
+                "loaded" : true,
+                "opened" : false,
+                "selected" : false,
+                "disabled" : false
+              },
+              "data" : {
+                "transformers" : [ {
+                  "op" : "copy",
+                  "from" : "/logMsg",
+                  "to" : "/log",
+                  "inTypePath" : "string",
+                  "outTypePath" : "string"
+                } ],
+                "lines" : [ {
+                  "inputPath" : "logMsg",
+                  "outputPath" : "log",
+                  "inpJsTree" : "#launching_arrow_jsTree",
+                  "outpJsTree" : "#landing_arrow_jsTree_function",
+                  "INPath" : "logMsg",
+                  "OUTPath" : "log",
+                  "op" : "copy",
+                  "line" : 0,
+                  "dashedLine" : false,
+                  "inType" : "string",
+                  "outType" : "string",
+                  "inTypePath" : "string",
+                  "outTypePath" : "string"
+                } ],
+                "dropList" : [ ],
+                "createList" : [ ],
+                "serviceType" : "service",
+                "status" : "disabled"
+              },
+              "children" : [ ],
+              "type" : "invoke"
+            }, {
+              "id" : "j1_49",
+              "text" : "LOOP",
+              "icon" : "/files/gui/middleware/pub/server/ui/icons/loop.png",
+              "li_attr" : {
+                "id" : "j1_49"
+              },
+              "a_attr" : {
+                "href" : "#",
+                "id" : "j1_49_anchor"
+              },
+              "state" : {
+                "loaded" : true,
+                "opened" : true,
+                "selected" : false,
+                "disabled" : false
+              },
+              "data" : {
+                "inArray" : "loopDoc",
+                "outArray" : "loopArrayDoc",
+                "comment" : "loop over the threads future objects to verify their status"
+              },
+              "children" : [ {
+                "id" : "j1_23",
+                "text" : "SWITCH",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/switch.png",
+                "li_attr" : {
+                  "id" : "j1_23"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_23_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : true,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "switch" : "loopDoc/*metaData/status",
+                  "comment" : "Jump to thread status"
+                },
+                "children" : [ {
+                  "id" : "j1_26",
+                  "text" : "CASE",
+                  "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+                  "li_attr" : {
+                    "id" : "j1_26"
+                  },
+                  "a_attr" : {
+                    "href" : "#",
+                    "id" : "j1_26_anchor"
+                  },
+                  "state" : {
+                    "loaded" : true,
+                    "opened" : true,
+                    "selected" : false,
+                    "disabled" : false
+                  },
+                  "data" : {
+                    "case" : "Completed",
+                    "comment" : "Thread completed processing"
+                  },
+                  "children" : [ {
+                    "id" : "j1_50",
+                    "text" : "MAP",
+                    "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+                    "li_attr" : {
+                      "id" : "j1_50"
+                    },
+                    "a_attr" : {
+                      "href" : "#",
+                      "id" : "j1_50_anchor"
+                    },
+                    "state" : {
+                      "loaded" : true,
+                      "opened" : false,
+                      "selected" : false,
+                      "disabled" : false
+                    },
+                    "data" : {
+                      "transformers" : [ {
+                        "op" : "copy",
+                        "from" : "/size",
+                        "to" : "/size",
+                        "condition" : "",
+                        "applyFunction" : "",
+                        "jsFunction" : "return val-1;",
+                        "jsFunctionSig" : "",
+                        "inTypePath" : "integer",
+                        "outTypePath" : "integer"
+                      } ],
+                      "lines" : [ {
+                        "inputPath" : "size",
+                        "outputPath" : "size",
+                        "inpJsTree" : "#launching_arrow_jsTree",
+                        "outpJsTree" : "#landing_arrow_jsTree",
+                        "INPath" : "size",
+                        "OUTPath" : "size",
+                        "op" : "copy",
+                        "line" : 0,
+                        "dashedLine" : false,
+                        "inType" : "integer",
+                        "outType" : "integer",
+                        "applyFunction" : "",
+                        "condition" : "",
+                        "jsFunction" : "return val-1;",
+                        "jsFunctionSig" : "",
+                        "inTypePath" : "integer",
+                        "outTypePath" : "integer"
+                      } ],
+                      "dropList" : [ ],
+                      "createList" : [ {
+                        "path" : "logThreadCompleted",
+                        "value" : "Thread(#{size}) with batchId: #{loopDoc/*metaData/batchId} completed",
+                        "evaluate" : "EEV",
+                        "typePath" : "string"
+                      } ],
+                      "comment" : "substract the size of list by 1"
+                    },
+                    "children" : [ ],
+                    "type" : "map"
+                  }, {
+                    "id" : "j1_54",
+                    "text" : "packages/middleware/pub/service/debugLog",
+                    "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                    "li_attr" : {
+                      "id" : "j1_54"
+                    },
+                    "a_attr" : {
+                      "href" : "#",
+                      "id" : "j1_54_anchor"
+                    },
+                    "state" : {
+                      "loaded" : true,
+                      "opened" : false,
+                      "selected" : false,
+                      "disabled" : false
+                    },
+                    "data" : {
+                      "transformers" : [ {
+                        "op" : "copy",
+                        "from" : "/logThreadCompleted",
+                        "to" : "/log",
+                        "inTypePath" : "string",
+                        "outTypePath" : "string"
+                      } ],
+                      "lines" : [ {
+                        "inputPath" : "logThreadCompleted",
+                        "outputPath" : "log",
+                        "inpJsTree" : "#launching_arrow_jsTree",
+                        "outpJsTree" : "#landing_arrow_jsTree_function",
+                        "INPath" : "logThreadCompleted",
+                        "OUTPath" : "log",
+                        "op" : "copy",
+                        "line" : 0,
+                        "dashedLine" : false,
+                        "inType" : "string",
+                        "outType" : "string",
+                        "inTypePath" : "string",
+                        "outTypePath" : "string"
+                      } ],
+                      "dropList" : [ ],
+                      "createList" : [ ],
+                      "serviceType" : "service",
+                      "status" : "disabled"
+                    },
+                    "children" : [ ],
+                    "type" : "invoke"
+                  } ],
+                  "type" : "sequence"
+                } ],
+                "type" : "switch"
+              } ],
+              "type" : "loop"
+            }, {
+              "id" : "j1_59",
+              "text" : "SEQUENCE",
+              "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+              "li_attr" : {
+                "id" : "j1_59"
+              },
+              "a_attr" : {
+                "href" : "#",
+                "id" : "j1_59_anchor"
+              },
+              "state" : {
+                "loaded" : true,
+                "opened" : true,
+                "selected" : false,
+                "disabled" : false
+              },
+              "data" : {
+                "evaluate" : true,
+                "comment" : "Check if all threads are completed"
+              },
+              "children" : [ {
+                "id" : "j1_51",
+                "text" : "SEQUENCE",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+                "li_attr" : {
+                  "id" : "j1_51"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_51_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : true,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "evaluate" : false,
+                  "condition" : "#{size}<=0"
+                },
+                "children" : [ {
+                  "id" : "j1_46",
+                  "text" : "MAP",
+                  "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+                  "li_attr" : {
+                    "id" : "j1_46"
+                  },
+                  "a_attr" : {
+                    "href" : "#",
+                    "id" : "j1_46_anchor"
+                  },
+                  "state" : {
+                    "loaded" : true,
+                    "opened" : false,
+                    "selected" : false,
+                    "disabled" : false
+                  },
+                  "data" : {
+                    "transformers" : [ ],
+                    "lines" : [ ],
+                    "dropList" : [ ],
+                    "createList" : [ {
+                      "path" : "logMsg",
+                      "value" : "-------------All threads completed processing-------------",
+                      "evaluate" : null,
+                      "typePath" : "string"
+                    } ],
+                    "comment" : "Initialize variables"
+                  },
+                  "children" : [ ],
+                  "type" : "map"
+                }, {
+                  "id" : "j1_60",
+                  "text" : "packages/middleware/pub/service/throwExecption",
+                  "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                  "li_attr" : {
+                    "id" : "j1_60"
+                  },
+                  "a_attr" : {
+                    "href" : "#",
+                    "id" : "j1_60_anchor"
+                  },
+                  "state" : {
+                    "loaded" : true,
+                    "opened" : false,
+                    "selected" : false,
+                    "disabled" : false
+                  },
+                  "data" : {
+                    "transformers" : [ {
+                      "op" : "copy",
+                      "from" : "/logMsg",
+                      "to" : "/msg",
+                      "inTypePath" : "string",
+                      "outTypePath" : "string"
+                    } ],
+                    "lines" : [ {
+                      "inputPath" : "logMsg",
+                      "outputPath" : "msg",
+                      "inpJsTree" : "#launching_arrow_jsTree",
+                      "outpJsTree" : "#landing_arrow_jsTree_function",
+                      "INPath" : "logMsg",
+                      "OUTPath" : "msg",
+                      "op" : "copy",
+                      "line" : 0,
+                      "dashedLine" : false,
+                      "inType" : "string",
+                      "outType" : "string",
+                      "inTypePath" : "string",
+                      "outTypePath" : "string"
+                    } ],
+                    "dropList" : [ ],
+                    "createList" : [ ],
+                    "serviceType" : "service",
+                    "condition" : "",
+                    "comment" : "Throw exception to break the repeat based on condition"
+                  },
+                  "children" : [ ],
+                  "type" : "invoke"
+                } ],
+                "type" : "sequence"
+              } ],
+              "type" : "sequence"
+            } ],
+            "type" : "repeat"
+          } ],
+          "type" : "sequence"
+        } ],
+        "type" : "sequence"
+      }, {
+        "id" : "j1_3",
+        "text" : "CATCH",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "li_attr" : {
+          "id" : "j1_3"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j1_3_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : true,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : {
+          "comment" : "Catch and log exceptions if any"
+        },
+        "children" : [ {
+          "id" : "j1_21",
+          "text" : "packages/middleware/pub/service/utils/getLastErrorDump",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "li_attr" : {
+            "id" : "j1_21"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_21_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "transformers" : [ {
+              "op" : "copy",
+              "from" : "/lastErrorDump",
+              "to" : "/lastErrorDump",
+              "inTypePath" : "document",
+              "outTypePath" : "document"
+            } ],
+            "lines" : [ {
+              "inputPath" : "lastErrorDump",
+              "outputPath" : "lastErrorDump",
+              "inpJsTree" : "#launching_arrow_jsTree_function",
+              "outpJsTree" : "#landing_arrow_jsTree",
+              "INPath" : "lastErrorDump",
+              "OUTPath" : "lastErrorDump",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "document",
+              "outType" : "document",
+              "inTypePath" : "document",
+              "outTypePath" : "document"
+            } ],
+            "dropList" : [ {
+              "path" : "br",
+              "typePath" : "javaObject"
+            }, {
+              "path" : "docList",
+              "typePath" : "documentList"
+            }, {
+              "path" : "size",
+              "typePath" : "integer"
+            }, {
+              "path" : "loopDoc",
+              "typePath" : "documentList"
+            } ],
+            "createList" : [ {
+              "path" : "status",
+              "value" : "Failed while processing file",
+              "evaluate" : null,
+              "typePath" : "string"
+            } ],
+            "serviceType" : "service",
+            "status" : "disabled"
+          },
+          "children" : [ ],
+          "type" : "invoke"
+        }, {
+          "id" : "j1_43",
+          "text" : "packages/middleware/pub/json/toJson",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "li_attr" : {
+            "id" : "j1_43"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_43_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "transformers" : [ {
+              "op" : "copy",
+              "from" : "/lastErrorDump",
+              "to" : "/root",
+              "inTypePath" : "document",
+              "outTypePath" : "document"
+            }, {
+              "op" : "copy",
+              "from" : "/jsonString",
+              "to" : "/jsonString",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            } ],
+            "lines" : [ {
+              "inputPath" : "lastErrorDump",
+              "outputPath" : "root",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "lastErrorDump",
+              "OUTPath" : "root",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "document",
+              "outType" : "document",
+              "inTypePath" : "document",
+              "outTypePath" : "document"
+            }, {
+              "inputPath" : "jsonString",
+              "outputPath" : "jsonString",
+              "inpJsTree" : "#launching_arrow_jsTree_function",
+              "outpJsTree" : "#landing_arrow_jsTree",
+              "INPath" : "jsonString",
+              "OUTPath" : "jsonString",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            } ],
+            "dropList" : [ {
+              "path" : "lastErrorDump",
+              "typePath" : "document"
+            }, {
+              "path" : "root",
+              "typePath" : "document"
+            } ],
+            "createList" : [ ],
+            "serviceType" : "service",
+            "status" : "disabled"
+          },
+          "children" : [ ],
+          "type" : "invoke"
+        }, {
+          "id" : "j1_42",
+          "text" : "packages/middleware/pub/service/debugLog",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "li_attr" : {
+            "id" : "j1_42"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_42_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : true,
+            "disabled" : false
+          },
+          "data" : {
+            "transformers" : [ {
+              "op" : "copy",
+              "from" : "/jsonString",
+              "to" : "/log",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            }, {
+              "op" : "copy",
+              "from" : "/status",
+              "to" : "/msg",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            } ],
+            "lines" : [ {
+              "inputPath" : "jsonString",
+              "outputPath" : "log",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "jsonString",
+              "OUTPath" : "log",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            }, {
+              "inputPath" : "status",
+              "outputPath" : "msg",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "status",
+              "OUTPath" : "msg",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            } ],
+            "dropList" : [ {
+              "path" : "jsonString",
+              "typePath" : "string"
+            } ],
+            "createList" : [ ],
+            "serviceType" : "service",
+            "comment" : "Log exception",
+            "status" : "disabled"
+          },
+          "children" : [ ],
+          "type" : "invoke"
+        } ],
+        "type" : "sequence"
+      }, {
+        "id" : "j1_4",
+        "text" : "FINALLY",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "li_attr" : {
+          "id" : "j1_4"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j1_4_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : true,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : {
+          "comment" : "Flush and close the buffered writer"
+        },
+        "children" : [ {
+          "id" : "j1_27",
+          "text" : "packages/middleware/pub/file/flushAndCloseBW",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "li_attr" : {
+            "id" : "j1_27"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_27_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "transformers" : [ {
+              "op" : "copy",
+              "from" : "/bw",
+              "to" : "/bufferedWriter",
+              "inTypePath" : "javaObject",
+              "outTypePath" : "javaObject"
+            } ],
+            "lines" : [ {
+              "inputPath" : "bw",
+              "outputPath" : "bufferedWriter",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "bw",
+              "OUTPath" : "bufferedWriter",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "javaObject",
+              "outType" : "javaObject",
+              "inTypePath" : "javaObject",
+              "outTypePath" : "javaObject"
+            } ],
+            "dropList" : [ {
+              "path" : "docList",
+              "typePath" : "documentList"
+            }, {
+              "path" : "loopDoc",
+              "typePath" : "documentList"
+            }, {
+              "path" : "bw",
+              "typePath" : "javaObject"
+            }, {
+              "path" : "bufferedWriter",
+              "typePath" : "javaObject"
+            } ],
+            "createList" : [ ],
+            "serviceType" : "service"
+          },
+          "children" : [ ],
+          "type" : "invoke"
+        } ],
+        "type" : "sequence"
+      } ],
+      "type" : "try-catch"
+    } ],
+    "lockedByUser" : "admin"
+  },
+  "consumers" : "",
+  "developers" : "",
+  "enableServiceDocumentValidation" : false
+}

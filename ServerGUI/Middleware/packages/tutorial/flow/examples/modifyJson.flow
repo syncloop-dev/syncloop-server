@@ -1,0 +1,417 @@
+{
+  "latest" : {
+    "createdTS" : "",
+    "input" : [ {
+      "id" : "j2_1",
+      "text" : "jsonList",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.png",
+      "li_attr" : {
+        "id" : "j2_1"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j2_1_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : true,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ {
+        "id" : "j2_2",
+        "text" : "id",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/integer.png",
+        "li_attr" : {
+          "id" : "j2_2"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j2_2_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : false,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : { },
+        "children" : [ ],
+        "type" : "integer"
+      }, {
+        "id" : "j2_3",
+        "text" : "name",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "li_attr" : {
+          "id" : "j2_3"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j2_3_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : false,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : { },
+        "children" : [ ],
+        "type" : "string"
+      }, {
+        "id" : "j2_4",
+        "text" : "email",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "li_attr" : {
+          "id" : "j2_4"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j2_4_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : false,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : { },
+        "children" : [ ],
+        "type" : "string"
+      } ],
+      "type" : "documentList"
+    }, {
+      "id" : "j2_5",
+      "text" : "bw",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.png",
+      "li_attr" : {
+        "id" : "j2_5"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j2_5_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ ],
+      "type" : "javaObject"
+    } ],
+    "output" : [ {
+      "id" : "j3_8",
+      "text" : "lines",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.png",
+      "li_attr" : {
+        "id" : "j3_8"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j3_8_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : true,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ {
+        "id" : "j3_13",
+        "text" : "line",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "li_attr" : {
+          "id" : "j3_13"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j3_13_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : false,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : { },
+        "children" : [ ],
+        "type" : "string"
+      } ],
+      "type" : "documentList"
+    } ],
+    "flow" : [ {
+      "id" : "j1_2",
+      "text" : "LOOP",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/loop.png",
+      "li_attr" : {
+        "id" : "j1_2"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j1_2_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : true,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : {
+        "inArray" : "jsonList",
+        "outArray" : "lines",
+        "status" : "enabled"
+      },
+      "children" : [ {
+        "id" : "j1_1",
+        "text" : "MAP",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+        "li_attr" : {
+          "id" : "j1_1"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j1_1_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : false,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : {
+          "transformers" : [ {
+            "op" : "copy",
+            "from" : "/jsonList/name",
+            "to" : "/targetJson/name",
+            "condition" : "",
+            "applyFunction" : "",
+            "jsFunction" : "",
+            "jsFunctionSig" : "",
+            "inTypePath" : "document/string",
+            "outTypePath" : "document/string"
+          }, {
+            "op" : "copy",
+            "from" : "/jsonList/id",
+            "to" : "/targetJson/id",
+            "inTypePath" : "document/integer",
+            "outTypePath" : "document/integer"
+          }, {
+            "op" : "copy",
+            "from" : "/jsonList/email",
+            "to" : "/targetJson/email",
+            "inTypePath" : "document/string",
+            "outTypePath" : "document/string"
+          } ],
+          "lines" : [ {
+            "inputPath" : "jsonList/name",
+            "outputPath" : "targetJson/name",
+            "inpJsTree" : "#launching_arrow_jsTree",
+            "outpJsTree" : "#landing_arrow_jsTree",
+            "INPath" : "jsonList/name",
+            "OUTPath" : "targetJson/name",
+            "op" : "copy",
+            "line" : 0,
+            "dashedLine" : false,
+            "inType" : "string",
+            "outType" : "string",
+            "inTypePath" : "document/string",
+            "outTypePath" : "document/string",
+            "applyFunction" : "",
+            "condition" : "",
+            "jsFunction" : "",
+            "jsFunctionSig" : ""
+          }, {
+            "inputPath" : "jsonList/id",
+            "outputPath" : "targetJson/id",
+            "inpJsTree" : "#launching_arrow_jsTree",
+            "outpJsTree" : "#landing_arrow_jsTree",
+            "INPath" : "jsonList/id",
+            "OUTPath" : "targetJson/id",
+            "op" : "copy",
+            "line" : 0,
+            "dashedLine" : false,
+            "inType" : "integer",
+            "outType" : "integer",
+            "inTypePath" : "document/integer",
+            "outTypePath" : "document/integer"
+          }, {
+            "inputPath" : "jsonList/email",
+            "outputPath" : "targetJson/email",
+            "inpJsTree" : "#launching_arrow_jsTree",
+            "outpJsTree" : "#landing_arrow_jsTree",
+            "INPath" : "jsonList/email",
+            "OUTPath" : "targetJson/email",
+            "op" : "copy",
+            "line" : 0,
+            "dashedLine" : false,
+            "inType" : "string",
+            "outType" : "string",
+            "inTypePath" : "document/string",
+            "outTypePath" : "document/string"
+          } ],
+          "dropList" : [ ],
+          "createList" : [ {
+            "path" : "targetJson/uuid",
+            "value" : "#{jsonList/id}opj98797u798io",
+            "evaluate" : "EEV",
+            "typePath" : "document/string"
+          } ]
+        },
+        "children" : [ ],
+        "type" : "map"
+      }, {
+        "id" : "j1_3",
+        "text" : "packages/middleware/pub/json/toJson",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+        "li_attr" : {
+          "id" : "j1_3"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j1_3_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : false,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : {
+          "transformers" : [ {
+            "op" : "copy",
+            "from" : "/targetJson",
+            "to" : "/root",
+            "inTypePath" : "document",
+            "outTypePath" : "document"
+          }, {
+            "op" : "copy",
+            "from" : "/jsonString",
+            "to" : "/lines/line",
+            "inTypePath" : "string",
+            "outTypePath" : "document/string"
+          } ],
+          "lines" : [ {
+            "inputPath" : "targetJson",
+            "outputPath" : "root",
+            "inpJsTree" : "#launching_arrow_jsTree",
+            "outpJsTree" : "#landing_arrow_jsTree_function",
+            "INPath" : "targetJson",
+            "OUTPath" : "root",
+            "op" : "copy",
+            "line" : 0,
+            "dashedLine" : false,
+            "inType" : "document",
+            "outType" : "document",
+            "inTypePath" : "document",
+            "outTypePath" : "document"
+          }, {
+            "inputPath" : "jsonString",
+            "outputPath" : "lines/line",
+            "inpJsTree" : "#launching_arrow_jsTree_function",
+            "outpJsTree" : "#landing_arrow_jsTree",
+            "INPath" : "jsonString",
+            "OUTPath" : "lines/line",
+            "op" : "copy",
+            "line" : 0,
+            "dashedLine" : false,
+            "inType" : "string",
+            "outType" : "string",
+            "inTypePath" : "string",
+            "outTypePath" : "document/string"
+          } ],
+          "dropList" : [ {
+            "path" : "targetJson",
+            "typePath" : "document"
+          }, {
+            "path" : "root",
+            "typePath" : "document"
+          } ],
+          "createList" : [ ],
+          "serviceType" : "service",
+          "status" : "enabled"
+        },
+        "children" : [ ],
+        "type" : "invoke"
+      } ],
+      "type" : "loop"
+    }, {
+      "id" : "j1_4",
+      "text" : "packages/middleware/pub/file/writeLines",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+      "li_attr" : {
+        "id" : "j1_4"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j1_4_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : {
+        "transformers" : [ {
+          "op" : "copy",
+          "from" : "/lines",
+          "to" : "/lines",
+          "inTypePath" : "document",
+          "outTypePath" : "documentList"
+        }, {
+          "op" : "copy",
+          "from" : "/bw",
+          "to" : "/bufferedWriter",
+          "inTypePath" : "javaObject",
+          "outTypePath" : "javaObject"
+        } ],
+        "lines" : [ {
+          "inputPath" : "lines",
+          "outputPath" : "lines",
+          "inpJsTree" : "#launching_arrow_jsTree",
+          "outpJsTree" : "#landing_arrow_jsTree_function",
+          "INPath" : "lines",
+          "OUTPath" : "lines",
+          "op" : "copy",
+          "line" : 0,
+          "dashedLine" : false,
+          "inType" : "documentList",
+          "outType" : "documentList",
+          "inTypePath" : "document",
+          "outTypePath" : "documentList"
+        }, {
+          "inputPath" : "bw",
+          "outputPath" : "bufferedWriter",
+          "inpJsTree" : "#launching_arrow_jsTree",
+          "outpJsTree" : "#landing_arrow_jsTree_function",
+          "INPath" : "bw",
+          "OUTPath" : "bufferedWriter",
+          "op" : "copy",
+          "line" : 0,
+          "dashedLine" : false,
+          "inType" : "javaObject",
+          "outType" : "javaObject",
+          "inTypePath" : "javaObject",
+          "outTypePath" : "javaObject"
+        } ],
+        "dropList" : [ {
+          "path" : "jsonList",
+          "typePath" : "documentList"
+        } ],
+        "createList" : [ ],
+        "serviceType" : "service",
+        "status" : "enabled"
+      },
+      "children" : [ ],
+      "type" : "invoke"
+    } ],
+    "lockedByUser" : "admin"
+  },
+  "consumers" : "",
+  "developers" : "",
+  "enableServiceDocumentValidation" : false
+}

@@ -52,10 +52,23 @@ function asyncRestRequest(url, payload, method, callBack){
             console.log(result);
         },
         error: function(errormessage) {
-        	alert(errormessage.responseText);
+        	//alert(errormessage.responseText);
+			swal("Error", errormessage.responseText, "error")
         }
     })
 }
+
+function deleteAllCookies() {
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+}
+
 function getJstreeFromSchema(jsonSchema){
 	
 						var datapipeline=JSON.parse(jsonSchema).properties;
@@ -619,8 +632,9 @@ function createFlowJstree(id) {
 }
 
 function deleteArtifact(filePath){
-  
-  if (confirm("Are you sure you want to delete ('"+filePath+"') ?")) {
+  var references=syncRestRequest("/execute/packages.middleware.pub.service.findReferences.main?serviceFqn="+(filePath).split(".")[0],"GET");
+  var list=JSON.parse(references.payload).list;
+  if (confirm("Service references:-\n\n"+JSON.stringify(list)+"\n\nAre you sure you want to delete ('"+filePath+"') ?")) {
     filePath="files/"+filePath;
     var response=syncRestRequest("/"+filePath, "DELETE");
     if(response.status==200){
@@ -631,7 +645,8 @@ function deleteArtifact(filePath){
        }else
        	location.reload();
     }else
-       alert(JSON.parse(response.payload).error);
+       //alert(JSON.parse(response.payload).error);
+       swal("Error", JSON.parse(response.payload).error, "error");
     
   }
 }
@@ -641,20 +656,25 @@ function packagesContextMenu(node, id)
   var tree = $(id).jstree(true);
   var sel = tree.get_selected()[0];
   var dest=tree.get_path(sel, '/');
-    var items = {
-        renameItem: {
+    var items = {};
+  if(node.type!="properties"){
+  items.renameItem={
             label: "Rename",
             action: function (e) { 
             	var sel = tree.get_selected();
               	tree.edit(sel);
             }
-        },
-        deleteItem: {
+        };
+  
+  }
+  
+  
+        items.deleteItem= {
             label: "Delete",
             action: function (e) { deleteArtifact(dest+"."+node.type); },
             "separator_after": true
-        }
-    };
+        };
+  
       if(dest.startsWith("gui")){
           if (node.type === 'gui-app'){
             items.export= {
@@ -724,15 +744,75 @@ function packagesContextMenu(node, id)
               console.log(sel);
               var elemId=document.getElementById(cid+"_checkbox");
               if(elemId==null)
-                alert("Please select Tools>Build first");
+                //alert("Please select Tools>Build first");
+			    swal("Warning", "Please select Tools>Build first", "warning");
               else{
-               	var buildName=prompt("Please create your build name:", "myBuild");
+                //var includeAllDependencies=confirm("Do you want to export the build with all the dependencies?");
+                //exportBuild('includeDependencies','includeGlobalProperties','includeLocalProperties','includeEndpoint','buildNameInput')
+               	var includeDependencies=$("#includeDependencies").prop("checked");//prompt("Please create your build name:", "myBuild");
+                if(includeDependencies)
+                  includeDependencies=true;
+                else
+                  includeDependencies=false;
+                
+                var includeGlobalProperties=$("#includeGlobalProperties").prop("checked");
+                if(includeGlobalProperties)
+                  includeGlobalProperties=true;
+                else
+                  includeGlobalProperties=false;
+                
+                var includeLocalProperties=$("#includeLocalProperties").prop("checked");
+                if(includeLocalProperties)
+                  includeLocalProperties=true;
+                else
+                  includeLocalProperties=false;
+                
+                var includeEndpoint=$("#includeEndpoint").prop("checked");
+                if(includeEndpoint)
+                  includeEndpoint=true;
+                else
+                  includeEndpoint=false;
+                
+                var buildName=$("#buildNameInput").val();
                 if(buildName!=null && buildName.trim().length>0){
                   	var data =tree.get_json('#', {'flat': true});
-                  	var content=JSON.stringify(data);
-                	var response=syncRestRequest("/build?name="+buildName, "POST", content,"application/json","application/json");
+                    var selected=[];
+                    var counter=0;
+                    for(var index in data) {
+                        var map=data[index];
+                        var elemNode=$("#"+map.id);
+                        var elemChecked=elemNode.attr('checked');
+                        
+                        //alert(JSON.stringify(map)+" : "+elemChecked);
+                      	if(elemChecked){
+                          //alert(JSON.stringify(map));
+                          var elemTreeNode=tree.get_node(map.id);
+                          //alert(elemTreeNode);
+                          var nodePath=tree.get_path(elemTreeNode, '/');
+                          //alert(nodePath);
+                          var artifact={"type":"","asset":""};
+                          artifact.type=map.type;
+                          artifact.asset=nodePath;
+                          selected.push(artifact);
+                          //selected[counter++].nodePath;
+                        }
+					} 
+                  	var content=JSON.stringify(selected);
+                   // alert(content);
+                    var qp="buildName="+buildName+"&includeDependencies="+includeDependencies+"&includeGlobalProperties="+includeGlobalProperties
+                    +"&includeLocalProperties="+includeLocalProperties+"&includeEndpoints="+includeEndpoint;
+                	var response=syncRestRequest("/build?"+qp, "POST", content,"application/json","application/json");
                     if(response.status==200){
-                    	alert(response.payload);
+                        var jObj=JSON.parse(response.payload);
+                        if(jObj.msg=="Success"){
+                          alert(jObj.msg);
+                          var element = document.createElement('a');
+                          element.setAttribute('href',JSON.parse(response.payload).url);
+                          element.setAttribute('target', "_blank");
+                          document.body.appendChild(element);
+                          element.click();
+                        }else
+                          alert(jObj.msg);
                     }
                 }
               }
@@ -791,10 +871,10 @@ function uploadFile(url,key,commaSepFileExts){
                     processData: false,
                     success: function(response){
                         if(response != 0){
-                           alert(response);
+                           alert(JSON.stringify(response));
                         }
                         else{
-                            alert(response);
+                            alert(JSON.stringify(response));
                         }
                       $("#middlewareFile").remove();
                     },
@@ -861,7 +941,7 @@ function createPackageJstree(id) {
 												"folder" : {
 													"icon" : "/files/gui/middleware/pub/server/ui/icons/filesystem/folder.png",
 													"valid_children" : [
-														"folder", "service","package","flow","map","html","js","css","jar"]
+														"folder", "service","package","flow","map","html","js","css","jar","jdbc","sql","properties"]
 												},"service" : {
 													"icon" : "/files/gui/middleware/pub/server/ui/icons/filesystem/cog.png",
 													"valid_children" : []
@@ -888,6 +968,12 @@ function createPackageJstree(id) {
 													"valid_children" : []
 												},"jar" : {
 													"icon" : "/files/gui/middleware/pub/server/ui/icons/jar.png",
+													"valid_children" : []
+												},"jdbc" : {
+													"icon" : "/files/gui/middleware/pub/server/ui/icons/jdbc.png",
+													"valid_children" : []
+												},"sql" : {
+													"icon" : "/files/gui/middleware/pub/server/ui/icons/sql.png",
 													"valid_children" : []
 												}
 											},
@@ -953,11 +1039,12 @@ for (i = 0; i < v.length && i < v.length; i++) {
 }
 
 var currentSelectedSchemaJStreeID=null;
-					function createSchema(type,ref,selected,text) {
-						
+function createSchema(type,ref,selected,text) {
+						//alert(type);
 						//console.log($(currentSelectedSchemaJStreeID));
 						//var ref = $(currentSelectedSchemaJStreeID).jstree(true), 
 						var sel = ref.get_selected();
+  						
                         if(selected)
                           sel[0]=selected;
                         if(!text)
@@ -974,9 +1061,18 @@ var currentSelectedSchemaJStreeID=null;
 							return;
 						} else {*/
                             sel = sel[0];
+  							var selNode=ref.get_node(sel);
+  							var selNodeParent=ref.get_node(selNode.parent);
+  							//alert(selNode.text+", "+selNodeParent.text+", "+type);
+  							if(selNode.text=="config" && selNodeParent.text=="dependency" && type=="properties"){
+                              text="package";
+                            }else
+  							if(type=="properties"){
+                              return;
+                            }
                             if(type=="try-catch"){
                               text = "TCF-Block";
-                          	}else if(type=="sequence" && ref.get_node(sel).type=="switch"){// && sel.parent.type=="switch"){
+                          	}else if(type=="sequence" && selNode.type=="switch"){// && sel.parent.type=="switch"){
                             	//console.log();
                               text="CASE";
                             }
@@ -1016,7 +1112,9 @@ currentSelectedJSONObject={};
 							var alias=$("#serviceAliasValue").val();
 							if(alias.trim().length>1){
 								//alert("loadFile: "+loadFile);
-								var packageName=("/"+loadFile).replace("/files/","alias?fqn=").replace(".service",".main").replace(".flow",".main");
+                                var urlLoadFile=loadFile.trim()+"$";
+								var packageName=("/"+urlLoadFile).replace("/files/","alias?fqn=").replace(".service$",".main").replace(".flow$",".main").replace(".sql$",".main");
+								//var packageName=("/"+loadFile).replace("/files/","alias?fqn=").replace(".service",".main").replace(".flow",".main");
 								
 								packageName=packageName.split("/").join(".");
 								//alert("packageName: "+packageName);
@@ -1039,7 +1137,10 @@ currentSelectedJSONObject={};
 							
 							var properties=$("#servicePropertiesFile").val();
 							if(properties!=null && properties.trim().length>0){
-								var propertyPath=loadFile.replace(".service",".properties").replace(".flow",".properties");//).replace("/files","alias?fqn=packages").replace(".service",".main");
+								var urlLoadFile=loadFile.trim()+"$";
+								var propertyPath=urlLoadFile.replace(".service$",".properties").replace(".flow$",".properties").replace(".sql$",".properties");
+                                //alert(propertyPath);
+                              //var propertyPath=loadFile.replace(".service",".properties").replace(".flow",".properties");//).replace("/files","alias?fqn=packages").replace(".service",".main");
 								var propFileName=(propertyPath.split("/").join(".")).replace("files.","");
 								var propURLPath=("/files/packages/"+propertyPath.split("/")[2]+"/dependency/config/"+propFileName);
 								//alert(propURLPath);
@@ -1054,10 +1155,12 @@ currentSelectedJSONObject={};
 							
 						}
 						modal.style.display = "block";
-						
-						var packageName=("/"+loadFile).replace("/files/","alias?fqn=").replace(".service",".main").replace(".flow",".main");
+						var urlLoadFile=loadFile.trim()+"$";
+						var packageName=("/"+urlLoadFile).replace("/files/","alias?fqn=").replace(".service$",".main").replace(".flow$",".main").replace(".sql$",".main");
+						//var packageName=("/"+loadFile).replace("/files/","alias?fqn=").replace(".service",".main").replace(".flow",".main");
 						packageName=packageName.split("/").join(".");
-						var urlPath="/"+packageName;
+						//alert(packageName);
+                        var urlPath="/"+packageName;
 						//urlPath=urlPath.replace("/files","/alias");
 						var response=syncRestRequest(urlPath, "GET", "");
 						if(response.status==200){
@@ -1078,7 +1181,9 @@ currentSelectedJSONObject={};
 						}else
 							alert(JSON.stringify(response));
 						//alert(JSON.stringify(response));
-						var propertyPath=loadFile.replace(".service",".properties").replace(".flow",".properties");//).replace("/files","alias?fqn=packages").replace(".service",".main");
+                        var urlLoadFile=loadFile.trim()+"$";
+						var propertyPath=urlLoadFile.replace(".service$",".properties").replace(".flow$",".properties").replace(".sql$",".properties");
+						//var propertyPath=loadFile.replace(".service",".properties").replace(".flow",".properties");//).replace("/files","alias?fqn=packages").replace(".service",".main");
 						//alert("propFilePath: "+propertyPath);
 						var propFileName=(propertyPath.split("/").join(".")).replace("files.","");
 						//alert("propFileName: "+propFileName);
@@ -1090,6 +1195,22 @@ currentSelectedJSONObject={};
 						else
 							swal("Error", JSON.stringify(responseProps), "error")
 					}
+
+function openBuildConfigurationForm(){
+  var modal = document.getElementById("exportBuildModelDialog");
+  var span = document.getElementById("closeExportBuildModelDialog");
+  var selectArtifactsButton = document.getElementById("selectArtifactsButton");
+  modal.style.display = "block";
+  span.onclick = function() {
+	  modal.style.display = "none";
+	  //$(".elementProperty").css("display","none");
+  }
+  
+  selectArtifactsButton.onclick = function() {
+      addCheckBoxOnJSTree('#packageManagerJsTree');
+	  modal.style.display = "none";
+  }
+}
 					function openForm(jsTreeId,sel){
 					// Get the modal
 					var modal = document.getElementById("elementPropertyModalDialog");
@@ -1098,10 +1219,12 @@ currentSelectedJSONObject={};
 					var ref = $(jsTreeId).jstree(true); 
 					var sel = ref.get_selected();
 					if(!sel.length){
-						alert("Select an element first");
+						//alert("Select an element first");
+						swal("Warning", "Select an element first", "warning");
 						return;
 					}else if(sel.length>1){
-						alert("Select only one element");
+						//alert("Select only one element");
+						swal("Warning", "Select only one element", "warning");
 						return;
 					}
 					
@@ -1110,6 +1233,7 @@ currentSelectedJSONObject={};
 					sel = ref.get_selected()[0];
 					currentNodePath=ref.get_path(sel, '/');
 					currentSelectedJSONObject.node=sel;
+                    currentSelectedJSONObject.selNode=ref.get_node(sel);
 					currentSelectedJSONObject.jsTreeId=jsTreeId;
 					currentSelectedJSONObject.ref=ref;
 					currentSelectedJSONObject.nodeType=ref.get_type(sel);
@@ -1119,7 +1243,6 @@ currentSelectedJSONObject={};
 						$("#isArray").prop('checked', true);
 					else
 						$("#isArray").prop('checked', false);
-					
 					var elemType=currentSelectedJSONObject.nodeType.replace("List","");
 					$("#elementType").prop("value",elemType);
 					showProperties(elemType);
@@ -1140,7 +1263,20 @@ currentSelectedJSONObject={};
 					}
 					
 					function showProperties(elementType){
-						
+                        var curDataNode=currentSelectedJSONObject.selNode;
+                        for(var key in curDataNode.data) {
+                          var value=curDataNode.data[key];
+                          if(key.endsWith('Description') || key.endsWith('regex'))
+                        	value=atob(value);
+                          //alert(key+":"+value);
+                          if(key=="isRequiredField" && value==true){
+                            //alert(key+":"+value);
+                            //alert($("#"+key));
+                            $("#"+key).prop( "checked", true );
+                          }
+                          else
+     					  	$("#"+key).val(value);
+						} 
 						$(".elementProperty").css("display","none");
 						$("#"+elementType+"Properties").css("display","block");
 						if(currentSelectedJSONObject.nodeType==elementType)
@@ -1148,6 +1284,14 @@ currentSelectedJSONObject={};
 						currentSelectedJSONObject.nodeType=elementType;
 						changeCurrentNodeType($("#isArray").prop('checked'));
 					}
+					function updateDataField(field,value){
+                      var curDataNode=currentSelectedJSONObject.selNode;
+                      if(curDataNode.data==null)
+                        curDataNode.data={};
+                      if(field.endsWith('Description') || field.endsWith('regex'))
+                        value=btoa(value);
+                      curDataNode.data[field]=value;
+                    }
 
  function addDblclickClickListener(id,callback){
    $(id).dblclick(function(event) {

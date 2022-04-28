@@ -2,17 +2,14 @@
 <head>
 <title>Flow Designer</title>
 <link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui/bootstrap-3.4.1-dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui/css/jstree.style.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
 <script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
 <script src="/files/gui/middleware/pub/server/ui/javascript/leader-line.min.js"></script>
 <script src="/files/gui/middleware/pub/server/ui/javascript/mapping.js"></script>
 <script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.min.js"></script>
 <script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.init.js"></script>
-<script src="/files/gui/middleware/pub/server/ui/javascript/mapping.js"></script>
 <link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
 <link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/sweetalert.css">
   </head>
@@ -24,13 +21,12 @@
 			<div class="navbar">  
                      <div class="dropdown">
                       <button class="dropbtn nw">Service 
-                        <i class="fa fa-angle-down"></i>
+                        <i class="fa fa-caret-down"></i>
                       </button>
                       <div class="dropdown-content">
                         <a href="#" onclick="save();">Save</a>
                         <a href="#" onclick="reload();">Reload</a>
-                        <!-- <a href="#" onclick="alert('Inprogress')">Test</a> -->
-						<a href="#" onclick="swal('Inprogress', '', 'warning')">Test</a>
+                        <a href="#" onclick="swal('Inprogress', '', 'warning')">Test</a>
                         <a href="#" onclick="openConfigurationProprties()">Configuration</a>
                         <a href="#" onclick="lockArtifact()">Lock</a>
                         <a href="#" onclick="unLockArtifact()">unLock</a>
@@ -39,11 +35,11 @@
                     </div>
                     <div class="dropdown">
                       <button class="dropbtn nw">Search 
-                        <!-- <i class="-fa fa-angle-down"></i> -->
+                        <i class="fa fa-caret-down"></i>
                       </button>
                       <div class="dropdown-content">
                                               <input type="text" value=""
-                                                  style="box-shadow: inset 0 0 4px #eee; width: 124px; margin: 2px; padding: 2px; border-radius: 0px; border: 1px solid silver; font-size: .8em;"
+                                                  style="box-shadow: inset 0 0 4px #eee; width: 120px; margin: 2px; padding: 2px; border-radius: 0px; border: 1px solid silver; font-size: .8em;"
                                                   id="search_q" placeholder="Search">
                       </div>
                     </div> 
@@ -164,29 +160,47 @@
 			<h4>Apply logic on value</h4>
 			<div id="methodSelectionBox" style="margin-top:10px;">
 			<label style="min-width: 100px;" for="jsFunction">Method: </label> 
-				<select id="jsFunction" class="form-control">
-                    <option value="none">none</option>
+				<select id="jsFunction" onChange="applyInbuiltFunction(this.value)" class="form-control">
+                    <option value=""></option>
 					<option value="trim">trim</option>
 					<option value="emptyToNull">emptyToNull</option>
 					<option value="emptyToBlank">emptyToBlank</option>
 					<option value="numberToString">numberToString</option>
-					<option value="stringToDate">stringToDate</option>
                   	<option value="custom">custom</option>
 				</select>
               <br>
 			</div>
             <div id="conditionConfigurationBox" style="margin-top:10px;">
 			<label style="min-width: 100px;" for="mappingCondition">Condition: </label> 
-				<input class="form-control" type="text" id="mappingCondition">
+				<input class="form-control" type="text" id="mappingCondition" style="with:400px;">
               <br>
 			</div>
 			<div>
 				<label for="functionJSDef" id="jsFunctionSig">function(val)</label>
-                {<br><textarea class="form-control" id="functionJSDef" rows="15" cols="50" value="">return val;</textarea><br>}
+                {<br><textarea class="form-control" id="functionJSDef" rows="15" cols="50" value="" style="width:600px"></textarea><br>}
 			</div>
 		</div>
 </div>
-    
+    <script>
+      function applyInbuiltFunction(func){
+        var functionJSDef=$("#functionJSDef");
+        var funcValue="";
+        if(func=="trim"){
+       		funValue="if(val!=null)\nreturn val.trim();\nelse return null;";
+        }else if(func=="emptyToNull"){
+       		funValue="if(val!=null && val.trim().length==0)\nreturn null;\nelse return val;";
+        }else if(func=="emptyToBlank"){
+       		funValue='if(val==null || val.trim().length==0)return "";\nelse return val;';
+        }else if(func=="numberToString"){
+       		funValue='if(val!=null)return val+"";else return val;';
+        }else if(func=="custom"){
+       		funValue="return val;";
+        }else if(func==""){
+       		funValue="";
+        }
+        functionJSDef.val(funValue);
+      }
+      </script>
 <div id="configureSetValueModelDialog" class="modal">
 		<!-- Modal content -->
 		<div class="modal-content" style="width:400px;height:auto;">
@@ -194,7 +208,7 @@
             <h5>Set</h5>
             <div style="margin-top:10px;">
 			<label style="min-width: 100px;" for="elementValueInput">Value: </label> 
-				<input class="form-control" type="text" id="elementSetValueInput" style="with:400px;">
+				<input class="form-control" type="text" id="elementSetValueInput">
               <br>
 			</div>
           
@@ -231,49 +245,47 @@
 		<div class="modal-content" style="width:650px;height:auto;">
 			<span id="closeConfigurePropertiesModelDialog" class="close">&times;</span>
 			<h3>Configure properties</h3>
+			
 			<div class="row">
 			    <div class="col-md-6" style="padding-left:0px;">
-				    <div id="serviceHTTPMethod" style="margin-top:10px;">
-			        <label style="min-width: 100px;" for="serviceHTTPMethodValue">Method: </label> 
-					<select
-					name="serviceHTTPMethodValue" id="serviceHTTPMethodValue" class="form-control">
-						<option value="GET">GET</option>
-						<option value="POST">POST</option>
-						<option value="DELETE">DELETE</option>
-						<option value="PUT">PUT</option>
-						<option value="PATCH">PATCH</option>
-					</select><br>
-			        </div>
-				</div>
-			    <div class="col-md-6">
-				    <div class="en_ck">
-				    <input type="checkbox" id="enableServiceDocumentValidation" name="enableServiceDocumentValidation"
-				value="false">
-			        <label style="min-width: 100px;" for="enableServiceDocumentValidation"> Enable Validation</label>
-					</div>
-				</div>
+			<div id="serviceHTTPMethod" style="margin-top:10px;">
+			<label style="min-width: 100px;" for="serviceHTTPMethodValue">Method: </label> 
+				<select
+				name="serviceHTTPMethodValue" class="form-control" id="serviceHTTPMethodValue">
+					<option value="GET">GET</option>
+					<option value="POST">POST</option>
+					<option value="DELETE">DELETE</option>
+					<option value="PUT">PUT</option>
+					<option value="PATCH">PATCH</option>
+				</select><br>
+			</div>
 			</div>
 			
+            <div class="col-md-6">
+			<div class="en_ck">
+			<input type="checkbox" id="enableServiceDocumentValidation" name="enableServiceDocumentValidation"
+				value="false">
+			<label style="min-width: 100px;" for="enableServiceDocumentValidation"> Enable Validation</label><br>
+			</div>
+			</div>
+			</div>
 			
-            
 			<div id="serviceAlias" style="margin-top:10px;">
 				<label for="serviceAliasValue">Alias: </label> <input class="form-control" type="text"
-					id="serviceAliasValue" name="serviceAliasValue" value=""><br>
+					id="serviceAliasValue" name="serviceAliasValue" value="" style="width:600px"><br>
 			</div>
           	<div id="serviceConsumersDiv" style="margin-top:10px;">
 				<label for="serviceConsumers">Consumers: </label> <input class="form-control" type="text" title="Add comma separated groups without spaces."
-					id="serviceConsumers" name="serviceConsumers" value=""><br>
+					id="serviceConsumers" name="serviceConsumers" value="" style="width:600px"><br>
 			</div>
           	<div id="serviceDevelopersDiv" style="margin-top:10px;">
 				<label for="serviceDevelopers">Developers: </label> <input class="form-control" type="text" title="Add comma separated groups without spaces."
-					id="serviceDevelopers" name="serviceDevelopers" value=""><br>
+					id="serviceDevelopers" name="serviceDevelopers" value="" style="width:600px"><br>
 			</div>
 			<div id="serviceProperties" style="margin-top:10px;">
 				<label for="servicePropertiesFile">Configuration Properties: </label> <textarea class="form-control" rows="10" cols="50"
-					id="servicePropertiesFile" name="servicePropertiesFile" value=""></textarea><br>
+					id="servicePropertiesFile" name="servicePropertiesFile" value="" style="width:600px"></textarea><br>
 			</div>
-			
-			 
 		</div>
 </div>
    <div id="flowElementPropertyModalDialog" class="modal">
@@ -283,14 +295,14 @@
 			<p id="currentflowElementPath">Properties: -</p>
        		<div id="elementStatus" class="elementStatus" style="padding-bottom:10px;">
               <label style="min-width: 100px;" for="elementStatusInput">Status: </label> <select
-                  name="elementStatusInput" id="elementStatusInput"
-                  onChange="setFlowElemAttribOnSelected('status',this.value);" class="form-control">
+                  name="elementStatusInput" class="form-control" id="elementStatusInput"
+                  onChange="setFlowElemAttribOnSelected('status',this.value);">
                   <option value="enabled">Enabled</option>
                   <option value="disabled">Disabled</option>
               </select>
        		</div>
        		<div id="elementComment" class="elementComment" style="padding-bottom:10px;">
-				<label for="elementCommentInput">Comment: </label> <input class="form-control" type="text" onChange="setFlowElemAttribOnSelected('comment',this.value);" 
+				<label for="elementCommentInput">Comment: </label> <input class="form-control" style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('comment',this.value);" 
 					id="elementCommentInput" name="elementCommentInput" value="comment here"><br>
 			</div>
        		<div id="elementSequence" class="elementSequence" style="padding-bottom:10px;display:none;">
@@ -299,19 +311,19 @@
 				<label style="min-width: 100px;" for="elementSequenceInput"> Enable Condition evaluation</label><br>
 			</div>
        		<div id="elementCase" class="elementCase" style="padding-bottom:10px;display:none;">
-				<label for="elementCaseInput">Case: </label> <input type="text" onChange="setFlowElemAttribOnSelected('case',this.value);"
+				<label for="elementCaseInput">Case: </label> <input class="form-control" type="text" onChange="setFlowElemAttribOnSelected('case',this.value);"
 					id="elementCaseInput" name="elementCaseInput" value="xyz"><br>
 			</div>
        		<div id="elementCondition" class="elementCondition" style="padding-bottom:10px;display:none;">
-				<label for="elementConditionInput">Condition: </label> <input style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('condition',this.value);"
+				<label for="elementConditionInput">Condition: </label> <input class="form-control" style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('condition',this.value);"
 					id="elementConditionInput" name="elementConditionInput" value="%myVar/Path/string%=='xyz'"><br>
 			</div>
        		<div id="elementRepeatInterval" class="elementRepeat" style="padding-bottom:10px;display:none;">
-				<label for="elementRepeatIntervalInput">Interval: </label> <input type="number" min="0" max="300" onChange="setFlowElemAttribOnSelected('interval',this.value);"
+				<label for="elementRepeatIntervalInput">Interval: </label> <input class="form-control" type="number" min="0" max="300" onChange="setFlowElemAttribOnSelected('interval',this.value);"
 					id="elementRepeatIntervalInput" name="elementRepeatIntervalInput" value="0"><br>
 			</div>
        		<div id="elementRepeatTimes" class="elementRepeat" style="padding-bottom:10px;display:none;">
-				<label for="elementRepeatTimesInput">Repeat: </label> <input type="number" min="-1" max="50000" onChange="setFlowElemAttribOnSelected('repeat',this.value);"
+				<label for="elementRepeatTimesInput">Repeat: </label> <input class="form-control" type="number" min="-1" max="50000" onChange="setFlowElemAttribOnSelected('repeat',this.value);"
 					id="elementRepeatTimesInput" name="elementRepeatTimesInput" title="Set -1 to repeat based on condition" value="-1"><br>
 			</div>
        		<div id="elementRepeatOn" class="elementRepeat" style="padding-bottom:10px;display:none;">
@@ -323,16 +335,16 @@
               </select>
        		</div>
        		<div id="elementLoopInputArray" class="elementLoop" style="padding-bottom:10px;display:none;">
-				<label for="elementLoopInputArrayInput">Input Array: </label> <input style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('inArray',this.value);"
+				<label for="elementLoopInputArrayInput">Input Array: </label> <input class="form-control" style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('inArray',this.value);"
 					id="elementLoopInputArrayInput" name="elementLoopInputArrayInput" title="Set the path of array you want to loop over"><br>
 			</div>
        		<div id="elementLoopOutputArray" class="elementLoop" style="padding-bottom:10px;display:none;">
-				<label for="elementLoopOutputArrayInput">Output Array: </label> <input style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('outArray',this.value);"
+				<label for="elementLoopOutputArrayInput">Output Array: </label> <input class="form-control" style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('outArray',this.value);"
 					id="elementLoopOutputArrayInput" name="elementLoopOutputArrayInput" title="Set the path of array you want to map through loop"><br>
 			</div>
        
        		<div id="elementSwitch" class="elementSwitch" style="padding-bottom:10px;display:none;">
-				<label for="elementSwitchInput">Switch: </label> <input type="text" onChange="setFlowElemAttribOnSelected('switch',this.value);"
+				<label for="elementSwitchInput">Switch: </label> <input class="form-control" type="text" onChange="setFlowElemAttribOnSelected('switch',this.value);"
 					id="elementSwitchInput" name="elementSwitchInput" title="Set the path of element on which you want to switch on case"><br>
 			</div>
        		<div id="invokeRequestMethod" class="elementInvoke" style="padding-bottom:10px;display:none;">
@@ -396,11 +408,11 @@
 				value="false" onChange="updateDataField('isRequiredField',this.checked);">
 			<label style="min-width: 100px;" for="isRequiredField"> Required</label><br>
 			<div id="javaObjectProperties" class="elementProperty">
-				<label for="javaObjectWrapper">Java Wrapper: </label> <input type="text" onChange="updateDataField('javaObjectWrapper',this.value);"
+				<label for="javaObjectWrapper">Java Wrapper: </label> <input class="form-control" type="text" onChange="updateDataField('javaObjectWrapper',this.value);"
 					id="javaObjectWrapper" name="javaObjectWrapper" value="java.lang.Object"><br>
 			</div>
 			<div id="refProperties" class="elementProperty">
-				<label for="reference">Reference: </label> <input type="text" onChange="updateDataField('reference',this.value);"
+				<label for="reference">Reference: </label> <input class="form-control" type="text" onChange="updateDataField('reference',this.value);"
 					id="reference" name="reference" value=""><br>
 			</div>
 			<div id="stringProperties" class="elementProperty">
@@ -411,43 +423,43 @@
 					<option value="email">Email</option>
 					<option value="url">URL</option>
 				</select><br> 
-                <label for="regex">Override regex: </label> <input type="text" onChange="updateDataField('regex',this.value);"
+                <label for="regex">Override regex: </label> <input class="form-control" type="text" onChange="updateDataField('regex',this.value);"
 					id="regex" name="regex" value=""><br>
-                <label for="minLength">Min size: </label> <input onChange="updateDataField('minLength',this.value);"
+                <label for="minLength">Min size: </label> <input class="form-control" onChange="updateDataField('minLength',this.value);"
 					type="text" id="minLength" name="minLength" value=""><br>
-				<label for="maxLength">Max size: </label> <input type="text" onChange="updateDataField('maxLength',this.value);"
+				<label for="maxLength">Max size: </label> <input class="form-control" type="text" onChange="updateDataField('maxLength',this.value);"
 					id="maxLength" name="maxLength" value=""><br>
 			</div>
 
 			<div id="intProperties" class="elementProperty">
-				<label for="minimumInteger">minimum: </label> <input type="text" onChange="updateDataField('minimumInteger',this.value);"
+				<label for="minimumInteger">minimum: </label> <input class="form-control" type="text" onChange="updateDataField('minimumInteger',this.value);"
 					id="minimumInteger" name="minimumInteger" value=""><br>
-				<label for="maximumInteger">maximum: </label> <input type="text" onChange="updateDataField('maximumInteger',this.value);"
+				<label for="maximumInteger">maximum: </label> <input class="form-control" type="text" onChange="updateDataField('maximumInteger',this.value);"
 					id="maximumInteger" name="maximumInteger" value=""><br>
 			</div>
 
 
 			<div id="numberProperties" class="elementProperty">
-				<label for="minimumNumber">minimum: </label> <input type="text" onChange="updateDataField('minimumNumber',this.value);"
+				<label for="minimumNumber">minimum: </label> <input class="form-control" type="text" onChange="updateDataField('minimumNumber',this.value);"
 					id="minimumNumber" name="minimumNumber" value=""><br>
-				<label for="maximumNumber">maximum: </label> <input type="text" onChange="updateDataField('maximumNumber',this.value);"
+				<label for="maximumNumber">maximum: </label> <input class="form-control" type="text" onChange="updateDataField('maximumNumber',this.value);"
 					id="maximumNumber" name="maximumNumber" value=""><br>
-                <label for="decimalFormat">Decimal format: </label> <input type="text" onChange="updateDataField('decimalFormat',this.value);"
+                <label for="decimalFormat">Decimal format: </label> <input class="form-control" type="text" onChange="updateDataField('decimalFormat',this.value);"
 					id="decimalFormat" name="decimalFormat" value="0.00"><br>
 			</div>
 
 			<div id="dateProperties" class="elementProperty">
-				<label for="dateFormat">Date format: </label> <input type="text" onChange="updateDataField('dateFormat',this.value);"
+				<label for="dateFormat">Date format: </label> <input class="form-control" type="text" onChange="updateDataField('dateFormat',this.value);"
 					id="dateFormat" name="dateFormat" value=""><br>
-                <label for="toDateFormat">To date format: </label> <input type="text" onChange="updateDataField('toDateFormat',this.value);"
+                <label for="toDateFormat">To date format: </label> <input class="form-control" type="text" onChange="updateDataField('toDateFormat',this.value);"
 					id="toDateFormat" name="toDateFormat" value=""><br>
-                <label for="startDate">Start date: </label> <input type="date" onChange="updateDataField('startDate',this.value);"
+                <label for="startDate">Start date: </label> <input class="form-control" type="date" onChange="updateDataField('startDate',this.value);"
 					id="endDate" name="startDate" value=""><br> 
-                <label for="endDate">End date: </label> <input type="date" id="endDate" onChange="updateDataField('endDate',this.value);"
+                <label for="endDate">End date: </label> <input class="form-control" type="date" id="endDate" onChange="updateDataField('endDate',this.value);"
 					name="endDate" value=""><br>
 			</div>
             <div style="margin-top:10px;">
-				<label for="fieldDescription">Description: </label> <textarea rows="5" cols="35" onChange="updateDataField('fieldDescription',this.value);"
+				<label for="fieldDescription">Description: </label> <textarea class="form-control" rows="5" cols="35" onChange="updateDataField('fieldDescription',this.value);"
 					id="fieldDescription" name="fieldDescription" value="" style="width:310px;height:125px"></textarea><br>
 			</div>
 
@@ -640,16 +652,16 @@ $("#flowDesignerJsTree").on('changed.jstree', function (e, data) {
  // alert("saved to local");
 });
     
-var asyncInDoc=[{
-      "id" : "j2_1",
+var asyncInDoc={
+      "id" : "asyncIn_j2_1",
       "text" : "asyncInputDoc",
       "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
       "li_attr" : {
-        "id" : "j2_1"
+        "id" : "asyncIn_j2_1"
       },
       "a_attr" : {
         "href" : "#",
-        "id" : "j2_1_anchor"
+        "id" : "asyncIn_j2_1_anchor"
       },
       "state" : {
         "loaded" : true,
@@ -659,7 +671,7 @@ var asyncInDoc=[{
       },
       "data" : { },
       "children" : [ {
-        "id" : "j2_2",
+        "id" : "asyncIn_j2_2",
         "text" : "*metaData",
         "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
         "li_attr" : {
@@ -667,7 +679,7 @@ var asyncInDoc=[{
         },
         "a_attr" : {
           "href" : "#",
-          "id" : "j2_2_anchor"
+          "id" : "asyncIn_j2_2_anchor"
         },
         "state" : {
           "loaded" : true,
@@ -680,18 +692,18 @@ var asyncInDoc=[{
         "type" : "document"
       } ],
       "type" : "document"
-    }];
+    };
     
-    var asyncOutDoc=[{
+    var asyncOutDoc={
       "id" : "j3_1",
       "text" : "asyncOutputDoc",
       "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
       "li_attr" : {
-        "id" : "j3_1"
+        "id" : "asyncOut_j3_1"
       },
       "a_attr" : {
         "href" : "#",
-        "id" : "j3_1_anchor"
+        "id" : "asyncOut_j3_1_anchor"
       },
       "state" : {
         "loaded" : true,
@@ -701,15 +713,15 @@ var asyncInDoc=[{
       },
       "data" : { },
       "children" : [ {
-        "id" : "j3_2",
+        "id" : "asyncOut_j3_2",
         "text" : "*metaData",
         "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
         "li_attr" : {
-          "id" : "j3_2"
+          "id" : "asyncOut_j3_2"
         },
         "a_attr" : {
           "href" : "#",
-          "id" : "j3_2_anchor"
+          "id" : "asyncOut_j3_2_anchor"
         },
         "state" : {
           "loaded" : true,
@@ -719,7 +731,7 @@ var asyncInDoc=[{
         },
         "data" : { },
         "children" : [ {
-          "id" : "j3_3",
+          "id" : "asyncOut_j3_3",
           "text" : "batchId",
           "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
           "li_attr" : {
@@ -727,7 +739,7 @@ var asyncInDoc=[{
           },
           "a_attr" : {
             "href" : "#",
-            "id" : "j3_3_anchor"
+            "id" : "asyncOut_j3_3_anchor"
           },
           "state" : {
             "loaded" : true,
@@ -739,15 +751,15 @@ var asyncInDoc=[{
           "children" : [ ],
           "type" : "string"
         }, {
-          "id" : "j3_4",
+          "id" : "asyncOut_j3_4",
           "text" : "status",
           "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
           "li_attr" : {
-            "id" : "j3_4"
+            "id" : "asyncOut_j3_4"
           },
           "a_attr" : {
             "href" : "#",
-            "id" : "j3_4_anchor"
+            "id" : "asyncOut_j3_4_anchor"
           },
           "state" : {
             "loaded" : true,
@@ -762,7 +774,7 @@ var asyncInDoc=[{
         "type" : "document"
       } ],
       "type" : "document"
-    }];
+    };
     
 $("#flowDesignerJsTree").on('select_node.jstree', function (e, data) {
         mapperObj.clean();
@@ -795,24 +807,28 @@ $("#flowDesignerJsTree").on('select_node.jstree', function (e, data) {
                 var inData=response.input;
                 var outData=response.output;
                 var randomId=Math.floor(Math.random() * 10000);
-                modifyJsTreeIds(inData,randomId+"_funcInput");
-                modifyJsTreeIds(outData,randomId+"_funcOutput");
+                
                 
               	if(data.node.data.requestMethod=="async"){
-                    //console.log(asyncInDoc);
-                    modifyJsTreeIds(asyncInDoc,randomId+"_async_funcInput");
-                    modifyJsTreeIds(asyncOutDoc,randomId+"_async_funcOutput");
-                    inData.push(asyncInDoc[0].children[0]);
-                    asyncInDoc[0].children=inData;
+                    var asyncTempInDoc=JSON.parse(JSON.stringify(asyncInDoc));
+                    var asyncTempOutDoc=JSON.parse(JSON.stringify(asyncOutDoc));
+                    
+                    //modifyJsTreeIds(asyncTempInDoc,randomId+"_async_funcInput");
+                    //modifyJsTreeIds(asyncTempOutDoc,randomId+"_async_funcOutput");
+                    //inData.push(asyncTempInDoc[0].children[0]);
+                    $.merge(asyncTempInDoc.children,inData);
+                    //asyncTempInDoc[0].children.concat(inData);
 
-                    outData.push(asyncOutDoc[0].children[0]);
-                    asyncOutDoc[0].children=outData;
-                  
-                	inData=asyncInDoc;
-                    outData=asyncOutDoc;
+                    //outData.push(asyncTempOutDoc[0].children[0]);
+                    $.merge(asyncTempOutDoc.children,outData);
+                    //asyncTempOutDoc[0].children.concat(outData);
+                    
+                	inData=[asyncTempInDoc];
+                    outData=[asyncTempOutDoc];
                   
                 }
-              	
+              	modifyJsTreeIds(inData,randomId+"_funcInput");
+                modifyJsTreeIds(outData,randomId+"_funcOutput");
               	
           		launching_arrow_jsTree_function_ref.settings.core.data=outData;
           		launching_arrow_jsTree_function_ref.refresh();
@@ -1027,12 +1043,15 @@ function save(servicePath){
 		var response=syncRestRequest(("/flow/"+servicePath).replace("/flow/files/","/flow/"), "POST", data);
 		if(response.status==200){
 			localStorage.setItem(loadFile, "");
-			 swal("Accepted", "Your all changed have been saved successfully", "success", function(){reload();})
-          	
+			//alert("Saved");
+			swal("Saved !!", "Saved", "success");
+          	reload();
 		}else
-			swal("Accepted", JSON.parse(response.payload).error, "error");
+			//alert(JSON.parse(response.payload).error);
+			swal('Error', JSON.parse(response.payload).error, 'error');
 	}else
-		swal("Rejected", "No changes to save", "error");
+		//alert("No changes to save");
+		swal("Warning !!", "No changes to save" , "warning");
 }
 function reload(){
     localStorage.setItem(loadFile, "");
@@ -1108,7 +1127,8 @@ function openSelectServiceModalDialog(jsTreeId,sel){
 	  swal("Warning !!", "Select an element first" , "warning");
       return;
   }else if(sel.length>1){
-      alert("Select only one element");
+      //alert("Select only one element");
+	  swal("Warning !!", "Select only one element" , "warning");
       return;
   }
   modal.style.display = "block";
@@ -1202,12 +1222,15 @@ function showMapLinePropertiesModelDialog(){
   	console.log(mapperObj.selectedLines);
     var lines=mapperObj.selectedLines;
     if(lines==null || lines.length!=1){
-      alert("Please ensure that only one mapping line is red.")
+      //alert("Please ensure that only one mapping line is red.")
+	  swal("Warning !!", "Please ensure that only one mapping line is red." , "warning");
       modal.style.display="none";
       return;
     }
     var line=lines[0];
+    
   	var indexes=line.INPath.match(/#\d+/g);
+    console.log(indexes);
   	var html="";
     var index=null;
     if(indexes!=null){
@@ -1241,7 +1264,7 @@ function showMapLinePropertiesModelDialog(){
           $("#targetPath").html(html);
      // }
     }else
-      $("#targetPath").html(line.INPath);
+      $("#targetPath").html(line.OUTPath);
   	
   	$("#mappingCondition").val(line.condition);
     
@@ -1297,10 +1320,12 @@ function openFlowElementProperties(jsTreeId,sel){
 	var ref = $(jsTreeId).jstree(true); 
 	var sel = ref.get_selected();
 	if(!sel.length){
-		alert("Select an element first");
+		//alert("Select an element first");
+		swal("Warning !!", "Select an element first" , "warning");
 		return;
 	}else if(sel.length>1){
-		alert("Select only one element");
+		//alert("Select only one element");
+		swal("Warning !!", "Select only one element" , "warning");
 		return;
 	}
 	
