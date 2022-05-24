@@ -16,6 +16,7 @@ import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.model.time.ExecutionTime;
 import com.cronutils.parser.CronParser;
 import io.timeandspace.cronscheduler.CronScheduler;
+import java.time.format.DateTimeFormatter;
 public final class getSchedulerJobData{
 	public static final void main(DataPipeline dataPipeline) throws SnippetException{
 try {
@@ -35,6 +36,7 @@ try {
     	throw new SnippetException(dataPipeline,"Snippet exception", new Exception(e));
   }
 	}
+private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
 private static final Map<String,Map<String,String>> jobMapData=new ConcurrentHashMap<String,Map<String,String>>();
 	private static Thread schedulerThread=new Thread(new Runnable() {
 	
@@ -85,22 +87,22 @@ private static final Map<String,Map<String,String>> jobMapData=new ConcurrentHas
                                     ZonedDateTime startedAt = ZonedDateTime.now();
                                     jobData.put("status","running");
                                     jobData.put("internal_status","running");
-                                    jobData.put("start_time",startedAt+"");
+                                    jobData.put("start_time",dtf.format(startedAt));
                                     jobData.put("end_time","");
                                     jobData.put("next_run",getNextInstant(cronExpression)+"");
                         			dp.put("jobData",jobData);
                                     dp.log("Calling startJob for "+serviceFqn+" at time: "+startedAt);
                                     ServiceUtils.execute("packages.ekaScheduler.cronJob.handler.startJob.main", dp);
-                                    ZonedDateTime endededAt = ZonedDateTime.now();
-                                    dp.log(serviceFqn+" ended at time: "+endededAt);
-                                    dp.log(serviceFqn+" : "+(endededAt.toInstant().toEpochMilli()-startedAt.toInstant().toEpochMilli())+"ms");
+                                    ZonedDateTime endedAt = ZonedDateTime.now();
+                                    dp.log(serviceFqn+" ended at time: "+dtf.format(endedAt));
+                                    dp.log(serviceFqn+" took : "+(endedAt.toInstant().toEpochMilli()-startedAt.toInstant().toEpochMilli())+"ms to finish the job.");
                                     if(dp.get("error")==null)
                                       dp.log(serviceFqn+": Service execution completed successfully");
                                 	else
                                       dp.log(serviceFqn+": Service execution failed. "+dp.get("error"));
                                     jobData.put("status","Completed");
                         			jobData.put("internal_status","completed");
-                                    jobData.put("end_time",endededAt+"");
+                                    jobData.put("end_time",dtf.format(endedAt));
                                 } catch (Exception e) {
                                     dp.log(serviceFqn+": Service execution failed. "+e.getMessage());
                                     jobData.put("status","failed");
@@ -123,6 +125,8 @@ private static final Map<String,Map<String,String>> jobMapData=new ConcurrentHas
    });
 
 private static Instant getNextInstant(String cronExpression) {
+        if(cronExpression.equals("0"))
+          return ZonedDateTime.now().toInstant();
 		CronDefinition cronDefinition = CronDefinitionBuilder.instanceDefinitionFor(CronType.UNIX);
 		CronParser parser = new CronParser(cronDefinition);
 

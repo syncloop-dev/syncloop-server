@@ -1,0 +1,52 @@
+{
+  "input" : [ {
+    "id" : "j1_1",
+    "text" : "docList",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.png",
+    "li_attr" : {
+      "id" : "j1_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "documentList"
+  }, {
+    "id" : "j1_2",
+    "text" : "deleteDoc",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "li_attr" : {
+      "id" : "j1_2"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_2_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : true,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "document"
+  } ],
+  "output" : [ ],
+  "package" : "cGFja2FnZSBwYWNrYWdlcy5taWRkbGV3YXJlLnB1Yi5kb2NMaXN0Ow==",
+  "imports" : "aW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLkRhdGFQaXBlbGluZTsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLlNlcnZpY2VVdGlsczsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS50ZW1wbGF0ZS5TbmlwcGV0RXhjZXB0aW9uOwppbXBvcnQgamF2YS51dGlsLio7",
+  "main" : "dHJ5IHsKCQlMaXN0PE1hcDxTdHJpbmcsT2JqZWN0Pj4gaW5wdXRMaXN0PWRhdGFQaXBlbGluZS5nZXRBc0xpc3QoImRvY0xpc3QiKTsKICAgICAgICBpZihpbnB1dExpc3QhPW51bGwpewogICAgICAgICAgTWFwPFN0cmluZyxPYmplY3Q+IGRlbGV0ZURvYz1kYXRhUGlwZWxpbmUuZ2V0QXNNYXAoImRlbGV0ZURvYyIpOwogICAgICAgICAgaW5wdXRMaXN0LnJlbW92ZShkZWxldGVEb2MpOwogICAgICAgIH0KICB9IGNhdGNoIChFeGNlcHRpb24gZSkgewoJCWRhdGFQaXBlbGluZS5jbGVhcigpOwogIAkJZGF0YVBpcGVsaW5lLnB1dCgiZXJyb3IiLGUuZ2V0TWVzc2FnZSgpKTsKICAgIAl0aHJvdyBuZXcgU25pcHBldEV4Y2VwdGlvbihkYXRhUGlwZWxpbmUsIlNuaXBwZXQgZXhjZXB0aW9uIiwgbmV3IEV4Y2VwdGlvbihlKSk7CiAgfQ==",
+  "staticWorkspace" : "",
+  "version" : "v1",
+  "consumers" : "",
+  "developers" : "",
+  "lockedByUser" : "ekaDev"
+}

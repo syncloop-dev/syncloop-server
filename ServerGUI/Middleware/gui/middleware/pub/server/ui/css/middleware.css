@@ -11,7 +11,7 @@ body {
   height:100%;
   width:100%;
   background: #fff;
-  font-size:13px;
+  font-size:12px;
 }
 .row {
     margin-right: 0px;
@@ -43,6 +43,7 @@ span.glyphicon.glyphicon-log-in {
 
 #currentServiceName {
   color: #6e6f81c4;
+  font-size: 12px;
   padding-top: 15px !important;
 }
 
@@ -54,7 +55,7 @@ span.glyphicon.glyphicon-log-in {
 	overflow: hidden;
 	text-overflow: ellipsis;
     text-align:left;
-	color:#444444;
+	color:#121212;
 }
 
 
@@ -191,7 +192,8 @@ div.jstree-table-cell-root-flowDesignerJsTree {
 	padding: 20px;
 	border: 1px solid #888;
 	width: 300px; /* Could be more or less, depending on screen size */
-	height: 400px;
+	/* height: 400px; */
+	height: auto !important;
 }
 
 /* The Close Button */
@@ -219,8 +221,8 @@ div.jstree-table-cell-root-flowDesignerJsTree {
 
 .btn {
 	display: inline-block;
-	padding-left: 5px;
-	padding-right: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
 	margin-bottom: 0;
 	font-size: 14px;
 	font-weight: normal;
@@ -308,15 +310,25 @@ width:100%;
 div#mostRecentlyOpened a:hover {
     /* background: #1d1d2ee3;
     border-radius: 10px 10px 0px 0px; */
-	border-bottom: solid 2px #ff6c37;
+	border-bottom: solid 2px #3276b1 ;
+	color: #151515;
+}
+
+div#mostRecentlyOpened a.active {
+	border-bottom: solid 2px #3276b1 ;
+	color: #151515;
+}
+
+#mostRecentlyOpened a {
+  font-size: 12px;
 }
 
 .dropdown-content {
   display: none;
   position: fixed;
   background-color: #f9f9f9;
-  max-width: 160px;
-  width: 150px;
+  max-width: 190px;
+  width: 190px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 2000;
   border: 1px solid #bbb;
@@ -510,13 +522,16 @@ div::-webkit-scrollbar-thumb {
   background: #f9f9f9;
   /* padding-top: 15px !important;  */
   border-right: solid 1px #eaebed;
+  /* padding-bottom: 50px !important; */
 }
 #flowDesignerJsTreeContainer {
   background: #fff;
+  /* padding-bottom: 50px !important; */
 }
 #output_schema_editor_jsTree_container {
   background: #f9f9f9;
-  padding-top: 15px !important;
+  padding-top: 5px !important;
+  /* padding-bottom: 50px !important; */
 }
 #iframe_container {
   background: #fbfbfb;
@@ -524,7 +539,7 @@ div::-webkit-scrollbar-thumb {
 #packageManagerJsTree {
   background: #f9f9f9;
   border-right: solid 1px #eaebed;
-  padding-top: 15px !important;
+  padding-top: 5px !important;
 }
 .jstree-anchor i {
   margin-left: 6px !important;
@@ -535,7 +550,7 @@ div::-webkit-scrollbar-thumb {
   margin-bottom: 2px;
 }
 
-#packageManagerJsTree .jstree-anchor{color:#444444;}
+#packageManagerJsTree .jstree-anchor{color:#121212; font-size: 12px;}
 
 #input_schema_editor_jsTree_container ul li ul li {
   margin-top: 2px;
@@ -547,24 +562,24 @@ div::-webkit-scrollbar-thumb {
 }
 
 .jstree-default .jstree-wholerow-clicked {
-  background: #eeeeee;
+  background: #83acd938;
 }
 
 #flowDesignerJsTreeContainer .jstree-wholerow-clicked {
-  background: #f2f2f2;
+  background: #83acd938;
 }
 
 #input_schema_editor_jsTree_container .jstree-default .jstree-wholerow-clicked {
-  background:#eeeeee;
+  background:#83acd938;
 }
 
 #packageManagerJsTree .jstree-wholerow-hovered {
- background:#eeeeee !important;
+ background:#83acd938 !important;
 }
 
 #packageManagerJsTree ul li {
   font-size: 13px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 
 /* #packageManagerJsTree {
@@ -581,31 +596,33 @@ div::-webkit-scrollbar-thumb {
 }
 
 #flowDesignerJsTree ul li ul li {
-  border-top: solid 1px #e9ebec;
+  /* border-top: solid 1px #e9ebec; */
   margin: 0px;
 }
 
-#flowDesignerJsTree ul li .jstree-anchor{color:#040d21;}
+#flowDesignerJsTree ul li .jstree-anchor{color:#040d21; font-size: 12.5px;}
 
 #flowDesignerJsTree .jstree-anchor{
-	line-height:25px;
-	height:25px;
+	line-height:27px;
+	height:27px;
 }
 
 #flowDesignerJsTree .jstree-striped {
   min-width: 98%;
   margin: 1%;
-  border: solid 1px #eaebed;
+  border: solid 1px #f9f9f9;
     border-left-color: rgb(234, 235, 237);
     border-left-style: solid;
     border-left-width: 1px;
   border-radius: 4px;
-  border-left: solid 2px #0d7cef;
+  border-left: solid 2px #3276b1 ;
+  background-image:url("/files/gui/middleware/pub/server/ui/icons/bg-stp.png");
   /* background-image: linear-gradient(to bottom, #f9f9f9, #f4f4f4, #f9f9f9, #fbfbfb, #fff); */
-  background-image: linear-gradient(to bottom, #fff, #fff, #f9f9f9, #f4f4f4, #f9f9f9);
+  /* background-image: linear-gradient(to bottom, #fff, #fff, #f9f9f9, #f4f4f4, #f9f9f9); */
+  box-shadow: 3px 4px 15px rgba(50, 50, 50, 0.1);
 }
 
-#flowDesignerJsTree .jstree-wholerow{height:25px;}
+#flowDesignerJsTree .jstree-wholerow{height:27px;}
 #flowDesignerJsTree .jstree-icon:empty{margin-top:1px;}
 
 #flowDesignerJsTree {
@@ -622,12 +639,14 @@ div::-webkit-scrollbar-thumb {
   background: #f9f9f9;
 }
 
-#centerServiceName{height:22px; background:#f9f9f9; height:35px; line-height:35px;}
+#centerServiceName{height:22px; background:#f9f9f9; height:35px; line-height:35px; color: #6e6f81c4;
+font-size: 12px;}
 
 .jstree-default > .jstree-striped{background:none;}
 
 .eka_logo img {
-  margin: 6px 0px 0px;
+  margin: 9px 0px 0px;
+  width: 40px;
 }
 
 .eka_logo {
@@ -644,22 +663,28 @@ div::-webkit-scrollbar-thumb {
 .dropbtn.nw {
   background: #e5e5e5;
   border-radius: 4px;
-  margin: 7px 0px 7px 15px;
+  margin: 7px 0px 7px 10px;
   height: 30px;
+  font-size: 11.5px;
   padding: 6px 10px;
-  color: #000;
+  color: #101010;
+}
+
+.dropbtn.nw i {
+  color: #505050;
+  padding-left: 1px;
 }
 
 #map {
   border: none !important;
 }
 
-#flowDesignerJsTree #j1_2 {
+/* #flowDesignerJsTree #j1_2 {
   border-top: solid 1px #eee;
 }
-
+ */
 #input_schema_editor_jsTree {
-  padding-top: 15px !important;
+  padding-top: 5px !important;
 }
 
 .modal-content h3 {
@@ -680,8 +705,12 @@ div::-webkit-scrollbar-thumb {
 }
 
 #flowDesignerJsTreeContainer .jstree .jstree-open > .jstree-children{padding-left:6px;}
-#mostRecentlyOpened a:nth-child(2):hover {
+/* #mostRecentlyOpened a:nth-child(2):hover {
   border: transparent;
+} */
+
+#mostRecentlyOpened a.active:first-child {
+  border: none !important;
 }
 
 span.glyphicon.glyphicon-pushpin.changeTag {
@@ -695,4 +724,39 @@ span.glyphicon.glyphicon-pushpin.changeTag {
 .glyphicon.glyphicon-pencil.valueTag {
   margin-top: 7px;
 }
+
+.leader-line {
+  z-index: 999;
+}
+
+#j1_7_status {
+  color: #aaa !important;
+}
+
+#configureSetValueModelDialog {
+  z-index: 9999;
+}
+
+#flowElementPropertyModalDialog {
+  z-index: 9999;
+}
+
+div#configurePropertiesModelDialog {
+    z-index: 9999;
+}
+
+div#elementPropertyModalDialog {
+    z-index: 9999;
+}
+
+div#configureMapLinePropertiesModelDialog {
+    z-index: 9999;
+}
+
+/* #flowDesignerJsTreeContainer li:nth-child(odd) {
+    background: red;
+}
+#flowDesignerJsTreeContainer li:nth-child(even) {
+    background: blue;
+} */
 /* new css start here 05 april 2022 */

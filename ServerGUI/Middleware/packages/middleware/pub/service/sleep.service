@@ -2,7 +2,7 @@
   "input" : [ {
     "id" : "j1_1",
     "text" : "milli",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_1"
     },

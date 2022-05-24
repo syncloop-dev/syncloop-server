@@ -1,0 +1,32 @@
+{
+  "input" : [ {
+    "id" : "j1_1",
+    "text" : "bufferedWriter",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.png",
+    "li_attr" : {
+      "id" : "j1_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "javaObject"
+  } ],
+  "output" : [ ],
+  "package" : "cGFja2FnZSBwYWNrYWdlcy5taWRkbGV3YXJlLnB1Yi5maWxlOw==",
+  "imports" : "aW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLkRhdGFQaXBlbGluZTsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLlNlcnZpY2VVdGlsczsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS50ZW1wbGF0ZS5TbmlwcGV0RXhjZXB0aW9uOwppbXBvcnQgamF2YS5pby5CdWZmZXJlZFdyaXRlcjs=",
+  "main" : "dHJ5IHsKICAgIAlCdWZmZXJlZFdyaXRlciBidWZmZXJlZFdyaXRlciA9IChCdWZmZXJlZFdyaXRlcilkYXRhUGlwZWxpbmUuZ2V0KCJidWZmZXJlZFdyaXRlciIpOwogICAgICAgIGJ1ZmZlcmVkV3JpdGVyLmZsdXNoKCk7CiAgCQlidWZmZXJlZFdyaXRlci5jbG9zZSgpOwogICAgICAgIGRhdGFQaXBlbGluZS5sb2coIi0tLS0tLS0tLS0tV3JpdGluZyBCeXRlcyBjb21wbGV0ZWQtLS0tLS0tLS0tLS0tIik7CiAgfSBjYXRjaCAoRXhjZXB0aW9uIGUpIHsKCQlkYXRhUGlwZWxpbmUuY2xlYXIoKTsKICAJCWRhdGFQaXBlbGluZS5wdXQoImVycm9yIixlLmdldE1lc3NhZ2UoKSk7CiAgICAJdGhyb3cgbmV3IFNuaXBwZXRFeGNlcHRpb24oZGF0YVBpcGVsaW5lLCJTbmlwcGV0IGV4Y2VwdGlvbiIsIG5ldyBFeGNlcHRpb24oZSkpOwogIH0=",
+  "staticWorkspace" : "",
+  "version" : "v1",
+  "consumers" : "",
+  "developers" : "",
+  "lockedByUser" : "ekaDev"
+}

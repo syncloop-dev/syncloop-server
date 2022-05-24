@@ -2,7 +2,7 @@
   "input" : [ {
     "id" : "j1_2",
     "text" : "*payload",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.svg",
     "li_attr" : {
       "id" : "j1_2"
     },
@@ -22,7 +22,7 @@
   }, {
     "id" : "j1_3",
     "text" : "asset",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_3"
     },
@@ -42,7 +42,7 @@
   }, {
     "id" : "j1_1",
     "text" : "type",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_1"
     },
@@ -82,7 +82,7 @@
   }, {
     "id" : "j1_5",
     "text" : "includeDependencies",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.svg",
     "li_attr" : {
       "id" : "j1_5"
     },
@@ -102,7 +102,7 @@
   }, {
     "id" : "j1_6",
     "text" : "includeGlobalProperties",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.svg",
     "li_attr" : {
       "id" : "j1_6"
     },
@@ -122,7 +122,7 @@
   }, {
     "id" : "j1_7",
     "text" : "includeLocalProperties",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.svg",
     "li_attr" : {
       "id" : "j1_7"
     },
@@ -142,7 +142,7 @@
   }, {
     "id" : "j1_8",
     "text" : "includeEndpoints",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.svg",
     "li_attr" : {
       "id" : "j1_8"
     },
@@ -163,7 +163,7 @@
   "output" : [ {
     "id" : "j2_1",
     "text" : "url",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_1"
     },
@@ -183,7 +183,7 @@
   }, {
     "id" : "j2_2",
     "text" : "msg",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_2"
     },

@@ -1,0 +1,52 @@
+{
+  "input" : [ {
+    "id" : "j1_1",
+    "text" : "lines",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/textArr.png",
+    "li_attr" : {
+      "id" : "j1_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : true,
+      "selected" : true,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "stringList"
+  } ],
+  "output" : [ {
+    "id" : "j2_1",
+    "text" : "root",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.png",
+    "li_attr" : {
+      "id" : "j2_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j2_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "documentList"
+  } ],
+  "package" : "cGFja2FnZSBwYWNrYWdlcy5taWRkbGV3YXJlLnB1Yi5qc29uOw==",
+  "imports" : "aW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLkRhdGFQaXBlbGluZTsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLlNlcnZpY2VVdGlsczsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS50ZW1wbGF0ZS5TbmlwcGV0RXhjZXB0aW9uOwppbXBvcnQgamF2YS51dGlsLio7",
+  "main" : "dHJ5ewogIC8vU3RyaW5nIGpzb25TdHJpbmc9IiI7IAogIFN0cmluZ1tdIGpzb25MaXN0PShTdHJpbmdbXSlkYXRhUGlwZWxpbmUuZ2V0KCJsaW5lcyIpOwogIExpc3Q8T2JqZWN0PiByb290PW5ldyBBcnJheUxpc3Q8PigpOwogIGZvcihTdHJpbmcganNvblN0cmluZzoganNvbkxpc3QpewogICAgLy9kYXRhUGlwZWxpbmUubG9nKGpzb25TdHJpbmcpOwogICAgTWFwPFN0cmluZyxPYmplY3Q+IG1hcD1TZXJ2aWNlVXRpbHMuanNvblRvTWFwKCJ7XCJqc29uRG9jXCI6Iitqc29uU3RyaW5nKyJ9Iik7CiAgICBPYmplY3Qgb2JqPW1hcC5nZXQoImpzb25Eb2MiKTsKICAgIHJvb3QuYWRkKG9iaik7CiAgfQogIGRhdGFQaXBlbGluZS5wdXQoInJvb3QiLHJvb3QpOwogIC8vZGF0YVBpcGVsaW5lLmxvZ0RhdGFQaXBlbGluZSgpOwp9Y2F0Y2goRXhjZXB0aW9uIGUpewoJZGF0YVBpcGVsaW5lLmNsZWFyKCk7CiAgCWRhdGFQaXBlbGluZS5wdXQoImVycm9yIixlLmdldE1lc3NhZ2UoKSk7CiAgCW5ldyBTbmlwcGV0RXhjZXB0aW9uKGRhdGFQaXBlbGluZSwiU25lcHBldCBleGNlcHRpb24iLCBuZXcgRXhjZXB0aW9uKGUpKTsKfQ==",
+  "staticWorkspace" : "",
+  "version" : "v1",
+  "consumers" : "",
+  "developers" : "",
+  "lockedByUser" : "ekaDev"
+}

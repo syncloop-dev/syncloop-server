@@ -1,10 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap');
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif; */
+  font-family: 'Inter', sans-serif;
   height:100%;
   width:100%;
-  background: white;
+  background: #fff;
+  font-size:13px;
 }
+
 .row {
     margin-right: 0px;
     margin-left: 0px; 
@@ -225,7 +230,7 @@ width:100%;
 
 .navbar {
   overflow: hidden;
-  background-color: #999;
+  background-color: #ddd;
   min-height: 15px;
   margin-bottom: 0px;
   line-height: normal;
@@ -251,7 +256,7 @@ width:100%;
   font-size: 16px;  
   border: none;
   outline: none;
-  color: white;
+  color: #555;
   padding: 4px 6px;
   background-color: inherit;
   font-family: inherit;
@@ -452,4 +457,7 @@ div::-webkit-scrollbar-track {
 
 div::-webkit-scrollbar-thumb {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+.leader-line {
+  z-index: 10;
 }

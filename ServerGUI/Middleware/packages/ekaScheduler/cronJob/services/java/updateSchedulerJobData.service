@@ -2,7 +2,7 @@
   "input" : [ {
     "id" : "j1_1",
     "text" : "jobList",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.svg",
     "li_attr" : {
       "id" : "j1_1"
     },
@@ -22,7 +22,7 @@
   }, {
     "id" : "j1_2",
     "text" : "id",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_2"
     },
@@ -42,7 +42,7 @@
   }, {
     "id" : "j1_3",
     "text" : "cronExpression",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_3"
     },
@@ -62,7 +62,7 @@
   }, {
     "id" : "j1_4",
     "text" : "serviceFqn",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_4"
     },
@@ -82,7 +82,7 @@
   }, {
     "id" : "j1_6",
     "text" : "enabled",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_6"
     },
@@ -102,7 +102,7 @@
   }, {
     "id" : "j1_5",
     "text" : "jobMapData",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.svg",
     "li_attr" : {
       "id" : "j1_5"
     },
@@ -123,7 +123,7 @@
   "output" : [ {
     "id" : "j2_1",
     "text" : "msg",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_1"
     },
@@ -143,7 +143,7 @@
   }, {
     "id" : "j2_2",
     "text" : "error",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_2"
     },

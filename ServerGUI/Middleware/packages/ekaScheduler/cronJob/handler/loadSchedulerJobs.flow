@@ -5,7 +5,7 @@
     "output" : [ {
       "id" : "j3_1",
       "text" : "jobList",
-      "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.png",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.svg",
       "li_attr" : {
         "id" : "j3_1"
       },
@@ -25,7 +25,7 @@
     }, {
       "id" : "j3_2",
       "text" : "error",
-      "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
       "li_attr" : {
         "id" : "j3_2"
       },
@@ -45,7 +45,7 @@
     }, {
       "id" : "j3_3",
       "text" : "lastErrorDump",
-      "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.svg",
       "li_attr" : {
         "id" : "j3_3"
       },
@@ -66,7 +66,7 @@
     "flow" : [ {
       "id" : "j1_1",
       "text" : "TCF-Block",
-      "icon" : "/files/gui/middleware/pub/server/ui/icons/try-catch.png",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/try-catch.svg",
       "li_attr" : {
         "id" : "j1_1"
       },
@@ -86,7 +86,7 @@
       "children" : [ {
         "id" : "j1_2",
         "text" : "TRY",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
         "li_attr" : {
           "id" : "j1_2"
         },
@@ -106,7 +106,7 @@
         "children" : [ {
           "id" : "j1_11",
           "text" : "MAP",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/map.svg",
           "li_attr" : {
             "id" : "j1_11"
           },
@@ -138,7 +138,7 @@
         }, {
           "id" : "j1_18",
           "text" : "SEQUENCE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
           "li_attr" : {
             "id" : "j1_18"
           },
@@ -158,7 +158,7 @@
           "children" : [ {
             "id" : "j1_5",
             "text" : "packages/ekaScheduler/cronJob/adapter/services/DQL/getSchedulers",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
             "li_attr" : {
               "id" : "j1_5"
             },
@@ -410,7 +410,7 @@
         }, {
           "id" : "j1_19",
           "text" : "SEQUENCE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
           "li_attr" : {
             "id" : "j1_19"
           },
@@ -430,7 +430,7 @@
           "children" : [ {
             "id" : "j1_9",
             "text" : "packages/ekaScheduler/cronJob/services/java/getSchedulerJobData",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
             "li_attr" : {
               "id" : "j1_9"
             },
@@ -479,7 +479,7 @@
         }, {
           "id" : "j1_20",
           "text" : "SEQUENCE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
           "li_attr" : {
             "id" : "j1_20"
           },
@@ -499,7 +499,7 @@
           "children" : [ {
             "id" : "j1_10",
             "text" : "packages/ekaScheduler/cronJob/services/java/updateSchedulerJobData",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
             "li_attr" : {
               "id" : "j1_10"
             },
@@ -548,7 +548,7 @@
         }, {
           "id" : "j1_12",
           "text" : "MAP",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/map.svg",
           "li_attr" : {
             "id" : "j1_12"
           },
@@ -582,7 +582,7 @@
       }, {
         "id" : "j1_3",
         "text" : "CATCH",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
         "li_attr" : {
           "id" : "j1_3"
         },
@@ -602,7 +602,7 @@
         "children" : [ {
           "id" : "j1_7",
           "text" : "packages/middleware/pub/service/utils/getLastErrorDump",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
           "li_attr" : {
             "id" : "j1_7"
           },
@@ -648,7 +648,7 @@
         }, {
           "id" : "j1_8",
           "text" : "packages/middleware/pub/service/debugLog",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
           "li_attr" : {
             "id" : "j1_8"
           },
@@ -696,7 +696,7 @@
       }, {
         "id" : "j1_4",
         "text" : "FINALLY",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
         "li_attr" : {
           "id" : "j1_4"
         },
@@ -707,7 +707,7 @@
         "state" : {
           "loaded" : true,
           "opened" : false,
-          "selected" : true,
+          "selected" : false,
           "disabled" : false
         },
         "data" : {

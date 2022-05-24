@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <style>
+      .cls-1 {
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        font-size: 13.036px;
+        fill: #010101;
+        font-family: Verdana;
+      }
+    </style>
+    <filter id="filter" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#7b7b7b"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="html">
+    <g class="cls-1">
+      <path class="cls-2" d="M1218.95,82.269a1.069,1.069,0,0,0-.22-0.332L1215,78.283a0.927,0.927,0,0,0-.31-0.209h0a0.968,0.968,0,0,0-.37-0.075h-7.15a2.205,2.205,0,0,0-2.18,2.226V93.774A2.205,2.205,0,0,0,1207.17,96h9.68a2.205,2.205,0,0,0,2.18-2.226V82.664A1.082,1.082,0,0,0,1218.95,82.269ZM1218,93.778a1.166,1.166,0,0,1-1.15,1.174h-9.68a1.168,1.168,0,0,1-1.15-1.174V80.23a1.166,1.166,0,0,1,1.15-1.174h6.82v1.7a2.21,2.21,0,0,0,2.19,2.226H1218V93.778h0Z" transform="translate(-1202 -77)"/>
+      <text id="HTML-2" data-name="HTML" class="cls-3" transform="translate(3.965 12.679) scale(0.355 0.345)">HTML</text>
+    </g>
+  </g>
+</svg>

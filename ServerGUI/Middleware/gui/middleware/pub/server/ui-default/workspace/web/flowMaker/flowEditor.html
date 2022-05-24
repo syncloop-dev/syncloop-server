@@ -1,14 +1,15 @@
 <html style="min-height: 100% !important;">
 <head>
 <title>Flow Designer</title>
-<link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui/bootstrap-3.4.1-dist/css/bootstrap.min.css">
-<link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui/css/jstree.style.min.css">
+<link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui-default/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+<link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui-default/css/jstree.style.min.css">
+<link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui/css/style.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
-<script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
-<script src="/files/gui/middleware/pub/server/ui/javascript/leader-line.min.js"></script>
-<script src="/files/gui/middleware/pub/server/ui/javascript/mapping.js"></script>
-<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+<script	src="/files/gui/middleware/pub/server/ui-default/javascript/jstree.min.js"></script>
+<script src="/files/gui/middleware/pub/server/ui-default/javascript/middleware.js"></script>
+<script src="/files/gui/middleware/pub/server/ui-default/javascript/leader-line.min.js"></script>
+<script src="/files/gui/middleware/pub/server/ui-default/javascript/mapping.js"></script>
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui-default/css/middleware.css">
   </head>
 
   <body style="width:100%;height:100%;">
@@ -17,7 +18,7 @@
 		<div class="row" style="margin: 0px; padding:0px;">
 			<div class="navbar">  
                      <div class="dropdown">
-                      <button class="dropbtn">Service 
+                      <button class="dropbtn nw">Service 
                         <i class="fa fa-caret-down"></i>
                       </button>
                       <div class="dropdown-content">
@@ -31,7 +32,7 @@
                       </div>
                     </div>
                     <div class="dropdown">
-                      <button class="dropbtn">Search 
+                      <button class="dropbtn nw">Search 
                         <i class="fa fa-caret-down"></i>
                       </button>
                       <div class="dropdown-content">
@@ -55,14 +56,14 @@
 
 <div class="col-md-12" id="flowDesignerJsTreeContainer" style="width:70%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">    
   <div id="flowDesignerJsTree" class="jstree jstree-1 jstree-default"
-								style="margin: 0px;padding:0px; height: 55%; width: 100%; overflow: scroll;"
+								style="margin: 0px;padding:0px; height: 95%; width: 100%; overflow: scroll; overflow-x: hidden;"
 								role="tree" aria-multiselectable="true" tabindex="0"
      aria-activedescendant="j1_2" aria-busy="false"></div>
   
   
   <div id="mappingArea" style="margin: 0px;padding:0px; height: 45%; width: 100%; overflow: hidden; display:none;">
-    <div style="margin: 0px;padding:0px; height: 20px; width: 100%; overflow: hidden;">
-      <div id="rightSideTools" style="position:relative;float:left;width:20%;">
+    <div style="margin: 0px;padding:0px; height: 35px; width: 100%; overflow: hidden;">
+      <div id="rightSideTools" style="position:relative;float:left;width:20%; padding: 10px 0px;">
         <center>
           <a style="text-decoration: none;color:red;margin-left:10px;" href="#" onclick="mapperObj.deleteSelectedLines();mapperObj.deleteSelectedFromCreateList();mapperObj.deleteSelectedFromDropList();"><span class="glyphicon glyphicon-remove"></span></a>
           <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="showMapLinePropertiesModelDialog();"><span class="glyphicon glyphicon-random"></span></a>
@@ -71,8 +72,8 @@
           <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="mapperObj.reMap();"><span class="glyphicon glyphicon-refresh"></span></a>
         </center>
       </div>
-      <div id="centerServiceName" style="position:relative;float:left;width:60%; text-align:center;"></div>
-      <div id="leftSideTools" style="position:relative;float:right;width:20%">
+      <div style="position:relative;float:left;width:59%; text-align:center;margin-top:8px;"><span id="centerServiceName"></span><span id="expandMappingArea" class="glyphicon glyphicon-new-window" style="color:rgba(30, 130, 250,1);float:right;margin-top:2px;"></span></div>
+      <div id="leftSideTools" style="position:relative;float:right;width:21%; padding: 10px 0px;">
         <center>
           <a style="text-decoration: none;color:red;margin-left:10px;" href="#" onclick="mapperObj.deleteSelectedLines();mapperObj.deleteSelectedFromCreateList();mapperObj.deleteSelectedFromDropList();"><span class="glyphicon glyphicon-remove"></span></a>
           <a style="text-decoration: none;color:green;margin-left:10px;" href="#" onclick="showMapLinePropertiesModelDialog();"><span class="glyphicon glyphicon-random"></span></a>
@@ -157,13 +158,12 @@
 			<h4>Apply logic on value</h4>
 			<div id="methodSelectionBox" style="margin-top:10px;">
 			<label style="min-width: 100px;" for="jsFunction">Method: </label> 
-				<select id="jsFunction">
-                    <option value="none">none</option>
+				<select id="jsFunction" onChange="applyInbuiltFunction(this.value)">
+                    <option value=""></option>
 					<option value="trim">trim</option>
 					<option value="emptyToNull">emptyToNull</option>
 					<option value="emptyToBlank">emptyToBlank</option>
 					<option value="numberToString">numberToString</option>
-					<option value="stringToDate">stringToDate</option>
                   	<option value="custom">custom</option>
 				</select>
               <br>
@@ -175,11 +175,70 @@
 			</div>
 			<div>
 				<label for="functionJSDef" id="jsFunctionSig">function(val)</label>
-                {<br><textarea id="functionJSDef" rows="15" cols="50" value="" style="width:600px">return val;</textarea><br>}
+                {<br><textarea id="functionJSDef" rows="15" cols="50" value="" style="width:600px"></textarea><br>}
 			</div>
 		</div>
 </div>
     
+    <div id="mappingAreaModalDialog" class="modal">
+		<!-- Modal content -->
+	  <div class="modal-content" id="mappingAreaModalDialogContent" style="margin:auto;width:95%;height:95%">
+         <span id="closeMappingAreaModalDialog" class="close">&times;</span>
+          
+      </div>
+    </div>
+    
+    <script>
+      function applyInbuiltFunction(func){
+        var functionJSDef=$("#functionJSDef");
+        var funcValue="";
+        if(func=="trim"){
+       		funValue="if(val!=null)\nreturn val.trim();\nelse return null;";
+        }else if(func=="emptyToNull"){
+       		funValue="if(val!=null && val.trim().length==0)\nreturn null;\nelse return val;";
+        }else if(func=="emptyToBlank"){
+       		funValue='if(val==null || val.trim().length==0)return "";\nelse return val;';
+        }else if(func=="numberToString"){
+       		funValue='if(val!=null)return val+"";else return val;';
+        }else if(func=="custom"){
+       		funValue="return val;";
+        }else if(func==""){
+       		funValue="";
+        }
+        functionJSDef.val(funValue);
+      }
+      
+      window.onload=function(){
+        $("#expandMappingArea").click(function(){
+          $("#expandMappingArea").css("display","none");
+          var mappingAreaModalDialogContent=$("#mappingAreaModalDialogContent");
+          var modal = document.getElementById("mappingAreaModalDialog");
+          var mappingArea=$("#mappingArea");
+          modal.style.display="block";
+          var span = document.getElementById("closeMappingAreaModalDialog");
+          //span.style.display = "block";
+          span.onclick = function() {
+            mappingArea.detach().appendTo('#flowDesignerJsTreeContainer');
+            mappingArea.css("height","45%");
+            modal.style.display = "none";
+            setTimeout(function(){mapperObj.reMap();},20);
+            $("#expandMappingArea").css("display","block");
+          };          
+            mappingArea.detach().appendTo('#mappingAreaModalDialogContent');
+            mappingArea.css("height","100%");
+            setTimeout(function(){mapperObj.reMap();},20);
+          //mappingArea.detach();
+          //mappingAreaModalDialogContent.appendTo();
+          //var flowDesignerJsTree=$("#flowDesignerJsTree");
+          //flowDesignerJsTree.css("display","none");
+          //mappingArea.css("top","0px");
+          //mappingArea.css("left","0px");
+          //mappingArea.css("position","absolute");
+          //mappingArea.css("height","100%");
+          //mappingArea.css("width","100%");
+        });
+       };
+      </script>
 <div id="configureSetValueModelDialog" class="modal">
 		<!-- Modal content -->
 		<div class="modal-content" style="width:400px;height:auto;">
@@ -205,7 +264,12 @@
               <input type="radio" id="element_LocalVariable" name="setValueTag">
               <label for="element_LocalVariable">Evaluate local configuration variables</label>
             </div>
-
+          
+			<div>
+              <input type="radio" id="element_PackageVariable" name="setValueTag">
+              <label for="element_PackageVariable">Evaluate package configuration variables</label>
+            </div>
+          
             <div>
               <input type="radio" id="element_GlobalVariable" name="setValueTag">
               <label for="element_GlobalVariable">Evaluate global configuration variables</label>
@@ -264,6 +328,19 @@
                   <option value="disabled">Disabled</option>
               </select>
        		</div>
+       		<div id="elementSnap" class="elementStatus" style="padding-bottom:10px;">
+              <label style="min-width: 100px;" for="elementSnapInput">Snapshot: </label> <select
+                  name="elementSnapInput" id="elementSnapInput"
+                  onChange="setFlowElemAttribOnSelected('snap',this.value);">
+                  <option value="disabled">Disabled</option>
+              	  <option value="enabled">Enabled</option>
+              	  <option value="conditional">Conditional</option>
+              </select>
+       		</div>
+            <div id="elementSnapCondition" class="elementSnapCondition" style="padding-bottom:10px;display:none;">
+				<label for="elementSnapConditionInput">Snap condition: </label> <input style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('snapCondition',this.value);" 
+					id="elementSnapConditionInput" name="elementSnapConditionInput"><br>
+			</div>
        		<div id="elementComment" class="elementComment" style="padding-bottom:10px;">
 				<label for="elementCommentInput">Comment: </label> <input style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('comment',this.value);" 
 					id="elementCommentInput" name="elementCommentInput" value="comment here"><br>
@@ -298,12 +375,23 @@
               </select>
        		</div>
        		<div id="elementLoopInputArray" class="elementLoop" style="padding-bottom:10px;display:none;">
-				<label for="elementLoopInputArrayInput">Input Array: </label> <input style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('inArray',this.value);"
+				<label for="elementLoopInputArrayInput">Input list: </label> <input style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('inArray',this.value);"
 					id="elementLoopInputArrayInput" name="elementLoopInputArrayInput" title="Set the path of array you want to loop over"><br>
 			</div>
        		<div id="elementLoopOutputArray" class="elementLoop" style="padding-bottom:10px;display:none;">
-				<label for="elementLoopOutputArrayInput">Output Array: </label> <input style="width:400px" type="text" onChange="setFlowElemAttribOnSelected('outArray',this.value);"
-					id="elementLoopOutputArrayInput" name="elementLoopOutputArrayInput" title="Set the path of array you want to map through loop"><br>
+				<label for="elementLoopOutputArrayInput">Output list: </label> <input style="width:150px;padding-right:20px;" type="text" onChange="setFlowElemAttribOnSelected('outArray',this.value);"
+					id="elementLoopOutputArrayInput" name="elementLoopOutputArrayInput" title="Set the path of array you want to map through loop">
+                <label style="min-width: 60px;" for="outputArrayTypeInput">List type: </label> 
+                <select name="outputArrayTypeInput" id="outputArrayTypeInput" onChange="setFlowElemAttribOnSelected('outArrayType',this.value);">
+                  <option value="document">Document</option>
+                  <option value="javaObject">Object</option>
+                  <option value="string">String</option>
+                  <option value="integer">Integer</option>
+                  <option value="boolean">Boolean</option>
+                  <option value="number">number</option>
+                  <option value="byte">Byte</option>
+                  <option value="date">Date</option>
+				</select>
 			</div>
        
        		<div id="elementSwitch" class="elementSwitch" style="padding-bottom:10px;display:none;">
@@ -536,6 +624,8 @@ function refreshFlowNodeData(node){
       setFlowElemProperty(node.children_d[i],"switch");
       setFlowElemProperty(node.children_d[i],"case");
       setFlowElemProperty(node.children_d[i],"status");
+      setFlowElemProperty(node.children_d[i],"snap");
+      setFlowElemProperty(node.children_d[i],"snapCondition");
       setFlowElemProperty(node.children_d[i],"requestMethod");
     }
   }
@@ -573,6 +663,10 @@ function setFlowElemProperty(nodeId,attribute,text,cls,pos,onlyUI){
           if(text=="disabled")
           	text=" -- DISABLED -- ";
           else text=null;
+        }else if(attribute=="snap"){
+          if(text=="enabled" || text=="conditional")
+          	text=" --> Snap ";
+          else text=null;
         }else if(attribute=="requestMethod"){
         	if(text=="async"){
           		text="  ";
@@ -595,7 +689,12 @@ function setFlowElemProperty(nodeId,attribute,text,cls,pos,onlyUI){
     
 function setFlowElemAttribOnSelected(attrib,text,cls,pos,onlyUI){
   var sel = flowDesignerJsTreeRef.get_selected()[0];
-  
+  if(attrib=="snap"){
+    if(text=='conditional')
+      $('#elementSnapCondition').css('display','block');
+    else 
+      $('#elementSnapCondition').css('display','none');
+  }
   if(sel)
   	setFlowElemProperty(sel,attrib,text,cls,pos,onlyUI);
   else
@@ -615,11 +714,129 @@ $("#flowDesignerJsTree").on('changed.jstree', function (e, data) {
  // alert("saved to local");
 });
     
-
+var asyncInDoc={
+      "id" : "asyncIn_j2_1",
+      "text" : "asyncInputDoc",
+      "li_attr" : {
+        "id" : "asyncIn_j2_1"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "asyncIn_j2_1_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : true,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ {
+        "id" : "asyncIn_j2_2",
+        "text" : "*metaData",
+        "li_attr" : {
+          "id" : "j2_2"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "asyncIn_j2_2_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : false,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : { },
+        "children" : [ ],
+        "type" : "document"
+      } ],
+      "type" : "document"
+    };
+    
+    var asyncOutDoc={
+      "id" : "j3_1",
+      "text" : "asyncOutputDoc",
+      "li_attr" : {
+        "id" : "asyncOut_j3_1"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "asyncOut_j3_1_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : true,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ {
+        "id" : "asyncOut_j3_2",
+        "text" : "*metaData",
+        "li_attr" : {
+          "id" : "asyncOut_j3_2"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "asyncOut_j3_2_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : true,
+          "selected" : true,
+          "disabled" : false
+        },
+        "data" : { },
+        "children" : [ {
+          "id" : "asyncOut_j3_3",
+          "text" : "batchId",
+          "li_attr" : {
+            "id" : "j3_3"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "asyncOut_j3_3_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : { },
+          "children" : [ ],
+          "type" : "string"
+        }, {
+          "id" : "asyncOut_j3_4",
+          "text" : "status",
+          "li_attr" : {
+            "id" : "asyncOut_j3_4"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "asyncOut_j3_4_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : { },
+          "children" : [ ],
+          "type" : "string"
+        } ],
+        "type" : "document"
+      } ],
+      "type" : "document"
+    };
+    
 $("#flowDesignerJsTree").on('select_node.jstree', function (e, data) {
         mapperObj.clean();
   		$("#mappingArea").css("display","none");
-  
+  		var flowDesignerJsTree=$("#flowDesignerJsTree");
+        flowDesignerJsTree.css("height","95%");
   		$("#centerServiceName").html("");
   		  launching_arrow_jsTree_ref.settings.core.data=[];
 		  launching_arrow_jsTree_ref.refresh();  
@@ -627,6 +844,7 @@ $("#flowDesignerJsTree").on('select_node.jstree', function (e, data) {
 		  landing_arrow_jsTree_ref.refresh(); 
   
   		if(data.node.type=='invoke'){
+          flowDesignerJsTree.css("height","55%");
           $("#plainMapping").css("display","none");
           $("#serviceMapping").css("display","block");
           $("#mappingArea").css("display","block");
@@ -644,10 +862,32 @@ $("#flowDesignerJsTree").on('select_node.jstree', function (e, data) {
             	response=JSON.parse(response.payload);
               	if(data.node.data.serviceType=="flow")
                   response=response.latest;
+                removeIcons(response.input);
+      			removeIcons(response.output);
                 var inData=response.input;
-              	modifyJsTreeIds(inData,"funcInput");
                 var outData=response.output;
-                modifyJsTreeIds(outData,"funcOutput");
+                var randomId=Math.floor(Math.random() * 10000);                
+              	if(data.node.data.requestMethod=="async"){
+                    var asyncTempInDoc=JSON.parse(JSON.stringify(asyncInDoc));
+                    var asyncTempOutDoc=JSON.parse(JSON.stringify(asyncOutDoc));
+                    
+                    //modifyJsTreeIds(asyncTempInDoc,randomId+"_async_funcInput");
+                    //modifyJsTreeIds(asyncTempOutDoc,randomId+"_async_funcOutput");
+                    //inData.push(asyncTempInDoc[0].children[0]);
+                    $.merge(asyncTempInDoc.children,inData);
+                    //asyncTempInDoc[0].children.concat(inData);
+
+                    //outData.push(asyncTempOutDoc[0].children[0]);
+                    $.merge(asyncTempOutDoc.children,outData);
+                    //asyncTempOutDoc[0].children.concat(outData);
+                    
+                	inData=[asyncTempInDoc];
+                    outData=[asyncTempOutDoc];
+                  
+                }
+              	modifyJsTreeIds(inData,randomId+"_funcInput");
+                modifyJsTreeIds(outData,randomId+"_funcOutput");
+              	
           		launching_arrow_jsTree_function_ref.settings.core.data=outData;
           		launching_arrow_jsTree_function_ref.refresh();
                 landing_arrow_jsTree_function_ref.settings.core.data=inData;
@@ -666,6 +906,7 @@ $("#flowDesignerJsTree").on('select_node.jstree', function (e, data) {
             setTimeout(function(){getAllVisibleInputs(data.node);},200);
           }
         }else if(data.node.type=='map'){
+          flowDesignerJsTree.css("height","55%");
           $("#serviceMapping").css("display","none");
           $("#plainMapping").css("display","block");
           $("#mappingArea").css("display","block");
@@ -710,10 +951,13 @@ function modifyJsTreeIds(jsonObject, postFix){
 jQuery.each(jsonObject, function(i, val) {
   				if(val.id && val.id!='#'){
                   val.id=val.id+"_"+postFix+"_";
+                  //console.log(val);
                   val.a_attr.id=val.id+"_anchor";
                   val.li_attr.id=val.id;
                   if(val.parent && val.parent!='#')
-                  val.parent=val.parent+"_"+postFix+"_";
+                  	val.parent=val.parent+"_"+postFix+"_";
+                  if(val.children)
+                    modifyJsTreeIds(val.children, postFix);
                 }
 		  });
 }
@@ -740,7 +984,9 @@ function loadRemoteFile(overwrite){
       
       response=response.latest;
    //   console.log(window.atob(response.imports));
-
+	  removeIcons(response.input);
+      removeIcons(response.output);
+      removeIcons(response.flow);
 
       var inputJsTree_data=localStorage.getItem(inputJsTree_id);
       if(inputJsTree_data==null || inputJsTree_data.trim().length==0 || overwrite){
@@ -841,6 +1087,9 @@ function save(servicePath){
 	dataJson[version].input=inputJstreeRef.get_json('#', {flat:false});
 	dataJson[version].output=outputJstreeRef.get_json('#', {flat:false});
     dataJson[version].flow=flowDesignerJsTreeRef.get_json('#', {flat:false});
+    removeIcons(dataJson[version].input);
+    removeIcons(dataJson[version].output);
+    removeIcons(dataJson[version].flow);
     //console.log(dataJson[version].flow);
  //   console.log(JSON.stringify(flowDesignerJsTreeRef.get_json('#', {flat:false})[10]));
   //flowDesignerJsTreeRef.get_json('#', {flat:true});
@@ -868,7 +1117,8 @@ function reload(){
 	loadRemoteFile(true);
   	setUnsavedChanges(loadFile,false);
 	location.reload(true);
-  	//window.location = window.location.href+'?eraseCache=true';
+    //alert(window.location.href+'?millis='+Date.now());
+  	//window.location = window.location.href+'?millis='+Date.now();
 }
       
       
@@ -984,6 +1234,8 @@ function openSetValueModelDialog(){
             $("#element_LocalVariable").prop("checked",true);
         if(createItem.evaluate=="EGV")
             $("#element_GlobalVariable").prop("checked",true);
+        if(createItem.evaluate=="EPV")
+            $("#element_PackageVariable").prop("checked",true);
     }
     
 	span.onclick = function() {
@@ -998,6 +1250,9 @@ function openSetValueModelDialog(){
     var egv=$("#element_GlobalVariable").prop("checked");
     if(egv==true)
         evaluate="EGV";
+    var egv=$("#element_PackageVariable").prop("checked");
+    if(egv==true)
+        evaluate="EPV";
 	modal.style.display = "none";
     mapperObj.setValue(landing_arrow_jsTree_ref,value,evaluate);
     $("#element_NoneVariable").prop("checked",true);
@@ -1035,7 +1290,9 @@ function showMapLinePropertiesModelDialog(){
       return;
     }
     var line=lines[0];
+    
   	var indexes=line.INPath.match(/#\d+/g);
+    console.log(indexes);
   	var html="";
     var index=null;
     if(indexes!=null){
@@ -1069,7 +1326,7 @@ function showMapLinePropertiesModelDialog(){
           $("#targetPath").html(html);
      // }
     }else
-      $("#targetPath").html(line.INPath);
+      $("#targetPath").html(line.OUTPath);
   	
   	$("#mappingCondition").val(line.condition);
     
@@ -1213,6 +1470,30 @@ function openFlowElementProperties(jsTreeId,sel){
       	$("#elementCommentInput").val(comment);
       else
         $("#elementCommentInput").val(null);
+      
+      
+      var snap=node.data["snap"];
+      if(snap){
+      	$("#elementSnapInput").val(snap);
+        if(snap=="conditional")
+          $("#elementSnapCondition").css("display","block");
+        else
+          $("#elementSnapCondition").css("display","none");
+      }
+      else
+        $("#elementSnapInput").val("disabled");
+      
+      var snapCondition=node.data["snapCondition"];
+      if(snapCondition)
+      	$("#elementSnapConditionInput").val(snapCondition);
+      else
+        $("#elementSnapConditionInput").val(null);
+      
+      var outArrayType=node.data["outArrayType"];
+      if(outArrayType)
+      	$("#outputArrayTypeInput").val(outArrayType);
+      else
+        $("#outputArrayTypeInput").val("document");
     }
   	if(nodeType=="repeat")
       $(".elementRepeat").css("display","block");

@@ -17,7 +17,7 @@
       "state" : {
         "loaded" : true,
         "opened" : false,
-        "selected" : false,
+        "selected" : true,
         "disabled" : false
       },
       "data" : {
@@ -36,7 +36,7 @@
           "typePath" : "string"
         }, {
           "path" : "delay",
-          "value" : "20000",
+          "value" : "10000",
           "evaluate" : null,
           "typePath" : "string"
         } ]
@@ -74,7 +74,11 @@
           "inType" : "string",
           "outType" : "string",
           "inTypePath" : "string",
-          "outTypePath" : "string"
+          "outTypePath" : "string",
+          "applyFunction" : "none",
+          "condition" : "",
+          "jsFunction" : "",
+          "jsFunctionSig" : ""
         }, {
           "inputPath" : "log",
           "outputPath" : "log",
@@ -88,18 +92,30 @@
           "inType" : "string",
           "outType" : "string",
           "inTypePath" : "string",
-          "outTypePath" : "string"
+          "outTypePath" : "string",
+          "applyFunction" : "none",
+          "condition" : "",
+          "jsFunction" : "",
+          "jsFunctionSig" : ""
         } ],
         "transformers" : [ {
           "op" : "copy",
           "from" : "/msg",
           "to" : "/msg",
+          "condition" : "",
+          "applyFunction" : "none",
+          "jsFunction" : "",
+          "jsFunctionSig" : "",
           "inTypePath" : "string",
           "outTypePath" : "string"
         }, {
           "op" : "copy",
           "from" : "/log",
           "to" : "/log",
+          "condition" : "",
+          "applyFunction" : "none",
+          "jsFunction" : "",
+          "jsFunctionSig" : "",
           "inTypePath" : "string",
           "outTypePath" : "string"
         } ],
@@ -129,7 +145,7 @@
       "state" : {
         "loaded" : true,
         "opened" : false,
-        "selected" : true,
+        "selected" : false,
         "disabled" : false
       },
       "data" : {

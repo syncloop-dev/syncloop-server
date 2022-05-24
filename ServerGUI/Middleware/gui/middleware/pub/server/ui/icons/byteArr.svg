@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <style>
+      .cls-1 {
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        fill: #84857d;
+      }
+
+      .cls-2, .cls-3 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        fill: none;
+        stroke: #010101;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.5px;
+      }
+    </style>
+    <filter id="filter" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#7b7b7b"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="byteArr">
+    <g class="cls-1">
+      <path class="cls-2" d="M868.5,79.4a1.1,1.1,0,0,1,1.1,1.1v13a1.1,1.1,0,0,1-1.1,1.1h-13a1.1,1.1,0,0,1-1.1-1.1v-13a1.1,1.1,0,0,1,1.1-1.1h13m0-1.4h-13a2.5,2.5,0,0,0-2.5,2.5v13a2.5,2.5,0,0,0,2.5,2.5h13a2.5,2.5,0,0,0,2.5-2.5v-13a2.5,2.5,0,0,0-2.5-2.5h0Z" transform="translate(-852 -77)"/>
+      <path class="cls-3" d="M863.091,92.164h-3.864V87.386h1.1v-2.1h-1.1v-3.44h5.337l2.208,2.293v4.778" transform="translate(-852 -77)"/>
+      <path class="cls-3" d="M861.447,81.844v2.484" transform="translate(-852 -77)"/>
+      <path id="Shape_2_copy_2" data-name="Shape 2 copy 2" class="cls-3" d="M863.631,81.844v2.484" transform="translate(-852 -77)"/>
+      <path class="cls-3" d="M863.091,90.635H860.7V87.96h4.6v0.956" transform="translate(-852 -77)"/>
+    </g>
+  </g>
+</svg>

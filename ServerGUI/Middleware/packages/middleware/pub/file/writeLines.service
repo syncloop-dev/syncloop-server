@@ -1,0 +1,72 @@
+{
+  "input" : [ {
+    "id" : "j1_1",
+    "text" : "bufferedWriter",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.svg",
+    "li_attr" : {
+      "id" : "j1_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "javaObject"
+  }, {
+    "id" : "j1_2",
+    "text" : "lines",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.svg",
+    "li_attr" : {
+      "id" : "j1_2"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_2_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : true,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "documentList"
+  }, {
+    "id" : "j1_3",
+    "text" : "line",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
+    "li_attr" : {
+      "id" : "j1_3"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_3_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "j1_2",
+    "type" : "string"
+  } ],
+  "output" : [ ],
+  "package" : "cGFja2FnZSBwYWNrYWdlcy5taWRkbGV3YXJlLnB1Yi5maWxlOw==",
+  "imports" : "aW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLkRhdGFQaXBlbGluZTsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLlNlcnZpY2VVdGlsczsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS50ZW1wbGF0ZS5TbmlwcGV0RXhjZXB0aW9uOwppbXBvcnQgamF2YS5pby5CdWZmZXJlZFdyaXRlcjsKaW1wb3J0IGphdmEudXRpbC4qOw==",
+  "main" : "dHJ5IHsKICAvL2RhdGFQaXBlbGluZS5sb2coIisrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKzEiKTsKCQlMaXN0PE1hcDxTdHJpbmcsU3RyaW5nPj4gbGluZXM9ZGF0YVBpcGVsaW5lLmdldEFzTGlzdCgibGluZXMiKTsKICAvL2RhdGFQaXBlbGluZS5sb2coIisrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKzIiKTsKICAgIAlCdWZmZXJlZFdyaXRlciBidWZmZXJlZFdyaXRlciA9IChCdWZmZXJlZFdyaXRlcilkYXRhUGlwZWxpbmUuZ2V0KCJidWZmZXJlZFdyaXRlciIpOwogIC8vZGF0YVBpcGVsaW5lLmxvZygiKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrMyIpOwogICAgICAgIGZvcihNYXA8U3RyaW5nLFN0cmluZz4gbGluZTogbGluZXMpewogIC8vZGF0YVBpcGVsaW5lLmxvZyhsaW5lLnRvU3RyaW5nKCkpOwogIAkJCWJ1ZmZlcmVkV3JpdGVyLndyaXRlKGxpbmUuZ2V0KCJsaW5lIikpOwogICAgICAgICAgICBidWZmZXJlZFdyaXRlci5uZXdMaW5lKCk7CiAgICAgICAgfQogLy8gICAgICAgZGF0YVBpcGVsaW5lLmxvZygiKysrKysrKysrKytXcml0aW5nIEJ5dGVzKysrKysrKysrKysrKysrKysrKysrKysiKTsKICAJCS8vYnVmZmVyZWRXcml0ZXIuZmx1c2goKTsKICAgICAgICAvL2RhdGFQaXBlbGluZS5sb2coIi0tLS0tLS0tLS0tV3JpdGluZyBCeXRlcyBjb21wbGV0ZWQtLS0tLS0tLS0tLS0tIik7CiAgfSBjYXRjaCAoRXhjZXB0aW9uIGUpIHsKCQlkYXRhUGlwZWxpbmUuY2xlYXIoKTsKICAJCWRhdGFQaXBlbGluZS5wdXQoImVycm9yIixlLmdldE1lc3NhZ2UoKSk7CiAgICAJdGhyb3cgbmV3IFNuaXBwZXRFeGNlcHRpb24oZGF0YVBpcGVsaW5lLCJTbmlwcGV0IGV4Y2VwdGlvbiIsIG5ldyBFeGNlcHRpb24oZSkpOwogIH0=",
+  "staticWorkspace" : "",
+  "version" : "v1",
+  "consumers" : "",
+  "developers" : "",
+  "lockedByUser" : "ekaDev"
+}

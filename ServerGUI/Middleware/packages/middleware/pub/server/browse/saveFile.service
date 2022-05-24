@@ -2,7 +2,7 @@
   "input" : [ {
     "id" : "j1_1",
     "text" : "body",
-    "icon" : "/files/middleware/pub/server/ui/icons/byteArr.png",
+    "icon" : "/files/middleware/pub/server/ui/icons/byteArr.svg",
     "li_attr" : {
       "id" : "j1_1"
     },
@@ -23,7 +23,7 @@
   "output" : [ {
     "id" : "j2_1",
     "text" : "status",
-    "icon" : "/files/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_1"
     },
@@ -43,7 +43,7 @@
   }, {
     "id" : "j2_2",
     "text" : "error",
-    "icon" : "/files/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_2"
     },

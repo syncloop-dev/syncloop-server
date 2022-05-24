@@ -21,7 +21,10 @@ try {
             
         }
   		String size=bytes.length+"";
-		IOUtils.write(bytes, new FileOutputStream(file));
+  		FileOutputStream fo=new FileOutputStream(file);
+		IOUtils.write(bytes, fo);
+  		fo.flush();
+  		fo.close();
         dataPipeline.put("size",size);
 	} catch (Exception e) {
 		dataPipeline.clear();

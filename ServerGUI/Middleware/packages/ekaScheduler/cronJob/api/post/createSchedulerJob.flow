@@ -1,0 +1,491 @@
+{
+  "latest" : {
+    "createdTS" : "",
+    "input" : [ {
+      "id" : "j2_3",
+      "text" : "serviceFqn",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
+      "li_attr" : {
+        "id" : "j2_3"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j2_3_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : {
+        "fieldDescription" : "RnVsbHkgcXVhbGlmaWVkIHNlcnZpY2UgbmFtZSBpcyBtYW5kYXRvcnkgZmllbGQuIEl0IGlzIHRoZSBwYXRoIG9mIHRoZSBzZXJ2aWNlIGZvciB3aGljaCB5b3Ugd2FudCB0byBjcmVhdGUgYSBzY2hlZHVsZXIgam9iLgoKRXhhbXBsZTotCnBhY2thZ2VzLmVrYVNjaGVkdWxlci5jcm9uSm9iLmFwaS5wb3N0LmNyZWF0ZVNjaGVkdWxlckpvYg==",
+        "isRequiredField" : true
+      },
+      "children" : [ ],
+      "type" : "string"
+    }, {
+      "id" : "j2_4",
+      "text" : "cronExpression",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
+      "li_attr" : {
+        "id" : "j2_4"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j2_4_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : {
+        "isRequiredField" : true,
+        "fieldDescription" : "Q3JvbiBleHByZXNzaW9uIGlzIGEgdW5peCBjcm9uIHV0aWxpdHkgZXhwcmVzc2lvbiB3aGljaCByZXByZXNlbnRzIHRoZSBzY2hlZHVsZWQgZnJlcXVlbmN5IG9mIHRoZSBzZXJ2aWNlLiBJdCdzIGEgcmVxdWlyZWQgZmllbGQgdG8gY3JlYXRlIHRoZSBzY2hlZHVsZXIgam9iLgoKRXhhbXBsZTotCkV2ZXJ5IE1pbnV0ZTogKiAqICogKiAq"
+      },
+      "children" : [ ],
+      "type" : "string"
+    }, {
+      "id" : "j2_5",
+      "text" : "status",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
+      "li_attr" : {
+        "id" : "j2_5"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j2_5_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ ],
+      "type" : "string"
+    }, {
+      "id" : "j2_6",
+      "text" : "enabled",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
+      "li_attr" : {
+        "id" : "j2_6"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j2_6_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ ],
+      "type" : "string"
+    }, {
+      "id" : "j2_7",
+      "text" : "ownerNode",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
+      "li_attr" : {
+        "id" : "j2_7"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j2_7_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ ],
+      "type" : "string"
+    } ],
+    "output" : [ {
+      "id" : "j3_1",
+      "text" : "rows",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/integer.svg",
+      "li_attr" : {
+        "id" : "j3_1"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j3_1_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ ],
+      "type" : "integer"
+    }, {
+      "id" : "j3_2",
+      "text" : "error",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
+      "li_attr" : {
+        "id" : "j3_2"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j3_2_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ ],
+      "type" : "string"
+    } ],
+    "flow" : [ {
+      "id" : "j1_7",
+      "text" : "MAP",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/map.svg",
+      "li_attr" : {
+        "id" : "j1_7"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j1_7_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : {
+        "transformers" : [ ],
+        "lines" : [ ],
+        "dropList" : [ ],
+        "createList" : [ {
+          "path" : "ownerNode",
+          "value" : "#{nodeName}",
+          "evaluate" : "EGV",
+          "typePath" : "string"
+        } ]
+      },
+      "children" : [ ],
+      "type" : "map"
+    }, {
+      "id" : "j1_1",
+      "text" : "packages/ekaScheduler/cronJob/adapter/services/DML/insertScheduler",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
+      "li_attr" : {
+        "id" : "j1_1"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j1_1_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : {
+        "transformers" : [ {
+          "op" : "copy",
+          "from" : "/serviceFqn",
+          "to" : "/inputDocList/#0/serviceFqn",
+          "inTypePath" : "string",
+          "outTypePath" : "documentList/string"
+        }, {
+          "op" : "copy",
+          "from" : "/cronExpression",
+          "to" : "/inputDocList/#0/cronExpression",
+          "inTypePath" : "string",
+          "outTypePath" : "documentList/string"
+        }, {
+          "op" : "copy",
+          "from" : "/status",
+          "to" : "/inputDocList/#0/status",
+          "inTypePath" : "string",
+          "outTypePath" : "documentList/string"
+        }, {
+          "op" : "copy",
+          "from" : "/enabled",
+          "to" : "/inputDocList/#0/enabled",
+          "inTypePath" : "string",
+          "outTypePath" : "documentList/string"
+        }, {
+          "op" : "copy",
+          "from" : "/ownerNode",
+          "to" : "/inputDocList/#0/ownerNode",
+          "inTypePath" : "string",
+          "outTypePath" : "documentList/string"
+        }, {
+          "op" : "copy",
+          "from" : "/rows",
+          "to" : "/rows",
+          "inTypePath" : "integer",
+          "outTypePath" : "integer"
+        }, {
+          "op" : "copy",
+          "from" : "/success",
+          "to" : "/success",
+          "inTypePath" : "boolean",
+          "outTypePath" : "boolean"
+        } ],
+        "lines" : [ {
+          "inputPath" : "serviceFqn",
+          "outputPath" : "inputDocList/serviceFqn",
+          "inpJsTree" : "#launching_arrow_jsTree",
+          "outpJsTree" : "#landing_arrow_jsTree_function",
+          "INPath" : "serviceFqn",
+          "OUTPath" : "inputDocList/#0/serviceFqn",
+          "op" : "copy",
+          "line" : 0,
+          "dashedLine" : false,
+          "inType" : "string",
+          "outType" : "string",
+          "inTypePath" : "string",
+          "outTypePath" : "documentList/string"
+        }, {
+          "inputPath" : "cronExpression",
+          "outputPath" : "inputDocList/cronExpression",
+          "inpJsTree" : "#launching_arrow_jsTree",
+          "outpJsTree" : "#landing_arrow_jsTree_function",
+          "INPath" : "cronExpression",
+          "OUTPath" : "inputDocList/#0/cronExpression",
+          "op" : "copy",
+          "line" : 0,
+          "dashedLine" : false,
+          "inType" : "string",
+          "outType" : "string",
+          "inTypePath" : "string",
+          "outTypePath" : "documentList/string"
+        }, {
+          "inputPath" : "status",
+          "outputPath" : "inputDocList/status",
+          "inpJsTree" : "#launching_arrow_jsTree",
+          "outpJsTree" : "#landing_arrow_jsTree_function",
+          "INPath" : "status",
+          "OUTPath" : "inputDocList/#0/status",
+          "op" : "copy",
+          "line" : 0,
+          "dashedLine" : false,
+          "inType" : "string",
+          "outType" : "string",
+          "inTypePath" : "string",
+          "outTypePath" : "documentList/string"
+        }, {
+          "inputPath" : "enabled",
+          "outputPath" : "inputDocList/enabled",
+          "inpJsTree" : "#launching_arrow_jsTree",
+          "outpJsTree" : "#landing_arrow_jsTree_function",
+          "INPath" : "enabled",
+          "OUTPath" : "inputDocList/#0/enabled",
+          "op" : "copy",
+          "line" : 0,
+          "dashedLine" : false,
+          "inType" : "string",
+          "outType" : "string",
+          "inTypePath" : "string",
+          "outTypePath" : "documentList/string"
+        }, {
+          "inputPath" : "ownerNode",
+          "outputPath" : "inputDocList/ownerNode",
+          "inpJsTree" : "#launching_arrow_jsTree",
+          "outpJsTree" : "#landing_arrow_jsTree_function",
+          "INPath" : "ownerNode",
+          "OUTPath" : "inputDocList/#0/ownerNode",
+          "op" : "copy",
+          "line" : 0,
+          "dashedLine" : false,
+          "inType" : "string",
+          "outType" : "string",
+          "inTypePath" : "string",
+          "outTypePath" : "documentList/string"
+        }, {
+          "inputPath" : "rows",
+          "outputPath" : "rows",
+          "inpJsTree" : "#launching_arrow_jsTree_function",
+          "outpJsTree" : "#landing_arrow_jsTree",
+          "INPath" : "rows",
+          "OUTPath" : "rows",
+          "op" : "copy",
+          "line" : 0,
+          "dashedLine" : false,
+          "inType" : "integer",
+          "outType" : "integer",
+          "inTypePath" : "integer",
+          "outTypePath" : "integer"
+        }, {
+          "inputPath" : "success",
+          "outputPath" : "success",
+          "inpJsTree" : "#launching_arrow_jsTree_function",
+          "outpJsTree" : "#landing_arrow_jsTree",
+          "INPath" : "success",
+          "OUTPath" : "success",
+          "op" : "copy",
+          "line" : 0,
+          "dashedLine" : false,
+          "inType" : "boolean",
+          "outType" : "boolean",
+          "inTypePath" : "boolean",
+          "outTypePath" : "boolean"
+        } ],
+        "dropList" : [ {
+          "path" : "serviceFqn",
+          "typePath" : "string"
+        }, {
+          "path" : "cronExpression",
+          "typePath" : "string"
+        }, {
+          "path" : "status",
+          "typePath" : "string"
+        }, {
+          "path" : "enabled",
+          "typePath" : "string"
+        }, {
+          "path" : "ownerNode",
+          "typePath" : "string"
+        } ],
+        "createList" : [ ],
+        "serviceType" : "sql"
+      },
+      "children" : [ ],
+      "type" : "invoke"
+    }, {
+      "id" : "j1_2",
+      "text" : "SWITCH",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/switch.svg",
+      "li_attr" : {
+        "id" : "j1_2"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j1_2_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : true,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : {
+        "switch" : "success"
+      },
+      "children" : [ {
+        "id" : "j1_3",
+        "text" : "CASE",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
+        "li_attr" : {
+          "id" : "j1_3"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j1_3_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : false,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : {
+          "case" : "true"
+        },
+        "children" : [ {
+          "id" : "j1_4",
+          "text" : "packages/ekaScheduler/cronJob/handler/loadSchedulerJobs",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
+          "li_attr" : {
+            "id" : "j1_4"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_4_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "transformers" : [ ],
+            "lines" : [ ],
+            "dropList" : [ ],
+            "createList" : [ ],
+            "serviceType" : "flow"
+          },
+          "children" : [ ],
+          "type" : "invoke"
+        } ],
+        "type" : "sequence"
+      }, {
+        "id" : "j1_5",
+        "text" : "CASE",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
+        "li_attr" : {
+          "id" : "j1_5"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j1_5_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : true,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : {
+          "case" : "#default"
+        },
+        "children" : [ {
+          "id" : "j1_6",
+          "text" : "MAP",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/map.svg",
+          "li_attr" : {
+            "id" : "j1_6"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_6_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "transformers" : [ ],
+            "lines" : [ ],
+            "dropList" : [ ],
+            "createList" : [ {
+              "path" : "error",
+              "value" : "Could not create scheduler Job",
+              "evaluate" : null,
+              "typePath" : "string"
+            } ]
+          },
+          "children" : [ ],
+          "type" : "map"
+        } ],
+        "type" : "sequence"
+      } ],
+      "type" : "switch"
+    } ],
+    "lockedByUser" : "ekaDev"
+  },
+  "consumers" : "",
+  "developers" : "rnd",
+  "enableServiceDocumentValidation" : true
+}

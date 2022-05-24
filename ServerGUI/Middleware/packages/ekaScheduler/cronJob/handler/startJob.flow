@@ -4,7 +4,7 @@
     "input" : [ {
       "id" : "j2_4",
       "text" : "jobData",
-      "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.svg",
       "li_attr" : {
         "id" : "j2_4"
       },
@@ -22,7 +22,7 @@
       "children" : [ {
         "id" : "j2_2",
         "text" : "id",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
         "li_attr" : {
           "id" : "j2_2"
         },
@@ -42,7 +42,7 @@
       }, {
         "id" : "j2_3",
         "text" : "cronExpression",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
         "li_attr" : {
           "id" : "j2_3"
         },
@@ -62,7 +62,7 @@
       }, {
         "id" : "j2_1",
         "text" : "serviceFqn",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
         "li_attr" : {
           "id" : "j2_1"
         },
@@ -82,7 +82,7 @@
       }, {
         "id" : "j2_10",
         "text" : "lasterror",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
         "li_attr" : {
           "id" : "j2_10"
         },
@@ -102,7 +102,7 @@
       }, {
         "id" : "j2_9",
         "text" : "enabled",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
         "li_attr" : {
           "id" : "j2_9"
         },
@@ -122,7 +122,7 @@
       }, {
         "id" : "j2_8",
         "text" : "owner_node",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
         "li_attr" : {
           "id" : "j2_8"
         },
@@ -142,7 +142,7 @@
       }, {
         "id" : "j2_7",
         "text" : "last_run",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
         "li_attr" : {
           "id" : "j2_7"
         },
@@ -162,7 +162,7 @@
       }, {
         "id" : "j2_6",
         "text" : "next_run",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
         "li_attr" : {
           "id" : "j2_6"
         },
@@ -182,7 +182,7 @@
       }, {
         "id" : "j2_5",
         "text" : "status",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
         "li_attr" : {
           "id" : "j2_5"
         },
@@ -202,7 +202,7 @@
       }, {
         "id" : "j2_14",
         "text" : "start_time",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
         "li_attr" : {
           "id" : "j2_14"
         },
@@ -222,7 +222,7 @@
       }, {
         "id" : "j2_15",
         "text" : "end_time",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
         "li_attr" : {
           "id" : "j2_15"
         },
@@ -246,7 +246,7 @@
     "flow" : [ {
       "id" : "j1_2",
       "text" : "TCF-Block",
-      "icon" : "/files/gui/middleware/pub/server/ui/icons/try-catch.png",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/try-catch.svg",
       "li_attr" : {
         "id" : "j1_2"
       },
@@ -266,7 +266,7 @@
       "children" : [ {
         "id" : "j1_3",
         "text" : "TRY",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
         "li_attr" : {
           "id" : "j1_3"
         },
@@ -286,7 +286,7 @@
         "children" : [ {
           "id" : "j1_6",
           "text" : "MAP",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/map.svg",
           "li_attr" : {
             "id" : "j1_6"
           },
@@ -297,7 +297,7 @@
           "state" : {
             "loaded" : true,
             "opened" : false,
-            "selected" : true,
+            "selected" : false,
             "disabled" : false
           },
           "data" : {
@@ -317,7 +317,7 @@
         }, {
           "id" : "j1_7",
           "text" : "packages/middleware/pub/service/debugLog",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
           "li_attr" : {
             "id" : "j1_7"
           },
@@ -391,7 +391,7 @@
         }, {
           "id" : "j1_12",
           "text" : "SEQUENCE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
           "li_attr" : {
             "id" : "j1_12"
           },
@@ -412,7 +412,7 @@
           "children" : [ {
             "id" : "j1_13",
             "text" : "MAP",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/map.svg",
             "li_attr" : {
               "id" : "j1_13"
             },
@@ -423,7 +423,7 @@
             "state" : {
               "loaded" : true,
               "opened" : false,
-              "selected" : false,
+              "selected" : true,
               "disabled" : false
             },
             "data" : {
@@ -470,6 +470,11 @@
                 "value" : "Updatng database status to running**********************",
                 "evaluate" : null,
                 "typePath" : "string"
+              }, {
+                "path" : "jobData/lasterror",
+                "value" : "",
+                "evaluate" : null,
+                "typePath" : "document/string"
               } ],
               "comment" : "Prepare jobData document"
             },
@@ -478,7 +483,7 @@
           }, {
             "id" : "j1_21",
             "text" : "packages/middleware/pub/service/debugLog",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
             "li_attr" : {
               "id" : "j1_21"
             },
@@ -544,7 +549,7 @@
           }, {
             "id" : "j1_8",
             "text" : "packages/ekaScheduler/cronJob/adapter/services/DML/updateScheduler",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
             "li_attr" : {
               "id" : "j1_8"
             },
@@ -658,68 +663,68 @@
                 "inTypePath" : "document/string",
                 "outTypePath" : "documentList/string"
               }, {
-                "inputPath" : "error",
-                "outputPath" : "error",
-                "inpJsTree" : "#launching_arrow_jsTree_function",
-                "outpJsTree" : "#landing_arrow_jsTree",
-                "INPath" : "error",
-                "OUTPath" : "error",
+                "inputPath" : "jobData/lasterror",
+                "outputPath" : "inputDocList/lasterror",
+                "inpJsTree" : "#launching_arrow_jsTree",
+                "outpJsTree" : "#landing_arrow_jsTree_function",
+                "INPath" : "jobData/lasterror",
+                "OUTPath" : "inputDocList/#0/lasterror",
                 "op" : "copy",
                 "line" : 0,
                 "dashedLine" : false,
                 "inType" : "string",
                 "outType" : "string",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
+                "inTypePath" : "document/string",
+                "outTypePath" : "documentList/string"
               } ],
               "transformers" : [ {
                 "op" : "copy",
                 "from" : "/jobData/id",
-                "to" : "/inputDocList/#0/id",
+                "to" : "/inputDocList/0/id",
                 "inTypePath" : "document/string",
                 "outTypePath" : "documentList/string"
               }, {
                 "op" : "copy",
                 "from" : "/jobData/cronExpression",
-                "to" : "/inputDocList/#0/cronExpression",
+                "to" : "/inputDocList/0/cronExpression",
                 "inTypePath" : "document/string",
                 "outTypePath" : "documentList/string"
               }, {
                 "op" : "copy",
                 "from" : "/jobData/owner_node",
-                "to" : "/inputDocList/#0/owner_node",
+                "to" : "/inputDocList/0/owner_node",
                 "inTypePath" : "document/string",
                 "outTypePath" : "documentList/string"
               }, {
                 "op" : "copy",
                 "from" : "/jobData/enabled",
-                "to" : "/inputDocList/#0/enabled",
+                "to" : "/inputDocList/0/enabled",
                 "inTypePath" : "document/string",
                 "outTypePath" : "documentList/string"
               }, {
                 "op" : "copy",
                 "from" : "/jobData/last_run",
-                "to" : "/inputDocList/#0/last_run",
+                "to" : "/inputDocList/0/last_run",
                 "inTypePath" : "document/string",
                 "outTypePath" : "documentList/string"
               }, {
                 "op" : "copy",
                 "from" : "/jobData/next_run",
-                "to" : "/inputDocList/#0/next_run",
+                "to" : "/inputDocList/0/next_run",
                 "inTypePath" : "document/string",
                 "outTypePath" : "documentList/string"
               }, {
                 "op" : "copy",
                 "from" : "/jobData/status",
-                "to" : "/inputDocList/#0/status",
+                "to" : "/inputDocList/0/status",
                 "inTypePath" : "document/string",
                 "outTypePath" : "documentList/string"
               }, {
                 "op" : "copy",
-                "from" : "/error",
-                "to" : "/error",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
+                "from" : "/jobData/lasterror",
+                "to" : "/inputDocList/0/lasterror",
+                "inTypePath" : "document/string",
+                "outTypePath" : "documentList/string"
               } ],
               "dropList" : [ {
                 "path" : "inputDocList",
@@ -739,7 +744,7 @@
           }, {
             "id" : "j1_22",
             "text" : "packages/middleware/pub/service/debugLog",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
             "li_attr" : {
               "id" : "j1_22"
             },
@@ -807,7 +812,7 @@
         }, {
           "id" : "j1_9",
           "text" : "SEQUENCE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
           "li_attr" : {
             "id" : "j1_9"
           },
@@ -817,7 +822,7 @@
           },
           "state" : {
             "loaded" : true,
-            "opened" : false,
+            "opened" : true,
             "selected" : false,
             "disabled" : false
           },
@@ -828,7 +833,7 @@
           "children" : [ {
             "id" : "j1_10",
             "text" : "packages/middleware/pub/service/utils/execute",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
             "li_attr" : {
               "id" : "j1_10"
             },
@@ -876,7 +881,7 @@
         }, {
           "id" : "j1_11",
           "text" : "SEQUENCE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
           "li_attr" : {
             "id" : "j1_11"
           },
@@ -886,7 +891,7 @@
           },
           "state" : {
             "loaded" : true,
-            "opened" : false,
+            "opened" : true,
             "selected" : false,
             "disabled" : false
           },
@@ -897,7 +902,7 @@
           "children" : [ {
             "id" : "j1_1",
             "text" : "MAP",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/map.svg",
             "li_attr" : {
               "id" : "j1_1"
             },
@@ -931,9 +936,79 @@
             "children" : [ ],
             "type" : "map"
           }, {
+            "id" : "j1_27",
+            "text" : "packages/ekaScheduler/cronJob/adapter/services/DQL/getSchedulerById",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
+            "li_attr" : {
+              "id" : "j1_27"
+            },
+            "a_attr" : {
+              "href" : "#",
+              "id" : "j1_27_anchor"
+            },
+            "state" : {
+              "loaded" : true,
+              "opened" : false,
+              "selected" : false,
+              "disabled" : false
+            },
+            "data" : {
+              "transformers" : [ {
+                "op" : "copy",
+                "from" : "/jobData/id",
+                "to" : "/inputDocList/0/id",
+                "inTypePath" : "document/string",
+                "outTypePath" : "documentList/string"
+              }, {
+                "op" : "copy",
+                "from" : "/outputDocList/0/enabled",
+                "to" : "/jobData/enabled",
+                "inTypePath" : "documentList/string",
+                "outTypePath" : "document/string"
+              } ],
+              "lines" : [ {
+                "inputPath" : "jobData/id",
+                "outputPath" : "inputDocList/id",
+                "inpJsTree" : "#launching_arrow_jsTree",
+                "outpJsTree" : "#landing_arrow_jsTree_function",
+                "INPath" : "jobData/id",
+                "OUTPath" : "inputDocList/#0/id",
+                "op" : "copy",
+                "line" : 0,
+                "dashedLine" : false,
+                "inType" : "string",
+                "outType" : "string",
+                "inTypePath" : "document/string",
+                "outTypePath" : "documentList/string"
+              }, {
+                "inputPath" : "outputDocList/enabled",
+                "outputPath" : "jobData/enabled",
+                "inpJsTree" : "#launching_arrow_jsTree_function",
+                "outpJsTree" : "#landing_arrow_jsTree",
+                "INPath" : "outputDocList/#0/enabled",
+                "OUTPath" : "jobData/enabled",
+                "op" : "copy",
+                "line" : 0,
+                "dashedLine" : false,
+                "inType" : "string",
+                "outType" : "string",
+                "inTypePath" : "documentList/string",
+                "outTypePath" : "document/string"
+              } ],
+              "dropList" : [ {
+                "path" : "outputDocList",
+                "typePath" : "documentList"
+              } ],
+              "createList" : [ ],
+              "serviceType" : "sql",
+              "comment" : "Select the latest updated scheduler Job data"
+            },
+            "children" : [ ],
+            "type" : "invoke"
+          }, {
             "id" : "j1_5",
             "text" : "packages/ekaScheduler/cronJob/adapter/services/DML/updateScheduler",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
             "li_attr" : {
               "id" : "j1_5"
             },
@@ -1116,6 +1191,72 @@
             },
             "children" : [ ],
             "type" : "invoke"
+          }, {
+            "id" : "j1_15",
+            "text" : "packages/middleware/pub/service/debugLog",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
+            "li_attr" : {
+              "id" : "j1_15"
+            },
+            "a_attr" : {
+              "href" : "#",
+              "id" : "j1_15_anchor"
+            },
+            "state" : {
+              "loaded" : true,
+              "opened" : false,
+              "selected" : false,
+              "disabled" : false
+            },
+            "data" : {
+              "transformers" : [ {
+                "op" : "copy",
+                "from" : "/jobData/serviceFqn",
+                "to" : "/log",
+                "inTypePath" : "document/string",
+                "outTypePath" : "string"
+              }, {
+                "op" : "copy",
+                "from" : "/jobData/status",
+                "to" : "/msg",
+                "inTypePath" : "document/string",
+                "outTypePath" : "string"
+              } ],
+              "lines" : [ {
+                "inputPath" : "jobData/serviceFqn",
+                "outputPath" : "log",
+                "inpJsTree" : "#launching_arrow_jsTree",
+                "outpJsTree" : "#landing_arrow_jsTree_function",
+                "INPath" : "jobData/serviceFqn",
+                "OUTPath" : "log",
+                "op" : "copy",
+                "line" : 0,
+                "dashedLine" : false,
+                "inType" : "string",
+                "outType" : "string",
+                "inTypePath" : "document/string",
+                "outTypePath" : "string"
+              }, {
+                "inputPath" : "jobData/status",
+                "outputPath" : "msg",
+                "inpJsTree" : "#launching_arrow_jsTree",
+                "outpJsTree" : "#landing_arrow_jsTree_function",
+                "INPath" : "jobData/status",
+                "OUTPath" : "msg",
+                "op" : "copy",
+                "line" : 0,
+                "dashedLine" : false,
+                "inType" : "string",
+                "outType" : "string",
+                "inTypePath" : "document/string",
+                "outTypePath" : "string"
+              } ],
+              "dropList" : [ ],
+              "createList" : [ ],
+              "serviceType" : "service"
+            },
+            "children" : [ ],
+            "type" : "invoke"
           } ],
           "type" : "sequence"
         } ],
@@ -1123,7 +1264,7 @@
       }, {
         "id" : "j1_4",
         "text" : "CATCH",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
         "li_attr" : {
           "id" : "j1_4"
         },
@@ -1133,7 +1274,7 @@
         },
         "state" : {
           "loaded" : true,
-          "opened" : false,
+          "opened" : true,
           "selected" : false,
           "disabled" : false
         },
@@ -1143,7 +1284,7 @@
         "children" : [ {
           "id" : "j1_16",
           "text" : "packages/middleware/pub/service/utils/getLastErrorDump",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
           "li_attr" : {
             "id" : "j1_16"
           },
@@ -1170,6 +1311,10 @@
               "dashedLine" : false,
               "inType" : "string",
               "outType" : "string",
+              "applyFunction" : "none",
+              "condition" : "",
+              "jsFunction" : "",
+              "jsFunctionSig" : "",
               "inTypePath" : "document/string",
               "outTypePath" : "document/string"
             } ],
@@ -1177,6 +1322,10 @@
               "op" : "copy",
               "from" : "/lastErrorDump/message",
               "to" : "/jobData/lasterror",
+              "condition" : "",
+              "applyFunction" : "none",
+              "jsFunction" : "",
+              "jsFunctionSig" : "",
               "inTypePath" : "document/string",
               "outTypePath" : "document/string"
             } ],
@@ -1193,15 +1342,15 @@
           "children" : [ ],
           "type" : "invoke"
         }, {
-          "id" : "j1_15",
-          "text" : "packages/ekaScheduler/cronJob/adapter/services/DML/updateScheduler",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "id" : "j1_17",
+          "text" : "packages/middleware/pub/service/debugLog",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
           "li_attr" : {
-            "id" : "j1_15"
+            "id" : "j1_17"
           },
           "a_attr" : {
             "href" : "#",
-            "id" : "j1_15_anchor"
+            "id" : "j1_17_anchor"
           },
           "state" : {
             "loaded" : true,
@@ -1210,11 +1359,237 @@
             "disabled" : false
           },
           "data" : {
-            "lines" : [ ],
-            "transformers" : [ ],
+            "transformers" : [ {
+              "op" : "copy",
+              "from" : "/jobData/serviceFqn",
+              "to" : "/msg",
+              "inTypePath" : "document/string",
+              "outTypePath" : "string"
+            }, {
+              "op" : "copy",
+              "from" : "/jobData/status",
+              "to" : "/log",
+              "inTypePath" : "document/string",
+              "outTypePath" : "string"
+            } ],
+            "lines" : [ {
+              "inputPath" : "jobData/serviceFqn",
+              "outputPath" : "msg",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "jobData/serviceFqn",
+              "OUTPath" : "msg",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "document/string",
+              "outTypePath" : "string"
+            }, {
+              "inputPath" : "jobData/status",
+              "outputPath" : "log",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "jobData/status",
+              "OUTPath" : "log",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "document/string",
+              "outTypePath" : "string"
+            } ],
             "dropList" : [ ],
             "createList" : [ ],
-            "comment" : "Update exception in database"
+            "serviceType" : "service"
+          },
+          "children" : [ ],
+          "type" : "invoke"
+        }, {
+          "id" : "j1_14",
+          "text" : "packages/ekaScheduler/cronJob/adapter/services/DML/updateScheduler",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.svg",
+          "li_attr" : {
+            "id" : "j1_14"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_14_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "transformers" : [ {
+              "op" : "copy",
+              "from" : "/jobData/id",
+              "to" : "/inputDocList/#0/id",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "op" : "copy",
+              "from" : "/jobData/cronExpression",
+              "to" : "/inputDocList/#0/cronExpression",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "op" : "copy",
+              "from" : "/jobData/lasterror",
+              "to" : "/inputDocList/#0/lasterror",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "op" : "copy",
+              "from" : "/jobData/enabled",
+              "to" : "/inputDocList/#0/enabled",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "op" : "copy",
+              "from" : "/jobData/owner_node",
+              "to" : "/inputDocList/#0/owner_node",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "op" : "copy",
+              "from" : "/jobData/last_run",
+              "to" : "/inputDocList/#0/last_run",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "op" : "copy",
+              "from" : "/jobData/next_run",
+              "to" : "/inputDocList/#0/next_run",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "op" : "copy",
+              "from" : "/jobData/status",
+              "to" : "/inputDocList/#0/status",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            } ],
+            "lines" : [ {
+              "inputPath" : "jobData/id",
+              "outputPath" : "inputDocList/id",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "jobData/id",
+              "OUTPath" : "inputDocList/#0/id",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "inputPath" : "jobData/cronExpression",
+              "outputPath" : "inputDocList/cronExpression",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "jobData/cronExpression",
+              "OUTPath" : "inputDocList/#0/cronExpression",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "inputPath" : "jobData/lasterror",
+              "outputPath" : "inputDocList/lasterror",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "jobData/lasterror",
+              "OUTPath" : "inputDocList/#0/lasterror",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "inputPath" : "jobData/enabled",
+              "outputPath" : "inputDocList/enabled",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "jobData/enabled",
+              "OUTPath" : "inputDocList/#0/enabled",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "inputPath" : "jobData/owner_node",
+              "outputPath" : "inputDocList/owner_node",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "jobData/owner_node",
+              "OUTPath" : "inputDocList/#0/owner_node",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "inputPath" : "jobData/last_run",
+              "outputPath" : "inputDocList/last_run",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "jobData/last_run",
+              "OUTPath" : "inputDocList/#0/last_run",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "inputPath" : "jobData/next_run",
+              "outputPath" : "inputDocList/next_run",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "jobData/next_run",
+              "OUTPath" : "inputDocList/#0/next_run",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            }, {
+              "inputPath" : "jobData/status",
+              "outputPath" : "inputDocList/status",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "jobData/status",
+              "OUTPath" : "inputDocList/#0/status",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "document/string",
+              "outTypePath" : "documentList/string"
+            } ],
+            "dropList" : [ ],
+            "createList" : [ ],
+            "serviceType" : "sql"
           },
           "children" : [ ],
           "type" : "invoke"
@@ -1223,7 +1598,7 @@
       }, {
         "id" : "j1_19",
         "text" : "FINALLY",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.svg",
         "li_attr" : {
           "id" : "j1_19"
         },

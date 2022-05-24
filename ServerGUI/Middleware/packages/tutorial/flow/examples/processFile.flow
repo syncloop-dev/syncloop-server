@@ -5,7 +5,7 @@
     "output" : [ {
       "id" : "j3_2",
       "text" : "lastErrorDump",
-      "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+      "icon" : null,
       "li_attr" : {
         "id" : "j3_2"
       },
@@ -24,9 +24,105 @@
       "type" : "document"
     } ],
     "flow" : [ {
+      "id" : "j1_58",
+      "text" : "MAP",
+      "icon" : null,
+      "li_attr" : {
+        "id" : "j1_58"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j1_58_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : {
+        "transformers" : [ ],
+        "lines" : [ ],
+        "dropList" : [ ],
+        "createList" : [ {
+          "path" : "myLog",
+          "value" : "myLog testing",
+          "evaluate" : null,
+          "typePath" : "string"
+        } ]
+      },
+      "children" : [ ],
+      "type" : "map"
+    }, {
+      "id" : "j1_29",
+      "text" : "packages/middleware/pub/service/debugLog",
+      "icon" : null,
+      "li_attr" : {
+        "id" : "j1_29"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j1_29_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : {
+        "transformers" : [ {
+          "op" : "copy",
+          "from" : "/STRING",
+          "to" : "/msg",
+          "inTypePath" : "string",
+          "outTypePath" : "string"
+        }, {
+          "op" : "copy",
+          "from" : "/myLog",
+          "to" : "/log",
+          "inTypePath" : "string",
+          "outTypePath" : "string"
+        } ],
+        "lines" : [ {
+          "inputPath" : "STRING",
+          "outputPath" : "msg",
+          "inpJsTree" : "#launching_arrow_jsTree",
+          "outpJsTree" : "#landing_arrow_jsTree_function",
+          "INPath" : "STRING",
+          "OUTPath" : "msg",
+          "op" : "copy",
+          "line" : 0,
+          "dashedLine" : false,
+          "inType" : "string",
+          "outType" : "string",
+          "inTypePath" : "string",
+          "outTypePath" : "string"
+        }, {
+          "inputPath" : "myLog",
+          "outputPath" : "log",
+          "inpJsTree" : "#launching_arrow_jsTree",
+          "outpJsTree" : "#landing_arrow_jsTree_function",
+          "INPath" : "myLog",
+          "OUTPath" : "log",
+          "op" : "copy",
+          "line" : 0,
+          "dashedLine" : false,
+          "inType" : "string",
+          "outType" : "string",
+          "inTypePath" : "string",
+          "outTypePath" : "string"
+        } ],
+        "dropList" : [ ],
+        "createList" : [ ],
+        "serviceType" : "service"
+      },
+      "children" : [ ],
+      "type" : "invoke"
+    }, {
       "id" : "j1_1",
       "text" : "TCF-Block",
-      "icon" : "/files/gui/middleware/pub/server/ui/icons/try-catch.png",
+      "icon" : null,
       "li_attr" : {
         "id" : "j1_1"
       },
@@ -37,17 +133,18 @@
       "state" : {
         "loaded" : true,
         "opened" : true,
-        "selected" : false,
+        "selected" : true,
         "disabled" : false
       },
       "data" : {
         "status" : "enabled",
-        "comment" : "Try catch block"
+        "comment" : "Try catch block",
+        "snap" : "disabled"
       },
       "children" : [ {
         "id" : "j1_2",
         "text" : "TRY",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "icon" : null,
         "li_attr" : {
           "id" : "j1_2"
         },
@@ -62,12 +159,14 @@
           "disabled" : false
         },
         "data" : {
-          "comment" : "Main Service Block"
+          "comment" : "Main Service Block",
+          "snap" : "disabled",
+          "snapCondition" : "1==0"
         },
         "children" : [ {
           "id" : "j1_40",
           "text" : "SEQUENCE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "icon" : null,
           "li_attr" : {
             "id" : "j1_40"
           },
@@ -77,17 +176,18 @@
           },
           "state" : {
             "loaded" : true,
-            "opened" : true,
+            "opened" : false,
             "selected" : false,
             "disabled" : false
           },
           "data" : {
-            "comment" : "Initialize variables"
+            "comment" : "Initialize variables",
+            "status" : "enabled"
           },
           "children" : [ {
             "id" : "j1_5",
             "text" : "MAP",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+            "icon" : null,
             "li_attr" : {
               "id" : "j1_5"
             },
@@ -107,13 +207,13 @@
               "dropList" : [ ],
               "createList" : [ {
                 "path" : "inBoundFile",
-                "value" : "D:\\ekamw\\sample_files\\inBound.json",
-                "evaluate" : null,
+                "value" : "#{inBound}",
+                "evaluate" : "ELV",
                 "typePath" : "string"
               }, {
                 "path" : "outBoundFile",
-                "value" : "D:\\ekamw\\sample_files\\outBound.json",
-                "evaluate" : null,
+                "value" : "#{outBound}",
+                "evaluate" : "ELV",
                 "typePath" : "string"
               } ],
               "status" : "enabled",
@@ -124,7 +224,7 @@
           }, {
             "id" : "j1_7",
             "text" : "packages/middleware/pub/file/getBufferedReader",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+            "icon" : null,
             "li_attr" : {
               "id" : "j1_7"
             },
@@ -182,10 +282,10 @@
                 "outTypePath" : "string"
               } ],
               "dropList" : [ {
-                "path" : "inBoundFile",
+                "path" : "filePathWithName",
                 "typePath" : "string"
               }, {
-                "path" : "filePathWithName",
+                "path" : "inBoundFile",
                 "typePath" : "string"
               } ],
               "createList" : [ ],
@@ -197,7 +297,7 @@
           }, {
             "id" : "j1_24",
             "text" : "packages/middleware/pub/file/getBufferedWriter",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+            "icon" : null,
             "li_attr" : {
               "id" : "j1_24"
             },
@@ -259,7 +359,8 @@
                 "typePath" : "string"
               } ],
               "createList" : [ ],
-              "serviceType" : "service"
+              "serviceType" : "service",
+              "status" : "enabled"
             },
             "children" : [ ],
             "type" : "invoke"
@@ -268,7 +369,7 @@
         }, {
           "id" : "j1_41",
           "text" : "SEQUENCE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "icon" : null,
           "li_attr" : {
             "id" : "j1_41"
           },
@@ -283,12 +384,13 @@
             "disabled" : false
           },
           "data" : {
-            "comment" : "Loop over file data and process documents"
+            "comment" : "Loop over file data and process documents",
+            "status" : "enabled"
           },
           "children" : [ {
             "id" : "j1_9",
             "text" : "REPEAT",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/repeat.png",
+            "icon" : null,
             "li_attr" : {
               "id" : "j1_9"
             },
@@ -306,13 +408,14 @@
               "repeat" : "-1",
               "repeatOn" : "success",
               "status" : "enabled",
-              "interval" : "150",
-              "comment" : "Repeat until eof"
+              "interval" : "100",
+              "comment" : "Repeat until eof",
+              "snap" : "disabled"
             },
             "children" : [ {
               "id" : "j1_11",
               "text" : "MAP",
-              "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+              "icon" : null,
               "li_attr" : {
                 "id" : "j1_11"
               },
@@ -343,7 +446,7 @@
             }, {
               "id" : "j1_8",
               "text" : "packages/middleware/pub/file/readLines",
-              "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+              "icon" : null,
               "li_attr" : {
                 "id" : "j1_8"
               },
@@ -439,7 +542,7 @@
             }, {
               "id" : "j1_10",
               "text" : "SWITCH",
-              "icon" : "/files/gui/middleware/pub/server/ui/icons/switch.png",
+              "icon" : null,
               "li_attr" : {
                 "id" : "j1_10"
               },
@@ -461,7 +564,7 @@
               "children" : [ {
                 "id" : "j1_12",
                 "text" : "CASE",
-                "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+                "icon" : null,
                 "li_attr" : {
                   "id" : "j1_12"
                 },
@@ -477,12 +580,13 @@
                 },
                 "data" : {
                   "case" : "#null",
-                  "comment" : "EOF"
+                  "comment" : "EOF",
+                  "status" : "enabled"
                 },
                 "children" : [ {
                   "id" : "j1_15",
                   "text" : "MAP",
-                  "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+                  "icon" : null,
                   "li_attr" : {
                     "id" : "j1_15"
                   },
@@ -511,15 +615,15 @@
                   "children" : [ ],
                   "type" : "map"
                 }, {
-                  "id" : "j1_6",
-                  "text" : "packages/middleware/pub/service/throwExecption",
-                  "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                  "id" : "j1_57",
+                  "text" : "packages/middleware/pub/service/exitRepeat",
+                  "icon" : null,
                   "li_attr" : {
-                    "id" : "j1_6"
+                    "id" : "j1_57"
                   },
                   "a_attr" : {
                     "href" : "#",
-                    "id" : "j1_6_anchor"
+                    "id" : "j1_57_anchor"
                   },
                   "state" : {
                     "loaded" : true,
@@ -551,16 +655,16 @@
                       "outTypePath" : "string"
                     } ],
                     "dropList" : [ {
-                      "path" : "msg",
+                      "path" : "log",
                       "typePath" : "string"
                     }, {
-                      "path" : "log",
+                      "path" : "msg",
                       "typePath" : "string"
                     } ],
                     "createList" : [ ],
                     "serviceType" : "service",
-                    "status" : "enabled",
-                    "comment" : "Break the repeat module as EOF is reached"
+                    "comment" : "Break the repeat module as EOF is reached",
+                    "status" : "enabled"
                   },
                   "children" : [ ],
                   "type" : "invoke"
@@ -569,7 +673,7 @@
               }, {
                 "id" : "j1_13",
                 "text" : "CASE",
-                "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+                "icon" : null,
                 "li_attr" : {
                   "id" : "j1_13"
                 },
@@ -585,12 +689,13 @@
                 },
                 "data" : {
                   "case" : "#default",
-                  "comment" : "Process"
+                  "comment" : "Process",
+                  "status" : "enabled"
                 },
                 "children" : [ {
                   "id" : "j1_14",
                   "text" : "packages/middleware/pub/json/fromJsonList",
-                  "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                  "icon" : null,
                   "li_attr" : {
                     "id" : "j1_14"
                   },
@@ -669,7 +774,7 @@
                 }, {
                   "id" : "j1_17",
                   "text" : "packages/tutorial/flow/examples/modifyJson",
-                  "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                  "icon" : null,
                   "li_attr" : {
                     "id" : "j1_17"
                   },
@@ -814,7 +919,7 @@
                 }, {
                   "id" : "j1_18",
                   "text" : "packages/middleware/pub/service/debugLog",
-                  "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                  "icon" : null,
                   "li_attr" : {
                     "id" : "j1_18"
                   },
@@ -886,14 +991,15 @@
                     } ],
                     "createList" : [ ],
                     "serviceType" : "service",
-                    "comment" : "Log the batch Id's and status of future document"
+                    "comment" : "Log the batch Id's and status of future document",
+                    "status" : "enabled"
                   },
                   "children" : [ ],
                   "type" : "invoke"
                 }, {
                   "id" : "j1_20",
                   "text" : "packages/middleware/pub/docList/addDoc",
-                  "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                  "icon" : null,
                   "li_attr" : {
                     "id" : "j1_20"
                   },
@@ -959,7 +1065,8 @@
                     } ],
                     "createList" : [ ],
                     "serviceType" : "service",
-                    "comment" : "Add future documents to List"
+                    "comment" : "Add future documents to List",
+                    "status" : "enabled"
                   },
                   "children" : [ ],
                   "type" : "invoke"
@@ -974,7 +1081,7 @@
         }, {
           "id" : "j1_39",
           "text" : "SEQUENCE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "icon" : null,
           "li_attr" : {
             "id" : "j1_39"
           },
@@ -989,12 +1096,13 @@
             "disabled" : false
           },
           "data" : {
-            "comment" : "Wait for threads to complete the task"
+            "comment" : "Wait for threads to complete the task",
+            "status" : "enabled"
           },
           "children" : [ {
             "id" : "j1_47",
             "text" : "MAP",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+            "icon" : null,
             "li_attr" : {
               "id" : "j1_47"
             },
@@ -1020,7 +1128,7 @@
           }, {
             "id" : "j1_19",
             "text" : "REPEAT",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/repeat.png",
+            "icon" : null,
             "li_attr" : {
               "id" : "j1_19"
             },
@@ -1043,7 +1151,7 @@
             "children" : [ {
               "id" : "j1_25",
               "text" : "packages/middleware/pub/docList/listSize",
-              "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+              "icon" : null,
               "li_attr" : {
                 "id" : "j1_25"
               },
@@ -1110,7 +1218,7 @@
             }, {
               "id" : "j1_22",
               "text" : "MAP",
-              "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+              "icon" : null,
               "li_attr" : {
                 "id" : "j1_22"
               },
@@ -1161,7 +1269,7 @@
             }, {
               "id" : "j1_48",
               "text" : "packages/middleware/pub/service/debugLog",
-              "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+              "icon" : null,
               "li_attr" : {
                 "id" : "j1_48"
               },
@@ -1208,7 +1316,7 @@
             }, {
               "id" : "j1_49",
               "text" : "LOOP",
-              "icon" : "/files/gui/middleware/pub/server/ui/icons/loop.png",
+              "icon" : null,
               "li_attr" : {
                 "id" : "j1_49"
               },
@@ -1230,7 +1338,7 @@
               "children" : [ {
                 "id" : "j1_23",
                 "text" : "SWITCH",
-                "icon" : "/files/gui/middleware/pub/server/ui/icons/switch.png",
+                "icon" : null,
                 "li_attr" : {
                   "id" : "j1_23"
                 },
@@ -1251,7 +1359,7 @@
                 "children" : [ {
                   "id" : "j1_26",
                   "text" : "CASE",
-                  "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+                  "icon" : null,
                   "li_attr" : {
                     "id" : "j1_26"
                   },
@@ -1272,7 +1380,7 @@
                   "children" : [ {
                     "id" : "j1_50",
                     "text" : "MAP",
-                    "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+                    "icon" : null,
                     "li_attr" : {
                       "id" : "j1_50"
                     },
@@ -1331,7 +1439,7 @@
                   }, {
                     "id" : "j1_54",
                     "text" : "packages/middleware/pub/service/debugLog",
-                    "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                    "icon" : null,
                     "li_attr" : {
                       "id" : "j1_54"
                     },
@@ -1371,7 +1479,7 @@
                       "dropList" : [ ],
                       "createList" : [ ],
                       "serviceType" : "service",
-                      "status" : "disabled"
+                      "status" : "enabled"
                     },
                     "children" : [ ],
                     "type" : "invoke"
@@ -1384,7 +1492,7 @@
             }, {
               "id" : "j1_59",
               "text" : "SEQUENCE",
-              "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+              "icon" : null,
               "li_attr" : {
                 "id" : "j1_59"
               },
@@ -1405,7 +1513,7 @@
               "children" : [ {
                 "id" : "j1_51",
                 "text" : "SEQUENCE",
-                "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+                "icon" : null,
                 "li_attr" : {
                   "id" : "j1_51"
                 },
@@ -1415,7 +1523,7 @@
                 },
                 "state" : {
                   "loaded" : true,
-                  "opened" : true,
+                  "opened" : false,
                   "selected" : false,
                   "disabled" : false
                 },
@@ -1426,7 +1534,7 @@
                 "children" : [ {
                   "id" : "j1_46",
                   "text" : "MAP",
-                  "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+                  "icon" : null,
                   "li_attr" : {
                     "id" : "j1_46"
                   },
@@ -1455,15 +1563,15 @@
                   "children" : [ ],
                   "type" : "map"
                 }, {
-                  "id" : "j1_60",
-                  "text" : "packages/middleware/pub/service/throwExecption",
-                  "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                  "id" : "j1_6",
+                  "text" : "packages/middleware/pub/service/exitRepeat",
+                  "icon" : null,
                   "li_attr" : {
-                    "id" : "j1_60"
+                    "id" : "j1_6"
                   },
                   "a_attr" : {
                     "href" : "#",
-                    "id" : "j1_60_anchor"
+                    "id" : "j1_6_anchor"
                   },
                   "state" : {
                     "loaded" : true,
@@ -1497,7 +1605,6 @@
                     "dropList" : [ ],
                     "createList" : [ ],
                     "serviceType" : "service",
-                    "condition" : "",
                     "comment" : "Throw exception to break the repeat based on condition"
                   },
                   "children" : [ ],
@@ -1510,12 +1617,68 @@
             "type" : "repeat"
           } ],
           "type" : "sequence"
+        }, {
+          "id" : "j1_16",
+          "text" : "MAP",
+          "icon" : null,
+          "li_attr" : {
+            "id" : "j1_16"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_16_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "transformers" : [ ],
+            "lines" : [ ],
+            "dropList" : [ {
+              "path" : "lastErrorDump",
+              "typePath" : "document"
+            } ],
+            "createList" : [ ],
+            "comment" : "Dropper",
+            "status" : "enabled"
+          },
+          "children" : [ ],
+          "type" : "map"
+        }, {
+          "id" : "j1_28",
+          "text" : "packages/middleware/pub/service/throwExecption",
+          "icon" : null,
+          "li_attr" : {
+            "id" : "j1_28"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_28_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "transformers" : null,
+            "lines" : null,
+            "dropList" : [ ],
+            "createList" : [ ],
+            "serviceType" : "service"
+          },
+          "children" : [ ],
+          "type" : "invoke"
         } ],
         "type" : "sequence"
       }, {
         "id" : "j1_3",
         "text" : "CATCH",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "icon" : null,
         "li_attr" : {
           "id" : "j1_3"
         },
@@ -1525,17 +1688,19 @@
         },
         "state" : {
           "loaded" : true,
-          "opened" : true,
+          "opened" : false,
           "selected" : false,
           "disabled" : false
         },
         "data" : {
-          "comment" : "Catch and log exceptions if any"
+          "comment" : "Catch and log exceptions if any",
+          "status" : "enabled",
+          "snap" : "enabled"
         },
         "children" : [ {
           "id" : "j1_21",
           "text" : "packages/middleware/pub/service/utils/getLastErrorDump",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "icon" : null,
           "li_attr" : {
             "id" : "j1_21"
           },
@@ -1591,15 +1756,14 @@
               "evaluate" : null,
               "typePath" : "string"
             } ],
-            "serviceType" : "service",
-            "status" : "disabled"
+            "serviceType" : "service"
           },
           "children" : [ ],
           "type" : "invoke"
         }, {
           "id" : "j1_43",
           "text" : "packages/middleware/pub/json/toJson",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "icon" : null,
           "li_attr" : {
             "id" : "j1_43"
           },
@@ -1665,14 +1829,14 @@
             } ],
             "createList" : [ ],
             "serviceType" : "service",
-            "status" : "disabled"
+            "status" : "enabled"
           },
           "children" : [ ],
           "type" : "invoke"
         }, {
           "id" : "j1_42",
           "text" : "packages/middleware/pub/service/debugLog",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "icon" : null,
           "li_attr" : {
             "id" : "j1_42"
           },
@@ -1683,7 +1847,7 @@
           "state" : {
             "loaded" : true,
             "opened" : false,
-            "selected" : true,
+            "selected" : false,
             "disabled" : false
           },
           "data" : {
@@ -1736,7 +1900,7 @@
             "createList" : [ ],
             "serviceType" : "service",
             "comment" : "Log exception",
-            "status" : "disabled"
+            "status" : "enabled"
           },
           "children" : [ ],
           "type" : "invoke"
@@ -1745,7 +1909,7 @@
       }, {
         "id" : "j1_4",
         "text" : "FINALLY",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "icon" : null,
         "li_attr" : {
           "id" : "j1_4"
         },
@@ -1760,12 +1924,13 @@
           "disabled" : false
         },
         "data" : {
-          "comment" : "Flush and close the buffered writer"
+          "comment" : "Flush and close the buffered writer",
+          "status" : "enabled"
         },
         "children" : [ {
           "id" : "j1_27",
           "text" : "packages/middleware/pub/file/flushAndCloseBW",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "icon" : null,
           "li_attr" : {
             "id" : "j1_27"
           },
@@ -1825,7 +1990,7 @@
       } ],
       "type" : "try-catch"
     } ],
-    "lockedByUser" : "admin"
+    "lockedByUser" : "ekaDev"
   },
   "consumers" : "",
   "developers" : "",

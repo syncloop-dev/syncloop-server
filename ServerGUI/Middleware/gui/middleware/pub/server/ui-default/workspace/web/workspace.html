@@ -3,32 +3,33 @@
   <title>Workspace</title>
   <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/dist/themes/default/style.min.css">
+<link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui/css/style.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
-  <script src="/files/gui/middleware/pub/server/ui/javascript/jstreetable.js"></script>
-<script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
-<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+<script	src="/files/gui/middleware/pub/server/ui-default/javascript/jstree.min.js"></script>
+  <script src="/files/gui/middleware/pub/server/ui-default/javascript/jstreetable.js"></script>
+<script src="/files/gui/middleware/pub/server/ui-default/javascript/middleware.js"></script>
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui-default/css/middleware.css">
   </head>
 
-  <body style="width:100%;height:100%;">
+<body style="width:100%;height:100%;">
 
-<div class="navbar" style="background-color:slategray;left:0px;top:0px;">
+<div class="navbar" style="background-color:slategray;height:25px;">
   <div id="mostRecentlyOpened" class="dropdown">
-    <a class="dropbtn">Unsaved: </a>
+	<a class="dropbtn" style="color:#ddd">Recent: </a>
   </div>
   <div class="dropdown navbar-right">
-    <a href="#" onclick="localStorage.clear();sessionStorage.clear();deleteAllCookies();location.reload(true);" class="dropbtn"><span class="glyphicon glyphicon-log-in"></span> Reload cache</a>
+    <a href="#" onclick="localStorage.clear();sessionStorage.clear();deleteAllCookies();location.reload(true);" class="dropbtn" style="color:#ddd"><span class="glyphicon glyphicon-log-in"></span> Clear cache</a>
   </div>
 </div>    
 
-<div id="content" style="max-width: 100%; min-height:500px;padding: 0px; margin: 0px;height:98%;">
+<div id="content" style="max-width: 100%; min-height:500px;padding: 0px; margin: 0px;height:auto;">
 <div class="row" id="demo" style="display: block;padding: 0px; margin: 0px;width:100%;height:100%">
 
 <div class="col-md-12" id="packageManagerJsTreeContainer" style="width:15%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">  
 <div class="row" style="margin: 0px; padding:0px;">
 			<div class="navbar">  
               		<div class="dropdown">
-                      <button class="dropbtn">New 
+                      <button class="dropbtn nw">New 
                         <i class="fa fa-caret-down"></i>
                       </button>
                       <div class="dropdown-content">
@@ -38,10 +39,11 @@
                         <a href="#" onclick="createSchema('service',packageManagerJsTreeRef);">Service</a>
                         <a href="#" onclick="createSchema('jdbc',packageManagerJsTreeRef);">JDBC</a>
                         <a href="#" onclick="createSchema('sql',packageManagerJsTreeRef);">SQL</a>
+                        <a href="#" onclick="createSchema('properties',packageManagerJsTreeRef);">Properties</a>
                       </div>
                     </div>
               <div class="dropdown">
-                <button class="dropbtn">Tools 
+                <button class="dropbtn nw">Tools 
                   <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
@@ -99,16 +101,7 @@
 </div>
 </body>
   <script>    
-function deleteAllCookies() {
-    var cookies = document.cookie.split(";");
 
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i];
-        var eqPos = cookie.indexOf("=");
-        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
-}
     var packageManagerJsTreeRef=createPackageJstree('#packageManagerJsTree');
     $("#packageManagerJsTree").on('click',
 											function(e, data) {
@@ -124,19 +117,19 @@ function deleteAllCookies() {
 												//alert(src);
 												var url=null;
 												if(type=="service"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/clike/serviceEditor.html";
+													url="/files/gui/middleware/pub/server/ui-default/workspace/web/CodeMirror-master/mode/clike/serviceEditor.html";
 												}else if(type=="html"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/htmlmixed/htmlEditor.html";
+													url="/files/gui/middleware/pub/server/ui-default/workspace/web/CodeMirror-master/mode/htmlmixed/htmlEditor.html";
 												}else if(type=="jdbc"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/properties/propertiesEditor.html";
+													url="/files/gui/middleware/pub/server/ui-default/workspace/web/CodeMirror-master/mode/properties/propertiesEditor.html";
 												}else if(type=="sql"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/sql/sqlEditor.html";
+													url="/files/gui/middleware/pub/server/ui-default/workspace/web/CodeMirror-master/mode/sql/sqlEditor.html";
 												}else if(type=="properties"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/properties/propertiesEditor.html";
+													url="/files/gui/middleware/pub/server/ui-default/workspace/web/CodeMirror-master/mode/properties/propertiesEditor.html";
 												}else if(type=="map"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/transformer.html";
+													url="/files/gui/middleware/pub/server/ui-default/workspace/web/transformer.html";
 												}else if(type=="flow"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/flowMaker/flowEditor.html";
+													url="/files/gui/middleware/pub/server/ui-default/workspace/web/flowMaker/flowEditor.html";
 												}else
 													url=null;
 												if(url!=null){

@@ -9,10 +9,13 @@
 <script src="../../addon/edit/matchbrackets.js"></script>
 <script src="../../addon/comment/continuecomment.js"></script>
 <script src="../../addon/comment/comment.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.min.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.init.js"></script>
 <script src="properties.js"></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
 <link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/sweetalert.css" />
 <style>.CodeMirror {height:96%;width:100%}</style>
 <html>
 <body style="width:100%;height:100%;">
@@ -52,8 +55,10 @@
 		var response=syncRestRequest("/"+loadFile, "POST", data,"application/text","application/text");
 		if(response.status==200){
 			//localStorage.setItem(loadFile, "");
-			alert("Saved");
+			//alert("Saved");
+			swal("Saved !!", "Saved", "success");
 		}else
-		alert(JSON.parse(response.payload).error);
+		//alert(JSON.parse(response.payload).error);
+		swal('Error', JSON.parse(response.payload).error, 'error');
 	}
   </script></body></html>

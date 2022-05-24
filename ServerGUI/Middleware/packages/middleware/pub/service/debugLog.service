@@ -2,7 +2,7 @@
   "input" : [ {
     "id" : "j1_1",
     "text" : "msg",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_1"
     },
@@ -22,7 +22,7 @@
   }, {
     "id" : "j1_2",
     "text" : "log",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_2"
     },

@@ -2,7 +2,7 @@
   "input" : [ {
     "id" : "j1_2",
     "text" : "inputDocList",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.svg",
     "li_attr" : {
       "id" : "j1_2"
     },
@@ -22,7 +22,7 @@
   }, {
     "id" : "j1_1",
     "text" : "keyword",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_1"
     },
@@ -42,7 +42,7 @@
   }, {
     "id" : "j1_3",
     "text" : "txConn",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.svg",
     "li_attr" : {
       "id" : "j1_3"
     },
@@ -62,7 +62,7 @@
   }, {
     "id" : "j1_4",
     "text" : "isTxn",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.svg",
     "li_attr" : {
       "id" : "j1_4"
     },
@@ -83,7 +83,7 @@
   "output" : [ {
     "id" : "j2_1",
     "text" : "outputDocList",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.svg",
     "li_attr" : {
       "id" : "j2_1"
     },
@@ -103,7 +103,7 @@
   }, {
     "id" : "j2_5",
     "text" : "id",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_5"
     },
@@ -123,7 +123,7 @@
   }, {
     "id" : "j2_6",
     "text" : "serviceFqn",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_6"
     },
@@ -143,7 +143,7 @@
   }, {
     "id" : "j2_7",
     "text" : "cron",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_7"
     },
@@ -163,7 +163,7 @@
   }, {
     "id" : "j2_8",
     "text" : "status",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_8"
     },
@@ -183,7 +183,7 @@
   }, {
     "id" : "j2_9",
     "text" : "lasterror",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_9"
     },
@@ -203,7 +203,7 @@
   }, {
     "id" : "j2_10",
     "text" : "enabled",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_10"
     },
@@ -223,7 +223,7 @@
   }, {
     "id" : "j2_11",
     "text" : "owner_node",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_11"
     },
@@ -243,7 +243,7 @@
   }, {
     "id" : "j2_12",
     "text" : "last_run",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_12"
     },
@@ -263,7 +263,7 @@
   }, {
     "id" : "j2_13",
     "text" : "next_run",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_13"
     },
@@ -283,7 +283,7 @@
   }, {
     "id" : "j2_2",
     "text" : "rows",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/integer.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/integer.svg",
     "li_attr" : {
       "id" : "j2_2"
     },
@@ -303,7 +303,7 @@
   }, {
     "id" : "j2_3",
     "text" : "success",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.svg",
     "li_attr" : {
       "id" : "j2_3"
     },
@@ -323,7 +323,7 @@
   }, {
     "id" : "j2_4",
     "text" : "error",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_4"
     },

@@ -1,0 +1,112 @@
+{
+  "input" : [ {
+    "id" : "j1_1",
+    "text" : "*pathParameters",
+    "icon" : null,
+    "li_attr" : {
+      "id" : "j1_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : true,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "children" : [ {
+      "id" : "j1_2",
+      "text" : "resource",
+      "icon" : null,
+      "li_attr" : {
+        "id" : "j1_2"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j1_2_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ ],
+      "type" : "string"
+    }, {
+      "id" : "j1_3",
+      "text" : "id",
+      "icon" : null,
+      "li_attr" : {
+        "id" : "j1_3"
+      },
+      "a_attr" : {
+        "href" : "#",
+        "id" : "j1_3_anchor"
+      },
+      "state" : {
+        "loaded" : true,
+        "opened" : false,
+        "selected" : false,
+        "disabled" : false
+      },
+      "data" : { },
+      "children" : [ ],
+      "type" : "string"
+    } ],
+    "type" : "document"
+  } ],
+  "output" : [ {
+    "id" : "j2_1",
+    "text" : "files",
+    "icon" : null,
+    "li_attr" : {
+      "id" : "j2_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j2_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "children" : [ ],
+    "type" : "stringList"
+  }, {
+    "id" : "j2_2",
+    "text" : "*multiPart",
+    "icon" : null,
+    "li_attr" : {
+      "id" : "j2_2"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j2_2_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : true,
+      "disabled" : false
+    },
+    "data" : { },
+    "children" : [ ],
+    "type" : "javaObject"
+  } ],
+  "package" : "cGFja2FnZSBwYWNrYWdlcy5taWRkbGV3YXJlLnB1Yi5zZXJ2aWNlOw==",
+  "imports" : "aW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLkRhdGFQaXBlbGluZTsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLlNlcnZpY2VVdGlsczsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS50ZW1wbGF0ZS5TbmlwcGV0RXhjZXB0aW9uOwppbXBvcnQgamF2YS5pby5GaWxlOwppbXBvcnQgY29tLmVrYS5taWRkbGV3YXJlLnNlcnZlci5TZXJ2aWNlTWFuYWdlcjs=",
+  "main" : "ClN0cmluZyByZXNvdXJjZT1kYXRhUGlwZWxpbmUuZ2V0QXNTdHJpbmcoIipwYXRoUGFyYW1ldGVycy9yZXNvdXJjZSIpOwpTdHJpbmcgbmFtZT1kYXRhUGlwZWxpbmUuZ2V0QXNTdHJpbmcoIipwYXRoUGFyYW1ldGVycy9pZCIpOwpkYXRhUGlwZWxpbmUuY2xlYXIoKTsKRmlsZSBmaWxlID0gbnVsbDsKaWYobmFtZT09bnVsbCB8fCBuYW1lLmVxdWFscygibGlzdCIpKXsKICBmaWxlPW5ldyBGaWxlKFNlcnZpY2VNYW5hZ2VyLnBhY2thZ2VQYXRoICsgIi9zbmFwc2hvdHMvIiArIHJlc291cmNlKTsKICBTdHJpbmcgZmlsZXNbXT1maWxlLmxpc3QoKTsKICBkYXRhUGlwZWxpbmUucHV0KCJmaWxlcyIsZmlsZXMpOwp9ZWxzZXsKICBpZighbmFtZS5lbmRzV2l0aCgic25hcCIpKQogICAgbmFtZSs9Ii5zbmFwIjsKICBmaWxlPW5ldyBGaWxlKFNlcnZpY2VNYW5hZ2VyLnBhY2thZ2VQYXRoICsgIi9zbmFwc2hvdHMvIiArIHJlc291cmNlICsgIi8iICsgbmFtZSk7CiAgZGF0YVBpcGVsaW5lLnNldEJvZHkoZmlsZSk7Cn0=",
+  "staticWorkspace" : "",
+  "version" : "v1",
+  "consumers" : "",
+  "developers" : "",
+  "lockedByUser" : "ekaDev"
+}

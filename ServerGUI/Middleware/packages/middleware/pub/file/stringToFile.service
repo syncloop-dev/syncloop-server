@@ -1,1 +1,92 @@
-{"input":[{"id":"j1_1","text":"filePathWithName","icon":"/files/gui/middleware/pub/server/ui/icons/text.png","li_attr":{"id":"j1_1"},"a_attr":{"href":"#","id":"j1_1_anchor"},"state":{"loaded":true,"opened":false,"selected":false,"disabled":false},"data":{},"parent":"#","type":"string"},{"id":"j1_2","text":"string","icon":"/files/gui/middleware/pub/server/ui/icons/text.png","li_attr":{"id":"j1_2"},"a_attr":{"href":"#","id":"j1_2_anchor"},"state":{"loaded":true,"opened":false,"selected":false,"disabled":false},"data":{},"parent":"#","type":"string"},{"id":"j1_3","text":"append","icon":"/files/gui/middleware/pub/server/ui/icons/boolean.png","li_attr":{"id":"j1_3"},"a_attr":{"href":"#","id":"j1_3_anchor"},"state":{"loaded":true,"opened":false,"selected":false,"disabled":false},"data":{},"parent":"#","type":"boolean"}],"output":[{"id":"j2_1","text":"size","icon":"/files/gui/middleware/pub/server/ui/icons/text.png","li_attr":{"id":"j2_1"},"a_attr":{"href":"#","id":"j2_1_anchor"},"state":{"loaded":true,"opened":false,"selected":false,"disabled":false},"data":{},"parent":"#","type":"string"}],"package":"cGFja2FnZSBwYWNrYWdlcy5taWRkbGV3YXJlLnB1Yi5maWxlOw==","imports":"aW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLkRhdGFQaXBlbGluZTsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLlNlcnZpY2VVdGlsczsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS50ZW1wbGF0ZS5TbmlwcGV0RXhjZXB0aW9uOwppbXBvcnQgamF2YS5pby5GaWxlOwppbXBvcnQgamF2YS5pby5GaWxlT3V0cHV0U3RyZWFtOwppbXBvcnQgb3JnLmFwYWNoZS5jb21tb25zLmlvLklPVXRpbHM7CmltcG9ydCBvcmcuYXBhY2hlLmNvbW1vbnMubGFuZzMuQXJyYXlVdGlsczs=","main":"dHJ5IHsKCQlTdHJpbmcgc3RyaW5nPWRhdGFQaXBlbGluZS5nZXRTdHJpbmcoInN0cmluZyIpOwogIAkJYnl0ZVtdIGJ5dGVzPXN0cmluZy5nZXRCeXRlcygpOwogIAkJYnl0ZVtdIG9sZEJ5dGVzPW51bGw7CiAgCQlTdHJpbmcgZmlsZVBhdGhXaXRoTmFtZT1kYXRhUGlwZWxpbmUuZ2V0U3RyaW5nKCJmaWxlUGF0aFdpdGhOYW1lIik7CiAgICAgICAgQm9vbGVhbiBhcHBlbmQ9ZGF0YVBpcGVsaW5lLmdldEFzQm9vbGVhbigiYXBwZW5kIik7CiAgCQlGaWxlIGZpbGU9bmV3IEZpbGUoZmlsZVBhdGhXaXRoTmFtZSk7CiAgCQlpZihhcHBlbmQpewogICAgICAgIAlvbGRCeXRlcz1TZXJ2aWNlVXRpbHMucmVhZEFsbEJ5dGVzKGZpbGUpOwogICAgICAgICAgICBieXRlcz1BcnJheVV0aWxzLmFkZEFsbChieXRlcywgb2xkQnl0ZXMpOwogICAgICAgICAgICAKICAgICAgICB9CiAgCQlTdHJpbmcgc2l6ZT1ieXRlcy5sZW5ndGgrIiI7CgkJSU9VdGlscy53cml0ZShieXRlcywgbmV3IEZpbGVPdXRwdXRTdHJlYW0oZmlsZSkpOwogICAgICAgIGRhdGFQaXBlbGluZS5wdXQoInNpemUiLHNpemUpOwoJfSBjYXRjaCAoRXhjZXB0aW9uIGUpIHsKCQlkYXRhUGlwZWxpbmUuY2xlYXIoKTsKICAJCWRhdGFQaXBlbGluZS5wdXQoImVycm9yIixlLmdldE1lc3NhZ2UoKSk7CiAgICAJdGhyb3cgbmV3IFNuaXBwZXRFeGNlcHRpb24oZGF0YVBpcGVsaW5lLCJTbmVwcGV0IGV4Y2VwdGlvbiIsIG5ldyBFeGNlcHRpb24oZSkpOwoJfQ==","staticWorkspace":"","version":"v1","consumers":"","developers":"","lockedByUser":"@Vineet"}
+{
+  "input" : [ {
+    "id" : "j1_1",
+    "text" : "filePathWithName",
+    "icon" : null,
+    "li_attr" : {
+      "id" : "j1_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "children" : [ ],
+    "type" : "string"
+  }, {
+    "id" : "j1_2",
+    "text" : "string",
+    "icon" : null,
+    "li_attr" : {
+      "id" : "j1_2"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_2_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "children" : [ ],
+    "type" : "string"
+  }, {
+    "id" : "j1_3",
+    "text" : "append",
+    "icon" : null,
+    "li_attr" : {
+      "id" : "j1_3"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_3_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "children" : [ ],
+    "type" : "boolean"
+  } ],
+  "output" : [ {
+    "id" : "j2_1",
+    "text" : "size",
+    "icon" : null,
+    "li_attr" : {
+      "id" : "j2_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j2_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "children" : [ ],
+    "type" : "string"
+  } ],
+  "package" : "cGFja2FnZSBwYWNrYWdlcy5taWRkbGV3YXJlLnB1Yi5maWxlOw==",
+  "imports" : "aW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLkRhdGFQaXBlbGluZTsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLlNlcnZpY2VVdGlsczsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS50ZW1wbGF0ZS5TbmlwcGV0RXhjZXB0aW9uOwppbXBvcnQgamF2YS5pby5GaWxlOwppbXBvcnQgamF2YS5pby5GaWxlT3V0cHV0U3RyZWFtOwppbXBvcnQgb3JnLmFwYWNoZS5jb21tb25zLmlvLklPVXRpbHM7CmltcG9ydCBvcmcuYXBhY2hlLmNvbW1vbnMubGFuZzMuQXJyYXlVdGlsczs=",
+  "main" : "dHJ5IHsKCQlTdHJpbmcgc3RyaW5nPWRhdGFQaXBlbGluZS5nZXRTdHJpbmcoInN0cmluZyIpOwogIAkJYnl0ZVtdIGJ5dGVzPXN0cmluZy5nZXRCeXRlcygpOwogIAkJYnl0ZVtdIG9sZEJ5dGVzPW51bGw7CiAgCQlTdHJpbmcgZmlsZVBhdGhXaXRoTmFtZT1kYXRhUGlwZWxpbmUuZ2V0U3RyaW5nKCJmaWxlUGF0aFdpdGhOYW1lIik7CiAgICAgICAgQm9vbGVhbiBhcHBlbmQ9ZGF0YVBpcGVsaW5lLmdldEFzQm9vbGVhbigiYXBwZW5kIik7CiAgCQlGaWxlIGZpbGU9bmV3IEZpbGUoZmlsZVBhdGhXaXRoTmFtZSk7CiAgCQlpZihhcHBlbmQpewogICAgICAgIAlvbGRCeXRlcz1TZXJ2aWNlVXRpbHMucmVhZEFsbEJ5dGVzKGZpbGUpOwogICAgICAgICAgICBieXRlcz1BcnJheVV0aWxzLmFkZEFsbChieXRlcywgb2xkQnl0ZXMpOwogICAgICAgICAgICAKICAgICAgICB9CiAgCQlTdHJpbmcgc2l6ZT1ieXRlcy5sZW5ndGgrIiI7CiAgCQlGaWxlT3V0cHV0U3RyZWFtIGZvPW5ldyBGaWxlT3V0cHV0U3RyZWFtKGZpbGUpOwoJCUlPVXRpbHMud3JpdGUoYnl0ZXMsIGZvKTsKICAJCWZvLmZsdXNoKCk7CiAgCQlmby5jbG9zZSgpOwogICAgICAgIGRhdGFQaXBlbGluZS5wdXQoInNpemUiLHNpemUpOwoJfSBjYXRjaCAoRXhjZXB0aW9uIGUpIHsKCQlkYXRhUGlwZWxpbmUuY2xlYXIoKTsKICAJCWRhdGFQaXBlbGluZS5wdXQoImVycm9yIixlLmdldE1lc3NhZ2UoKSk7CiAgICAJdGhyb3cgbmV3IFNuaXBwZXRFeGNlcHRpb24oZGF0YVBpcGVsaW5lLCJTbmVwcGV0IGV4Y2VwdGlvbiIsIG5ldyBFeGNlcHRpb24oZSkpOwoJfQ==",
+  "staticWorkspace" : "",
+  "version" : "v1",
+  "consumers" : "",
+  "developers" : "",
+  "lockedByUser" : "ekaDev"
+}

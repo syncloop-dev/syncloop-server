@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <style>
+      .cls-1 {
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        fill: #7b7b7b;
+      }
+
+      .cls-2, .cls-3 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        fill: none;
+        stroke: #000;
+        stroke-width: 1px;
+      }
+    </style>
+    <filter id="filter" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#7b7b7b"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="sequence">
+    <g class="cls-1">
+      <path class="cls-2" d="M2120,87h-5a2,2,0,0,1-2-2V80a2,2,0,0,1,2-2h5a2,2,0,0,1,2,2v5A2,2,0,0,1,2120,87Zm-5-7.5a0.5,0.5,0,0,0-.5.5v5a0.5,0.5,0,0,0,.5.5h5a0.5,0.5,0,0,0,.5-0.5V80a0.5,0.5,0,0,0-.5-0.5h-5Z" transform="translate(-2112 -77)"/>
+      <path id="Shape_64_copy" data-name="Shape 64 copy" class="cls-2" d="M2129,96h-5a2,2,0,0,1-2-2V89a2,2,0,0,1,2-2h5a2,2,0,0,1,2,2v5A2,2,0,0,1,2129,96Zm-5-7.5a0.5,0.5,0,0,0-.5.5v5a0.5,0.5,0,0,0,.5.5h5a0.5,0.5,0,0,0,.5-0.5V89a0.5,0.5,0,0,0-.5-0.5h-5Z" transform="translate(-2112 -77)"/>
+      <path class="cls-3" d="M2115,89s-1.35,4.335,3,5" transform="translate(-2112 -77)"/>
+      <path class="cls-2" d="M2118.17,94.254l-0.78.522a0.509,0.509,0,0,0-.13.708v0a0.514,0.514,0,0,0,.71.138v0l1.8-1.217a0.476,0.476,0,0,0,.13-0.145,0.468,0.468,0,0,0,.07-0.381,0.421,0.421,0,0,0-.07-0.185l-1.22-1.789a0.521,0.521,0,0,0-.72-0.135,0.513,0.513,0,0,0-.13.711l0.53,0.77,0.51,0.615Z" transform="translate(-2112 -77)"/>
+    </g>
+  </g>
+</svg>

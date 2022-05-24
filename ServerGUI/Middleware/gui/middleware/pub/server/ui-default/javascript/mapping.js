@@ -274,8 +274,18 @@ deleteSelectedFromCreateList(){
     this.isAllowed=false;
     this.isEnabled=false;
     this.node=node;
+    
     if(!this.node.data)
       this.node.data={};
+    
+    if(!this.node.data.transformers)
+      this.node.data.transformers=[];
+    
+    this.transformers=JSON.parse(JSON.stringify(this.node.data.transformers));
+    //console.log("-----------------------------------------------------------------------------------");
+    //console.log(this.transformers);
+    //console.log(this.node.data);
+    
     if(this.node.data.dropList){
     	this.dropList=JSON.parse(JSON.stringify(this.node.data.dropList));
     }
@@ -450,13 +460,23 @@ deleteSelectedFromCreateList(){
 					}
 					
 					reMap(){
-						this.transformers=[];
+						
                         let mapperThis=this;
 						$(".dropperTag").remove();
                       	$(".changeTag").remove();
                       	let bp={};
                         let instance = $(mapperThis.outJSTreeID).jstree(true);
-                        this.lines.forEach(function(lineMap){mapperThis.reConnectMap(lineMap)});
+                        let transformer=null;
+                        
+                        this.lines.forEach(function(lineMap,index){
+                          //console.log(index);
+                          //console.log(mapperThis.transformers);
+                          //console.log(mapperThis.transformers[index]);
+                          if(mapperThis.transformers.length>index)
+                        	transformer=mapperThis.transformers[index];
+                          mapperThis.reConnectMap(lineMap,transformer);
+                        });
+                        this.transformers=[];
                         this.dropList.forEach(function(dropPath){
                           mapperThis.createNode(mapperThis.outJSTreeID,dropPath.path,dropPath.typePath);
                           let node=mapperThis.getTaggableNode(mapperThis.outJSTreeID,dropPath.path);
@@ -547,8 +567,32 @@ deleteSelectedFromCreateList(){
 					generateJSONPatch(lineMap){
 						let transformer={};
 						transformer.op=lineMap.op;
-						transformer.from="/"+lineMap.INPath;
-						transformer.to="/"+lineMap.OUTPath;
+                        var indexes=lineMap.INPath.match(/#\d+/g);
+                        if(indexes!=null){
+                            var from=null;
+                            for(var i=0;i<indexes.length;i++){
+                                var index=indexes[i];
+                                if(from==null)
+                                  from=lineMap.INPath;
+                                var val=index.replace("#","");
+                                from=from.replace("/"+index+"/","/"+val+"/");
+                            }
+                          transformer.from="/"+from;
+                        }else
+							transformer.from="/"+lineMap.INPath;
+                        indexes=lineMap.OUTPath.match(/#\d+/g);
+                        if(indexes!=null){
+                            var to=null;
+                            for(var i=0;i<indexes.length;i++){
+                                var index=indexes[i];
+                                if(to==null)
+                                  to=lineMap.OUTPath;
+                                var val=index.replace("#","");
+                                to=to.replace("/"+index+"/","/"+val+"/");
+                            }
+                          transformer.to="/"+to;
+                        }else
+							transformer.to="/"+lineMap.OUTPath;
 						if(lineMap.loop_Id!=null)
 							transformer.loop_Id=lineMap.loop_Id;
 						if(lineMap.follow!=null)
@@ -589,7 +633,7 @@ getTaggableNode(jsTreeId,nodePath){
   return null;
 }
 
-					reConnectMap(lineMap){
+					reConnectMap(lineMap,transformer){
 						if(lineMap==null || lineMap.line==null)
 							return;
 						if(lineMap.line!=null && lineMap.line!=0){
@@ -615,6 +659,8 @@ getTaggableNode(jsTreeId,nodePath){
                                   return;
                                 }
                             }
+                      		//console.log("**************************");
+                            //console.log(JSON.stringify(node));
 							let inpJsTree_instance = $(inpJsTree).jstree(true);
 							//isOpen=inpJsTree_instance.is_open(node);
 							let pos=$('#'+node.id).position();
@@ -632,6 +678,7 @@ getTaggableNode(jsTreeId,nodePath){
                             //console.log(outpJstree);
                       		//console.log(lineMap);
 							node=this.getNodeByPath(outpJstree,lineMap.outputPath);
+                      		
                       		if(!node){
                               if(lineMap.outTypePath)
                             	this.createNode(outpJstree,lineMap.outputPath,lineMap.outTypePath);
@@ -658,11 +705,27 @@ getTaggableNode(jsTreeId,nodePath){
 							if(outPathNode_anchor.offset().top>(outJstTreeRef.offset().top+outJstTreeRef.height()-20))
 								isOutputOverflowBottom=true;
 							let isOutVisible=(!isOutputOverflowBottom && (outJstTreeRef.offset().top<=(outPathNode_anchor.offset().top+2)));//$(outpJstree).height()+40>outPathNode_anchor.offset().top && outPathNode_anchor.offset().top>30;
-							
+							let jsFunction=null;
+                            let lineColour='30, 130, 250';
+                            //if(mappingIndex){
+                                //console.log("mappingIndex: "+(mappingIndex-1));
+                                //console.log(this.transformers);
+                            	//let transformer=this.transformers[mappingIndex-1];
+                                //console.log("transformer: "+transformer);
+                      		  let mappingCondition=null;
+                      		  let mappingApplyFunction=null;
+                              if(transformer){
+                                jsFunction=transformer.jsFunction;
+                              	mappingCondition=transformer.condition;
+                                mappingApplyFunction=transformer.applyFunction
+                              }
+                              if((jsFunction!=null && jsFunction.trim().length>0) || (mappingCondition!=null && mappingCondition.trim().length>0) || (mappingApplyFunction!=null && mappingApplyFunction.trim().length>0))
+                                lineColour='12, 187, 82';
+                            //}
 							let line=null;
 							if(isInVisible && isOutVisible){
 								line = new LeaderLine(document.getElementById(inPathNode.id+"_anchor"),document.getElementById(outPathNode.id+"_anchor"),{dash: lineMap.dashedLine});
-								line.color = 'rgba(30, 130, 250, 0.5)';
+								line.color = 'rgba('+lineColour+', 0.8)';
 								line.size = 2;
 							}else if(isInVisible){
 								if(isOutputOverflowBottom){
@@ -672,12 +735,12 @@ getTaggableNode(jsTreeId,nodePath){
 									line = new LeaderLine(document.getElementById(inPathNode.id+"_anchor"),document.getElementById(outJstTreeRef.attr('id')+"_tp"),{dash:lineMap.dashedLine});
 									line.setOptions({endSocket: 'bottom'});
 								}	
-								line.color = 'rgba(30, 130, 250, 0.8)';
+								line.color = 'rgba('+lineColour+', 0.8)';
 								line.size = 2;
 									line.setOptions({ // element-1, element-2
 										  gradient: {
-										    startColor: 'rgba(30, 130, 250, 0.8)',
-										    endColor: 'rgba(30, 130, 250, .25)'
+										    startColor: 'rgba('+lineColour+', 0.8)',
+										    endColor: 'rgba('+lineColour+', .2)'
 										  }
 										});
 							}else if(isOutVisible){
@@ -689,12 +752,12 @@ getTaggableNode(jsTreeId,nodePath){
 									line = new LeaderLine(document.getElementById(inpJsTreeRef.attr('id')+"_tp"),document.getElementById(outPathNode.id+"_anchor"),{dash: lineMap.dashedLine});
 									line.setOptions({startSocket: 'bottom'});
 								}	
-								line.color = 'rgba(30, 130, 250, 0.8)';
+								line.color = 'rgba('+lineColour+', 0.8)';
 								line.size = 2;
 									line.setOptions({ // element-1, element-2
 										  gradient: {
-										    startColor: 'rgba(30, 130, 250, .25)',
-										    endColor: 'rgba(30, 130, 250, 0.8)'
+										    startColor: 'rgba('+lineColour+', .2)',
+										    endColor: 'rgba('+lineColour+', 0.8)'
 										  }
 										});
 							}else{

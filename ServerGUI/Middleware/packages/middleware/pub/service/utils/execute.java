@@ -7,10 +7,12 @@ public final class execute{
 try{
 	String fqn=dataPipeline.getString("fqn");
 	dataPipeline.apply(fqn);
+    dataPipeline.put("msg","Success");
   } catch (Exception e) {
 		dataPipeline.clear();
-  		dataPipeline.put("error",e.getMessage());
-    	throw new SnippetException(dataPipeline,"Snippet exception", new Exception(e));
+  		dataPipeline.put("error","Error: "+e.getMessage());
+        e.printStackTrace();
+    	//throw new SnippetException(dataPipeline,"Snippet exception", new Exception(e));
   }
 	}
 

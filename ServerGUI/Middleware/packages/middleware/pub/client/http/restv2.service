@@ -2,7 +2,7 @@
   "input" : [ {
     "id" : "j1_1",
     "text" : "url",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_1"
     },
@@ -22,7 +22,7 @@
   }, {
     "id" : "j1_9",
     "text" : "method",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_9"
     },
@@ -42,7 +42,7 @@
   }, {
     "id" : "j1_8",
     "text" : "payload",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_8"
     },
@@ -62,7 +62,7 @@
   }, {
     "id" : "j1_2",
     "text" : "headers",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.svg",
     "li_attr" : {
       "id" : "j1_2"
     },
@@ -82,7 +82,7 @@
   }, {
     "id" : "j1_17",
     "text" : "uriParameters",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.svg",
     "li_attr" : {
       "id" : "j1_17"
     },
@@ -102,7 +102,7 @@
   }, {
     "id" : "j1_3",
     "text" : "urlParameters",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.svg",
     "li_attr" : {
       "id" : "j1_3"
     },
@@ -122,7 +122,7 @@
   }, {
     "id" : "j1_4",
     "text" : "auth",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.svg",
     "li_attr" : {
       "id" : "j1_4"
     },
@@ -142,7 +142,7 @@
   }, {
     "id" : "j1_5",
     "text" : "basic",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.svg",
     "li_attr" : {
       "id" : "j1_5"
     },
@@ -162,7 +162,7 @@
   }, {
     "id" : "j1_6",
     "text" : "username",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_6"
     },
@@ -202,7 +202,7 @@
   }, {
     "id" : "j1_11",
     "text" : "awsSignature",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.svg",
     "li_attr" : {
       "id" : "j1_11"
     },
@@ -222,7 +222,7 @@
   }, {
     "id" : "j1_12",
     "text" : "AccessKey",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_12"
     },
@@ -242,7 +242,7 @@
   }, {
     "id" : "j1_13",
     "text" : "SecretKey",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_13"
     },
@@ -262,7 +262,7 @@
   }, {
     "id" : "j1_14",
     "text" : "region",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_14"
     },
@@ -282,7 +282,7 @@
   }, {
     "id" : "j1_15",
     "text" : "service",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_15"
     },
@@ -302,7 +302,7 @@
   }, {
     "id" : "j1_16",
     "text" : "host",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_16"
     },
@@ -322,7 +322,7 @@
   }, {
     "id" : "j1_24",
     "text" : "signPayload",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.svg",
     "li_attr" : {
       "id" : "j1_24"
     },
@@ -342,7 +342,7 @@
   }, {
     "id" : "j1_10",
     "text" : "formData",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.svg",
     "li_attr" : {
       "id" : "j1_10"
     },
@@ -362,7 +362,7 @@
   }, {
     "id" : "j1_18",
     "text" : "respHandling",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.svg",
     "li_attr" : {
       "id" : "j1_18"
     },
@@ -382,7 +382,7 @@
   }, {
     "id" : "j1_19",
     "text" : "contentType",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_19"
     },
@@ -402,7 +402,7 @@
   }, {
     "id" : "j1_20",
     "text" : "enableStreaming",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.svg",
     "li_attr" : {
       "id" : "j1_20"
     },
@@ -422,7 +422,7 @@
   }, {
     "id" : "j1_21",
     "text" : "binaryData",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.svg",
     "li_attr" : {
       "id" : "j1_21"
     },
@@ -442,7 +442,7 @@
   }, {
     "id" : "j1_22",
     "text" : "bytes",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/byteArr.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/byteArr.svg",
     "li_attr" : {
       "id" : "j1_22"
     },
@@ -462,7 +462,7 @@
   }, {
     "id" : "j1_23",
     "text" : "inputStream",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.svg",
     "li_attr" : {
       "id" : "j1_23"
     },
@@ -483,7 +483,7 @@
   "output" : [ {
     "id" : "j2_2",
     "text" : "respHeaders",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/doc.svg",
     "li_attr" : {
       "id" : "j2_2"
     },
@@ -503,7 +503,7 @@
   }, {
     "id" : "j2_1",
     "text" : "respPayload",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_1"
     },
@@ -523,7 +523,7 @@
   }, {
     "id" : "j2_3",
     "text" : "error",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_3"
     },
@@ -543,7 +543,7 @@
   }, {
     "id" : "j2_4",
     "text" : "bytes",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/byteArr.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/byteArr.svg",
     "li_attr" : {
       "id" : "j2_4"
     },
@@ -563,7 +563,7 @@
   }, {
     "id" : "j2_5",
     "text" : "inputStream",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.svg",
     "li_attr" : {
       "id" : "j2_5"
     },
@@ -583,7 +583,7 @@
   }, {
     "id" : "j2_6",
     "text" : "statusCode",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j2_6"
     },

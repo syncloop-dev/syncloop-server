@@ -39,7 +39,16 @@ function syncRestRequest(url, method, payload, contentType, dataType){
     })
     return {"status":status,"payload":response};
 }
-
+function removeIcons(jsonObject){
+jQuery.each(jsonObject, function(i, val) {
+  				if(val.icon){
+                  val.icon=null;
+                }
+  				if(val.children){
+                	removeIcons(val.children);
+                }
+		  });
+}
 function asyncRestRequest(url, payload, method, callBack){
 	$.ajax({
         url: url, // url where to submit the request
@@ -56,6 +65,18 @@ function asyncRestRequest(url, payload, method, callBack){
         }
     })
 }
+
+function deleteAllCookies() {
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+}
+
 function getJstreeFromSchema(jsonSchema){
 	
 						var datapipeline=JSON.parse(jsonSchema).properties;
@@ -319,62 +340,62 @@ function createSchemaJstree(id) {
 				},
 				"types" : {
 					"default" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/doc.png",
 						"valid_children" : [
 							"default","document", "string","documentList","stringList","javaObjectList","javaObject","integer","integerList","number","numberList","date","dateList","boolean","booleanList","byte","byteList"]
 					},
 					"document" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/doc.png",
 						"valid_children" : [
 							"default","document", "string","documentList","stringList","javaObjectList","javaObject","integer","integerList","number","numberList","date","dateList","boolean","booleanList","byte","byteList"]
 					},"documentList" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/docList.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/docList.png",
 						"valid_children" : [
 							"default","document", "string","documentList","stringList","javaObjectList","javaObject","integer","integerList","number","numberList","date","dateList","boolean","booleanList","byte","byteList"]
 					},
 					"string" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/text.png",
 						"valid_children" : []
 					},"stringList" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/textArr.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/textArr.png",
 						"valid_children" : []
 					},
 					"javaObject" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/javaObject.png",
 						"valid_children" : []
 					},"javaObjectList" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/javaObjectArr.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/javaObjectArr.png",
 						"valid_children" : []
 					},
 					"integer" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/integer.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/integer.png",
 						"valid_children" : []
 					},"integerList" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/integerArr.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/integerArr.png",
 						"valid_children" : []
 					},"number" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/number.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/number.png",
 						"valid_children" : []
 					},"numberList" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/numberArr.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/numberArr.png",
 						"valid_children" : []
 					},"date" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/date.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/date.png",
 						"valid_children" : []
 					},"dateList" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/dateArr.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/dateArr.png",
 						"valid_children" : []
 					},"boolean" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/boolean.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/boolean.png",
 						"valid_children" : []
 					},"booleanList" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/booleanArr.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/booleanArr.png",
 						"valid_children" : []
 					},"byte" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/byte.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/byte.png",
 						"valid_children" : []
 					},"byteList" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/byteArr.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/byteArr.png",
 						"valid_children" : []
 					}
 				},
@@ -566,36 +587,36 @@ function createFlowJstree(id) {
 							"default","sequence", "switch","loop","repeat","try-catch","map","invoke"]
 					},
                     "sequence" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/sequence.png",
 						"valid_children" : [
 							"default","sequence", "switch","loop","repeat","try-catch","map","invoke"]
 					},
                     "switch" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/switch.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/switch.png",
 						"valid_children" : [
 							"default","sequence", "switch","loop","repeat","try-catch","map","invoke"]
 					},
                     "loop" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/loop.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/loop.png",
 						"valid_children" : [
 							"default","sequence", "switch","loop","repeat","try-catch","map","invoke"]
 					},
                     "repeat" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/repeat.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/repeat.png",
 						"valid_children" : [
 							"default","sequence", "switch","loop","repeat","try-catch","map","invoke"]
 					},
                     "try-catch" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/try-catch.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/try-catch.png",
 						"valid_children" : [
 							"default","sequence", "switch","loop","repeat","try-catch","map","invoke"]
 					},
                     "map" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/map.png",
 						"valid_children" : []
 					},
                     "invoke" : {
-						"icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+						"icon" : "/files/gui/middleware/pub/server/ui-default/icons/invoke.png",
 						"valid_children" : []
 					}
 				},
@@ -619,8 +640,9 @@ function createFlowJstree(id) {
 }
 
 function deleteArtifact(filePath){
-  
-  if (confirm("Are you sure you want to delete ('"+filePath+"') ?")) {
+  var references=syncRestRequest("/execute/packages.middleware.pub.service.findReferences.main?serviceFqn="+(filePath).split(".")[0],"GET");
+  var list=JSON.parse(references.payload).list;
+  if (confirm("Service references:-\n\n"+JSON.stringify(list)+"\n\nAre you sure you want to delete ('"+filePath+"') ?")) {
     filePath="files/"+filePath;
     var response=syncRestRequest("/"+filePath, "DELETE");
     if(response.status==200){
@@ -641,20 +663,25 @@ function packagesContextMenu(node, id)
   var tree = $(id).jstree(true);
   var sel = tree.get_selected()[0];
   var dest=tree.get_path(sel, '/');
-    var items = {
-        renameItem: {
+    var items = {};
+  if(node.type!="properties"){
+  items.renameItem={
             label: "Rename",
             action: function (e) { 
             	var sel = tree.get_selected();
               	tree.edit(sel);
             }
-        },
-        deleteItem: {
+        };
+  
+  }
+  
+  
+        items.deleteItem= {
             label: "Delete",
             action: function (e) { deleteArtifact(dest+"."+node.type); },
             "separator_after": true
-        }
-    };
+        };
+  
       if(dest.startsWith("gui")){
           if (node.type === 'gui-app'){
             items.export= {
@@ -795,7 +822,7 @@ function packagesContextMenu(node, id)
                     }
                 }
               }
-              //window.open('http://192.168.2.133:8182/files/gui/middleware/pub/server/ui/workspace/web/export.html','popUpWindow','height=720,width=400,left=100,top=100,location=0,directories=0,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no, status=no'); 
+              //window.open('http://192.168.2.133:8182/files/gui/middleware/pub/server/ui-default/workspace/web/export.html','popUpWindow','height=720,width=400,left=100,top=100,location=0,directories=0,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no, status=no'); 
             }
         }
         	  items.import={
@@ -850,10 +877,10 @@ function uploadFile(url,key,commaSepFileExts){
                     processData: false,
                     success: function(response){
                         if(response != 0){
-                           alert(response);
+                           alert(JSON.stringify(response));
                         }
                         else{
-                            alert(response);
+                            alert(JSON.stringify(response));
                         }
                       $("#middlewareFile").remove();
                     },
@@ -891,68 +918,68 @@ function createPackageJstree(id) {
 											},
 											"types" : {
                                               "#" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/filesystem/unknown.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/filesystem/unknown.png",
 													"valid_children" : [
 														"root","ui-root"]
 												},
                                                 "default" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/filesystem/unknown.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/filesystem/unknown.png",
 													"valid_children" : [
 														"package","gui-app"]
 												},
 												"root" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/myPackages.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/myPackage.png",
 													"valid_children" : [
 														"package"]
 												},"ui-root" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/ui.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/ui.png",
 													"valid_children" : [
 														"gui-app"]
 												},"package" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/myPackage.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/myPackages.png",
 													"valid_children" : [
 														"folder"]
 												},"gui-app" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/gui-app.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/gui-app.png",
 													"valid_children" : [
 														"folder"]
 												},
 												"folder" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/filesystem/folder.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/folder.png",
 													"valid_children" : [
-														"folder", "service","package","flow","map","html","js","css","jar","jdbc","sql"]
+														"folder", "service","package","flow","map","html","js","css","jar","jdbc","sql","properties"]
 												},"service" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/filesystem/cog.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/filesystem/cog.png",
 													"valid_children" : []
 												},"map" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/filesystem/arrow_switch.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/filesystem/arrow_switch.png",
 													"valid_children" : []
 												},"doc" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/doc.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/doc.png",
 													"valid_children" : []
 												},"properties" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/properties.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/properties.png",
 													"valid_children" : []
 												},"html" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/html.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/html.png",
 													"valid_children" : []
 												},"js" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/js.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/js.png",
 													"valid_children" : []
 												},"css" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/css.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/css.png",
 													"valid_children" : []
 												},"flow" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/flow.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/flow.png",
 													"valid_children" : []
 												},"jar" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/jar.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/jar.png",
 													"valid_children" : []
 												},"jdbc" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/jdbc.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/jdbc.png",
 													"valid_children" : []
 												},"sql" : {
-													"icon" : "/files/gui/middleware/pub/server/ui/icons/sql.png",
+													"icon" : "/files/gui/middleware/pub/server/ui-default/icons/sql.png",
 													"valid_children" : []
 												}
 											},
@@ -1018,11 +1045,12 @@ for (i = 0; i < v.length && i < v.length; i++) {
 }
 
 var currentSelectedSchemaJStreeID=null;
-					function createSchema(type,ref,selected,text) {
+function createSchema(type,ref,selected,text) {
 						//alert(type);
 						//console.log($(currentSelectedSchemaJStreeID));
 						//var ref = $(currentSelectedSchemaJStreeID).jstree(true), 
 						var sel = ref.get_selected();
+  						
                         if(selected)
                           sel[0]=selected;
                         if(!text)
@@ -1039,9 +1067,18 @@ var currentSelectedSchemaJStreeID=null;
 							return;
 						} else {*/
                             sel = sel[0];
+  							var selNode=ref.get_node(sel);
+  							var selNodeParent=ref.get_node(selNode.parent);
+  							//alert(selNode.text+", "+selNodeParent.text+", "+type);
+  							if(selNode.text=="config" && selNodeParent.text=="dependency" && type=="properties"){
+                              text="package";
+                            }else
+  							if(type=="properties"){
+                              return;
+                            }
                             if(type=="try-catch"){
                               text = "TCF-Block";
-                          	}else if(type=="sequence" && ref.get_node(sel).type=="switch"){// && sel.parent.type=="switch"){
+                          	}else if(type=="sequence" && selNode.type=="switch"){// && sel.parent.type=="switch"){
                             	//console.log();
                               text="CASE";
                             }

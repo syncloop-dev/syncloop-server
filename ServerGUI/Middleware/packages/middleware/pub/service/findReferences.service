@@ -2,7 +2,7 @@
   "input" : [ {
     "id" : "j1_1",
     "text" : "serviceFqn",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/text.svg",
     "li_attr" : {
       "id" : "j1_1"
     },
@@ -23,7 +23,7 @@
   "output" : [ {
     "id" : "j2_1",
     "text" : "list",
-    "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.png",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/docList.svg",
     "li_attr" : {
       "id" : "j2_1"
     },

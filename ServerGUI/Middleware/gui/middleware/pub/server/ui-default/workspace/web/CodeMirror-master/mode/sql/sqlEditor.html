@@ -6,9 +6,9 @@
 <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/dist/themes/default/style.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
-<script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
-<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+<script	src="/files/gui/middleware/pub/server/ui-default/javascript/jstree.min.js"></script>
+<script src="/files/gui/middleware/pub/server/ui-default/javascript/middleware.js"></script>
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui-default/css/middleware.css">
 <link rel="stylesheet" href="../../lib/codemirror.css" />
 <script src="../../lib/codemirror.js"></script>
 <script src="../../addon/edit/matchbrackets.js"></script>
@@ -29,7 +29,7 @@
                         <i class="fa fa-caret-down"></i>
                       </button>
                       <div class="dropdown-content">
-                        <a href="#" onclick="save();">Save</a>
+                        <a href="javascript:void(0)" onclick="save();">Save</a>
                         <a href="#" onclick="reload();">Reload</a>
                         <a href="#" onclick="alert('Inprogress')">Test</a>
                         <a href="#" onclick="openConfigurationProprties()">Configuration</a>
@@ -261,7 +261,6 @@ var defaultSQLServiceSignature={
 		{
 			"id": "j1_2",
 			"text": "inputDocList",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/docList.png",
 			"li_attr": {
 				"id": "j1_2"
 			},
@@ -282,7 +281,6 @@ var defaultSQLServiceSignature={
 		{
 			"id": "j1_3",
 			"text": "txConn",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/javaObject.png",
 			"li_attr": {
 				"id": "j1_3"
 			},
@@ -303,7 +301,6 @@ var defaultSQLServiceSignature={
 		{
 			"id": "j1_4",
 			"text": "isTxn",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/boolean.png",
 			"li_attr": {
 				"id": "j1_4"
 			},
@@ -326,7 +323,6 @@ var defaultSQLServiceSignature={
 		{
 			"id": "j2_1",
 			"text": "outputDocList",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/docList.png",
 			"li_attr": {
 				"id": "j2_1"
 			},
@@ -347,7 +343,6 @@ var defaultSQLServiceSignature={
 		{
 			"id": "j2_2",
 			"text": "rows",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/integer.png",
 			"li_attr": {
 				"id": "j2_2"
 			},
@@ -368,7 +363,6 @@ var defaultSQLServiceSignature={
 		{
 			"id": "j2_3",
 			"text": "success",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/boolean.png",
 			"li_attr": {
 				"id": "j2_3"
 			},
@@ -389,7 +383,6 @@ var defaultSQLServiceSignature={
 		{
 			"id": "j2_4",
 			"text": "error",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/text.png",
 			"li_attr": {
 				"id": "j2_4"
 			},
@@ -409,6 +402,7 @@ var defaultSQLServiceSignature={
 		}
 	]
 };
+    
 function loadRemoteFile(overwrite){
 	if(overwrite==null)
 		overwrite=false;
@@ -437,6 +431,9 @@ if(loadFile!=false){
             localStorage.setItem(sqlMainCode_id, decoded);
           }
       }
+      
+      removeIcons(response.input);
+      removeIcons(response.output);
 	  var inputSchema=response.input;
       var outputSchema=response.output;
 //      if(!inputSchema)
@@ -511,8 +508,10 @@ function save(){
 	packageName=packageName.split("/").join(".");//replaceALL(packageName,"/",".");
 	//alert(dataJson.imports);
 	dataJson.sql=window.btoa(sqlMainCode_data);
-	dataJson.input=inputJstreeRef.get_json('#', {flat:true})
-	dataJson.output=outputJstreeRef.get_json('#', {flat:true})
+	dataJson.input=inputJstreeRef.get_json('#', {flat:false})
+	dataJson.output=outputJstreeRef.get_json('#', {flat:false})
+    removeIcons(dataJson.input);
+    removeIcons(dataJson.output);
 	dataJson.version="v1";
     dataJson.consumers=$("#serviceConsumers").val();
     dataJson.developers=$("#serviceDevelopers").val();

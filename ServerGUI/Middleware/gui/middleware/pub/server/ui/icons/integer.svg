@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <style>
+      .cls-1 {
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #010101;
+        stroke-width: 1px;
+      }
+
+      .cls-2, .cls-3 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        fill: #84857d;
+      }
+
+      .cls-4 {
+        font-size: 44.944px;
+        fill: #010101;
+        font-family: Verdana;
+      }
+    </style>
+    <filter id="filter" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#7b7b7b"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="integer">
+    <g class="cls-1">
+      <path class="cls-2" d="M1360.43,82.127h-16.6" transform="translate(-1342 -77)"/>
+      <path class="cls-3" d="M1358.5,79.4a1.1,1.1,0,0,1,1.1,1.1v13a1.1,1.1,0,0,1-1.1,1.1h-13a1.1,1.1,0,0,1-1.1-1.1v-13a1.1,1.1,0,0,1,1.1-1.1h13m0-1.4h-13a2.5,2.5,0,0,0-2.5,2.5v13a2.5,2.5,0,0,0,2.5,2.5h13a2.5,2.5,0,0,0,2.5-2.5v-13a2.5,2.5,0,0,0-2.5-2.5h0Z" transform="translate(-1342 -77)"/>
+      <text id="_x_" data-name="(x)" class="cls-4" transform="translate(4.15 13.077) scale(0.169)">(x)</text>
+    </g>
+  </g>
+</svg>

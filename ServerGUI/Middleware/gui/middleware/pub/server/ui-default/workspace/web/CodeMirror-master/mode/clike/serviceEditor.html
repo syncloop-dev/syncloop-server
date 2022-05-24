@@ -13,9 +13,9 @@
 <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/dist/themes/default/style.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
-<script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
-<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+<script	src="/files/gui/middleware/pub/server/ui-default/javascript/jstree.min.js"></script>
+<script src="/files/gui/middleware/pub/server/ui-default/javascript/middleware.js"></script>
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui-default/css/middleware.css">
 <style>.CodeMirror {height:min-content;}</style>
 <html>
 <body style="width:100%;height:100%;">
@@ -290,6 +290,9 @@ if(loadFile!=false){
           }
       }
 
+     removeIcons(response.input);
+     removeIcons(response.output);
+      
       var inputRef=inputJstreeRef;
       inputRef.settings.core.data=response.input;
       inputRef.refresh();
@@ -388,8 +391,10 @@ function save(){
 	dataJson.main=window.btoa(javaMainCode_data);
 	dataJson.staticWorkspace=window.btoa(javaWorkspace_data);
 	
-	dataJson.input=inputJstreeRef.get_json('#', {flat:true})
-	dataJson.output=outputJstreeRef.get_json('#', {flat:true})
+	dataJson.input=inputJstreeRef.get_json('#', {flat:false})
+	dataJson.output=outputJstreeRef.get_json('#', {flat:false})
+    removeIcons(dataJson.input);
+    removeIcons(dataJson.output);
 	dataJson.version="v1";
     dataJson.consumers=$("#serviceConsumers").val();
     dataJson.developers=$("#serviceDevelopers").val();

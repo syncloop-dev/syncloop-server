@@ -60,155 +60,15 @@
       "children" : [ ],
       "type" : "map"
     }, {
-      "id" : "j1_21",
-      "text" : "packages/ekaScheduler/test/testAsync",
-      "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+      "id" : "j1_23",
+      "text" : "TCF-Block",
+      "icon" : "/files/gui/middleware/pub/server/ui/icons/try-catch.png",
       "li_attr" : {
-        "id" : "j1_21"
+        "id" : "j1_23"
       },
       "a_attr" : {
         "href" : "#",
-        "id" : "j1_21_anchor"
-      },
-      "state" : {
-        "loaded" : true,
-        "opened" : false,
-        "selected" : true,
-        "disabled" : false
-      },
-      "data" : {
-        "lines" : [ {
-          "inputPath" : "asyncOutputDoc/*metaData",
-          "outputPath" : "asyncOutputDoc/*metaData",
-          "inpJsTree" : "#launching_arrow_jsTree_function",
-          "outpJsTree" : "#landing_arrow_jsTree",
-          "INPath" : "asyncOutputDoc/*metaData",
-          "OUTPath" : "asyncOutputDoc/*metaData",
-          "op" : "copy",
-          "line" : 0,
-          "dashedLine" : false,
-          "inType" : "document",
-          "outType" : "document",
-          "inTypePath" : "document/document",
-          "outTypePath" : "document/document"
-        } ],
-        "transformers" : [ {
-          "op" : "copy",
-          "from" : "/asyncOutputDoc/*metaData",
-          "to" : "/asyncOutputDoc/*metaData",
-          "inTypePath" : "document/document",
-          "outTypePath" : "document/document"
-        } ],
-        "dropList" : [ ],
-        "createList" : [ ],
-        "serviceType" : "flow",
-        "requestMethod" : "async",
-        "status" : "enabled"
-      },
-      "children" : [ ],
-      "type" : "invoke"
-    }, {
-      "id" : "j1_2",
-      "text" : "packages/middleware/pub/service/debugLog",
-      "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
-      "li_attr" : {
-        "id" : "j1_2"
-      },
-      "a_attr" : {
-        "href" : "#",
-        "id" : "j1_2_anchor"
-      },
-      "state" : {
-        "loaded" : true,
-        "opened" : false,
-        "selected" : false,
-        "disabled" : false
-      },
-      "data" : {
-        "lines" : [ {
-          "inputPath" : "log",
-          "outputPath" : "asyncInputDoc/log",
-          "inpJsTree" : "#launching_arrow_jsTree",
-          "outpJsTree" : "#landing_arrow_jsTree_function",
-          "INPath" : "log",
-          "OUTPath" : "asyncInputDoc/log",
-          "op" : "copy",
-          "line" : 0,
-          "dashedLine" : false,
-          "inType" : "string",
-          "outType" : "string",
-          "inTypePath" : "string",
-          "outTypePath" : "document/string"
-        }, {
-          "inputPath" : "msg",
-          "outputPath" : "asyncInputDoc/msg",
-          "inpJsTree" : "#launching_arrow_jsTree",
-          "outpJsTree" : "#landing_arrow_jsTree_function",
-          "INPath" : "msg",
-          "OUTPath" : "asyncInputDoc/msg",
-          "op" : "copy",
-          "line" : 0,
-          "dashedLine" : false,
-          "inType" : "string",
-          "outType" : "string",
-          "inTypePath" : "string",
-          "outTypePath" : "document/string"
-        }, {
-          "inputPath" : "asyncOutputDoc/*metaData",
-          "outputPath" : "asyncOutputDoc/*metaData",
-          "inpJsTree" : "#launching_arrow_jsTree_function",
-          "outpJsTree" : "#landing_arrow_jsTree",
-          "INPath" : "asyncOutputDoc/*metaData",
-          "OUTPath" : "asyncOutputDoc/*metaData",
-          "op" : "copy",
-          "line" : 0,
-          "dashedLine" : false,
-          "inType" : "document",
-          "outType" : "document",
-          "inTypePath" : "document/document",
-          "outTypePath" : "document/document"
-        } ],
-        "transformers" : [ {
-          "op" : "copy",
-          "from" : "/log",
-          "to" : "/asyncInputDoc/log",
-          "inTypePath" : "string",
-          "outTypePath" : "document/string"
-        }, {
-          "op" : "copy",
-          "from" : "/msg",
-          "to" : "/asyncInputDoc/msg",
-          "inTypePath" : "string",
-          "outTypePath" : "document/string"
-        }, {
-          "op" : "copy",
-          "from" : "/asyncOutputDoc/*metaData",
-          "to" : "/asyncOutputDoc/*metaData",
-          "inTypePath" : "document/document",
-          "outTypePath" : "document/document"
-        } ],
-        "dropList" : [ {
-          "path" : "asyncInputDoc",
-          "typePath" : "document"
-        } ],
-        "createList" : [ ],
-        "serviceType" : "service",
-        "comment" : "Log test message",
-        "requestMethod" : "async",
-        "status" : "disabled"
-      },
-      "children" : [ ],
-      "type" : "invoke"
-    }, {
-      "id" : "j1_3",
-      "text" : "REPEAT",
-      "icon" : "/files/gui/middleware/pub/server/ui/icons/repeat.png",
-      "li_attr" : {
-        "id" : "j1_3"
-      },
-      "a_attr" : {
-        "href" : "#",
-        "id" : "j1_3_anchor"
+        "id" : "j1_23_anchor"
       },
       "state" : {
         "loaded" : true,
@@ -216,124 +76,17 @@
         "selected" : false,
         "disabled" : false
       },
-      "data" : {
-        "interval" : "10",
-        "repeat" : "-1",
-        "repeatOn" : "error",
-        "comment" : "Repeat until status is not completed or failed"
-      },
+      "data" : { },
       "children" : [ {
-        "id" : "j1_4",
-        "text" : "MAP",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+        "id" : "j1_24",
+        "text" : "TRY",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
         "li_attr" : {
-          "id" : "j1_4"
+          "id" : "j1_24"
         },
         "a_attr" : {
           "href" : "#",
-          "id" : "j1_4_anchor"
-        },
-        "state" : {
-          "loaded" : true,
-          "opened" : false,
-          "selected" : false,
-          "disabled" : false
-        },
-        "data" : {
-          "lines" : [ ],
-          "transformers" : [ ],
-          "dropList" : [ ],
-          "createList" : [ {
-            "path" : "log",
-            "value" : "*********************************************repeating***************************",
-            "evaluate" : null,
-            "typePath" : "string"
-          }, {
-            "path" : "msg",
-            "value" : "+++++++++++++++++++++++++++++++++++++++++++",
-            "evaluate" : null,
-            "typePath" : "string"
-          } ]
-        },
-        "children" : [ ],
-        "type" : "map"
-      }, {
-        "id" : "j1_20",
-        "text" : "packages/middleware/pub/service/debugLog",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
-        "li_attr" : {
-          "id" : "j1_20"
-        },
-        "a_attr" : {
-          "href" : "#",
-          "id" : "j1_20_anchor"
-        },
-        "state" : {
-          "loaded" : true,
-          "opened" : false,
-          "selected" : false,
-          "disabled" : false
-        },
-        "data" : {
-          "lines" : [ {
-            "inputPath" : "msg",
-            "outputPath" : "msg",
-            "inpJsTree" : "#launching_arrow_jsTree",
-            "outpJsTree" : "#landing_arrow_jsTree_function",
-            "INPath" : "msg",
-            "OUTPath" : "msg",
-            "op" : "copy",
-            "line" : 0,
-            "dashedLine" : false,
-            "inType" : "string",
-            "outType" : "string",
-            "inTypePath" : "string",
-            "outTypePath" : "string"
-          }, {
-            "inputPath" : "log",
-            "outputPath" : "log",
-            "inpJsTree" : "#launching_arrow_jsTree",
-            "outpJsTree" : "#landing_arrow_jsTree_function",
-            "INPath" : "log",
-            "OUTPath" : "log",
-            "op" : "copy",
-            "line" : 0,
-            "dashedLine" : false,
-            "inType" : "string",
-            "outType" : "string",
-            "inTypePath" : "string",
-            "outTypePath" : "string"
-          } ],
-          "transformers" : [ {
-            "op" : "copy",
-            "from" : "/msg",
-            "to" : "/msg",
-            "inTypePath" : "string",
-            "outTypePath" : "string"
-          }, {
-            "op" : "copy",
-            "from" : "/log",
-            "to" : "/log",
-            "inTypePath" : "string",
-            "outTypePath" : "string"
-          } ],
-          "dropList" : [ ],
-          "createList" : [ ],
-          "serviceType" : "service",
-          "status" : "disabled"
-        },
-        "children" : [ ],
-        "type" : "invoke"
-      }, {
-        "id" : "j1_6",
-        "text" : "SWITCH",
-        "icon" : "/files/gui/middleware/pub/server/ui/icons/switch.png",
-        "li_attr" : {
-          "id" : "j1_6"
-        },
-        "a_attr" : {
-          "href" : "#",
-          "id" : "j1_6_anchor"
+          "id" : "j1_24_anchor"
         },
         "state" : {
           "loaded" : true,
@@ -341,513 +94,1049 @@
           "selected" : false,
           "disabled" : false
         },
-        "data" : {
-          "switch" : "asyncOutputDoc/*metaData/status",
-          "comment" : "Jump to the right sequence"
-        },
+        "data" : { },
         "children" : [ {
-          "id" : "j1_7",
-          "text" : "CASE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+          "id" : "j1_21",
+          "text" : "packages/ekaScheduler/test/testAsync",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
           "li_attr" : {
-            "id" : "j1_7"
+            "id" : "j1_21"
           },
           "a_attr" : {
             "href" : "#",
-            "id" : "j1_7_anchor"
+            "id" : "j1_21_anchor"
           },
           "state" : {
             "loaded" : true,
             "opened" : false,
-            "selected" : false,
+            "selected" : true,
             "disabled" : false
           },
           "data" : {
-            "case" : "Completed",
-            "evaluate" : false
-          },
-          "children" : [ {
-            "id" : "j1_8",
-            "text" : "MAP",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
-            "li_attr" : {
-              "id" : "j1_8"
-            },
-            "a_attr" : {
-              "href" : "#",
-              "id" : "j1_8_anchor"
-            },
-            "state" : {
-              "loaded" : true,
-              "opened" : false,
-              "selected" : false,
-              "disabled" : false
-            },
-            "data" : {
-              "lines" : [ ],
-              "transformers" : [ ],
-              "dropList" : [ ],
-              "createList" : [ {
-                "path" : "log",
-                "value" : "Service execution completed",
-                "evaluate" : null,
-                "typePath" : "string"
-              }, {
-                "path" : "msg",
-                "value" : "Exiting repeat",
-                "evaluate" : null,
-                "typePath" : "string"
-              } ]
-            },
-            "children" : [ ],
-            "type" : "map"
-          }, {
-            "id" : "j1_9",
-            "text" : "packages/middleware/pub/service/debugLog",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
-            "li_attr" : {
-              "id" : "j1_9"
-            },
-            "a_attr" : {
-              "href" : "#",
-              "id" : "j1_9_anchor"
-            },
-            "state" : {
-              "loaded" : true,
-              "opened" : false,
-              "selected" : false,
-              "disabled" : false
-            },
-            "data" : {
-              "lines" : [ {
-                "inputPath" : "log",
-                "outputPath" : "log",
-                "inpJsTree" : "#launching_arrow_jsTree",
-                "outpJsTree" : "#landing_arrow_jsTree_function",
-                "INPath" : "log",
-                "OUTPath" : "log",
-                "op" : "copy",
-                "line" : 0,
-                "dashedLine" : false,
-                "inType" : "string",
-                "outType" : "string",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              }, {
-                "inputPath" : "msg",
-                "outputPath" : "msg",
-                "inpJsTree" : "#launching_arrow_jsTree",
-                "outpJsTree" : "#landing_arrow_jsTree_function",
-                "INPath" : "msg",
-                "OUTPath" : "msg",
-                "op" : "copy",
-                "line" : 0,
-                "dashedLine" : false,
-                "inType" : "string",
-                "outType" : "string",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              } ],
-              "transformers" : [ {
-                "op" : "copy",
-                "from" : "/log",
-                "to" : "/log",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              }, {
-                "op" : "copy",
-                "from" : "/msg",
-                "to" : "/msg",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              } ],
-              "dropList" : [ ],
-              "createList" : [ ],
-              "serviceType" : "service"
-            },
-            "children" : [ ],
-            "type" : "invoke"
-          } ],
-          "type" : "sequence"
-        }, {
-          "id" : "j1_10",
-          "text" : "CASE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
-          "li_attr" : {
-            "id" : "j1_10"
-          },
-          "a_attr" : {
-            "href" : "#",
-            "id" : "j1_10_anchor"
-          },
-          "state" : {
-            "loaded" : true,
-            "opened" : false,
-            "selected" : false,
-            "disabled" : false
-          },
-          "data" : {
-            "case" : "Failed"
-          },
-          "children" : [ {
-            "id" : "j1_11",
-            "text" : "MAP",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
-            "li_attr" : {
-              "id" : "j1_11"
-            },
-            "a_attr" : {
-              "href" : "#",
-              "id" : "j1_11_anchor"
-            },
-            "state" : {
-              "loaded" : true,
-              "opened" : false,
-              "selected" : false,
-              "disabled" : false
-            },
-            "data" : {
-              "lines" : [ ],
-              "transformers" : [ ],
-              "dropList" : [ ],
-              "createList" : [ {
-                "path" : "log",
-                "value" : "Exiting service",
-                "evaluate" : null,
-                "typePath" : "string"
-              }, {
-                "path" : "msg",
-                "value" : "Job failed",
-                "evaluate" : null,
-                "typePath" : "string"
-              } ]
-            },
-            "children" : [ ],
-            "type" : "map"
-          }, {
-            "id" : "j1_12",
-            "text" : "packages/middleware/pub/service/debugLog",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
-            "li_attr" : {
-              "id" : "j1_12"
-            },
-            "a_attr" : {
-              "href" : "#",
-              "id" : "j1_12_anchor"
-            },
-            "state" : {
-              "loaded" : true,
-              "opened" : false,
-              "selected" : false,
-              "disabled" : false
-            },
-            "data" : {
-              "lines" : [ {
-                "inputPath" : "log",
-                "outputPath" : "log",
-                "inpJsTree" : "#launching_arrow_jsTree",
-                "outpJsTree" : "#landing_arrow_jsTree_function",
-                "INPath" : "log",
-                "OUTPath" : "log",
-                "op" : "copy",
-                "line" : 0,
-                "dashedLine" : false,
-                "inType" : "string",
-                "outType" : "string",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              }, {
-                "inputPath" : "msg",
-                "outputPath" : "msg",
-                "inpJsTree" : "#launching_arrow_jsTree",
-                "outpJsTree" : "#landing_arrow_jsTree_function",
-                "INPath" : "msg",
-                "OUTPath" : "msg",
-                "op" : "copy",
-                "line" : 0,
-                "dashedLine" : false,
-                "inType" : "string",
-                "outType" : "string",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              } ],
-              "transformers" : [ {
-                "op" : "copy",
-                "from" : "/log",
-                "to" : "/log",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              }, {
-                "op" : "copy",
-                "from" : "/msg",
-                "to" : "/msg",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              } ],
-              "dropList" : [ ],
-              "createList" : [ ],
-              "serviceType" : "service"
-            },
-            "children" : [ ],
-            "type" : "invoke"
-          } ],
-          "type" : "sequence"
-        }, {
-          "id" : "j1_13",
-          "text" : "CASE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
-          "li_attr" : {
-            "id" : "j1_13"
-          },
-          "a_attr" : {
-            "href" : "#",
-            "id" : "j1_13_anchor"
-          },
-          "state" : {
-            "loaded" : true,
-            "opened" : true,
-            "selected" : false,
-            "disabled" : false
-          },
-          "data" : {
-            "case" : "Active",
-            "comment" : "Can not exit as the job is still active"
-          },
-          "children" : [ {
-            "id" : "j1_14",
-            "text" : "MAP",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
-            "li_attr" : {
-              "id" : "j1_14"
-            },
-            "a_attr" : {
-              "href" : "#",
-              "id" : "j1_14_anchor"
-            },
-            "state" : {
-              "loaded" : true,
-              "opened" : false,
-              "selected" : false,
-              "disabled" : false
-            },
-            "data" : {
-              "lines" : [ ],
-              "transformers" : [ ],
-              "dropList" : [ ],
-              "createList" : [ {
-                "path" : "log",
-                "value" : "Can not exit as the job is still active",
-                "evaluate" : null,
-                "typePath" : "string"
-              }, {
-                "path" : "msg",
-                "value" : "Waiting for job to complete",
-                "evaluate" : null,
-                "typePath" : "string"
-              } ]
-            },
-            "children" : [ ],
-            "type" : "map"
-          }, {
-            "id" : "j1_5",
-            "text" : "packages/middleware/pub/service/debugLog",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
-            "li_attr" : {
-              "id" : "j1_5"
-            },
-            "a_attr" : {
-              "href" : "#",
-              "id" : "j1_5_anchor"
-            },
-            "state" : {
-              "loaded" : true,
-              "opened" : false,
-              "selected" : false,
-              "disabled" : false
-            },
-            "data" : {
-              "lines" : [ {
-                "inputPath" : "log",
-                "outputPath" : "log",
-                "inpJsTree" : "#launching_arrow_jsTree",
-                "outpJsTree" : "#landing_arrow_jsTree_function",
-                "INPath" : "log",
-                "OUTPath" : "log",
-                "op" : "copy",
-                "line" : 0,
-                "dashedLine" : false,
-                "inType" : "string",
-                "outType" : "string",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              }, {
-                "inputPath" : "msg",
-                "outputPath" : "msg",
-                "inpJsTree" : "#launching_arrow_jsTree",
-                "outpJsTree" : "#landing_arrow_jsTree_function",
-                "INPath" : "msg",
-                "OUTPath" : "msg",
-                "op" : "copy",
-                "line" : 0,
-                "dashedLine" : false,
-                "inType" : "string",
-                "outType" : "string",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              } ],
-              "transformers" : [ {
-                "op" : "copy",
-                "from" : "/log",
-                "to" : "/log",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              }, {
-                "op" : "copy",
-                "from" : "/msg",
-                "to" : "/msg",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              } ],
-              "dropList" : [ ],
-              "createList" : [ ],
-              "serviceType" : "service"
-            },
-            "children" : [ ],
-            "type" : "invoke"
-          }, {
-            "id" : "j1_15",
-            "text" : "packages/middleware/pub/service/throwExecption",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
-            "li_attr" : {
-              "id" : "j1_15"
-            },
-            "a_attr" : {
-              "href" : "#",
-              "id" : "j1_15_anchor"
-            },
-            "state" : {
-              "loaded" : true,
-              "opened" : false,
-              "selected" : false,
-              "disabled" : false
-            },
-            "data" : {
-              "lines" : [ {
-                "inputPath" : "msg",
-                "outputPath" : "msg",
-                "inpJsTree" : "#launching_arrow_jsTree",
-                "outpJsTree" : "#landing_arrow_jsTree_function",
-                "INPath" : "msg",
-                "OUTPath" : "msg",
-                "op" : "copy",
-                "line" : 0,
-                "dashedLine" : false,
-                "inType" : "string",
-                "outType" : "string",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              } ],
-              "transformers" : [ {
-                "op" : "copy",
-                "from" : "/msg",
-                "to" : "/msg",
-                "inTypePath" : "string",
-                "outTypePath" : "string"
-              } ],
-              "dropList" : [ ],
-              "createList" : [ ],
-              "serviceType" : "service"
-            },
-            "children" : [ ],
-            "type" : "invoke"
-          } ],
-          "type" : "sequence"
-        }, {
-          "id" : "j1_16",
-          "text" : "CASE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
-          "li_attr" : {
-            "id" : "j1_16"
-          },
-          "a_attr" : {
-            "href" : "#",
-            "id" : "j1_16_anchor"
-          },
-          "state" : {
-            "loaded" : true,
-            "opened" : true,
-            "selected" : false,
-            "disabled" : false
-          },
-          "data" : {
-            "case" : "#null",
-            "comment" : "In case if input is null"
-          },
-          "children" : [ {
-            "id" : "j1_18",
-            "text" : "MAP",
-            "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
-            "li_attr" : {
-              "id" : "j1_18"
-            },
-            "a_attr" : {
-              "href" : "#",
-              "id" : "j1_18_anchor"
-            },
-            "state" : {
-              "loaded" : true,
-              "opened" : false,
-              "selected" : false,
-              "disabled" : false
-            },
-            "data" : {
-              "lines" : [ ],
-              "transformers" : [ ],
-              "dropList" : [ ],
-              "createList" : [ {
-                "path" : "log",
-                "value" : "Waiting as job is not completed yet",
-                "evaluate" : null,
-                "typePath" : "string"
-              }, {
-                "path" : "msg",
-                "value" : "metaData is null",
-                "evaluate" : null,
-                "typePath" : "string"
-              } ]
-            },
-            "children" : [ ],
-            "type" : "map"
-          } ],
-          "type" : "sequence"
-        }, {
-          "id" : "j1_17",
-          "text" : "CASE",
-          "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
-          "li_attr" : {
-            "id" : "j1_17"
-          },
-          "a_attr" : {
-            "href" : "#",
-            "id" : "j1_17_anchor"
-          },
-          "state" : {
-            "loaded" : true,
-            "opened" : false,
-            "selected" : false,
-            "disabled" : false
-          },
-          "data" : {
-            "case" : "#default",
-            "comment" : "In case of unexpected value",
-            "status" : "disabled"
+            "lines" : [ {
+              "inputPath" : "asyncOutputDoc/*metaData/batchId",
+              "outputPath" : "asyncOutputDoc/*metaData/batchId",
+              "inpJsTree" : "#launching_arrow_jsTree_function",
+              "outpJsTree" : "#landing_arrow_jsTree",
+              "INPath" : "asyncOutputDoc/*metaData/batchId",
+              "OUTPath" : "asyncOutputDoc/*metaData/batchId",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "document/document/string",
+              "outTypePath" : "document/document/string"
+            }, {
+              "inputPath" : "asyncOutputDoc/*metaData/status",
+              "outputPath" : "asyncOutputDoc/*metaData/status",
+              "inpJsTree" : "#launching_arrow_jsTree_function",
+              "outpJsTree" : "#landing_arrow_jsTree",
+              "INPath" : "asyncOutputDoc/*metaData/status",
+              "OUTPath" : "asyncOutputDoc/*metaData/status",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "document/document/string",
+              "outTypePath" : "document/document/string"
+            } ],
+            "transformers" : [ {
+              "op" : "copy",
+              "from" : "/asyncOutputDoc/*metaData/batchId",
+              "to" : "/asyncOutputDoc/*metaData/batchId",
+              "inTypePath" : "document/document/string",
+              "outTypePath" : "document/document/string"
+            }, {
+              "op" : "copy",
+              "from" : "/asyncOutputDoc/*metaData/status",
+              "to" : "/asyncOutputDoc/*metaData/status",
+              "inTypePath" : "document/document/string",
+              "outTypePath" : "document/document/string"
+            } ],
+            "dropList" : [ ],
+            "createList" : [ ],
+            "serviceType" : "flow",
+            "requestMethod" : "async",
+            "status" : "enabled"
           },
           "children" : [ ],
-          "type" : "sequence"
+          "type" : "invoke"
+        }, {
+          "id" : "j1_4",
+          "text" : "MAP",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+          "li_attr" : {
+            "id" : "j1_4"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_4_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "lines" : [ ],
+            "transformers" : [ ],
+            "dropList" : [ ],
+            "createList" : [ {
+              "path" : "log",
+              "value" : "Batch process starting. Batch ID: #{asyncOutputDoc/*metaData/batchId}",
+              "evaluate" : "EEV",
+              "typePath" : "string"
+            }, {
+              "path" : "msg",
+              "value" : "Async Job started",
+              "evaluate" : null,
+              "typePath" : "string"
+            } ],
+            "comment" : "Initialize start msg"
+          },
+          "children" : [ ],
+          "type" : "map"
+        }, {
+          "id" : "j1_33",
+          "text" : "packages/middleware/pub/service/debugLog",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "li_attr" : {
+            "id" : "j1_33"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_33_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "transformers" : [ {
+              "op" : "copy",
+              "from" : "/log",
+              "to" : "/msg",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            }, {
+              "op" : "copy",
+              "from" : "/msg",
+              "to" : "/log",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            } ],
+            "lines" : [ {
+              "inputPath" : "log",
+              "outputPath" : "msg",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "log",
+              "OUTPath" : "msg",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            }, {
+              "inputPath" : "msg",
+              "outputPath" : "log",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "msg",
+              "OUTPath" : "log",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            } ],
+            "dropList" : [ ],
+            "createList" : [ ],
+            "serviceType" : "service",
+            "comment" : "Log start Job msg"
+          },
+          "children" : [ ],
+          "type" : "invoke"
+        }, {
+          "id" : "j1_3",
+          "text" : "REPEAT",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/repeat.png",
+          "li_attr" : {
+            "id" : "j1_3"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_3_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : true,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "interval" : "10",
+            "repeat" : "-1",
+            "repeatOn" : "success",
+            "comment" : "Repeat until status is not completed or failed"
+          },
+          "children" : [ {
+            "id" : "j1_6",
+            "text" : "SWITCH",
+            "icon" : "/files/gui/middleware/pub/server/ui/icons/switch.png",
+            "li_attr" : {
+              "id" : "j1_6"
+            },
+            "a_attr" : {
+              "href" : "#",
+              "id" : "j1_6_anchor"
+            },
+            "state" : {
+              "loaded" : true,
+              "opened" : true,
+              "selected" : false,
+              "disabled" : false
+            },
+            "data" : {
+              "switch" : "asyncOutputDoc/*metaData/status",
+              "comment" : "Jump to the right sequence"
+            },
+            "children" : [ {
+              "id" : "j1_7",
+              "text" : "CASE",
+              "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+              "li_attr" : {
+                "id" : "j1_7"
+              },
+              "a_attr" : {
+                "href" : "#",
+                "id" : "j1_7_anchor"
+              },
+              "state" : {
+                "loaded" : true,
+                "opened" : false,
+                "selected" : false,
+                "disabled" : false
+              },
+              "data" : {
+                "case" : "Completed",
+                "evaluate" : false,
+                "comment" : "When the async service completes execution and return with future document"
+              },
+              "children" : [ {
+                "id" : "j1_8",
+                "text" : "MAP",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+                "li_attr" : {
+                  "id" : "j1_8"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_8_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : false,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "lines" : [ ],
+                  "transformers" : [ ],
+                  "dropList" : [ ],
+                  "createList" : [ {
+                    "path" : "log",
+                    "value" : "Service execution completed",
+                    "evaluate" : null,
+                    "typePath" : "string"
+                  }, {
+                    "path" : "msg",
+                    "value" : "Exiting repeat",
+                    "evaluate" : null,
+                    "typePath" : "string"
+                  } ]
+                },
+                "children" : [ ],
+                "type" : "map"
+              }, {
+                "id" : "j1_9",
+                "text" : "packages/middleware/pub/service/debugLog",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                "li_attr" : {
+                  "id" : "j1_9"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_9_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : false,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "lines" : [ {
+                    "inputPath" : "log",
+                    "outputPath" : "log",
+                    "inpJsTree" : "#launching_arrow_jsTree",
+                    "outpJsTree" : "#landing_arrow_jsTree_function",
+                    "INPath" : "log",
+                    "OUTPath" : "log",
+                    "op" : "copy",
+                    "line" : 0,
+                    "dashedLine" : false,
+                    "inType" : "string",
+                    "outType" : "string",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  }, {
+                    "inputPath" : "msg",
+                    "outputPath" : "msg",
+                    "inpJsTree" : "#launching_arrow_jsTree",
+                    "outpJsTree" : "#landing_arrow_jsTree_function",
+                    "INPath" : "msg",
+                    "OUTPath" : "msg",
+                    "op" : "copy",
+                    "line" : 0,
+                    "dashedLine" : false,
+                    "inType" : "string",
+                    "outType" : "string",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "transformers" : [ {
+                    "op" : "copy",
+                    "from" : "/log",
+                    "to" : "/log",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  }, {
+                    "op" : "copy",
+                    "from" : "/msg",
+                    "to" : "/msg",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "dropList" : [ ],
+                  "createList" : [ ],
+                  "serviceType" : "service"
+                },
+                "children" : [ ],
+                "type" : "invoke"
+              }, {
+                "id" : "j1_19",
+                "text" : "packages/middleware/pub/service/throwExecption",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                "li_attr" : {
+                  "id" : "j1_19"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_19_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : false,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "transformers" : [ {
+                    "op" : "copy",
+                    "from" : "/msg",
+                    "to" : "/msg",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "lines" : [ {
+                    "inputPath" : "msg",
+                    "outputPath" : "msg",
+                    "inpJsTree" : "#launching_arrow_jsTree",
+                    "outpJsTree" : "#landing_arrow_jsTree_function",
+                    "INPath" : "msg",
+                    "OUTPath" : "msg",
+                    "op" : "copy",
+                    "line" : 0,
+                    "dashedLine" : false,
+                    "inType" : "string",
+                    "outType" : "string",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "dropList" : [ ],
+                  "createList" : [ ],
+                  "serviceType" : "service"
+                },
+                "children" : [ ],
+                "type" : "invoke"
+              }, {
+                "id" : "j1_32",
+                "text" : "SEQUENCE",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+                "li_attr" : {
+                  "id" : "j1_32"
+                },
+                "a_attr" : {
+                  "href" : "#"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : false,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : { },
+                "children" : [ ],
+                "type" : "sequence"
+              } ],
+              "type" : "sequence"
+            }, {
+              "id" : "j1_10",
+              "text" : "CASE",
+              "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+              "li_attr" : {
+                "id" : "j1_10"
+              },
+              "a_attr" : {
+                "href" : "#",
+                "id" : "j1_10_anchor"
+              },
+              "state" : {
+                "loaded" : true,
+                "opened" : false,
+                "selected" : false,
+                "disabled" : false
+              },
+              "data" : {
+                "case" : "Failed",
+                "comment" : "When async service faces an exception and failed"
+              },
+              "children" : [ {
+                "id" : "j1_11",
+                "text" : "MAP",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+                "li_attr" : {
+                  "id" : "j1_11"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_11_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : false,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "lines" : [ ],
+                  "transformers" : [ ],
+                  "dropList" : [ ],
+                  "createList" : [ {
+                    "path" : "log",
+                    "value" : "Exiting service",
+                    "evaluate" : null,
+                    "typePath" : "string"
+                  }, {
+                    "path" : "msg",
+                    "value" : "Job failed",
+                    "evaluate" : null,
+                    "typePath" : "string"
+                  } ]
+                },
+                "children" : [ ],
+                "type" : "map"
+              }, {
+                "id" : "j1_12",
+                "text" : "packages/middleware/pub/service/debugLog",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                "li_attr" : {
+                  "id" : "j1_12"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_12_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : false,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "lines" : [ {
+                    "inputPath" : "log",
+                    "outputPath" : "log",
+                    "inpJsTree" : "#launching_arrow_jsTree",
+                    "outpJsTree" : "#landing_arrow_jsTree_function",
+                    "INPath" : "log",
+                    "OUTPath" : "log",
+                    "op" : "copy",
+                    "line" : 0,
+                    "dashedLine" : false,
+                    "inType" : "string",
+                    "outType" : "string",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  }, {
+                    "inputPath" : "msg",
+                    "outputPath" : "msg",
+                    "inpJsTree" : "#launching_arrow_jsTree",
+                    "outpJsTree" : "#landing_arrow_jsTree_function",
+                    "INPath" : "msg",
+                    "OUTPath" : "msg",
+                    "op" : "copy",
+                    "line" : 0,
+                    "dashedLine" : false,
+                    "inType" : "string",
+                    "outType" : "string",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "transformers" : [ {
+                    "op" : "copy",
+                    "from" : "/log",
+                    "to" : "/log",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  }, {
+                    "op" : "copy",
+                    "from" : "/msg",
+                    "to" : "/msg",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "dropList" : [ ],
+                  "createList" : [ ],
+                  "serviceType" : "service"
+                },
+                "children" : [ ],
+                "type" : "invoke"
+              }, {
+                "id" : "j1_22",
+                "text" : "packages/middleware/pub/service/throwExecption",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                "li_attr" : {
+                  "id" : "j1_22"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_22_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : false,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "transformers" : [ {
+                    "op" : "copy",
+                    "from" : "/msg",
+                    "to" : "/msg",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "lines" : [ {
+                    "inputPath" : "msg",
+                    "outputPath" : "msg",
+                    "inpJsTree" : "#launching_arrow_jsTree",
+                    "outpJsTree" : "#landing_arrow_jsTree_function",
+                    "INPath" : "msg",
+                    "OUTPath" : "msg",
+                    "op" : "copy",
+                    "line" : 0,
+                    "dashedLine" : false,
+                    "inType" : "string",
+                    "outType" : "string",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "dropList" : [ ],
+                  "createList" : [ ],
+                  "serviceType" : "service"
+                },
+                "children" : [ ],
+                "type" : "invoke"
+              } ],
+              "type" : "sequence"
+            }, {
+              "id" : "j1_13",
+              "text" : "CASE",
+              "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+              "li_attr" : {
+                "id" : "j1_13"
+              },
+              "a_attr" : {
+                "href" : "#",
+                "id" : "j1_13_anchor"
+              },
+              "state" : {
+                "loaded" : true,
+                "opened" : false,
+                "selected" : false,
+                "disabled" : false
+              },
+              "data" : {
+                "case" : "Active",
+                "comment" : "Can not exit as the job is still active"
+              },
+              "children" : [ {
+                "id" : "j1_14",
+                "text" : "MAP",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+                "li_attr" : {
+                  "id" : "j1_14"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_14_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : false,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "lines" : [ ],
+                  "transformers" : [ ],
+                  "dropList" : [ ],
+                  "createList" : [ {
+                    "path" : "log",
+                    "value" : "Can not exit as the job is still active",
+                    "evaluate" : null,
+                    "typePath" : "string"
+                  }, {
+                    "path" : "msg",
+                    "value" : "Waiting for job to complete",
+                    "evaluate" : null,
+                    "typePath" : "string"
+                  } ]
+                },
+                "children" : [ ],
+                "type" : "map"
+              }, {
+                "id" : "j1_5",
+                "text" : "packages/middleware/pub/service/debugLog",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                "li_attr" : {
+                  "id" : "j1_5"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_5_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : false,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "lines" : [ {
+                    "inputPath" : "log",
+                    "outputPath" : "log",
+                    "inpJsTree" : "#launching_arrow_jsTree",
+                    "outpJsTree" : "#landing_arrow_jsTree_function",
+                    "INPath" : "log",
+                    "OUTPath" : "log",
+                    "op" : "copy",
+                    "line" : 0,
+                    "dashedLine" : false,
+                    "inType" : "string",
+                    "outType" : "string",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  }, {
+                    "inputPath" : "msg",
+                    "outputPath" : "msg",
+                    "inpJsTree" : "#launching_arrow_jsTree",
+                    "outpJsTree" : "#landing_arrow_jsTree_function",
+                    "INPath" : "msg",
+                    "OUTPath" : "msg",
+                    "op" : "copy",
+                    "line" : 0,
+                    "dashedLine" : false,
+                    "inType" : "string",
+                    "outType" : "string",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "transformers" : [ {
+                    "op" : "copy",
+                    "from" : "/log",
+                    "to" : "/log",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  }, {
+                    "op" : "copy",
+                    "from" : "/msg",
+                    "to" : "/msg",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "dropList" : [ ],
+                  "createList" : [ ],
+                  "serviceType" : "service"
+                },
+                "children" : [ ],
+                "type" : "invoke"
+              }, {
+                "id" : "j1_15",
+                "text" : "packages/middleware/pub/service/throwExecption",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                "li_attr" : {
+                  "id" : "j1_15"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_15_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : false,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "lines" : [ {
+                    "inputPath" : "msg",
+                    "outputPath" : "msg",
+                    "inpJsTree" : "#launching_arrow_jsTree",
+                    "outpJsTree" : "#landing_arrow_jsTree_function",
+                    "INPath" : "msg",
+                    "OUTPath" : "msg",
+                    "op" : "copy",
+                    "line" : 0,
+                    "dashedLine" : false,
+                    "inType" : "string",
+                    "outType" : "string",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "transformers" : [ {
+                    "op" : "copy",
+                    "from" : "/msg",
+                    "to" : "/msg",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "dropList" : [ ],
+                  "createList" : [ ],
+                  "serviceType" : "service",
+                  "status" : "disabled"
+                },
+                "children" : [ ],
+                "type" : "invoke"
+              } ],
+              "type" : "sequence"
+            }, {
+              "id" : "j1_16",
+              "text" : "CASE",
+              "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+              "li_attr" : {
+                "id" : "j1_16"
+              },
+              "a_attr" : {
+                "href" : "#",
+                "id" : "j1_16_anchor"
+              },
+              "state" : {
+                "loaded" : true,
+                "opened" : false,
+                "selected" : false,
+                "disabled" : false
+              },
+              "data" : {
+                "case" : "#null",
+                "comment" : "In case if input is null"
+              },
+              "children" : [ {
+                "id" : "j1_18",
+                "text" : "MAP",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+                "li_attr" : {
+                  "id" : "j1_18"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_18_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : false,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "lines" : [ ],
+                  "transformers" : [ ],
+                  "dropList" : [ ],
+                  "createList" : [ {
+                    "path" : "log",
+                    "value" : "Waiting as job is not completed yet",
+                    "evaluate" : null,
+                    "typePath" : "string"
+                  }, {
+                    "path" : "msg",
+                    "value" : "metaData is null",
+                    "evaluate" : null,
+                    "typePath" : "string"
+                  } ]
+                },
+                "children" : [ ],
+                "type" : "map"
+              } ],
+              "type" : "sequence"
+            }, {
+              "id" : "j1_17",
+              "text" : "CASE",
+              "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+              "li_attr" : {
+                "id" : "j1_17"
+              },
+              "a_attr" : {
+                "href" : "#",
+                "id" : "j1_17_anchor"
+              },
+              "state" : {
+                "loaded" : true,
+                "opened" : false,
+                "selected" : false,
+                "disabled" : false
+              },
+              "data" : {
+                "case" : "#default",
+                "comment" : "In case of unexpected value",
+                "status" : "enabled"
+              },
+              "children" : [ {
+                "id" : "j1_31",
+                "text" : "packages/middleware/pub/service/debugLog",
+                "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+                "li_attr" : {
+                  "id" : "j1_31"
+                },
+                "a_attr" : {
+                  "href" : "#",
+                  "id" : "j1_31_anchor"
+                },
+                "state" : {
+                  "loaded" : true,
+                  "opened" : false,
+                  "selected" : false,
+                  "disabled" : false
+                },
+                "data" : {
+                  "transformers" : [ {
+                    "op" : "copy",
+                    "from" : "/log",
+                    "to" : "/msg",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  }, {
+                    "op" : "copy",
+                    "from" : "/msg",
+                    "to" : "/log",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "lines" : [ {
+                    "inputPath" : "log",
+                    "outputPath" : "msg",
+                    "inpJsTree" : "#launching_arrow_jsTree",
+                    "outpJsTree" : "#landing_arrow_jsTree_function",
+                    "INPath" : "log",
+                    "OUTPath" : "msg",
+                    "op" : "copy",
+                    "line" : 0,
+                    "dashedLine" : false,
+                    "inType" : "string",
+                    "outType" : "string",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  }, {
+                    "inputPath" : "msg",
+                    "outputPath" : "log",
+                    "inpJsTree" : "#launching_arrow_jsTree",
+                    "outpJsTree" : "#landing_arrow_jsTree_function",
+                    "INPath" : "msg",
+                    "OUTPath" : "log",
+                    "op" : "copy",
+                    "line" : 0,
+                    "dashedLine" : false,
+                    "inType" : "string",
+                    "outType" : "string",
+                    "inTypePath" : "string",
+                    "outTypePath" : "string"
+                  } ],
+                  "dropList" : [ ],
+                  "createList" : [ ],
+                  "serviceType" : "service"
+                },
+                "children" : [ ],
+                "type" : "invoke"
+              } ],
+              "type" : "sequence"
+            } ],
+            "type" : "switch"
+          } ],
+          "type" : "repeat"
         } ],
-        "type" : "switch"
+        "type" : "sequence"
+      }, {
+        "id" : "j1_25",
+        "text" : "CATCH",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "li_attr" : {
+          "id" : "j1_25"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j1_25_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : false,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : {
+          "comment" : "Catch Exception if any"
+        },
+        "children" : [ {
+          "id" : "j1_34",
+          "text" : "packages/middleware/pub/service/debugLog",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/invoke.png",
+          "li_attr" : {
+            "id" : "j1_34"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_34_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "transformers" : [ {
+              "op" : "copy",
+              "from" : "/log",
+              "to" : "/msg",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            }, {
+              "op" : "copy",
+              "from" : "/msg",
+              "to" : "/log",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            } ],
+            "lines" : [ {
+              "inputPath" : "log",
+              "outputPath" : "msg",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "log",
+              "OUTPath" : "msg",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            }, {
+              "inputPath" : "msg",
+              "outputPath" : "log",
+              "inpJsTree" : "#launching_arrow_jsTree",
+              "outpJsTree" : "#landing_arrow_jsTree_function",
+              "INPath" : "msg",
+              "OUTPath" : "log",
+              "op" : "copy",
+              "line" : 0,
+              "dashedLine" : false,
+              "inType" : "string",
+              "outType" : "string",
+              "inTypePath" : "string",
+              "outTypePath" : "string"
+            } ],
+            "dropList" : [ ],
+            "createList" : [ ],
+            "serviceType" : "service"
+          },
+          "children" : [ ],
+          "type" : "invoke"
+        } ],
+        "type" : "sequence"
+      }, {
+        "id" : "j1_26",
+        "text" : "FINALLY",
+        "icon" : "/files/gui/middleware/pub/server/ui/icons/sequence.png",
+        "li_attr" : {
+          "id" : "j1_26"
+        },
+        "a_attr" : {
+          "href" : "#",
+          "id" : "j1_26_anchor"
+        },
+        "state" : {
+          "loaded" : true,
+          "opened" : false,
+          "selected" : false,
+          "disabled" : false
+        },
+        "data" : {
+          "comment" : "Drop the variables from data pipeline"
+        },
+        "children" : [ {
+          "id" : "j1_36",
+          "text" : "MAP",
+          "icon" : "/files/gui/middleware/pub/server/ui/icons/map.png",
+          "li_attr" : {
+            "id" : "j1_36"
+          },
+          "a_attr" : {
+            "href" : "#",
+            "id" : "j1_36_anchor"
+          },
+          "state" : {
+            "loaded" : true,
+            "opened" : false,
+            "selected" : false,
+            "disabled" : false
+          },
+          "data" : {
+            "transformers" : [ ],
+            "lines" : [ ],
+            "dropList" : [ ],
+            "createList" : [ {
+              "path" : "msg",
+              "value" : "Job completed",
+              "evaluate" : null,
+              "typePath" : "string"
+            } ]
+          },
+          "children" : [ ],
+          "type" : "map"
+        } ],
+        "type" : "sequence"
       } ],
-      "type" : "repeat"
+      "type" : "try-catch"
     } ],
     "lockedByUser" : "ekaDev"
   },

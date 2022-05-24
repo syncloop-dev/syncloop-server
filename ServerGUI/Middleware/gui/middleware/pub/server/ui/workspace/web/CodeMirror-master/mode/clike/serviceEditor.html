@@ -291,7 +291,10 @@ if(loadFile!=false){
               localStorage.setItem(javaWorkspace_id,decoded);
           }
       }
-
+      
+      removeIcons(response.input);
+      removeIcons(response.output);
+      
       var inputRef=inputJstreeRef;
       inputRef.settings.core.data=response.input;
       inputRef.refresh();
@@ -390,8 +393,10 @@ function save(){
 	dataJson.main=window.btoa(javaMainCode_data);
 	dataJson.staticWorkspace=window.btoa(javaWorkspace_data);
 	
-	dataJson.input=inputJstreeRef.get_json('#', {flat:true})
-	dataJson.output=outputJstreeRef.get_json('#', {flat:true})
+	dataJson.input=inputJstreeRef.get_json('#', {flat:false})
+	dataJson.output=outputJstreeRef.get_json('#', {flat:false})
+    removeIcons(dataJson.input);
+    removeIcons(dataJson.output);
 	dataJson.version="v1";
     dataJson.consumers=$("#serviceConsumers").val();
     dataJson.developers=$("#serviceDevelopers").val();

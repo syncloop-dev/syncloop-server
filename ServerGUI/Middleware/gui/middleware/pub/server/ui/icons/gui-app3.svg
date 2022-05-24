@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <style>
+      .cls-1 {
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        fill-rule: evenodd;
+      }
+    </style>
+    <filter id="filter" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#7b7b7b"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="gui-app3">
+    <g class="cls-1">
+      <path class="cls-2" d="M1134.56,84h14.88l0.57-.5-0.57-.5h-14.88A0.508,0.508,0,1,0,1134.56,84Zm7.44,0.534v9.932l0.5,0.544,0.5-.544V84.534l-0.5-.545Zm-7.41,5.457h7.81l0.61-.491-0.61-.491h-7.81l-0.6.491Zm15.44-9.3a1.72,1.72,0,0,0-1.72-1.72h-12.62a1.72,1.72,0,0,0-1.72,1.72V93.308a1.72,1.72,0,0,0,1.72,1.72h12.62a1.72,1.72,0,0,0,1.72-1.72V80.692Zm-1.15,0V93.308a0.575,0.575,0,0,1-.57.573h-12.62a0.575,0.575,0,0,1-.57-0.573V80.692a0.575,0.575,0,0,1,.57-0.573h12.62A0.575,0.575,0,0,1,1148.88,80.692Zm-4.32,7.3h2.86a0.506,0.506,0,1,0,0-1h-2.86A0.507,0.507,0,1,0,1144.56,87.995Zm0,2.007h2.86a0.506,0.506,0,1,0,0-1h-2.86A0.507,0.507,0,1,0,1144.56,90Zm0,2.008h2.86a0.506,0.506,0,1,0,0-1h-2.86A0.507,0.507,0,1,0,1144.56,92.01Z" transform="translate(-1132 -77)"/>
+      <circle cx="11.5" cy="4.5" r="0.5"/>
+      <circle id="Ellipse_11_copy" data-name="Ellipse 11 copy" cx="13.5" cy="4.5" r="0.5"/>
+      <circle id="Ellipse_11_copy_2" data-name="Ellipse 11 copy 2" cx="15.5" cy="4.5" r="0.5"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,72 @@
+{
+  "input" : [ {
+    "id" : "j1_1",
+    "text" : "bufferedReader",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/javaObject.png",
+    "li_attr" : {
+      "id" : "j1_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "javaObject"
+  }, {
+    "id" : "j1_2",
+    "text" : "number",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/integer.png",
+    "li_attr" : {
+      "id" : "j1_2"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_2_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "integer"
+  } ],
+  "output" : [ {
+    "id" : "j2_1",
+    "text" : "lines",
+    "icon" : "/files/gui/middleware/pub/server/ui/icons/textArr.png",
+    "li_attr" : {
+      "id" : "j2_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j2_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : true,
+      "selected" : true,
+      "disabled" : false
+    },
+    "data" : { },
+    "parent" : "#",
+    "type" : "stringList"
+  } ],
+  "package" : "cGFja2FnZSBwYWNrYWdlcy5taWRkbGV3YXJlLnB1Yi5maWxlOw==",
+  "imports" : "aW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLkRhdGFQaXBlbGluZTsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLlNlcnZpY2VVdGlsczsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS50ZW1wbGF0ZS5TbmlwcGV0RXhjZXB0aW9uOwppbXBvcnQgamF2YS5pby5CdWZmZXJlZFJlYWRlcjsKaW1wb3J0IGphdmEuaW8uRmlsZTsKaW1wb3J0IGphdmEubmlvLmZpbGUuRmlsZXM7CmltcG9ydCBqYXZhLm5pby5maWxlLlBhdGg7CmltcG9ydCBqYXZhLnV0aWwuKjs=",
+  "main" : "dHJ5IHsKCQlCdWZmZXJlZFJlYWRlciBidWZmZXJlZFJlYWRlcj0oQnVmZmVyZWRSZWFkZXIpZGF0YVBpcGVsaW5lLmdldCgiYnVmZmVyZWRSZWFkZXIiKTsKCQlJbnRlZ2VyIG51bWJlcj1kYXRhUGlwZWxpbmUuZ2V0SW50ZWdlcigibnVtYmVyIik7CiAgICAgICAgTGlzdDxTdHJpbmc+IGxpbmVzPW5ldyBBcnJheUxpc3Q8U3RyaW5nPigpOwogICAgICAgIFN0cmluZyBsaW5lPW51bGw7CiAgICAgICAgd2hpbGUobnVtYmVyLS0+MCAmJiAobGluZT1idWZmZXJlZFJlYWRlci5yZWFkTGluZSgpKSE9bnVsbCl7CiAgICAgICAgCWxpbmVzLmFkZChsaW5lKTsKICAgICAgICB9CiAgICAgICAgaWYobGluZXMuc2l6ZSgpPT0wKQogICAgICAgIAlkYXRhUGlwZWxpbmUucHV0KCJsaW5lcyIsbnVsbCk7CiAgCQllbHNlCiAgICAgICAgCWRhdGFQaXBlbGluZS5wdXQoImxpbmVzIixsaW5lcy50b0FycmF5KG5ldyBTdHJpbmdbbGluZXMuc2l6ZSgpXSkpOwogIH0gY2F0Y2ggKEV4Y2VwdGlvbiBlKSB7CgkJZGF0YVBpcGVsaW5lLmNsZWFyKCk7CiAgCQlkYXRhUGlwZWxpbmUucHV0KCJlcnJvciIsZS5nZXRNZXNzYWdlKCkpOwogICAgCXRocm93IG5ldyBTbmlwcGV0RXhjZXB0aW9uKGRhdGFQaXBlbGluZSwiU25pcHBldCBleGNlcHRpb24iLCBuZXcgRXhjZXB0aW9uKGUpKTsKICB9",
+  "staticWorkspace" : "",
+  "version" : "v1",
+  "consumers" : "",
+  "developers" : "",
+  "lockedByUser" : "ekaDev"
+}

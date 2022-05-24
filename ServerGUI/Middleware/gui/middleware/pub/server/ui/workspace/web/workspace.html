@@ -1,209 +1,230 @@
 <html style="min-height: 100% !important;">
 <head>
-  <title>Workspace</title>
-  <link rel="shortcut icon" href="/files/gui/middleware/pub/server/ui/icons/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui/css/style.min.css">
-<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/sweetalert.css">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
-  <script src="/files/gui/middleware/pub/server/ui/javascript/jstreetable.js"></script>
-<script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
-<script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.min.js"></script>
-<script src="/files/gui/middleware/pub/server/ui/javascript/---sweetalert.init.js"></script>
-<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+    <title>Workspace</title>
+    <link rel="shortcut icon" href="/files/gui/middleware/pub/server/ui/icons/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet"	href="/files/gui/middleware/pub/server/ui/css/style.min.css">
+    <link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/sweetalert.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
+    <script src="/files/gui/middleware/pub/server/ui/javascript/jstreetable.js"></script>
+    <script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
+    <script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.min.js"></script>
+    <script src="/files/gui/middleware/pub/server/ui/javascript/---sweetalert.init.js"></script>
+    <link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
 
-  </head>
+</head>
 
-  <body style="width:100%;height:100%;">
+<body style="width:100%;height:100%;">
 
 <div class="navbar" style="background-color:#fff;left:0px;top:0px;">
-  <div id="mostRecentlyOpened" class="dropdown">
-    <a class="eka_logo"><img src="/files/gui/middleware/pub/server/ui/icons/eka_logo.png"></a>
-	<a class="dropbtn">Unsaved: </a>
-  </div>
-  <div class="dropdown navbar-right">
-    <a href="#" onclick="localStorage.clear();sessionStorage.clear();deleteAllCookies();location.reload(true);" class="dropbtn"><span class="glyphicon glyphicon-log-in"></span> Clear cache</a>
-  </div>
-</div>    
+    <div id="mostRecentlyOpened" class="dropdown">
+        <a class="eka_logo"><img src="/files/gui/middleware/pub/server/ui/icons/eka_logo.png"></a>
+        <!-- <a class="dropbtn">Unsaved: </a> -->
+    </div>
+    <div class="dropdown navbar-right">
+        <a href="#" onclick="localStorage.clear();sessionStorage.clear();deleteAllCookies();location.reload(true);" class="dropbtn"><span class="glyphicon glyphicon-log-in"></span> Clear cache</a>
+    </div>
+</div>
 
-<div id="content" style="max-width: 100%; min-height:500px;padding: 0px; margin: 0px;height:98%;">
-<div class="row" id="demo" style="display: block;padding: 0px; margin: 0px;width:100%;height:100%">
+<div id="content" style="max-width: 100%; min-height:500px;padding: 0px; margin: 0px;height:90%;">
+    <div class="row" id="demo" style="display: block;padding: 0px; margin: 0px;width:100%;height:100%">
 
-<div class="col-md-12" id="packageManagerJsTreeContainer" style="width:15%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">  
-<div class="row" style="margin: 0px; padding:0px;">
-			<div class="navbar">  
-              		<div class="dropdown">
-                      <button class="dropbtn nw">New 
-                        <i class="fa fa-angle-down"></i>
-                      </button>
-                      <div class="dropdown-content">
-                        <a href="#" onclick="createSchema('package',packageManagerJsTreeRef);">Package</a>
-                        <a href="#" onclick="createSchema('folder',packageManagerJsTreeRef);">Folder</a>
-                        <a href="#" onclick="createSchema('flow',packageManagerJsTreeRef);">Flow</a>
-                        <a href="#" onclick="createSchema('service',packageManagerJsTreeRef);">Service</a>
-                        <a href="#" onclick="createSchema('jdbc',packageManagerJsTreeRef);">JDBC</a>
-                        <a href="#" onclick="createSchema('sql',packageManagerJsTreeRef);">SQL</a>
-                        <a href="#" onclick="createSchema('properties',packageManagerJsTreeRef);">Properties</a>
-                      </div>
+        <div class="col-md-12" id="packageManagerJsTreeContainer" style="width:15%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">
+            <div class="row" style="margin: 0px; padding:0px;">
+                <div class="navbar">
+                    <div class="dropdown">
+                        <button class="dropbtn nw">New
+                            <i class="fa fa-angle-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="#" onclick="createSchema('package',packageManagerJsTreeRef);">Package</a>
+                            <a href="#" onclick="createSchema('folder',packageManagerJsTreeRef);">Folder</a>
+                            <a href="#" onclick="createSchema('flow',packageManagerJsTreeRef);">Flow</a>
+                            <a href="#" onclick="createSchema('service',packageManagerJsTreeRef);">Service</a>
+                            <a href="#" onclick="createSchema('jdbc',packageManagerJsTreeRef);">JDBC</a>
+                            <a href="#" onclick="createSchema('sql',packageManagerJsTreeRef);">SQL</a>
+                            <a href="#" onclick="createSchema('properties',packageManagerJsTreeRef);">Properties</a>
+                        </div>
                     </div>
-              <div class="dropdown">
-                <button class="dropbtn nw">Tools 
-                  <i class="fa fa-angle-down"></i>
-                </button>
-                <div class="dropdown-content">
-                                        <input type="text" value=""
-                                            style="box-shadow: inset 0 0 4px #eee; width: 124px; margin: 2px; padding: 2px; border-radius: 0px; border: 1px solid silver; font-size: .8em;"
-                                            id="launching_arrow_input_jsTree_q" placeholder="Search">
-                  <a href="#" onclick="openBuildConfigurationForm();">Build</a>
+                    <div class="dropdown">
+                        <button class="dropbtn nw">Tools
+                            <i class="fa fa-angle-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <!-- <input type="text" value=""
+                                style="box-shadow: inset 0 0 4px #eee; width: 124px; margin: 2px; padding: 2px; border-radius: 0px; border: 1px solid silver; font-size: .8em;"
+                                id="launching_arrow_input_jsTree_q" placeholder="Search"> -->
+                            <a href="#" onclick="openBuildConfigurationForm();">Build</a>
+                        </div>
+                    </div>
                 </div>
-                </div> 
-              </div>				
-      </div>
-<div id="packageManagerJsTree" class="jstree jstree-1 jstree-default"
-								style="margin: 0px;padding:0px; height: 96%; width: 100%; overflow: scroll;"
-								role="tree" aria-multiselectable="true" tabindex="0"
-     aria-activedescendant="j1_1" aria-busy="false"></div>
+            </div>
+            <div id="packageManagerJsTree" class="jstree jstree-1 jstree-default"
+                 style="margin: 0px;padding:0px; height: 96%; width: 100%; overflow: scroll;"
+                 role="tree" aria-multiselectable="true" tabindex="0"
+                 aria-activedescendant="j1_1" aria-busy="false"></div>
+        </div>
+
+        <div class="col-md-12" id="iframe_container" style="width:85%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">
+            <iframe id="middlewareCodeEditor" class="col-md-12" style="float: left; min-width:400px;min-height:600px;width:100%;height:100%;margin:0px;border:0px;padding:0px; overflow:hidden;overflow-x:hidden;overflow-y:hidden;" allowfullscreen frameborder="0" scrolling="no">
+            </iframe>
+        </div>
+
+    </div>
 </div>
 
-<div class="col-md-12" id="iframe_container" style="width:85%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">
-<iframe id="middlewareCodeEditor" class="col-md-12" style="float: left; min-width:400px;min-height:600px;width:100%;height:100%;margin:0px;border:0px;padding:0px; overflow:hidden;overflow-x:hidden;overflow-y:hidden;" allowfullscreen frameborder="0" scrolling="no">
-</iframe>
-</div>
-  
-</div>
-</div> 
-    
 <div id="exportBuildModelDialog" class="modal">
 
-		<!-- Modal content -->
-		<div class="modal-content" style="width:650px;height:auto;">
-			<span id="closeExportBuildModelDialog" class="close" >&times;</span>
-			<h3>Configure build</h3>
-          <div style="display:none">
+    <!-- Modal content -->
+    <div class="modal-content" style="width:650px;height:auto;">
+        <span id="closeExportBuildModelDialog" class="close" >&times;</span>
+        <h3>Configure build</h3>
+        <div style="display:none">
             <input type="checkbox" id="includeDependencies" name="includeDependencies"
-				value="true">
-			<label style="min-width: 100px;" for="includeDependencies"> Include all dependent services?</label><br>
+                   value="true">
+            <label style="min-width: 100px;" for="includeDependencies"> Include all dependent services?</label><br>
             <input type="checkbox" id="includeGlobalProperties" name="includeGlobalProperties"
-				value="false">
-			<label style="min-width: 100px;" for="includeGlobalProperties"> Include global properties?</label><br>
+                   value="false">
+            <label style="min-width: 100px;" for="includeGlobalProperties"> Include global properties?</label><br>
             <input type="checkbox" id="includeLocalProperties" name="includeLocalProperties"
-				value="false">
-			<label style="min-width: 100px;" for="includeLocalProperties"> Include local properties?</label><br>
-          </div>
-          	<input type="checkbox" id="includeEndpoint" name="includeEndpoint"
-				value="false">
-			<label style="min-width: 100px;" for="includeEndpoint"> Include endpoint?</label><br>
-          
-			<div id="buildNameDiv" style="margin-top:10px;">
-				<label for="buildNameInput">Build name: </label> <input type="text"
-					id="buildNameInput" name="buildNameInput" value="" style="width:600px"><br>
-		  </div>
-          <div class="modal-footer">
-            <button type="button" id="selectArtifactsButton" class="btn btn-primary">Select artifacts</button>
-          </div>
-		</div>
+                   value="false">
+            <label style="min-width: 100px;" for="includeLocalProperties"> Include local properties?</label><br>
+        </div>
+
+
+        <div id="buildNameDiv" style="margin-top:10px; margin-bottom:15px;">
+            <label for="buildNameInput">Build name: </label> <input class="form-control" type="text"
+                                                                    id="buildNameInput" name="buildNameInput" value="">
+        </div>
+
+        <input type="checkbox" id="includeEndpoint" name="includeEndpoint"
+               value="false">
+        <label style="min-width: 100px; margin-bottom:15px;" for="includeEndpoint"> Include endpoint?</label><br>
+
+        <button type="button" id="selectArtifactsButton" class="btn btn-primary">Select artifacts</button>
+    </div>
 </div>
+
+<div id="nameItemPrompt" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content" style="width:650px;height:auto;">
+        <span id="closeExportNameItemPromptModelDialog" class="close" >&times;</span>
+        <h3>Create New Item</h3>
+        <div id="NameItemPromptDiv" style="margin-top:10px; margin-bottom:15px;">
+            <label for="">Item name: </label>
+            <input class="form-control" type="text" id="" name="" value="">
+        </div>
+
+        <br>
+
+        <button type="button" id="" class="btn btn-primary">Ok</button>
+        <button type="button" id="" class="btn btn-primary">Cancel</button>
+    </div>
+</div>
+
+
 </body>
-  <script>    
+<script>
 
     var packageManagerJsTreeRef=createPackageJstree('#packageManagerJsTree');
     $("#packageManagerJsTree").on('click',
-											function(e, data) {
-											//console.log(e.target);
-											//$("#middlewareCodeEditor").
-											var ref = $("#packageManagerJsTree").jstree(true);
-											var type=ref.get_type(e.target);
-											if(type!="folder" && type!="root" && type!="package" && type!="default"){
-												var src=ref.get_path(e.target, '/');
-                                                localStorage.setItem("currentSelectedService",src);
-                                                localStorage.setItem("currentSelectedService_type",type);
-												src="files/"+src;
-												//alert(src);
-												var url=null;
-												if(type=="service"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/clike/serviceEditor.html";
-												}else if(type=="html"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/htmlmixed/htmlEditor.html";
-												}else if(type=="jdbc"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/properties/propertiesEditor.html";
-												}else if(type=="sql"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/sql/sqlEditor.html";
-												}else if(type=="properties"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/properties/propertiesEditor.html";
-												}else if(type=="map"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/transformer.html";
-												}else if(type=="flow"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/flowMaker/flowEditor.html";
-												}else
-													url=null;
-												if(url!=null){
-                                                    //alert(url+"?loadFile="+src+"."+type);
-													var loadFile=src+"."+type;
-                                                  	setUnsavedChanges(loadFile,false);
-                                                    
-                                                    var recent=localStorage.getItem("workspace-recent");
-                                                    if(recent==null){
-                                                      recent = loadFile;
-                                                      localStorage.setItem(loadFile+"_url",url);
-                                                    }
-                                                    else{
-                                                      var strArr=recent.split(",");
-                                                      var current=null;
-                                                      for(i=0;i<strArr.length;i++)
-                                                        if(strArr[i]==loadFile)
-                                                          current=loadFile;
-                                                      if(current==null){
-                                                      	localStorage.setItem(loadFile+"_url",url);
-                                                        recent = recent +","+ loadFile;
-                                                      }
-                                                    }
-                                                    //alert(localStorage.getItem("enableServiceSelectionMode"));
-                                                    if(localStorage.getItem("enableServiceSelectionMode")!="true"){
-                                                      localStorage.setItem("workspace-recent",recent);
-                                                      openPage(url+"?loadFile="+loadFile);
-                                                    }                 
-                                                 // alert(loadFile);
-												}
-											}
-										}).on('hover_node.jstree',
-											function(e, data) {
-											//console.log(e.target);
-											$("#"+data.node.id).prop('title', data.node.text);
-										});
+        function(e, data) {
+            //console.log(e.target);
+            //$("#middlewareCodeEditor").
+            var ref = $("#packageManagerJsTree").jstree(true);
+            var type=ref.get_type(e.target);
+            if(type!="folder" && type!="root" && type!="package" && type!="default"){
+                var src=ref.get_path(e.target, '/');
+                localStorage.setItem("currentSelectedService",src);
+                localStorage.setItem("currentSelectedService_type",type);
+                src="files/"+src;
+                //alert(src);
+                var url=null;
+                if(type=="service"){
+                    url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/clike/serviceEditor.html";
+                }else if(type=="html"){
+                    url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/htmlmixed/htmlEditor.html";
+                }else if(type=="jdbc"){
+                    url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/properties/propertiesEditor.html";
+                }else if(type=="sql"){
+                    url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/sql/sqlEditor.html";
+                }else if(type=="properties"){
+                    url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/properties/propertiesEditor.html";
+                }else if(type=="map"){
+                    url="/files/gui/middleware/pub/server/ui/workspace/web/transformer.html";
+                }else if(type=="flow"){
+                    url="/files/gui/middleware/pub/server/ui/workspace/web/flowMaker/flowEditor.html";
+                }else
+                    url=null;
+                if(url!=null){
+                    //alert(url+"?loadFile="+src+"."+type);
+                    var loadFile=src+"."+type;
+                    setUnsavedChanges(loadFile,false);
+
+                    var recent=localStorage.getItem("workspace-recent");
+                    if(recent==null){
+                        recent = loadFile;
+                        localStorage.setItem(loadFile+"_url",url);
+                    }
+                    else{
+                        var strArr=recent.split(",");
+                        var current=null;
+                        for(i=0;i<strArr.length;i++)
+                            if(strArr[i]==loadFile)
+                                current=loadFile;
+                        if(current==null){
+                            localStorage.setItem(loadFile+"_url",url);
+                            recent = recent +","+ loadFile;
+                        }
+                    }
+                    //alert(localStorage.getItem("enableServiceSelectionMode"));
+                    if(localStorage.getItem("enableServiceSelectionMode")!="true"){
+                        localStorage.setItem("workspace-recent",recent);
+                        openPage(url+"?loadFile="+loadFile);
+                    }
+                    // alert(loadFile);
+                }
+            }
+        }).on('hover_node.jstree',
+        function(e, data) {
+            //console.log(e.target);
+            $("#"+data.node.id).prop('title', data.node.text);
+        });
 
     var response=syncRestRequest("/packages/json", "GET", "");
-	if(response.status==200 && response.payload){
-      response=response.payload;
-      packageManagerJsTreeRef.settings.core.data=JSON.parse(response);
-      packageManagerJsTreeRef.refresh();
+    if(response.status==200 && response.payload){
+        response=response.payload;
+        packageManagerJsTreeRef.settings.core.data=JSON.parse(response);
+        packageManagerJsTreeRef.refresh();
     }
-    
+
     function openPage(src){
-      //alert(src);
-      $("#middlewareCodeEditor").attr('src',src);
+        //alert(src);
+        $("#middlewareCodeEditor").attr('src',src);
     }
-    
+
     function loadRecentlyOpened(){
-    	var recent=localStorage.getItem("workspace-recent");
+        var recent=localStorage.getItem("workspace-recent");
         if(recent!=null){
-           var strArr=recent.split(",");
-           for(i=0;i<strArr.length;i++){
-             	var loadFile=strArr[i];
-             	//var tokenize=loadFile.split("/");
-  				var name=localStorage.getItem(loadFile);//tokenize[tokenize.length-1].split(".")[0];
+            var strArr=recent.split(",");
+            for(i=0;i<strArr.length;i++){
+                var loadFile=strArr[i];
+                //var tokenize=loadFile.split("/");
+                var name=localStorage.getItem(loadFile);//tokenize[tokenize.length-1].split(".")[0];
                 //alert(loadFile+","+name);
-             	if(!name.endsWith("*"))
-                  continue;
-             	var url=localStorage.getItem(loadFile+"_url");
-             	var src=url+"?loadFile="+loadFile;
-             	var element='<a onclick="openPage(\''+src+'\');" class="dropbtn" style="margin-left:2px;cursor: pointer;">'+name+'</a>';
-             	//alert(element);
-          		$("#mostRecentlyOpened").append(element);
-           }
-         }
+                if(!name.endsWith("*"))
+                    continue;
+                var url=localStorage.getItem(loadFile+"_url");
+                var src=url+"?loadFile="+loadFile;
+                var element='<a onclick="openPage(\''+src+'\');" class="dropbtn" style="margin-left:2px;cursor: pointer;">'+name+'</a>';
+                //alert(element);
+                $("#mostRecentlyOpened").append(element);
+            }
+        }
     }
     loadRecentlyOpened();
-    </script>
+</script>
 </html>

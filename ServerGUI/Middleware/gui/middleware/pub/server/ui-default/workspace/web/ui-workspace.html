@@ -4,20 +4,20 @@
   <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/dist/themes/default/style.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
-  <script src="/files/gui/middleware/pub/server/ui/javascript/jstreetable.js"></script>
-<script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
-<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+<script	src="/files/gui/middleware/pub/server/ui-default/javascript/jstree.min.js"></script>
+  <script src="/files/gui/middleware/pub/server/ui-default/javascript/jstreetable.js"></script>
+<script src="/files/gui/middleware/pub/server/ui-default/javascript/middleware.js"></script>
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui-default/css/middleware.css">
   </head>
 
   <body style="width:100%;height:100%;padding:0px;margin:0px;left:0px;top:0px;position:absolute;">
 
 <div class="navbar" style="background-color:slategray;left:0px;top:0px;">
   <div class="dropdown">
-    <button class="dropbtn">Recent: </button>
+    <button class="dropbtn" style="color:#ddd">Recent: </button>
   </div>
   <div class="dropdown navbar-right">
-    <a href="#" onclick="localStorage.clear();sessionStorage.clear();deleteAllCookies();location.reload(true);" class="dropbtn"><span class="glyphicon glyphicon-log-in"></span> Log out</a>
+    <a href="#" onclick="localStorage.clear();sessionStorage.clear();deleteAllCookies();location.reload(true);" class="dropbtn" style="color:#ddd"><span class="glyphicon glyphicon-log-in"></span> Clear cache</a>
   </div>
 </div>    
 
@@ -82,17 +82,17 @@
 												//alert(src);
 												var url=null;
 												if(type=="service"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/clike/serviceEditor.html";
+													url="/files/gui/middleware/pub/server/ui-default/workspace/web/CodeMirror-master/mode/clike/serviceEditor.html";
 												}else if(type=="html"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/htmlmixed/htmlEditor.html";
+													url="/files/gui/middleware/pub/server/ui-default/workspace/web/CodeMirror-master/mode/htmlmixed/htmlEditor.html";
 												}else if(type=="js"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/javascript/jsEditor.html";
+													url="/files/gui/middleware/pub/server/ui-default/workspace/web/CodeMirror-master/mode/javascript/jsEditor.html";
 												}else if(type=="css"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/CodeMirror-master/mode/css/cssEditor.html";
+													url="/files/gui/middleware/pub/server/ui-default/workspace/web/CodeMirror-master/mode/css/cssEditor.html";
 												}else if(type=="map"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/transformer.html";
+													url="/files/gui/middleware/pub/server/ui-default/workspace/web/transformer.html";
 												}else if(type=="flow"){
-													url="/files/gui/middleware/pub/server/ui/workspace/web/flowMaker/flowEditor.html";
+													url="/files/gui/middleware/pub/server/ui-default/workspace/web/flowMaker/flowEditor.html";
 												}else
 													url=null;
 												if(url!=null){

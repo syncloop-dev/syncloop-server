@@ -8,7 +8,10 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
 <script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.min.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.init.js"></script>
 <link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/sweetalert.css" />
 <link rel="stylesheet" href="../../lib/codemirror.css" />
 <script src="../../lib/codemirror.js"></script>
 <script src="../../addon/edit/matchbrackets.js"></script>
@@ -23,9 +26,9 @@
 <div id="content" style="max-width: 100%; min-height:500px;padding: 0px; margin: 0px;height:96%;">
 	<div class="row" id="demo" style="display: block;padding: 0px; margin: 0px;">
 		<div class="row" style="margin: 0px; padding:0px;">
-			<div class="navbar">  
+			<div class="navbar">
                      <div class="dropdown">
-                      <button class="dropbtn">SQL 
+                      <button class="dropbtn">SQL
                         <i class="fa fa-caret-down"></i>
                       </button>
                       <div class="dropdown-content">
@@ -37,8 +40,8 @@
                         <a href="#" onclick="unLockArtifact()">unLock</a>
                       </div>
                     </div>
-                    <div class="dropdown">
-                      <button class="dropbtn">Search 
+                    <!-- <div class="dropdown">
+                      <button class="dropbtn">Search
                         <i class="fa fa-caret-down"></i>
                       </button>
                       <div class="dropdown-content">
@@ -46,9 +49,9 @@
                                                   style="box-shadow: inset 0 0 4px #eee; width: 120px; margin: 2px; padding: 2px; border-radius: 0px; border: 1px solid silver; font-size: .8em;"
                                                   id="search_q" placeholder="Search">
                       </div>
-                    </div>
-              <div style="text-align:center; width:100%;height:20px;padding-top:4px;" id="currentServiceName"></div>  
-              </div>				
+                    </div> -->
+              <div style="text-align:center; width:100%;height:20px;padding-top:4px;" id="currentServiceName"></div>
+              </div>
       </div></div>
 <div class="row" id="demo" style="display: block;padding: 0px; margin: 0px;width:100%;height:100%">
 <div class="col-md-12" id="input_schema_editor_jsTree_container" style="width:15%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">
@@ -57,9 +60,9 @@
 								style="margin: 0px;padding:0px; height: 100%; width: 100%; overflow: scroll;"
 								role="tree" aria-multiselectable="true" tabindex="0"
      aria-activedescendant="j1_1" aria-busy="false"></div>
-</div>     
-      
-<div class="col-md-12" style="margin: 0px; padding:0px;width:70%;height:100%;position:relative;float:left;overflow:scroll">    
+</div>
+
+<div class="col-md-12" style="margin: 0px; padding:0px;width:70%;height:100%;position:relative;float:left;overflow:scroll">
 
 <textarea id="sql-mainCode" name="sql-mainCode">
 SELECT SQL_NO_CACHE DISTINCT
@@ -77,17 +80,17 @@ SELECT SQL_NO_CACHE DISTINCT
 	LIMIT 1 OFFSET 0;
 </textarea>
   </div>
-  
+
   <div class="col-md-12" id="output_schema_editor_jsTree_container" style="width:15%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">
 <div id="output_schema_editor_jsTree"
 								class="jstree jstree-1 jstree-default"
 								style="margin: 0px;padding:0px; height: 100%; width: 100%; overflow: scroll;"
 								role="tree" aria-multiselectable="true" tabindex="0"
      aria-activedescendant="j1_1" aria-busy="false"></div>
-</div>   
-  </div> 
+</div>
+  </div>
  </div>
-  
+
   <div id="configurePropertiesModelDialog" class="modal">
 
 		<!-- Modal content -->
@@ -95,7 +98,7 @@ SELECT SQL_NO_CACHE DISTINCT
 			<span id="closeConfigurePropertiesModelDialog" class="close">&times;</span>
 			<h3>Configure properties</h3>
 			<div id="serviceHTTPMethod" style="margin-top:10px;">
-			<label style="min-width: 100px;" for="serviceHTTPMethodValue">Method: </label> 
+			<label style="min-width: 100px;" for="serviceHTTPMethodValue">Method: </label>
 				<select
 				name="serviceHTTPMethodValue" id="serviceHTTPMethodValue">
 					<option value="GET">GET</option>
@@ -142,7 +145,7 @@ SELECT SQL_NO_CACHE DISTINCT
 				<option value="number">number</option>
 				<option value="byte">Byte</option>
 				<option value="date">Date</option>
-			</select><br> 
+			</select><br>
 			<input type="checkbox" id="isArray" name="isArray"
 				value="false" onChange="changeCurrentNodeType(this.checked)">
 			<label style="min-width: 100px;" for="isArray"> It's an array</label><br>
@@ -199,7 +202,7 @@ SELECT SQL_NO_CACHE DISTINCT
 		</div>
 
 	</div>
-  
+
   <ul id="schema_editor_jsTree_contextMenu" class="menu dropdown-content">
       <li class="menu-item">Input Schema</li>
       <li class="menu-separator"></li>
@@ -220,10 +223,10 @@ SELECT SQL_NO_CACHE DISTINCT
                 <li class="menu-item" ><a href="#" onclick="alert('Inprogress');">XML</a></li>
             </ul>
           </li>
-        </ul>     
+        </ul>
       </li>
 	</ul>
-  
+
     <script>
 	/*loadFile=getUrlParam("loadFile");
 	var response=syncRestRequest("/"+loadFile, "GET", "");
@@ -233,8 +236,8 @@ SELECT SQL_NO_CACHE DISTINCT
 	}else{
 		alert(response.payload);
 	}
-      
-	  
+
+
 	  function save(){
 		data=editor.getValue();
 		var response=syncRestRequest("/"+loadFile, "POST", data,"application/text","application/text");
@@ -245,23 +248,22 @@ SELECT SQL_NO_CACHE DISTINCT
 		alert(JSON.parse(response.payload).error);
 	}*/
   </script>
-  
+
   <script>
 
 inputJstreeRef=createSchemaJstree('#input_schema_editor_jsTree');
-    
+
 outputJstreeRef=createSchemaJstree('#output_schema_editor_jsTree');
-    
+
 loadFile=getUrlParam("loadFile");
 sqlMainCode_id=loadFile+"sql-mainCode";
-    
-    
+
+
 var defaultSQLServiceSignature={
 	"input": [
 		{
 			"id": "j1_2",
 			"text": "inputDocList",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/docList.png",
 			"li_attr": {
 				"id": "j1_2"
 			},
@@ -282,7 +284,6 @@ var defaultSQLServiceSignature={
 		{
 			"id": "j1_3",
 			"text": "txConn",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/javaObject.png",
 			"li_attr": {
 				"id": "j1_3"
 			},
@@ -303,7 +304,6 @@ var defaultSQLServiceSignature={
 		{
 			"id": "j1_4",
 			"text": "isTxn",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/boolean.png",
 			"li_attr": {
 				"id": "j1_4"
 			},
@@ -326,7 +326,6 @@ var defaultSQLServiceSignature={
 		{
 			"id": "j2_1",
 			"text": "outputDocList",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/docList.png",
 			"li_attr": {
 				"id": "j2_1"
 			},
@@ -347,7 +346,6 @@ var defaultSQLServiceSignature={
 		{
 			"id": "j2_2",
 			"text": "rows",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/integer.png",
 			"li_attr": {
 				"id": "j2_2"
 			},
@@ -368,7 +366,6 @@ var defaultSQLServiceSignature={
 		{
 			"id": "j2_3",
 			"text": "success",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/boolean.png",
 			"li_attr": {
 				"id": "j2_3"
 			},
@@ -389,7 +386,6 @@ var defaultSQLServiceSignature={
 		{
 			"id": "j2_4",
 			"text": "error",
-			"icon": "/files/gui/middleware/pub/server/ui/icons/text.png",
 			"li_attr": {
 				"id": "j2_4"
 			},
@@ -412,7 +408,7 @@ var defaultSQLServiceSignature={
 function loadRemoteFile(overwrite){
 	if(overwrite==null)
 		overwrite=false;
-  
+
 
 if(loadFile!=false){
 	var response=syncRestRequest("/"+loadFile, "GET", "");
@@ -433,30 +429,34 @@ if(loadFile!=false){
           if(response.sql==null || response.sql.trim().length==0)
               localStorage.setItem(sqlMainCode_id, "");
           else{
-            var decoded=window.atob(response.sql);  
+            var decoded=window.atob(response.sql);
             localStorage.setItem(sqlMainCode_id, decoded);
           }
       }
+
+      removeIcons(response.input);
+      removeIcons(response.output);
+
 	  var inputSchema=response.input;
       var outputSchema=response.output;
 //      if(!inputSchema)
 //        inputSchema=defaultSQLServiceSignature.input;
-      
-      
-      
+
+
+
       inputRef.settings.core.data=inputSchema;
       inputRef.refresh();
-      
+
 //	  if(!outputSchema)
 //        outputSchema=defaultSQLServiceSignature.output;
-      
-      
+
+
       outputRef.settings.core.data=outputSchema;
       outputRef.refresh();
   }else{
   	inputRef.settings.core.data=defaultSQLServiceSignature.input;
     inputRef.refresh();
-    
+
     outputRef.settings.core.data=defaultSQLServiceSignature.output;
     outputRef.refresh();
   }
@@ -465,7 +465,7 @@ if(loadFile!=false){
 
 var tokenize=loadFile.split("/");
 var sqlFileName=tokenize[tokenize.length-1];
-//classDef=classDef.replace(".sql","");  
+//classDef=classDef.replace(".sql","");
 loadFromlocalstorage();
 }
 
@@ -473,25 +473,29 @@ function loadFromlocalstorage(){
   var decoded=localStorage.getItem(sqlMainCode_id);
   $("#sql-mainCode").val(decoded);
 }
-      
+
 function unLockArtifact(){
 	var response=syncRestRequest("/"+loadFile.replace("files/","artifact/unlock/"), "POST");
 	if(response.status==200){
 		localStorage.setItem(loadFile, "");
-		alert(JSON.parse(response.payload).status);
+		//alert(JSON.parse(response.payload).status);
+		swal('Accepted', JSON.parse(response.payload).status, 'success');
 	}else
-		alert(JSON.parse(response.payload).error);
+		//alert(JSON.parse(response.payload).error);
+		swal('Rejected', JSON.parse(response.payload).error, 'error');
 }
-      
+
 function lockArtifact(){
 	var response=syncRestRequest("/"+loadFile.replace("files/","artifact/lock/"), "POST");
 	if(response.status==200){
 		localStorage.setItem(loadFile, "");
-		alert(JSON.parse(response.payload).status);
+		//alert(JSON.parse(response.payload).status);
+		swal('Accepted', JSON.parse(response.payload).status, 'success');
 	}else
-		alert(JSON.parse(response.payload).error);
+		//alert(JSON.parse(response.payload).error);
+		swal('Rejected', JSON.parse(response.payload).error, 'error');
 }
-      
+
 function save(){
 	var dataJson={
 			"input":[],
@@ -501,18 +505,20 @@ function save(){
 	var sqlMainCode_data=localStorage.getItem(sqlMainCode_id);
 	if(sqlMainCode_data==null)
 		sqlMainCode_data="";
-	
+
 	var tokenize=loadFile.split("/");
 	var classDef=tokenize[tokenize.length-1];
 	classDef=classDef.replace(".sql","");
-	
-	
+
+
 	var packageName=loadFile.replace("files/","").replace("/"+classDef+".sql","");
 	packageName=packageName.split("/").join(".");//replaceALL(packageName,"/",".");
 	//alert(dataJson.imports);
 	dataJson.sql=window.btoa(sqlMainCode_data);
-	dataJson.input=inputJstreeRef.get_json('#', {flat:true})
-	dataJson.output=outputJstreeRef.get_json('#', {flat:true})
+	dataJson.input=inputJstreeRef.get_json('#', {flat:false})
+	dataJson.output=outputJstreeRef.get_json('#', {flat:false})
+    removeIcons(dataJson.input);
+    removeIcons(dataJson.output);
 	dataJson.version="v1";
     dataJson.consumers=$("#serviceConsumers").val();
     dataJson.developers=$("#serviceDevelopers").val();
@@ -522,20 +528,23 @@ function save(){
 		var response=syncRestRequest("/"+loadFile.replace("files/","sql/"), "POST", data);
 		if(response.status==200){
 			localStorage.setItem(loadFile, "");
-			alert("Saved");
+			//alert("Saved");
+			swal("Saved !!", "Saved", "success");
 		}else
-			alert(JSON.parse(response.payload).error);
+			//alert(JSON.parse(response.payload).error);
+			swal('Error', JSON.parse(response.payload).error, 'error');
 	}else
-		alert("No changes to save");
+		//alert("No changes to save");
+		swal("Warning !!", "No changes to save" , "warning");
 }
 function reload(){
 	loadRemoteFile(true);
 	location.reload();
 }
-      
-      
+
+
 loadRemoteFile(false);
-      
+
       function enableIDE(elemId, readOnly){
         if(readOnly!=true)
           readOnly=false;
@@ -553,7 +562,7 @@ loadRemoteFile(false);
           					}
                    );
         return javaEditor;
-    */    
+    */
         var id=sqlMainCode_id;
         var mime = 'text/x-mariadb';
         // get mime type
@@ -573,17 +582,17 @@ loadRemoteFile(false);
           users: ["name", "score", "birthDate"],
           countries: ["name", "population", "size"]}}
         });
-        
+
         editor.on("change", function (cm,change) {
                                 var value = cm.getValue();
                                 localStorage.setItem(id,value);
           					}
                    );
       }
-      enableIDE("sql-mainCode",false);      
+      enableIDE("sql-mainCode",false);
     //  var mac = CodeMirror.keyMap.default == CodeMirror.keyMap.macDefault;
     //  CodeMirror.keyMap.default[(mac ? "Cmd" : "Ctrl") + "-Space"] = "autocomplete";
-    
+
 menu=null;
 
 function showMenu(x, y){
@@ -629,13 +638,13 @@ function onClick(e){
     document.removeEventListener('click', onClick);
 }
 
-document.addEventListener('contextmenu', onContextMenu, false);    
-      
-      
-  
+document.addEventListener('contextmenu', onContextMenu, false);
+
+
+
   </script>
-  
-  
+
+
     </body>
 </html>
 

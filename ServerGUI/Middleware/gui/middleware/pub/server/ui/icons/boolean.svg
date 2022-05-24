@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <style>
+      .cls-1 {
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        fill: #84857d;
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        font-size: 50.089px;
+        fill: #7b7b7b;
+        font-family: AvenirLTStd-Roman, "Avenir LT Std";
+      }
+    </style>
+    <filter id="filter" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#7b7b7b"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="boolean">
+    <g class="cls-1">
+      <path class="cls-2" d="M658.5,79.4a1.1,1.1,0,0,1,1.1,1.1v13a1.1,1.1,0,0,1-1.1,1.1h-13a1.1,1.1,0,0,1-1.1-1.1v-13a1.1,1.1,0,0,1,1.1-1.1h13m0-1.4h-13a2.5,2.5,0,0,0-2.5,2.5v13a2.5,2.5,0,0,0,2.5,2.5h13a2.5,2.5,0,0,0,2.5-2.5v-13a2.5,2.5,0,0,0-2.5-2.5h0Z" transform="translate(-642 -77)"/>
+      <path id="Shape_55_copy" data-name="Shape 55 copy" class="cls-2" d="M655.675,82.17a1.156,1.156,0,0,1,1.155,1.155v7.35a1.156,1.156,0,0,1-1.155,1.155h-7.35a1.156,1.156,0,0,1-1.155-1.155v-7.35a1.156,1.156,0,0,1,1.155-1.155h7.35M655.5,81h-7a2.5,2.5,0,0,0-2.5,2.5v7a2.5,2.5,0,0,0,2.5,2.5h7a2.5,2.5,0,0,0,2.5-2.5v-7a2.5,2.5,0,0,0-2.5-2.5h0Z" transform="translate(-642 -77)"/>
+      <text id="_0" data-name="0" class="cls-3" transform="translate(6.402 12.863) scale(0.118 0.12)">0</text>
+      <text id="_1" data-name="1" class="cls-3" transform="translate(9.648 12.863) scale(0.118 0.12)">1</text>
+    </g>
+  </g>
+</svg>

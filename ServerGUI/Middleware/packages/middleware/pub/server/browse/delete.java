@@ -33,7 +33,7 @@ try {
                 //System.out.println("LockedBy user in user: "+lockedByUser);
               	if(!loggedInUserId.equals(lockedByUser)){
                   if(lockedByUser!=null)
-                    dataPipeline.put("error", "Locaked by user '"+lockedByUser+"'");
+                    dataPipeline.put("error", "Locked by user '"+lockedByUser+"'");
                   else
 					dataPipeline.put("error", "Please lock the service first.");
                   return;

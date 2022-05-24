@@ -1,0 +1,92 @@
+{
+  "input" : [ {
+    "id" : "j1_1",
+    "text" : "docList",
+    "icon" : null,
+    "li_attr" : {
+      "id" : "j1_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "children" : [ ],
+    "type" : "documentList"
+  }, {
+    "id" : "j1_2",
+    "text" : "addDoc",
+    "icon" : null,
+    "li_attr" : {
+      "id" : "j1_2"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_2_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "children" : [ ],
+    "type" : "document"
+  }, {
+    "id" : "j1_3",
+    "text" : "addDocList",
+    "icon" : null,
+    "li_attr" : {
+      "id" : "j1_3"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j1_3_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "children" : [ ],
+    "type" : "documentList"
+  } ],
+  "output" : [ {
+    "id" : "j2_1",
+    "text" : "docList",
+    "icon" : null,
+    "li_attr" : {
+      "id" : "j2_1"
+    },
+    "a_attr" : {
+      "href" : "#",
+      "id" : "j2_1_anchor"
+    },
+    "state" : {
+      "loaded" : true,
+      "opened" : false,
+      "selected" : false,
+      "disabled" : false
+    },
+    "data" : { },
+    "children" : [ ],
+    "type" : "documentList"
+  } ],
+  "package" : "cGFja2FnZSBwYWNrYWdlcy5taWRkbGV3YXJlLnB1Yi5kb2NMaXN0Ow==",
+  "imports" : "aW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLkRhdGFQaXBlbGluZTsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS5zZXJ2aWNlLlNlcnZpY2VVdGlsczsKaW1wb3J0IGNvbS5la2EubWlkZGxld2FyZS50ZW1wbGF0ZS5TbmlwcGV0RXhjZXB0aW9uOwppbXBvcnQgamF2YS51dGlsLio7",
+  "main" : "dHJ5IHsKCQlMaXN0PE9iamVjdD4gaW5wdXRMaXN0PWRhdGFQaXBlbGluZS5nZXRBc0xpc3QoImRvY0xpc3QiKTsKICAgICAgICBpZihpbnB1dExpc3Q9PW51bGwpCiAgICAgICAgICBpbnB1dExpc3Q9bmV3IEFycmF5TGlzdCgpOwogICAgICAgIE1hcDxTdHJpbmcsT2JqZWN0PiBpbnB1dERvYz1kYXRhUGlwZWxpbmUuZ2V0QXNNYXAoImFkZERvYyIpOwogIAkJaWYoaW5wdXREb2MhPW51bGwgJiYgaW5wdXREb2Muc2l6ZSgpPjApCiAgICAgICAgICAgIGlucHV0TGlzdC5hZGQoaW5wdXREb2MpOwogICAgICAgIExpc3Q8T2JqZWN0PiBhZGREb2NMaXN0PWRhdGFQaXBlbGluZS5nZXRBc0xpc3QoImFkZERvY0xpc3QiKTsKICAgICAgICBpZihhZGREb2NMaXN0IT1udWxsICYmIGFkZERvY0xpc3Quc2l6ZSgpPjApCiAgICAgICAgICBpbnB1dExpc3QuYWRkKGFkZERvY0xpc3QpOwogIAkJZGF0YVBpcGVsaW5lLnB1dCgiZG9jTGlzdCIsaW5wdXRMaXN0KTsKICB9IGNhdGNoIChFeGNlcHRpb24gZSkgewoJCWRhdGFQaXBlbGluZS5jbGVhcigpOwogIAkJZGF0YVBpcGVsaW5lLnB1dCgiZXJyb3IiLGUuZ2V0TWVzc2FnZSgpKTsKICAgIAl0aHJvdyBuZXcgU25pcHBldEV4Y2VwdGlvbihkYXRhUGlwZWxpbmUsIlNuaXBwZXQgZXhjZXB0aW9uIGluIGFkZERvYyBzZXJ2aWNlIiwgbmV3IEV4Y2VwdGlvbihlKSk7CiAgfQ==",
+  "staticWorkspace" : "",
+  "version" : "v1",
+  "consumers" : "",
+  "developers" : "",
+  "lockedByUser" : "ekaDev"
+}

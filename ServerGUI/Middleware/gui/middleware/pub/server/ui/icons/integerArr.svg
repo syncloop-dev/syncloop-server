@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <style>
+      .cls-1 {
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        fill: #84857d;
+      }
+
+      .cls-2, .cls-3 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        fill: none;
+        stroke: #010101;
+        stroke-width: 1px;
+      }
+    </style>
+    <filter id="filter" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#7b7b7b"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="integerArr">
+    <g class="cls-1">
+      <path class="cls-2" d="M1428.5,79.4a1.1,1.1,0,0,1,1.1,1.1v13a1.1,1.1,0,0,1-1.1,1.1h-13a1.1,1.1,0,0,1-1.1-1.1v-13a1.1,1.1,0,0,1,1.1-1.1h13m0-1.4h-13a2.5,2.5,0,0,0-2.5,2.5v13a2.5,2.5,0,0,0,2.5,2.5h13a2.5,2.5,0,0,0,2.5-2.5v-13a2.5,2.5,0,0,0-2.5-2.5h0Z" transform="translate(-1412 -77)"/>
+      <path class="cls-3" d="M1430.43,82.127h-16.6" transform="translate(-1412 -77)"/>
+      <path id="Polygon_1_copy_4" data-name="Polygon 1 copy 4" class="cls-3" d="M1420.51,84.335l0.64,1.112-0.64,1.112h-1.27l-0.63-1.112,0.63-1.112h1.27Zm4.64,0,0.63,1.112-0.63,1.112h-1.27l-0.64-1.112,0.64-1.112h1.27Zm-2.38,2.579,0.63,1.112-0.63,1.112h-1.26l-0.63-1.112,0.63-1.112h1.26Zm-2.26,2.579,0.64,1.1-0.64,1.1h-1.27l-0.63-1.1,0.63-1.1h1.27Zm4.64,0,0.63,1.1-0.63,1.1h-1.27l-0.64-1.1,0.64-1.1h1.27Z" transform="translate(-1412 -77)"/>
+    </g>
+  </g>
+</svg>
