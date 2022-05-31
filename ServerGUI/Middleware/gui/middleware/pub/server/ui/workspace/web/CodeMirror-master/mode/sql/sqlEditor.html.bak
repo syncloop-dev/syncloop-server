@@ -1,0 +1,661 @@
+<!doctype html>
+
+<title>SQL Editor</title>
+<meta charset="utf-8"/>
+<link rel=stylesheet href="../../doc/docs.css">
+<link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"	href="//static.jstree.com/3.3.11/assets/dist/themes/default/style.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script	src="/files/gui/middleware/pub/server/ui/javascript/jstree.min.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/middleware.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.min.js"></script>
+<script src="/files/gui/middleware/pub/server/ui/javascript/sweetalert.init.js"></script>
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/middleware.css">
+<link rel="stylesheet" href="/files/gui/middleware/pub/server/ui/css/sweetalert.css" />
+<link rel="stylesheet" href="../../lib/codemirror.css" />
+<script src="../../lib/codemirror.js"></script>
+<script src="../../addon/edit/matchbrackets.js"></script>
+<script src="sql.js"></script>
+<link rel="stylesheet" href="../../addon/hint/show-hint.css" />
+<script src="../../addon/hint/show-hint.js"></script>
+<script src="../../addon/hint/sql-hint.js"></script>
+
+<style>.CodeMirror {height:96%;width:100%}</style>
+<html>
+<body style="width:100%;height:100%;">
+<div id="content" style="max-width: 100%; min-height:500px;padding: 0px; margin: 0px;height:96%;">
+	<div class="row" id="demo" style="display: block;padding: 0px; margin: 0px;">
+		<div class="row" style="margin: 0px; padding:0px;">
+			<div class="navbar">
+                     <div class="dropdown">
+                      <button class="dropbtn">SQL
+                        <i class="fa fa-caret-down"></i>
+                      </button>
+                      <div class="dropdown-content">
+                        <a href="#" onclick="save();">Save</a>
+                        <a href="#" onclick="reload();">Reload</a>
+                        <a href="#" onclick="alert('Inprogress')">Test</a>
+                        <a href="#" onclick="openConfigurationProprties()">Configuration</a>
+                        <a href="#" onclick="lockArtifact()">Lock</a>
+                        <a href="#" onclick="unLockArtifact()">unLock</a>
+                      </div>
+                    </div>
+                    <!-- <div class="dropdown">
+                      <button class="dropbtn">Search
+                        <i class="fa fa-caret-down"></i>
+                      </button>
+                      <div class="dropdown-content">
+                                              <input type="text" value=""
+                                                  style="box-shadow: inset 0 0 4px #eee; width: 120px; margin: 2px; padding: 2px; border-radius: 0px; border: 1px solid silver; font-size: .8em;"
+                                                  id="search_q" placeholder="Search">
+                      </div>
+                    </div> -->
+              <div style="text-align:center; width:100%;height:20px;padding-top:4px;" id="currentServiceName"></div>
+              </div>
+      </div></div>
+<div class="row" id="demo" style="display: block;padding: 0px; margin: 0px;width:100%;height:100%">
+<div class="col-md-12" id="input_schema_editor_jsTree_container" style="width:15%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">
+<div id="input_schema_editor_jsTree"
+								class="jstree jstree-1 jstree-default"
+								style="margin: 0px;padding:0px; height: 100%; width: 100%; overflow: scroll;"
+								role="tree" aria-multiselectable="true" tabindex="0"
+     aria-activedescendant="j1_1" aria-busy="false"></div>
+</div>
+
+<div class="col-md-12" style="margin: 0px; padding:0px;width:70%;height:100%;position:relative;float:left;overflow:scroll">
+
+<textarea id="sql-mainCode" name="sql-mainCode">
+SELECT SQL_NO_CACHE DISTINCT
+		@var1 AS `val1`, @'val2', @global.'sql_mode',
+		1.1 AS `float_val`, .14 AS `another_float`, 0.09e3 AS `int_with_esp`,
+		0xFA5 AS `hex`, x'fa5' AS `hex2`, 0b101 AS `bin`, b'101' AS `bin2`,
+		DATE '1994-01-01' AS `sql_date`, { T "1994-01-01" } AS `odbc_date`,
+		'my string', _utf8'your string', N'her string',
+        TRUE, FALSE, UNKNOWN
+	FROM DUAL
+	-- space needed after '--'
+	# 1 line comment
+	/* multiline
+	comment! */
+	LIMIT 1 OFFSET 0;
+</textarea>
+  </div>
+
+  <div class="col-md-12" id="output_schema_editor_jsTree_container" style="width:15%; min-height:100%; float: left;min-height:600px;height:100%;margin: 0px; padding:0px;">
+<div id="output_schema_editor_jsTree"
+								class="jstree jstree-1 jstree-default"
+								style="margin: 0px;padding:0px; height: 100%; width: 100%; overflow: scroll;"
+								role="tree" aria-multiselectable="true" tabindex="0"
+     aria-activedescendant="j1_1" aria-busy="false"></div>
+</div>
+  </div>
+ </div>
+
+  <div id="configurePropertiesModelDialog" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content" style="width:650px;height:auto;">
+			<span id="closeConfigurePropertiesModelDialog" class="close">&times;</span>
+			<h3>Configure properties</h3>
+			
+			<div class="row">
+            <div class="col-md-6" style="padding-left:0px;">
+			    <div id="serviceHTTPMethod">
+			<label style="min-width: 100px;" for="serviceHTTPMethodValue">Method: </label>
+				<select
+				name="serviceHTTPMethodValue" id="serviceHTTPMethodValue" class="form-control">
+					<option value="GET">GET</option>
+					<option value="POST">POST</option>
+					<option value="DELETE">DELETE</option>
+					<option value="PUT">PUT</option>
+					<option value="PATCH">PATCH</option>
+				</select><br>
+			</div>
+			</div>
+			
+			<div class="col-md-6">
+			    <div id="serviceAlias">
+				<label for="serviceAliasValue">Alias: </label> <input type="text"
+					id="serviceAliasValue" name="serviceAliasValue" value="" class="form-control"><br>
+			</div>
+			</div>
+			</div>
+			
+			
+			
+          	<div id="serviceConsumersDiv" style="margin-top:10px;">
+				<label for="serviceConsumers">Consumers: </label> <input type="text" title="Add comma separated groups without spaces."
+					id="serviceConsumers" name="serviceConsumers" value="" class="form-control"><br>
+			</div>
+          	<div id="serviceDevelopersDiv" style="margin-top:10px;">
+				<label for="serviceDevelopers">Developers: </label> <input type="text" title="Add comma separated groups without spaces."
+					id="serviceDevelopers" name="serviceDevelopers" value="" class="form-control"><br>
+			</div>
+			<div id="serviceProperties" style="margin-top:10px;">
+				<label for="servicePropertiesFile">Configuration Properties: </label> <textarea rows="10" cols="50"
+					id="servicePropertiesFile" name="servicePropertiesFile" value="" class="form-control"></textarea><br>
+			</div>
+		</div>
+	</div>
+  <div id="elementPropertyModalDialog" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span id="closeNodeProperties" class="close">&times;</span>
+			<p id="currentNodePath"></p>
+
+			<label style="min-width: 100px;" for="elementType">Type: </label> <select
+				name="elementType" id="elementType"
+				onChange="showProperties(this.value);">
+				<option value="document">Document</option>
+				<option value="javaObject">Object</option>
+				<option value="ref">#ref</option>
+				<option value="string">String</option>
+				<option value="integer">Integer</option>
+				<option value="boolean">Boolean</option>
+				<option value="number">number</option>
+				<option value="byte">Byte</option>
+				<option value="date">Date</option>
+			</select><br>
+			<input type="checkbox" id="isArray" name="isArray"
+				value="false" onChange="changeCurrentNodeType(this.checked)">
+			<label style="min-width: 100px;" for="isArray"> It's an array</label><br>
+			<div>
+				<label>Additional properties: </label>
+			</div>
+			<div id="javaObjectProperties" class="elementProperty">
+				<label for="javaObjectWrapper">Java Wrapper: </label> <input type="text"
+					id="javaObjectWrapper" name="javaObjectWrapper" value="java.lang.Object"><br>
+			</div>
+			<div id="refProperties" class="elementProperty">
+				<label for="reference">Reference: </label> <input type="text"
+					id="reference" name="reference" value=""><br>
+			</div>
+			<div id="stringProperties" class="elementProperty">
+				<label for="stringValidation">Validation: </label> <select
+					name="stringValidation" id="stringValidation">
+					<option value=""></option>
+					<option value="email">Email</option>
+					<option value="url">URL</option>
+					<option value="secure">secure</option>
+				</select><br> <label for="minLength">Min size: </label> <input
+					type="text" id="minLength" name="minLength" value=""><br>
+				<label for="maxLength">Max size: </label> <input type="text"
+					id="maxLength" name="maxLength" value=""><br> <input
+					type="checkbox" id="isMuliline" name="isMuliline"> <label
+					for="isMuliline">Multi-line: </label>
+			</div>
+
+			<div id="intProperties" class="elementProperty">
+				<label for="minimumInteger">minimum: </label> <input type="text"
+					id="minimumInteger" name="minimumInteger" value=""><br>
+				<label for="maximumInteger">maximum: </label> <input type="text"
+					id="maximumInteger" name="maximumInteger" value=""><br>
+			</div>
+
+
+			<div id="numberProperties" class="elementProperty">
+				<label for="minimumNumber">minimum: </label> <input type="text"
+					id="minimumNumber" name="minimumNumber" value=""><br>
+				<label for="maximumNumber">maximum: </label> <input type="text"
+					id="maximumNumber" name="maximumNumber" value=""><br>
+			</div>
+
+			<div id="dateProperties" class="elementProperty">
+				<label for="dateFormat">Date Format: </label> <input type="text"
+					id="dateFormat" name="dateFormat" value=""><br> <label
+					for="startDate">Start date: </label> <input type="date"
+					id="endDate" name="startDate" value=""><br> <label
+					for="endDate">End date: </label> <input type="date" id="endDate"
+					name="endDate" value=""><br>
+			</div>
+
+		</div>
+
+	</div>
+
+  <ul id="schema_editor_jsTree_contextMenu" class="menu dropdown-content">
+      <li class="menu-item">Input Schema</li>
+      <li class="menu-separator"></li>
+      <li class="menu-item submenu"><a>New</a>
+        <ul class="menu">
+          <li class="menu-item" ><a href="#" onclick="createSchema('document',currentJstreeRef);">Document</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('string',currentJstreeRef);">String</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('integer',currentJstreeRef);">Integer</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('number',currentJstreeRef);">Number</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('date',currentJstreeRef);">Date</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('boolean',currentJstreeRef);">Boolean</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('byte',currentJstreeRef);">Byte</a></li>
+          <li class="menu-item" ><a href="#" onclick="createSchema('javaObject',currentJstreeRef);">Object</a></li>
+          <li class="menu-item submenu"><a>From</a>
+          	<ul class="menu">
+              	<li class="menu-item" ><a href="#" onclick="alert('Inprogress');">Ref</a></li>
+          		<li class="menu-item" ><a href="#" onclick="alert('Inprogress');">JSON</a></li>
+                <li class="menu-item" ><a href="#" onclick="alert('Inprogress');">XML</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+	</ul>
+
+    <script>
+	/*loadFile=getUrlParam("loadFile");
+	var response=syncRestRequest("/"+loadFile, "GET", "");
+	if(response.status==200){
+	response=response.payload;
+	$("#code").val(response);
+	}else{
+		alert(response.payload);
+	}
+
+
+	  function save(){
+		data=editor.getValue();
+		var response=syncRestRequest("/"+loadFile, "POST", data,"application/text","application/text");
+		if(response.status==200){
+			//localStorage.setItem(loadFile, "");
+			alert("Saved");
+		}else
+		alert(JSON.parse(response.payload).error);
+	}*/
+  </script>
+
+  <script>
+
+inputJstreeRef=createSchemaJstree('#input_schema_editor_jsTree');
+
+outputJstreeRef=createSchemaJstree('#output_schema_editor_jsTree');
+
+loadFile=getUrlParam("loadFile");
+sqlMainCode_id=loadFile+"sql-mainCode";
+
+
+var defaultSQLServiceSignature={
+	"input": [
+		{
+			"id": "j1_2",
+			"text": "inputDocList",
+			"li_attr": {
+				"id": "j1_2"
+			},
+			"a_attr": {
+				"href": "#",
+				"id": "j1_2_anchor"
+			},
+			"state": {
+				"loaded": true,
+				"opened": true,
+				"selected": false,
+				"disabled": false
+			},
+			"data": {},
+			"parent": "#",
+			"type": "documentList"
+		},
+		{
+			"id": "j1_3",
+			"text": "txConn",
+			"li_attr": {
+				"id": "j1_3"
+			},
+			"a_attr": {
+				"href": "#",
+				"id": "j1_3_anchor"
+			},
+			"state": {
+				"loaded": true,
+				"opened": false,
+				"selected": false,
+				"disabled": false
+			},
+			"data": {},
+			"parent": "#",
+			"type": "javaObject"
+		},
+		{
+			"id": "j1_4",
+			"text": "isTxn",
+			"li_attr": {
+				"id": "j1_4"
+			},
+			"a_attr": {
+				"href": "#",
+				"id": "j1_4_anchor"
+			},
+			"state": {
+				"loaded": true,
+				"opened": false,
+				"selected": false,
+				"disabled": false
+			},
+			"data": {},
+			"parent": "#",
+			"type": "boolean"
+		}
+	],
+	"output": [
+		{
+			"id": "j2_1",
+			"text": "outputDocList",
+			"li_attr": {
+				"id": "j2_1"
+			},
+			"a_attr": {
+				"href": "#",
+				"id": "j2_1_anchor"
+			},
+			"state": {
+				"loaded": true,
+				"opened": false,
+				"selected": false,
+				"disabled": false
+			},
+			"data": {},
+			"parent": "#",
+			"type": "documentList"
+		},
+		{
+			"id": "j2_2",
+			"text": "rows",
+			"li_attr": {
+				"id": "j2_2"
+			},
+			"a_attr": {
+				"href": "#",
+				"id": "j2_2_anchor"
+			},
+			"state": {
+				"loaded": true,
+				"opened": false,
+				"selected": false,
+				"disabled": false
+			},
+			"data": {},
+			"parent": "#",
+			"type": "integer"
+		},
+		{
+			"id": "j2_3",
+			"text": "success",
+			"li_attr": {
+				"id": "j2_3"
+			},
+			"a_attr": {
+				"href": "#",
+				"id": "j2_3_anchor"
+			},
+			"state": {
+				"loaded": true,
+				"opened": false,
+				"selected": false,
+				"disabled": false
+			},
+			"data": {},
+			"parent": "#",
+			"type": "boolean"
+		},
+		{
+			"id": "j2_4",
+			"text": "error",
+			"li_attr": {
+				"id": "j2_4"
+			},
+			"a_attr": {
+				"href": "#",
+				"id": "j2_4_anchor"
+			},
+			"state": {
+				"loaded": true,
+				"opened": false,
+				"selected": true,
+				"disabled": false
+			},
+			"data": {},
+			"parent": "#",
+			"type": "string"
+		}
+	]
+};
+function loadRemoteFile(overwrite){
+	if(overwrite==null)
+		overwrite=false;
+
+
+if(loadFile!=false){
+	var response=syncRestRequest("/"+loadFile, "GET", "");
+	//console.log(response);
+	//alert(response.status);
+  var inputRef=inputJstreeRef;
+  var outputRef=outputJstreeRef;
+	if(response.status==200){
+      response=response.payload;
+      response=JSON.parse(response);
+      if(response.consumers)
+      	$("#serviceConsumers").val(response.consumers);
+      if(response.developers)
+      	$("#serviceDevelopers").val(response.developers)
+
+      var sqlMainCode_data=localStorage.getItem(sqlMainCode_id);
+      if(sqlMainCode_data==null || sqlMainCode_data.trim().length==0 || overwrite){
+          if(response.sql==null || response.sql.trim().length==0)
+              localStorage.setItem(sqlMainCode_id, "");
+          else{
+            var decoded=window.atob(response.sql);
+            localStorage.setItem(sqlMainCode_id, decoded);
+          }
+      }
+
+      removeIcons(response.input);
+      removeIcons(response.output);
+
+	  var inputSchema=response.input;
+      var outputSchema=response.output;
+//      if(!inputSchema)
+//        inputSchema=defaultSQLServiceSignature.input;
+
+
+
+      inputRef.settings.core.data=inputSchema;
+      inputRef.refresh();
+
+//	  if(!outputSchema)
+//        outputSchema=defaultSQLServiceSignature.output;
+
+
+      outputRef.settings.core.data=outputSchema;
+      outputRef.refresh();
+  }else{
+  	inputRef.settings.core.data=defaultSQLServiceSignature.input;
+    inputRef.refresh();
+
+    outputRef.settings.core.data=defaultSQLServiceSignature.output;
+    outputRef.refresh();
+  }
+}
+
+
+var tokenize=loadFile.split("/");
+var sqlFileName=tokenize[tokenize.length-1];
+//classDef=classDef.replace(".sql","");
+loadFromlocalstorage();
+}
+
+function loadFromlocalstorage(){
+  var decoded=localStorage.getItem(sqlMainCode_id);
+  $("#sql-mainCode").val(decoded);
+}
+
+function unLockArtifact(){
+	var response=syncRestRequest("/"+loadFile.replace("files/","artifact/unlock/"), "POST");
+	if(response.status==200){
+		localStorage.setItem(loadFile, "");
+		//alert(JSON.parse(response.payload).status);
+		swal('Accepted', JSON.parse(response.payload).status, 'success');
+	}else
+		//alert(JSON.parse(response.payload).error);
+		swal('Rejected', JSON.parse(response.payload).error, 'error');
+}
+
+function lockArtifact(){
+	var response=syncRestRequest("/"+loadFile.replace("files/","artifact/lock/"), "POST");
+	if(response.status==200){
+		localStorage.setItem(loadFile, "");
+		//alert(JSON.parse(response.payload).status);
+		swal('Accepted', JSON.parse(response.payload).status, 'success');
+	}else
+		//alert(JSON.parse(response.payload).error);
+		swal('Rejected', JSON.parse(response.payload).error, 'error');
+}
+
+function save(){
+	var dataJson={
+			"input":[],
+			"output":[],
+			"sql":"",
+			};
+	var sqlMainCode_data=localStorage.getItem(sqlMainCode_id);
+	if(sqlMainCode_data==null)
+		sqlMainCode_data="";
+
+	var tokenize=loadFile.split("/");
+	var classDef=tokenize[tokenize.length-1];
+	classDef=classDef.replace(".sql","");
+
+
+	var packageName=loadFile.replace("files/","").replace("/"+classDef+".sql","");
+	packageName=packageName.split("/").join(".");//replaceALL(packageName,"/",".");
+	//alert(dataJson.imports);
+	dataJson.sql=window.btoa(sqlMainCode_data);
+	dataJson.input=inputJstreeRef.get_json('#', {flat:false})
+	dataJson.output=outputJstreeRef.get_json('#', {flat:false})
+    removeIcons(dataJson.input);
+    removeIcons(dataJson.output);
+	dataJson.version="v1";
+    dataJson.consumers=$("#serviceConsumers").val();
+    dataJson.developers=$("#serviceDevelopers").val();
+	var data=JSON.stringify(dataJson);
+	//alert(data);
+	if(data!=null && data.trim().length>0){
+		var response=syncRestRequest("/"+loadFile.replace("files/","sql/"), "POST", data);
+		if(response.status==200){
+			localStorage.setItem(loadFile, "");
+			//alert("Saved");
+			swal("Saved !!", "Saved", "success");
+		}else
+			//alert(JSON.parse(response.payload).error);
+			swal('Error', JSON.parse(response.payload).error, 'error');
+	}else
+		//alert("No changes to save");
+		swal("Warning !!", "No changes to save" , "warning");
+}
+function reload(){
+	loadRemoteFile(true);
+	location.reload();
+}
+
+
+loadRemoteFile(false);
+
+      function enableIDE(elemId, readOnly){
+        if(readOnly!=true)
+          readOnly=false;
+  /*      var id=loadFile+"_"+elemId;
+        var javaEditor = CodeMirror.fromTextArea(document.getElementById(elemId), {
+          lineNumbers: 10,
+          matchBrackets: true,
+          readOnly: readOnly,
+          mode: "text/x-java"
+        //  firstLineNumber: 10
+        });
+        javaEditor.on("change", function (cm,change) {
+                                var value = cm.getValue();
+                                localStorage.setItem(id,value);
+          					}
+                   );
+        return javaEditor;
+    */
+        var id=sqlMainCode_id;
+        var mime = 'text/x-mariadb';
+        // get mime type
+        if (window.location.href.indexOf('mime=') > -1) {
+          mime = window.location.href.substr(window.location.href.indexOf('mime=') + 5);
+        }
+        var editor = CodeMirror.fromTextArea(document.getElementById(elemId), {
+          mode: mime,
+          indentWithTabs: true,
+          smartIndent: true,
+          lineNumbers: true,
+          readOnly: readOnly,
+          matchBrackets : true,
+          autofocus: true,
+          extraKeys: {"Ctrl-Space": "autocomplete"},
+          hintOptions: {tables: {
+          users: ["name", "score", "birthDate"],
+          countries: ["name", "population", "size"]}}
+        });
+
+        editor.on("change", function (cm,change) {
+                                var value = cm.getValue();
+                                localStorage.setItem(id,value);
+          					}
+                   );
+      }
+      enableIDE("sql-mainCode",false);
+    //  var mac = CodeMirror.keyMap.default == CodeMirror.keyMap.macDefault;
+    //  CodeMirror.keyMap.default[(mac ? "Cmd" : "Ctrl") + "-Space"] = "autocomplete";
+
+menu=null;
+
+function showMenu(x, y){
+    menu.style.left = x + 'px';
+    menu.style.top = y + 'px';
+    menu.style.display="block";
+  	menu.classList.add('show-menu');
+  //alert(menu);
+}
+ function hideMenu(){
+    menu.classList.remove('show-menu');
+  	menu.style.display="none";
+}
+var currentJstreeRef=null;
+function onContextMenu(e){
+  console.log(e.target);
+  console.log(e.target.id);
+  if(menu!=null)
+    hideMenu();
+  menu=document.getElementById('schema_editor_jsTree_contextMenu');
+  //alert(e.target.id);
+  if(e.target.id=="input_schema_editor_jsTree"){
+    currentJstreeRef=inputJstreeRef;
+    menu=document.getElementById('schema_editor_jsTree_contextMenu');
+  }else if(e.target.id=="output_schema_editor_jsTree"){
+    currentJstreeRef=outputJstreeRef;
+    menu=document.getElementById('schema_editor_jsTree_contextMenu');
+  }else
+    menu=null;
+  if(menu!=null){
+    e.preventDefault();
+    if(window.innerWidth<e.pageX+250)
+    	showMenu(e.pageX-150, e.pageY);
+    else
+    	showMenu(e.pageX, e.pageY);
+    document.addEventListener('click', onClick, false);
+  }
+}
+
+function onClick(e){
+  if(menu)
+    hideMenu();
+    document.removeEventListener('click', onClick);
+}
+
+document.addEventListener('contextmenu', onContextMenu, false);
+
+
+
+  </script>
+
+
+    </body>
+</html>
+
