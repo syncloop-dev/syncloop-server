@@ -14,6 +14,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.nimbusds.jose.shaded.gson.Gson;
 import io.swagger.v3.oas.models.media.Content;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.apache.commons.io.IOUtils;
 
 import com.eka.middleware.heap.HashMap;
@@ -37,7 +38,9 @@ public class ImportSwagger {
 	final static String supportedTypes = "string,integer,number,date,boolean,object,byte,document,stringList,integerList,numberList,dateList,booleanList,documentList,objectList,byteList,";
 
 	public static void main(String[] args) throws Exception {
-		String path = "D:\\domains.json";// petstore
+		//	String path = "D:\\domains.json";// petstore
+
+		String path ="E:/petStore.json";
 
 		File openAPIFile = new File(path);
 		byte openAPI[] = ServiceUtils.readAllBytes(openAPIFile);
@@ -67,6 +70,8 @@ public class ImportSwagger {
 			Operation op = pi.getGet();
 			String opId = ServiceUtils.normalizeUri( null == op || op.getOperationId() == null ? ServiceUtils.normalizeApiPathName("get", alias) : op.getOperationId());
 			String servicePath = folderPath + ServiceUtils.normalizeApiPath(alias)+ File.separator + opId + ".flow";
+			String fqn1 = getFQN(folderPath + File.separator + "api" + File.separator + opId + ".flow");
+
 			flow = generateServerStub(op, swagger, servicePath);
 			if (flow != null) {
 				String json = Json.pretty().writeValueAsString(flow);
@@ -77,8 +82,15 @@ public class ImportSwagger {
 			opId = ServiceUtils.normalizeUri( null == op || op.getOperationId() == null ? ServiceUtils.normalizeApiPathName("post", alias) + alias : op.getOperationId());
 			flow = generateServerStub(op, swagger, servicePath);
 			if (flow != null) {
+
+				String httpMethod = "POST";
+				String alias1 = httpMethod + alias;
+				System.out.println("POST alias1:: " + alias1);
+				String fqn = getFQN(servicePath);
+				System.err.println("FQN>> POST " + fqn);
 				String json = Json.pretty().writeValueAsString(flow);
 				saveFlow(servicePath, json);
+				//ServiceUtils.registerURLAlias(fqn,alias1,null);
 				response.put("POST" + alias, opId);
 			}
 
@@ -86,8 +98,15 @@ public class ImportSwagger {
 			opId = ServiceUtils.normalizeUri( null == op || op.getOperationId() == null ? ServiceUtils.normalizeApiPathName("delete", alias) : op.getOperationId());
 			flow = generateServerStub(op, swagger, servicePath);
 			if (flow != null) {
+
+				String httpMethod = "DELETE";
+				String alias1 = httpMethod + alias;
+				System.out.println("DELETE alias1:: " + alias1);
+				String fqn = getFQN(servicePath);
+				System.err.println("FQN>> DELETE " + fqn);
 				String json = Json.pretty().writeValueAsString(flow);
 				saveFlow(servicePath, json);
+				//ServiceUtils.registerURLAlias(fqn,alias1,null);
 				response.put("DELETE" + alias, opId);
 			}
 
@@ -95,8 +114,15 @@ public class ImportSwagger {
 			opId = ServiceUtils.normalizeUri( null == op || op.getOperationId() == null ? ServiceUtils.normalizeApiPathName("patch", alias) + alias : op.getOperationId());
 			flow = generateServerStub(op, swagger, servicePath);
 			if (flow != null) {
+
+				String httpMethod = "PATCH";
+				String alias1 = httpMethod + alias;
+				System.out.println("PATCH alias1:: " + alias1);
+				String fqn = getFQN(servicePath);
+				System.err.println("FQN>> PATCH " + fqn);
 				String json = Json.pretty().writeValueAsString(flow);
 				saveFlow(servicePath, json);
+				//ServiceUtils.registerURLAlias(fqn,alias1,null);
 				response.put("PATCH" + alias, opId);
 			}
 
@@ -104,8 +130,15 @@ public class ImportSwagger {
 			opId = ServiceUtils.normalizeUri( null == op || op.getOperationId() == null ? ServiceUtils.normalizeApiPathName("put", alias) : op.getOperationId());
 			flow = generateServerStub(op, swagger, servicePath);
 			if (flow != null) {
+
+				String httpMethod = "PUT";
+				String alias1 = httpMethod + alias;
+				System.out.println("PUT alias1:: " + alias1);
+				String fqn = getFQN(servicePath);
+				System.err.println("FQN>> PATCH " + fqn);
 				String json = Json.pretty().writeValueAsString(flow);
 				saveFlow(servicePath, json);
+				//ServiceUtils.registerURLAlias(fqn,alias1,null);
 				response.put("PUT" + alias, opId);
 			}
 		}
@@ -113,8 +146,6 @@ public class ImportSwagger {
 	}
 
 	public static Map<String, String> asClientLib(String folderPath, byte[] openAPI) throws Exception {
-
-
 
 		File folder = new File(folderPath);
 		folder.mkdirs();
@@ -126,10 +157,13 @@ public class ImportSwagger {
 		swagger = Json.mapper().readValue(openAPI, OpenAPI.class);
 		Map<String, Object> flow = null;
 		Set<Entry<String, PathItem>> pathItemMap = swagger.getPaths().entrySet();
+
 		for (Entry<String, PathItem> entry : pathItemMap) {
 			String alias = entry.getKey();
 			PathItem pi = entry.getValue();
 			Operation op = pi.getGet();
+
+
 			flow = generateClientLib(alias, op, swagger, "GET");
 			if (flow != null) {
 				String opId = ServiceUtils.normalizeUri(op.getOperationId() == null ? ServiceUtils.normalizeApiPathName("get", alias) : op.getOperationId());
@@ -140,36 +174,80 @@ public class ImportSwagger {
 			op = pi.getPost();
 			flow = generateClientLib(alias, op, swagger, "POST");
 			if (flow != null) {
+
+				String httpMethod = "POST";
+				String alias1 = httpMethod + alias;
+				System.out.println("POST alias1:: " + alias1);
+
 				String opId = ServiceUtils.normalizeUri(op.getOperationId() == null ? ServiceUtils.normalizeApiPathName("post", alias) : op.getOperationId());
+
+				String servicePath = folderPath + ServiceUtils.normalizeApiPath(alias) + File.separator + opId + ".flow";
+				String fqn = getFQN(servicePath);
+				System.err.println("POST FQN > " + fqn);
 				String json = Json.pretty().writeValueAsString(flow);
-				saveFlow(folderPath + ServiceUtils.normalizeApiPath(alias) + File.separator + opId + ".flow", json);
+				//saveFlow(folderPath + ServiceUtils.normalizeApiPath(alias) + File.separator + opId + ".flow", json);
+				saveFlow(servicePath,json);
+				//ServiceUtils.registerURLAlias(fqn,alias1,null);
 				response.put("POST" + alias, opId);
 			}
 
 			op = pi.getDelete();
 			flow = generateClientLib(alias, op, swagger, "DELETE");
 			if (flow != null) {
+
+				String httpMethod = "DELETE";
+				String alias1 = httpMethod + alias;
+				System.out.println("DELETE alias1 :: " + alias1);
+
 				String opId = ServiceUtils.normalizeUri(op.getOperationId() == null ? ServiceUtils.normalizeApiPathName("delete", alias) : op.getOperationId());
+
+				String servicePath = folderPath + ServiceUtils.normalizeApiPath(alias) + File.separator + opId + ".flow";
+				String fqn = getFQN(servicePath);
+				System.err.println("DELETE FQN > " + fqn);
 				String json = Json.pretty().writeValueAsString(flow);
-				saveFlow(folderPath + ServiceUtils.normalizeApiPath(alias) + File.separator + opId + ".flow", json);
+				saveFlow(servicePath,json);
+				//saveFlow(folderPath + ServiceUtils.normalizeApiPath(alias) + File.separator + opId + ".flow", json);
+				//ServiceUtils.registerURLAlias(fqn,alias1,null);
 				response.put("DELETE" + alias, opId);
 			}
 
 			op = pi.getPatch();
 			flow = generateClientLib(alias, op, swagger, "PATCH");
 			if (flow != null) {
+
+				String httpMethod = "PATCH";
+				String alias1 = httpMethod + alias;
+				System.out.println("PATCH alias1 :: " + alias1);
+
 				String opId = ServiceUtils.normalizeUri(op.getOperationId() == null ? ServiceUtils.normalizeApiPathName("patch", alias) : op.getOperationId());
+
+				String servicePath = folderPath + ServiceUtils.normalizeApiPath(alias) + File.separator + opId + ".flow";
+				String fqn = getFQN(servicePath);
+				System.err.println("PATCH FQN > " + fqn);
 				String json = Json.pretty().writeValueAsString(flow);
-				saveFlow(folderPath + ServiceUtils.normalizeApiPath(alias) + File.separator + opId + ".flow", json);
+				saveFlow(servicePath,json);
+				//saveFlow(folderPath + ServiceUtils.normalizeApiPath(alias) + File.separator + opId + ".flow", json);
+				//ServiceUtils.registerURLAlias(fqn,alias1,null);
 				response.put("PATCH" + alias, opId);
 			}
 
 			op = pi.getPut();
 			flow = generateClientLib(alias, op, swagger, "PUT");
 			if (flow != null) {
+
+				String httpMethod = "PUT";
+				String alias1 = httpMethod + alias;
+				System.out.println("put alias1 :: " + alias1);
+
 				String opId = ServiceUtils.normalizeUri(op.getOperationId() == null ? ServiceUtils.normalizeApiPathName("put", alias) : op.getOperationId());
+
+				String servicePath = folderPath + ServiceUtils.normalizeApiPath(alias) + File.separator + opId + ".flow";
+				String fqn = getFQN(servicePath);
+				System.err.println("PUT FQN > " + fqn);
 				String json = Json.pretty().writeValueAsString(flow);
-				saveFlow(folderPath + ServiceUtils.normalizeApiPath(alias) + File.separator + opId + ".flow", json);
+				saveFlow(servicePath,json);
+				//saveFlow(folderPath + ServiceUtils.normalizeApiPath(alias) + File.separator + opId + ".flow", json);
+				//ServiceUtils.registerURLAlias(fqn,alias1,null);
 				response.put("PUT" + alias, opId);
 			}
 		}
@@ -398,7 +476,7 @@ public class ImportSwagger {
 			createPreInvokeMapping(invokeStepToJson, "copy", "document", "/payload", "documentList", "/root");
 			createPostInvokeMapping(invokeStepToJson, "copy", "string", "/jsonString", "string", "/body");
 		}
-		
+
 		Map<String, Object> invokeStepRequest= createInvokeStep(flowSteps,"service","packages/middleware/pub/client/http/request", "Initialize");
 
 		createPreInvokeMapping(invokeStepRequest, "copy", "document", "/requestHeaders", "document","/headers");
@@ -421,6 +499,34 @@ public class ImportSwagger {
 		if (!"GET".equalsIgnoreCase(method)) {
 			createPreInvokeMapping(invokeStepRequest, "copy", "string", "/body", "string", "/payload");
 			dropVariables(invokeStepRequest, "payload", "string");
+		}
+
+		Map<String, SecurityScheme> securitySchemes = swagger.getComponents().getSecuritySchemes();
+		for (String securitySchemesList: securitySchemes.keySet()){
+
+			SecurityScheme securityScheme = securitySchemes.get(securitySchemesList);
+			SecurityScheme.Type type = securityScheme.getType();
+
+			if (SecurityScheme.Type.APIKEY.equals(type)) {
+				Map<String, String> commonApiKey = Maps.newHashMap();
+				commonApiKey.put("text", "apiKey");
+				commonApiKey.put("type", "string");
+				inputs.add(commonApiKey);
+
+				if (SecurityScheme.In.HEADER.equals(securityScheme.getIn())) {
+					createVariables(intiMapStep, "requestHeaders/"+securityScheme.getName(),  "${apiKey}" , Evaluate.EEV, "document/string");
+				} else if (SecurityScheme.In.QUERY.equals(securityScheme.getIn())) {
+					createVariables(intiMapStep, "queryParameters/"+securityScheme.getName(),  "${apiKey}" , Evaluate.EEV, "document/string");
+				}
+			}
+			else if (SecurityScheme.Type.HTTP.equals(type)) {
+				Map<String, String> commonAccessToken = Maps.newHashMap();
+				commonAccessToken.put("text", "access_token");
+				commonAccessToken.put("type", "string");
+				inputs.add(commonAccessToken);
+				createVariables(intiMapStep, "requestHeaders/Authorization",  "Bearer ${access_token}" , Evaluate.EEV, "document/string");
+			}
+
 		}
 
 		Map<String, Object> switchMapping = createSwitch(flowSteps,"switch","SWITCH", "Checking status for response");
@@ -681,7 +787,7 @@ public class ImportSwagger {
 	}
 
 	public static void createMapping(Map<String, Object> mapStep, String op, String inTypePath, String from, String outTypePath,
-			String to) {
+									 String to) {
 		List<Object> transformers = (List<Object>) mapStep.get("transformers");
 		List<Object> lines = (List<Object>) mapStep.get("lines");
 		if (transformers == null) {
@@ -719,7 +825,7 @@ public class ImportSwagger {
 	}
 
 	public static void createPreInvokeMapping(Map<String, Object> mapStep, String op, String inTypePath, String from, String outTypePath,
-			String to) {
+											  String to) {
 		List<Object> transformers = (List<Object>) mapStep.get("transformers");
 		List<Object> lines = (List<Object>) mapStep.get("lines");
 		if (transformers == null) {
@@ -746,8 +852,8 @@ public class ImportSwagger {
 		line.put("outTypePath", outTypePath);
 		line.put("dashedLine", false);
 		line.put("inTypePath", inTypePath);
-			line.put("inpJsTree", "#launching_arrow_jsTree");
-			line.put("outpJsTree", "#landing_arrow_jsTree_function");
+		line.put("inpJsTree", "#launching_arrow_jsTree");
+		line.put("outpJsTree", "#landing_arrow_jsTree_function");
 		line.put("outType", outTypePath.substring(outTypePath.lastIndexOf("/") + 1));
 		line.put("OUTPath", to);
 		line.put("inputPath", from);
@@ -760,7 +866,7 @@ public class ImportSwagger {
 	}
 
 	public static void createPostInvokeMapping(Map<String, Object> mapStep, String op, String inTypePath, String from, String outTypePath,
-			String to) {
+											   String to) {
 		List<Object> transformers = (List<Object>) mapStep.get("transformers");
 		List<Object> lines = (List<Object>) mapStep.get("lines");
 		if (transformers == null) {
@@ -855,46 +961,91 @@ public class ImportSwagger {
 			System.out.println(name);
 		type = type.toUpperCase();
 		switch (type) {
-		case "INTEGER": {
-			break;
-		}
-		case "NUMBER": {
-			break;
-		}
-		case "STRING": {
-			break;
-		}
-		case "DATE": {
-			break;
-		}
-		case "BOOLEAN": {
-			break;
-		}
-		case "OBJECT": {
-
-			Map<String, Schema> addPropMap = bodySchema.getProperties();
-			if (addPropMap != null) {
-				Schema subType = addPropMap.get("type");
-				if (subType != null) {
-					param.put("type", subType.getType());
-					break;
-				}
+			case "INTEGER": {
+				break;
 			}
+			case "NUMBER": {
+				break;
+			}
+			case "STRING": {
+				break;
+			}
+			case "DATE": {
+				break;
+			}
+			case "BOOLEAN": {
+				break;
+			}
+			case "OBJECT": {
 
-			Object object = bodySchema.getAdditionalProperties();
-			if (object instanceof Schema) {
-				param.put("type", "document");
-
-				Schema addProp = (Schema) object;
-				if (addProp != null) {
-					String subType = addProp.getType();
-					if (subType != null)
-						param.put("type", subType);
-					break;
+				Map<String, Schema> addPropMap = bodySchema.getProperties();
+				if (addPropMap != null) {
+					Schema subType = addPropMap.get("type");
+					if (subType != null) {
+						param.put("type", subType.getType());
+						break;
+					}
 				}
 
-				if (bodySchema.getProperties() != null && bodySchema.getProperties().size() > 0) {
-					Set<Entry<String, Schema>> children = bodySchema.getProperties().entrySet();
+				Object object = bodySchema.getAdditionalProperties();
+				if (object instanceof Schema) {
+					param.put("type", "document");
+
+					Schema addProp = (Schema) object;
+					if (addProp != null) {
+						String subType = addProp.getType();
+						if (subType != null)
+							param.put("type", subType);
+						break;
+					}
+
+					if (bodySchema.getProperties() != null && bodySchema.getProperties().size() > 0) {
+						Set<Entry<String, Schema>> children = bodySchema.getProperties().entrySet();
+						List<Object> childParams = new ArrayList();
+						addChildren(param, childParams);
+						for (Entry<String, Schema> child : children) {
+							Schema childSchema = child.getValue();
+							childSchema.setName(child.getKey());
+							List<Object> list = getBody(childSchema, swagger);
+							if (list != null && list.size() > 0)
+								childParams.addAll(list);
+						}
+						if (childParams.size() == 0)
+							param.remove("children");
+					}
+				} else if (null != object) {
+					param.put("type", object.toString());
+				} else {
+					param.put("type", "object");
+				}
+
+				break;
+			}
+			case "ARRAY": {
+				param.put("type", "documentList");
+				Set<Entry<String, Schema>> children = null;
+				if (bodySchema.getItems() != null) {
+					String arrayRef = bodySchema.getItems().get$ref();
+					if (arrayRef != null) {
+						String subName = arrayRef.substring(arrayRef.lastIndexOf("/") + 1);
+						Schema bodyRefSchema = swagger.getComponents().getSchemas().get(subName);
+						param.put("text", subName);
+						children = bodyRefSchema.getProperties().entrySet();
+					} else {
+						// type = bodySchema.getType();
+						if (!"array,object".contains(bodySchema.getItems().getType())) {
+							String subType = bodySchema.getItems().getType();
+							param.put("type", subType + "List");
+						} else {
+							if (bodySchema.getItems() != null && bodySchema.getItems().getProperties() != null
+									&& bodySchema.getItems().getProperties().size() > 0) {
+								children = bodySchema.getItems().getProperties().entrySet();
+							}
+						}
+					}
+				}
+
+				if (children != null) {
 					List<Object> childParams = new ArrayList();
 					addChildren(param, childParams);
 					for (Entry<String, Schema> child : children) {
@@ -907,56 +1058,11 @@ public class ImportSwagger {
 					if (childParams.size() == 0)
 						param.remove("children");
 				}
-			} else if (null != object) {
-				param.put("type", object.toString());
-			} else {
+				break;
+			}
+			default: {
 				param.put("type", "object");
 			}
-
-			break;
-		}
-		case "ARRAY": {
-			param.put("type", "documentList");
-			Set<Entry<String, Schema>> children = null;
-			if (bodySchema.getItems() != null) {
-				String arrayRef = bodySchema.getItems().get$ref();
-				if (arrayRef != null) {
-					String subName = arrayRef.substring(arrayRef.lastIndexOf("/") + 1);
-					Schema bodyRefSchema = swagger.getComponents().getSchemas().get(subName);
-					param.put("text", subName);
-					children = bodyRefSchema.getProperties().entrySet();
-				} else {
-					// type = bodySchema.getType();
-					if (!"array,object".contains(bodySchema.getItems().getType())) {
-						String subType = bodySchema.getItems().getType();
-						param.put("type", subType + "List");
-					} else {
-						if (bodySchema.getItems() != null && bodySchema.getItems().getProperties() != null
-								&& bodySchema.getItems().getProperties().size() > 0) {
-							children = bodySchema.getItems().getProperties().entrySet();
-						}
-					}
-				}
-			}
-
-			if (children != null) {
-				List<Object> childParams = new ArrayList();
-				addChildren(param, childParams);
-				for (Entry<String, Schema> child : children) {
-					Schema childSchema = child.getValue();
-					childSchema.setName(child.getKey());
-					List<Object> list = getBody(childSchema, swagger);
-					if (list != null && list.size() > 0)
-						childParams.addAll(list);
-				}
-				if (childParams.size() == 0)
-					param.remove("children");
-			}
-			break;
-		}
-		default: {
-			param.put("type", "object");
-		}
 		}
 		return body;
 	}
@@ -989,5 +1095,15 @@ public class ImportSwagger {
 			}
 		}
 		return document;
+	}
+	public static String getFQN(String servicePath) {
+
+		String[] pathParts = servicePath.split("[/\\\\]");
+		String packageName = "package." + pathParts[pathParts.length - 4] + "." + pathParts[pathParts.length - 3];
+
+		String apiName = pathParts[pathParts.length - 2];
+		String operationId = pathParts[pathParts.length - 1].replace(".flow", "");
+
+		return packageName +"."+ apiName + "." + operationId + ".main";
 	}
 }
