@@ -53,7 +53,7 @@ public class ImportSwagger {
 		//System.out.println(json);
 	}
 
-	public static Map<String, String> asServerStub(String folderPath, byte[] openAPI,DataPipeline dataPipeline) throws Exception {
+	public static Map<String, String> asServerStub(String folderPath, byte[] openAPI,DataPipeline dataPipeline,Boolean isClientRequested,String packageName) throws Exception {
 
 		File folder = new File(folderPath);
 		folder.mkdirs();
