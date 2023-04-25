@@ -458,25 +458,24 @@ public class ImportSwagger {
 			SecurityScheme securityScheme = securitySchemes.get(securitySchemesList);
 			SecurityScheme.Type type = securityScheme.getType();
 
-			if (SecurityScheme.Type.APIKEY.equals(type)) {
-				Map<String, String> commonApiKey = Maps.newHashMap();
-				commonApiKey.put("text", "apiKey");
-				commonApiKey.put("type", "string");
-				inputs.add(commonApiKey);
+            if (SecurityScheme.Type.APIKEY.equals(type)) {
+                //Map<String, String> commonApiKey = Maps.newHashMap();
+                //commonApiKey.put("text", "apiKey");
+                //commonApiKey.put("type", "string");
+                // inputs.add(commonApiKey);
+                if (SecurityScheme.In.HEADER.equals(securityScheme.getIn())) {
+                    createVariables(intiMapStep, "requestHeaders/" + securityScheme.getName(), "#{apiKey}", Evaluate.EEV, "document/string");
+                } else if (SecurityScheme.In.QUERY.equals(securityScheme.getIn())) {
+                    createVariables(intiMapStep, "queryParameters/" + securityScheme.getName(), "#{apiKey}", Evaluate.EEV, "document/string");
+                }
 
-				if (SecurityScheme.In.HEADER.equals(securityScheme.getIn())) {
-					createVariables(intiMapStep, "requestHeaders/"+securityScheme.getName(),  "${apiKey}" , Evaluate.EEV, "document/string");
-				} else if (SecurityScheme.In.QUERY.equals(securityScheme.getIn())) {
-					createVariables(intiMapStep, "queryParameters/"+securityScheme.getName(),  "${apiKey}" , Evaluate.EEV, "document/string");
-				}
-			}
-			else if (SecurityScheme.Type.HTTP.equals(type)) {
-				Map<String, String> commonAccessToken = Maps.newHashMap();
-				commonAccessToken.put("text", "access_token");
-				commonAccessToken.put("type", "string");
-				inputs.add(commonAccessToken);
-				createVariables(intiMapStep, "requestHeaders/Authorization",  "Bearer ${access_token}" , Evaluate.EEV, "document/string");
-			}
+            } else if (SecurityScheme.Type.HTTP.equals(type)) {
+                Map<String, String> commonAccessToken = Maps.newHashMap();
+                commonAccessToken.put("text", "access_token");
+                commonAccessToken.put("type", "string");
+                inputs.add(commonAccessToken);
+                createVariables(intiMapStep, "requestHeaders/Authorization", "Bearer ${access_token}", Evaluate.EEV, "document/string");
+            }
 			/* else if (SecurityScheme.Type.OAUTH2.equals(type)) {
 
 				 SecurityScheme.Type type1 = securityScheme.getType();
@@ -632,20 +631,20 @@ public class ImportSwagger {
 			Map<String, Object>  invokeClient = createInvokeStep(flowService.getFlowSteps(), "flow",
 					str, "Invoking Client");
 
-			if (swagger.getPaths() != null) {
-				for (Map.Entry<String, PathItem> pathEntry : swagger.getPaths().entrySet()) {
-					PathItem pathItem = pathEntry.getValue();
-					for (Operation operation : pathItem.readOperations()) {
-						if (op.getParameters() != null) {
-							for (Parameter parameter : op.getParameters()) {
-								if ("query".equalsIgnoreCase(parameter.getIn())) {
-									createPreInvokeMapping(invokeClient, "copy", "string", "/" + parameter.getName(), "document", "/queryParameters/" + parameter.getName());
-								}
-							}
-						}
-					}
-				}
-			}
+            if (swagger.getPaths() != null) {
+                for (Map.Entry<String, PathItem> pathEntry : swagger.getPaths().entrySet()) {
+                    PathItem pathItem = pathEntry.getValue();
+                    for (Operation operation : pathItem.readOperations()) {
+                        if (op.getParameters() != null) {
+                            for (Parameter parameter : op.getParameters()) {
+                                if ("query".equalsIgnoreCase(parameter.getIn())) {
+                                    createPreInvokeMapping(invokeClient, "copy", "string", "/" + parameter.getName(), "document", "/queryParameters/" + parameter.getName());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
 			if (headers.size() > 0)
 				inputs.add(createDocument("*requestHeaders", headers, ""));
@@ -654,15 +653,22 @@ public class ImportSwagger {
 			if (query.size() > 0)
 				inputs.addAll(query);
 
-
-			createPreInvokeMapping(invokeClient, "copy", "document", "/*payload", "document", "/payload");
-			//  createPreInvokeMapping(invokeClient, "copy", "string", "/apiKey", "document/string", "/requestHeaders/apiKey");
+            createPreInvokeMapping(invokeClient, "copy", "document", "/*payload", "document", "/payload");
+            //  createPreInvokeMapping(invokeClient, "copy", "string", "/apiKey", "document/string", "/requestHeaders/apiKey");
+            createPreInvokeMapping(invokeClient, "copy", "document", "/*pathParameters", "document", "/pathParameters   ");
 
 			createPostInvokeMapping(invokeClient, "copy", "string", "/rawResponse", "string", "/rawResponse");
 			createPostInvokeMapping(invokeClient, "copy", "string", "/statusCode", "string", "/statusCode");
 
-			Map<String, SecurityScheme> securitySchemes = swagger.getComponents().getSecuritySchemes();
-			for (String securitySchemesList : securitySchemes.keySet()) {
+            Set<Entry<String, ApiResponse>> apiRespSet = apiResponses.entrySet();
+            for (Entry<String, ApiResponse> entry : apiRespSet) {
+                String code = entry.getKey();
+                createVariables(intiMapStep, "basePath", "/*" + code, Evaluate.EEV, "string");
+                createPostInvokeMapping(invokeClient, "copy", "document", "/*" + code, "document", "/*" + code);
+            }
+
+            Map<String, SecurityScheme> securitySchemes = swagger.getComponents().getSecuritySchemes();
+            for (String securitySchemesList : securitySchemes.keySet()) {
 
 				SecurityScheme securityScheme = securitySchemes.get(securitySchemesList);
 				SecurityScheme.Type type = securityScheme.getType();
@@ -673,10 +679,9 @@ public class ImportSwagger {
 					commonApiKey.put("type", "string");
 					inputs.add(commonApiKey);
 
-					if (SecurityScheme.In.HEADER.equals(securityScheme.getIn())) {
-						createVariables(intiMapStep, "requestHeaders/" + securityScheme.getName(), "${apiKey}", Evaluate.EEV, "document/string");
-						createPreInvokeMapping(invokeClient, "copy", "document/string", "/requestHeaders/"+securityScheme.getName(), "string", "/apiKey");
-						//createPreInvokeMapping(invokeClient, "copy", "string", "/apiKey", "document/string", "/requestHeaders/"+securityScheme.getName());
+                    if (SecurityScheme.In.HEADER.equals(securityScheme.getIn())) {
+                        createVariables(intiMapStep, "*requestHeaders/" + securityScheme.getName(), "#{apiKey}", Evaluate.EEV, "document/string");
+                        createPreInvokeMapping(invokeClient, "copy", "document/string", "/*requestHeaders/" + securityScheme.getName(), "string", "/apiKey");
 
 					} else if (SecurityScheme.In.QUERY.equals(securityScheme.getIn())) {
 						createVariables(intiMapStep, "queryParameters/" + securityScheme.getName(), "${apiKey}", Evaluate.EEV, "document/string");
@@ -698,12 +703,15 @@ public class ImportSwagger {
 			createPostInvokeMapping(invokeStepToJson, "copy", "document", "/output", "document", "/output");
 
 			Map<String, String> commonOutputRawResponse = Maps.newHashMap();
-			commonOutputRawResponse.put("text", "output");
-			commonOutputRawResponse.put("type", "document");
+			commonOutputRawResponse.put("text", "rawResponse");
+			commonOutputRawResponse.put("type", "string");
 			outputs.add(commonOutputRawResponse);
+
+			Map<String, String> commonOutputStatusCode = Maps.newHashMap();
+			commonOutputStatusCode.put("text", "statusCode");
+			commonOutputStatusCode.put("type", "string");
+			outputs.add(commonOutputStatusCode);
 		}
-
-
 		return flowService.getFlow();
 	}
 
