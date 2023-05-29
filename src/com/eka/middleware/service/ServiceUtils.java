@@ -31,6 +31,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.JarFile;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.*;
 
@@ -256,6 +257,50 @@ public class ServiceUtils {
 		return null;
 	}
 
+	public static final Map<String, Object> xmlToMap1(String xml) {
+		try {
+			xmlMapper.disable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE);
+			Map<String, Object> map = xmlMapper.readValue(String.format("<root>%s</root>", xml), Map.class);
+			Map<String, Object> updatedMap = addAttributePrefix(map, xml);
+			return updatedMap;
+		} catch (JsonProcessingException e) {
+			printException("Could not convert xml to map", e);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private static Map<String, Object> addAttributePrefix(Map<String, Object> map, String xml) {
+		Map<String, Object> updatedMap = new HashMap<>();
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+			if (value instanceof Map) {
+				value = addAttributePrefix((Map<String, Object>) value, xml);
+			}
+			String newKey = key;
+			List<String> attributeKeys = extractAttributeKeys(xml);
+			for (String attributeKey : attributeKeys) {
+				if (key.equalsIgnoreCase(attributeKey)) {
+					newKey = "@" + key;
+					break;
+				}
+			}
+			updatedMap.put(newKey, value);
+		}
+		return updatedMap;
+	}
+	public static List<String> extractAttributeKeys(String xml) {
+		List<String> attributeKeys = new ArrayList<>();
+		Pattern pattern = Pattern.compile("\\s(\\w+)=\"");
+		Matcher matcher = pattern.matcher(xml);
+		while (matcher.find()) {
+			String attributeKey = matcher.group(1);
+			attributeKeys.add(attributeKey);
+		}
+		return attributeKeys;
+	}
 	public static Object getExceptionMap(Exception e) {
 		Map<String, Object> lastErrorDump = new HashMap<>();
 		if (e == null)
