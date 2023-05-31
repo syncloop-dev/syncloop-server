@@ -73,7 +73,7 @@ public class ImportPostman {
             } if (postmanItems.getRequest() != null) {
                 String method = postmanItems.getRequest().getMethod();
  }
-        }
+          }
         return list;
     }
     public static String generateServerStub(String folderPath, String servicePath, String packageName, PostmanItems postmanItems, boolean isClientRequested, Evaluate evaluateFrom,DataPipeline dataPipeline) throws Exception {
