@@ -257,7 +257,7 @@ public class ServiceUtils {
 		return null;
 	}
 
-	public static final Map<String, Object> xmlToMap1(String xml) {
+	public static final Map<String, Object> xmlToMapParser(String xml) {
 		try {
 			xmlMapper.disable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE);
 			Map<String, Object> map = xmlMapper.readValue(String.format("<root>%s</root>", xml), Map.class);

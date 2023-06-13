@@ -1,17 +1,11 @@
 package com.eka.middleware.server;
 
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,15 +20,12 @@ import com.eka.middleware.service.RuntimePipeline;
 import com.eka.middleware.service.ServiceUtils;
 import com.eka.middleware.template.MultiPart;
 import com.eka.middleware.template.SnippetException;
-import com.eka.middleware.template.SystemException;
 import com.eka.middleware.template.Tenant;
 
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.Cookie;
-import io.undertow.server.handlers.CookieImpl;
 import io.undertow.util.Headers;
 import io.undertow.util.HttpString;
-import io.undertow.util.PathTemplate;
 import io.undertow.util.StatusCodes;
 
 public class ThreadManager {
@@ -229,7 +220,7 @@ public class ThreadManager {
 							content = new String(body);
 							if (content != null && content.trim().length() > 0)
 								//map = ServiceUtils.xmlToMap(String.format("<root>%s</root>", content));
-                                map = ServiceUtils.xmlToMap1(String.format("<root>%s</root>", content));
+                                map = ServiceUtils.xmlToMapParser(String.format("<root>%s</root>", content));
 							break;
 						case "application/yaml":
 							body = rp.dataPipeLine.getBody();
