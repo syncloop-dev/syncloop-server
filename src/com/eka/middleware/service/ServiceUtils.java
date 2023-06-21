@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
-import java.net.URI;
-import java.net.URL;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -572,6 +569,10 @@ public class ServiceUtils {
 		// alias=aliasTenantName+alias;
 		String existingFQN = getPathService(alias, null, dp.rp.getTenant());
 
+		if (!isAliasValid(fqn)) {
+			return "Failed to save. The provided fqn is incorrect.";
+		}
+
 		// String existingFQN=urlMappings.getProperty(alias);
 		Properties urlMappings = getUrlAliasMapping(dp.rp.getTenant());
 		String msg = "Saved";
@@ -595,6 +596,38 @@ public class ServiceUtils {
 		fos.close();
 		return msg;
 	}
+
+
+	private static boolean isAliasValid(String alias) {
+
+		if (alias.contains("?")) {
+			return false;
+		}
+
+		// Exclude aliases with path parameters with values
+		if (alias.contains("{") && alias.contains("}")) {
+			String[] pathSegments = alias.split("/");
+			for (String segment : pathSegments) {
+				if (segment.contains("{") && segment.contains("}")) {
+					String param = segment.substring(segment.indexOf("{") + 1, segment.indexOf("}"));
+					if (param.trim().isEmpty() || param.matches(".*[^a-zA-Z0-9_.-]+.*")) {
+						return false;
+					}
+				}
+			}
+		}
+
+		if (alias.contains("..")) {
+			return false;
+		}
+		String specialCharacters = ".*[!@#$%^&*()+=\\[\\]{}\\\\|;:\",<>/?].*";
+		if (alias.matches(specialCharacters) && !alias.contains(".") && !alias.contains("_")) {
+			return false;
+		}
+
+		return true;
+	}
+
 
 	private static final void streamResponseFile(final RuntimePipeline rp, final MultiPart mp) throws SnippetException {
 
