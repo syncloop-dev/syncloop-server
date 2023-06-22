@@ -87,447 +87,447 @@ import io.undertow.util.Sessions;
 import io.undertow.util.StatusCodes;
 
 public class ServiceUtils {
-	// private static final Properties serverProperties = new Properties();
-	// private static final Properties urlMappings = new Properties();
+    // private static final Properties serverProperties = new Properties();
+    // private static final Properties urlMappings = new Properties();
 
-	private static final Map<String, Properties> aliasMap = new ConcurrentHashMap<String, Properties>();
+    private static final Map<String, Properties> aliasMap = new ConcurrentHashMap<String, Properties>();
 
-	private static final Map<String, UriTemplate> parameterResolverMap = new ConcurrentHashMap<String, UriTemplate>();
-	private static final ObjectMapper om = new ObjectMapper();
-	public static final XmlMapper xmlMapper = new XmlMapper();
-	public static final YAMLMapper yamlMapper = new YAMLMapper();
-	public static Logger LOGGER = LogManager.getLogger(ServiceUtils.class);
-	private static final String OS = System.getProperty("os.name").toLowerCase();
+    private static final Map<String, UriTemplate> parameterResolverMap = new ConcurrentHashMap<String, UriTemplate>();
+    private static final ObjectMapper om = new ObjectMapper();
+    public static final XmlMapper xmlMapper = new XmlMapper();
+    public static final YAMLMapper yamlMapper = new YAMLMapper();
+    public static Logger LOGGER = LogManager.getLogger(ServiceUtils.class);
+    private static final String OS = System.getProperty("os.name").toLowerCase();
 
-	public static boolean isWindows() {
-		return (OS.indexOf("win") >= 0);
-	}
+    public static boolean isWindows() {
+        return (OS.indexOf("win") >= 0);
+    }
 
-	public static List<String> searchEndpoints(final String keyword, Tenant tenant) {
-		Properties urlMappings = getUrlAliasMapping(tenant);
-		Set endpoints = urlMappings.keySet();
-		final List<String> endpointList = new ArrayList<>();
-		endpoints.forEach((k) -> {
-			String key = k + "";
-			String value = urlMappings.getProperty(key, "");
-			if (keyword == null || keyword.trim().length() == 0 || value.toLowerCase().contains(keyword.toLowerCase())
-					|| key.toLowerCase().trim().contains(keyword.toLowerCase()))
-				endpointList.add(key + " : " + value);
-		});
-		return endpointList;
-	}
+    public static List<String> searchEndpoints(final String keyword, Tenant tenant) {
+        Properties urlMappings = getUrlAliasMapping(tenant);
+        Set endpoints = urlMappings.keySet();
+        final List<String> endpointList = new ArrayList<>();
+        endpoints.forEach((k) -> {
+            String key = k + "";
+            String value = urlMappings.getProperty(key, "");
+            if (keyword == null || keyword.trim().length() == 0 || value.toLowerCase().contains(keyword.toLowerCase())
+                    || key.toLowerCase().trim().contains(keyword.toLowerCase()))
+                endpointList.add(key + " : " + value);
+        });
+        return endpointList;
+    }
 
-	public static boolean isMac() {
-		return (OS.indexOf("mac") >= 0);
-	}
+    public static boolean isMac() {
+        return (OS.indexOf("mac") >= 0);
+    }
 
-	public static boolean isUnix() {
-		return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
-	}
+    public static boolean isUnix() {
+        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
+    }
 
-	public static boolean isSolaris() {
-		return (OS.indexOf("sunos") >= 0);
-	}
+    public static boolean isSolaris() {
+        return (OS.indexOf("sunos") >= 0);
+    }
 
-	public static String getSeparator() throws Exception {
-		if (isWindows()) {
-			return ";";
-		} else if (isMac()) {
-			return ":";
-		} else if (isUnix()) {
-			return ":";
-		} else if (isSolaris()) {
-			return ":";
-		} else {
-			throw new Exception("Un supported OS");
-		}
-	}
+    public static String getSeparator() throws Exception {
+        if (isWindows()) {
+            return ";";
+        } else if (isMac()) {
+            return ":";
+        } else if (isUnix()) {
+            return ":";
+        } else if (isSolaris()) {
+            return ":";
+        } else {
+            throw new Exception("Un supported OS");
+        }
+    }
 
-	public static final String generateUUID(String msg) {
-		UUID uuid = UUID.nameUUIDFromBytes(msg.getBytes());
-		return uuid.toString();
-	}
+    public static final String generateUUID(String msg) {
+        UUID uuid = UUID.nameUUIDFromBytes(msg.getBytes());
+        return uuid.toString();
+    }
 
-	public static final String toJson(Map<String, Object> map) throws Exception {
-		om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-		om.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-		String json = om.writeValueAsString(map);
-		return json;
-	}
+    public static final String toJson(Map<String, Object> map) throws Exception {
+        om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        om.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        String json = om.writeValueAsString(map);
+        return json;
+    }
 
-	public static final String toPrettyJson(Map<String, Object> map) throws Exception {
-		om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-		om.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-		String json = om.writerWithDefaultPrettyPrinter().writeValueAsString(map);
-		return json;
-	}
+    public static final String toPrettyJson(Map<String, Object> map) throws Exception {
+        om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        om.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        String json = om.writerWithDefaultPrettyPrinter().writeValueAsString(map);
+        return json;
+    }
 
-	public static final String objectToJson(Object object) throws Exception {
-		om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-		om.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-		String json = om.writeValueAsString(object);
-		return json;
-	}
+    public static final String objectToJson(Object object) throws Exception {
+        om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        om.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        String json = om.writeValueAsString(object);
+        return json;
+    }
 
-	public static final byte[] readAllBytes(File file) throws Exception {
-		if (!file.exists())
-			return null;
-		FileInputStream fis = null;
-		ByteArrayOutputStream baos = null;
-		try {
-			fis = new FileInputStream(file);
-			baos = new ByteArrayOutputStream();
-			IOUtils.copy(fis, baos);
-			baos.flush();
-			byte[] data = baos.toByteArray();
-			baos.close();
-			return data;
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			fis.close();
-			baos.close();
-		}
-	}
+    public static final byte[] readAllBytes(File file) throws Exception {
+        if (!file.exists())
+            return null;
+        FileInputStream fis = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            fis = new FileInputStream(file);
+            baos = new ByteArrayOutputStream();
+            IOUtils.copy(fis, baos);
+            baos.flush();
+            byte[] data = baos.toByteArray();
+            baos.close();
+            return data;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            fis.close();
+            baos.close();
+        }
+    }
 
-	public static final Map<String, Object> jsonToMap(String json) {
-		try {
-			om.disable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE);
-			Map<String, Object> map = om.readValue(json, Map.class);
-			return map;
-		} catch (Exception e) {
-			printException("Could not convert json to map", e);
-		}
-		return null;
-	}
+    public static final Map<String, Object> jsonToMap(String json) {
+        try {
+            om.disable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE);
+            Map<String, Object> map = om.readValue(json, Map.class);
+            return map;
+        } catch (Exception e) {
+            printException("Could not convert json to map", e);
+        }
+        return null;
+    }
 
-	public static final String toYaml(Map<String, Object> map) throws Exception {
-		yamlMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-		String xml = yamlMapper.writeValueAsString(map);
-		return xml;
-	}
+    public static final String toYaml(Map<String, Object> map) throws Exception {
+        yamlMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        String xml = yamlMapper.writeValueAsString(map);
+        return xml;
+    }
 
-	public static final Map<String, Object> yamlToMap(String json) {
-		try {
-			yamlMapper.disable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE);
-			Map<String, Object> map = yamlMapper.readValue(json, Map.class);
-			return map;
-		} catch (JsonProcessingException e) {
-			printException("Could not convert xml to map", e);
-		}
-		return null;
-	}
+    public static final Map<String, Object> yamlToMap(String json) {
+        try {
+            yamlMapper.disable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE);
+            Map<String, Object> map = yamlMapper.readValue(json, Map.class);
+            return map;
+        } catch (JsonProcessingException e) {
+            printException("Could not convert xml to map", e);
+        }
+        return null;
+    }
 
-	public static final String xmlToString(Object o, String rootName) throws Exception {
-		Map<String, Object> root = Maps.newHashMap();
-		XmlMapper xmlMapper = new XmlMapper();
-		if (StringUtils.isBlank(rootName)) {
-			rootName = "";
-		}
+    public static final String xmlToString(Object o, String rootName) throws Exception {
+        Map<String, Object> root = Maps.newHashMap();
+        XmlMapper xmlMapper = new XmlMapper();
+        if (StringUtils.isBlank(rootName)) {
+            rootName = "";
+        }
 
-		root.put(rootName, o);
-		String xml = xmlMapper.writeValueAsString(root);
-		xml = xml.replaceAll("<HashMap>", "").replaceAll("</HashMap>", "");
-		xml = xml.replaceAll("<>", "").replaceAll("</>", "");
-		return xml;
-	}
+        root.put(rootName, o);
+        String xml = xmlMapper.writeValueAsString(root);
+        xml = xml.replaceAll("<HashMap>", "").replaceAll("</HashMap>", "");
+        xml = xml.replaceAll("<>", "").replaceAll("</>", "");
+        return xml;
+    }
 
-	public static final String toXml(Map<String, Object> map, String rootName) throws Exception {
-		xmlMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-		xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
-		// xmlMapper.setDefaultUseWrapper(false);
-		// xmlMapper.xmlBuilder().defaultUseWrapper(false)
-		String xml = xmlMapper.writer().withRootName(rootName).writeValueAsString(map);
-		return xml;
-	}
+    public static final String toXml(Map<String, Object> map, String rootName) throws Exception {
+        xmlMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
+        // xmlMapper.setDefaultUseWrapper(false);
+        // xmlMapper.xmlBuilder().defaultUseWrapper(false)
+        String xml = xmlMapper.writer().withRootName(rootName).writeValueAsString(map);
+        return xml;
+    }
 
-	public static final Map<String, Object> xmlToMap(String json) {
-		try {
-			xmlMapper.disable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE);
-			Map<String, Object> map = xmlMapper.readValue(String.format("<root>%s</root>", json), Map.class);
-			return map;
-		} catch (JsonProcessingException e) {
-			printException("Could not convert xml to map", e);
+    public static final Map<String, Object> xmlToMap(String json) {
+        try {
+            xmlMapper.disable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE);
+            Map<String, Object> map = xmlMapper.readValue(String.format("<root>%s</root>", json), Map.class);
+            return map;
+        } catch (JsonProcessingException e) {
+            printException("Could not convert xml to map", e);
 
-		}
-		return null;
-	}
+        }
+        return null;
+    }
 
-	public static Object getExceptionMap(Exception e) {
-		Map<String, Object> lastErrorDump = new HashMap<>();
-		if (e == null)
-			e = new SystemException("EKA_MWS_1007",
-					new Exception("Exception thrown is null but it's not clear if it's null pointer exception"));
-		if (e instanceof SnippetException) {
-			lastErrorDump.put("lastErrorDump", (SnippetException) e);
-		} else {
-			lastErrorDump.put("lastErrorDump", e);
-		}
+    public static Object getExceptionMap(Exception e) {
+        Map<String, Object> lastErrorDump = new HashMap<>();
+        if (e == null)
+            e = new SystemException("EKA_MWS_1007",
+                    new Exception("Exception thrown is null but it's not clear if it's null pointer exception"));
+        if (e instanceof SnippetException) {
+            lastErrorDump.put("lastErrorDump", (SnippetException) e);
+        } else {
+            lastErrorDump.put("lastErrorDump", e);
+        }
 
-		String json = null;
-		try {
-			json = ServiceUtils.toJson(lastErrorDump);
-			lastErrorDump = ServiceUtils.jsonToMap(json);
-		} catch (Exception e2) {
-			// TODO: handle exception
-			lastErrorDump.clear();
-			lastErrorDump.put("lastErrorDump", "");
-		}
-		return lastErrorDump.get("lastErrorDump");
-	}
+        String json = null;
+        try {
+            json = ServiceUtils.toJson(lastErrorDump);
+            lastErrorDump = ServiceUtils.jsonToMap(json);
+        } catch (Exception e2) {
+            // TODO: handle exception
+            lastErrorDump.clear();
+            lastErrorDump.put("lastErrorDump", "");
+        }
+        return lastErrorDump.get("lastErrorDump");
+    }
 
-	public static final void execute(String fqn, DataPipeline dataPipeLine) throws SnippetException {
-		if (!fqn.endsWith(".main"))
-			fqn += ".main";
-		ServiceManager.invokeJavaMethod(fqn, dataPipeLine);
-	}
-	
-	public static final boolean isPublicFolder(String path) {
-		//String str="/files/gui/middleware/pub/";
-		String array[]=path.split("/pub/");
-		if(array.length>=2) {
-			String preFixPath=array[0];
-			String pArray[]=preFixPath.split("/files/gui/");
-			if(pArray.length>=2) {
-				String packageName=pArray[1];
-				if(!packageName.contains("/"))
-					return true;
-			}
-		}
-		return false;
-	}
+    public static final void execute(String fqn, DataPipeline dataPipeLine) throws SnippetException {
+        if (!fqn.endsWith(".main"))
+            fqn += ".main";
+        ServiceManager.invokeJavaMethod(fqn, dataPipeLine);
+    }
 
-	public static final void compileJavaCode(String fqn, DataPipeline dataPipeLine) throws SnippetException {
-		try {
-			ScriptEngineContextManager.clear();
-			ServiceManager.compileJava(fqn, dataPipeLine);
-		} catch (Throwable e) {
-			throw new SnippetException(dataPipeLine, "Error during compilation", new Exception(e));
-		}
-	}
+    public static final boolean isPublicFolder(String path) {
+        //String str="/files/gui/middleware/pub/";
+        String array[] = path.split("/pub/");
+        if (array.length >= 2) {
+            String preFixPath = array[0];
+            String pArray[] = preFixPath.split("/files/gui/");
+            if (pArray.length >= 2) {
+                String packageName = pArray[1];
+                if (!packageName.contains("/"))
+                    return true;
+            }
+        }
+        return false;
+    }
 
-	public static final void printException(String msg, Exception e) {
-		String logLine=getLogLine(e, msg);
-		LOGGER.error(logLine);
-	}
-	
-	public static final void printException(Tenant tenant,String msg, Exception e) {
-		String logLine=getLogLine(e, msg);
-		tenant.logError(null, logLine);
-		LOGGER.error(logLine);
-	}
-	
-	public static final void printException(DataPipeline dp, String msg, Exception e) {
-		String logLine=getLogLine(e, msg);
-		dp.log(logLine, Level.ERROR);
-		LOGGER.error(logLine);
+    public static final void compileJavaCode(String fqn, DataPipeline dataPipeLine) throws SnippetException {
+        try {
+            ScriptEngineContextManager.clear();
+            ServiceManager.compileJava(fqn, dataPipeLine);
+        } catch (Throwable e) {
+            throw new SnippetException(dataPipeLine, "Error during compilation", new Exception(e));
+        }
+    }
 
-	}
+    public static final void printException(String msg, Exception e) {
+        String logLine = getLogLine(e, msg);
+        LOGGER.error(logLine);
+    }
 
-	private static String getLogLine(Exception e, String msg) {
-		StringBuilder sb = new StringBuilder();
-		StackTraceElement[] stackTrace = e.getStackTrace();
-		sb.append(msg);
-		sb.append("\n");
-		if(e!=null)
-			sb.append(e.getMessage());
-		else
-			sb.append("Custom error");
-		sb.append("\n");
-		if (stackTrace == null)
-			stackTrace = Thread.currentThread().getStackTrace();
-		for (StackTraceElement stackTraceElement : stackTrace) {
-			sb.append(stackTraceElement.toString());
-			sb.append("\n");
-		}
-		return sb.toString();
-	}
-	
-	public static final String getServerProperty(String key) {
-		String val = null;
-		try {
-			Properties props = PropertyManager.getServerProperties("server.properties");
-			val = props.getProperty(key);
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+    public static final void printException(Tenant tenant, String msg, Exception e) {
+        String logLine = getLogLine(e, msg);
+        tenant.logError(null, logLine);
+        LOGGER.error(logLine);
+    }
 
-		return val;
-	}
+    public static final void printException(DataPipeline dp, String msg, Exception e) {
+        String logLine = getLogLine(e, msg);
+        dp.log(logLine, Level.ERROR);
+        LOGGER.error(logLine);
 
-	private static Properties getUrlAliasMapping(Tenant tenant) {
-		Properties urlMappings = aliasMap.get(tenant.getName());
-		if (urlMappings == null) {
-			urlMappings = new Properties();
-			aliasMap.put(tenant.getName(), urlMappings);
-		}
-		return urlMappings;
-	}
+    }
 
-	public static byte[] compress(byte data[]) {
-		Deflater def = new Deflater();
-		def.setInput(data);
-		def.finish();
-		byte compString[] = new byte[data.length];
-		int compSize = def.deflate(compString);
-		String str = new String(compString, StandardCharsets.UTF_8).trim();
-		def.end();
-		return str.getBytes();
-	}
+    private static String getLogLine(Exception e, String msg) {
+        StringBuilder sb = new StringBuilder();
+        StackTraceElement[] stackTrace = e.getStackTrace();
+        sb.append(msg);
+        sb.append("\n");
+        if (e != null)
+            sb.append(e.getMessage());
+        else
+            sb.append("Custom error");
+        sb.append("\n");
+        if (stackTrace == null)
+            stackTrace = Thread.currentThread().getStackTrace();
+        for (StackTraceElement stackTraceElement : stackTrace) {
+            sb.append(stackTraceElement.toString());
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 
-	public static byte[] deCompress(byte data[]) throws DataFormatException {
-		Inflater inf = new Inflater();
-		inf.setInput(data);
-		byte orgString[] = new byte[data.length];
-		int orgSize = inf.inflate(orgString);
-		String str = new String(orgString, StandardCharsets.UTF_8).trim();
-		inf.end();
-		return str.getBytes();
-	}
+    public static final String getServerProperty(String key) {
+        String val = null;
+        try {
+            Properties props = PropertyManager.getServerProperties("server.properties");
+            val = props.getProperty(key);
+        } catch (SystemException e) {
+            e.printStackTrace();
+        }
 
-	public static final String getPathService(String requestPath, Map<String, Object> payload, Tenant tenant) {
+        return val;
+    }
 
-		if (requestPath.startsWith("GET/packages"))
-			return requestPath.split("/")[1];
-		try {
-			String URLAliasFilePath = PropertyManager.getPackagePath(tenant) + "URLAliasMapping.properties";
-			if (requestPath.contains("//")) {
-				LOGGER.log(Level.INFO, requestPath);
-				tenant.logInfo(null,requestPath);
-				return null;
-			}
-			if (requestPath.endsWith("/")) {
-				requestPath += "$$^%@#";
-				requestPath = requestPath.replace("/$$^%@#", "");
-			}
-			final Properties urlMappings = getUrlAliasMapping(tenant);
-			Map<String, String> pathParams = new HashMap<String, String>();
-			boolean reload = PropertyManager.hasTenantFileChanged(URLAliasFilePath);
-			if (reload) {
-				Properties props = PropertyManager.getProperties(URLAliasFilePath);
-				if (props == null)
-					props = new Properties();
-				props.load(new FileInputStream(new File(URLAliasFilePath)));
-				Set<Object> keys = props.keySet();
-				// Add keys
-				for (Object keyStr : keys) {
-					String key = keyStr.toString();
-					urlMappings.put(key, props.get(key));
-					UriTemplate parameterResolver = new UriTemplate(key);
-					parameterResolverMap.put(tenant.getName() + "-" + key, parameterResolver);
-				}
-				// Remove Keys
-				keys = urlMappings.keySet();
-				for (Object keyStr : keys) {
-					String key = keyStr.toString();
-					if (props.get(key) == null) {
-						urlMappings.remove(key);
-						parameterResolverMap.remove(tenant.getName() + "-" + key);
-					}
-				}
-			}
-			String serviceName = urlMappings.getProperty(requestPath + "/*");
-			if (serviceName == null)
-				serviceName = urlMappings.getProperty(requestPath);
-			if (serviceName == null && payload != null) {
-				Set<Object> keys = urlMappings.keySet();
-				for (Object keyStr : keys) {
-					UriTemplate parameterResolver = parameterResolverMap.get(tenant.getName() + "-" + keyStr);
-					if (parameterResolver == null) {
-						continue;
-					}
-					// if (parameterResolver.match(requestPath)) {
-					pathParams = parameterResolver.matcher(requestPath);
-					if (pathParams != null && pathParams.size() > 0) {
-						serviceName = urlMappings.getProperty(keyStr.toString());
-						payload.put("pathParameters", pathParams);
-						break;
-					}
-					// }
-				}
-			}
-			return serviceName;
+    private static Properties getUrlAliasMapping(Tenant tenant) {
+        Properties urlMappings = aliasMap.get(tenant.getName());
+        if (urlMappings == null) {
+            urlMappings = new Properties();
+            aliasMap.put(tenant.getName(), urlMappings);
+        }
+        return urlMappings;
+    }
 
-		} catch (Exception e) {
-			ServiceUtils.printException(tenant,"Failed during evaluating resource path", e);
-		}
-		return null;
-	}
+    public static byte[] compress(byte data[]) {
+        Deflater def = new Deflater();
+        def.setInput(data);
+        def.finish();
+        byte compString[] = new byte[data.length];
+        int compSize = def.deflate(compString);
+        String str = new String(compString, StandardCharsets.UTF_8).trim();
+        def.end();
+        return str.getBytes();
+    }
 
-	public static final Map<String, Object> extractHeaders(HttpServerExchange exchange) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		HeaderMap hm = exchange.getRequestHeaders();
-		Collection<HttpString> hts = hm.getHeaderNames();
-		for (HttpString httpString : hts) {
-			map.put(httpString.toString(), hm.get(httpString).getFirst());
-		}
-		return map;
-	}
+    public static byte[] deCompress(byte data[]) throws DataFormatException {
+        Inflater inf = new Inflater();
+        inf.setInput(data);
+        byte orgString[] = new byte[data.length];
+        int orgSize = inf.inflate(orgString);
+        String str = new String(orgString, StandardCharsets.UTF_8).trim();
+        inf.end();
+        return str.getBytes();
+    }
 
-	public static final String getFormattedLogLine(String id, String resource, String info) {
-		StringBuilder log = new StringBuilder();
-		log.append(id);
-		log.append("    ");
-		log.append(resource);
-		log.append("    ");
-		log.append(info);
-		return log.toString();
-	}
+    public static final String getPathService(String requestPath, Map<String, Object> payload, Tenant tenant) {
 
-	public static final Map<String, Object> getFormattedLogMap(String id, String resource, String info) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("id", id);
-		map.put("resource", resource);
-		map.put("log", info);
-		return map;
-	}
+        if (requestPath.startsWith("GET/packages"))
+            return requestPath.split("/")[1];
+        try {
+            String URLAliasFilePath = PropertyManager.getPackagePath(tenant) + "URLAliasMapping.properties";
+            if (requestPath.contains("//")) {
+                LOGGER.log(Level.INFO, requestPath);
+                tenant.logInfo(null, requestPath);
+                return null;
+            }
+            if (requestPath.endsWith("/")) {
+                requestPath += "$$^%@#";
+                requestPath = requestPath.replace("/$$^%@#", "");
+            }
+            final Properties urlMappings = getUrlAliasMapping(tenant);
+            Map<String, String> pathParams = new HashMap<String, String>();
+            boolean reload = PropertyManager.hasTenantFileChanged(URLAliasFilePath);
+            if (reload) {
+                Properties props = PropertyManager.getProperties(URLAliasFilePath);
+                if (props == null)
+                    props = new Properties();
+                props.load(new FileInputStream(new File(URLAliasFilePath)));
+                Set<Object> keys = props.keySet();
+                // Add keys
+                for (Object keyStr : keys) {
+                    String key = keyStr.toString();
+                    urlMappings.put(key, props.get(key));
+                    UriTemplate parameterResolver = new UriTemplate(key);
+                    parameterResolverMap.put(tenant.getName() + "-" + key, parameterResolver);
+                }
+                // Remove Keys
+                keys = urlMappings.keySet();
+                for (Object keyStr : keys) {
+                    String key = keyStr.toString();
+                    if (props.get(key) == null) {
+                        urlMappings.remove(key);
+                        parameterResolverMap.remove(tenant.getName() + "-" + key);
+                    }
+                }
+            }
+            String serviceName = urlMappings.getProperty(requestPath + "/*");
+            if (serviceName == null)
+                serviceName = urlMappings.getProperty(requestPath);
+            if (serviceName == null && payload != null) {
+                Set<Object> keys = urlMappings.keySet();
+                for (Object keyStr : keys) {
+                    UriTemplate parameterResolver = parameterResolverMap.get(tenant.getName() + "-" + keyStr);
+                    if (parameterResolver == null) {
+                        continue;
+                    }
+                    // if (parameterResolver.match(requestPath)) {
+                    pathParams = parameterResolver.matcher(requestPath);
+                    if (pathParams != null && pathParams.size() > 0) {
+                        serviceName = urlMappings.getProperty(keyStr.toString());
+                        payload.put("pathParameters", pathParams);
+                        break;
+                    }
+                    // }
+                }
+            }
+            return serviceName;
 
-	public static final MultiPart getMultiPart(DataPipeline dataPipeLine) throws SnippetException {
-		String sessionId = dataPipeLine.getSessionId();
-		RuntimePipeline rp = RuntimePipeline.getPipeline(sessionId);
-		final HttpServerExchange exchange = rp.getExchange();
+        } catch (Exception e) {
+            ServiceUtils.printException(tenant, "Failed during evaluating resource path", e);
+        }
+        return null;
+    }
 
-		Builder builder = FormParserFactory.builder();
+    public static final Map<String, Object> extractHeaders(HttpServerExchange exchange) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        HeaderMap hm = exchange.getRequestHeaders();
+        Collection<HttpString> hts = hm.getHeaderNames();
+        for (HttpString httpString : hts) {
+            map.put(httpString.toString(), hm.get(httpString).getFirst());
+        }
+        return map;
+    }
 
-		final FormDataParser formDataParser = builder.build().createParser(exchange);
-		if (formDataParser != null) {
+    public static final String getFormattedLogLine(String id, String resource, String info) {
+        StringBuilder log = new StringBuilder();
+        log.append(id);
+        log.append("    ");
+        log.append(resource);
+        log.append("    ");
+        log.append(info);
+        return log.toString();
+    }
+
+    public static final Map<String, Object> getFormattedLogMap(String id, String resource, String info) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("resource", resource);
+        map.put("log", info);
+        return map;
+    }
+
+    public static final MultiPart getMultiPart(DataPipeline dataPipeLine) throws SnippetException {
+        String sessionId = dataPipeLine.getSessionId();
+        RuntimePipeline rp = RuntimePipeline.getPipeline(sessionId);
+        final HttpServerExchange exchange = rp.getExchange();
+
+        Builder builder = FormParserFactory.builder();
+
+        final FormDataParser formDataParser = builder.build().createParser(exchange);
+        if (formDataParser != null) {
 
 //			try {
 //				ExecutorService threadpool = Executors.newCachedThreadPool();
 //				@SuppressWarnings("unchecked")
 //				Future<Long> futureTask = (Future<Long>) threadpool.submit(() -> {
-			try {
-				// BlockingHttpExchange bht = exchange.startBlocking();
-				FormData formData = null;// new FormData(0);
-				try {
-					formData = formDataParser.parseBlocking();
-				} catch (Exception e) {
-					e.printStackTrace();
-					throw new SnippetException(dataPipeLine,
-							"Could not fetch formData for multipart request.\n" + e.getMessage(), e);
-				}
-				Map<String, Object> formDataMap = new HashMap<String, Object>();
-				List<InputStream> files = new ArrayList<InputStream>();
-				for (String key : formData) {
-					for (FormData.FormValue formValue : formData.get(key)) {
-						if (formValue.isFileItem()) {
-							if (key != null && key.trim().length() > 0) {
-								formDataMap.put(key + "_fileName", formValue.getFileName());
-								formDataMap.put(key, formValue.getFileItem().getInputStream());
-							}
-							InputStream is = formValue.getFileItem().getInputStream();
-							files.add(is);
-							formDataMap.put(formValue.getFileName(), is);
-						} else
-							formDataMap.put(key, formValue.getValue());
-					}
-				}
-				formDataMap.put("uploadedFiles", files);
-				MultiPart mp = new MultiPart(formDataMap);
-				rp.payload.put("*multiPartRequest", mp);
-			} catch (Exception e) {
-				ServiceUtils.printException(rp.getTenant(),rp.getSessionID() + " Could not stream file thread.", e);
-			}
+            try {
+                // BlockingHttpExchange bht = exchange.startBlocking();
+                FormData formData = null;// new FormData(0);
+                try {
+                    formData = formDataParser.parseBlocking();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new SnippetException(dataPipeLine,
+                            "Could not fetch formData for multipart request.\n" + e.getMessage(), e);
+                }
+                Map<String, Object> formDataMap = new HashMap<String, Object>();
+                List<InputStream> files = new ArrayList<InputStream>();
+                for (String key : formData) {
+                    for (FormData.FormValue formValue : formData.get(key)) {
+                        if (formValue.isFileItem()) {
+                            if (key != null && key.trim().length() > 0) {
+                                formDataMap.put(key + "_fileName", formValue.getFileName());
+                                formDataMap.put(key, formValue.getFileItem().getInputStream());
+                            }
+                            InputStream is = formValue.getFileItem().getInputStream();
+                            files.add(is);
+                            formDataMap.put(formValue.getFileName(), is);
+                        } else
+                            formDataMap.put(key, formValue.getValue());
+                    }
+                }
+                formDataMap.put("uploadedFiles", files);
+                MultiPart mp = new MultiPart(formDataMap);
+                rp.payload.put("*multiPartRequest", mp);
+            } catch (Exception e) {
+                ServiceUtils.printException(rp.getTenant(), rp.getSessionID() + " Could not stream file thread.", e);
+            }
 //				});
 //
 //				while (!futureTask.isDone()) {
@@ -541,172 +541,166 @@ public class ServiceUtils {
 //				throw new SnippetException(dataPipeLine, e.getMessage(), e);
 //			}
 
-		}
-		MultiPart mp = null;
-		Map<String, Object> payload = rp.payload;
-		if (payload.get("*multiPartRequest") != null) {
-			mp = (MultiPart) payload.get("*multiPartRequest");
-			payload.remove("*multiPartRequest");
-		}
-		return mp;
-	}
+        }
+        MultiPart mp = null;
+        Map<String, Object> payload = rp.payload;
+        if (payload.get("*multiPartRequest") != null) {
+            mp = (MultiPart) payload.get("*multiPartRequest");
+            payload.remove("*multiPartRequest");
+        }
+        return mp;
+    }
 
-	public static final String getURLAlias(String fqn, Tenant tenant) throws Exception {
-		Properties urlMappings = getUrlAliasMapping(tenant);
-		Set<Object> sset = urlMappings.keySet();
-		for (Object setKey : sset) {
-			if (fqn.equalsIgnoreCase(urlMappings.get(setKey).toString()))
-				return setKey.toString();
-		}
-		return null;
-	}
+    public static final String getURLAlias(String fqn, Tenant tenant) throws Exception {
+        Properties urlMappings = getUrlAliasMapping(tenant);
+        Set<Object> sset = urlMappings.keySet();
+        for (Object setKey : sset) {
+            if (fqn.equalsIgnoreCase(urlMappings.get(setKey).toString()))
+                return setKey.toString();
+        }
+        return null;
+    }
 
-	public static final String registerURLAlias(String fqn, String alias, DataPipeline dp) throws Exception {
+    public static final String registerURLAlias(String fqn, String alias, DataPipeline dp) throws Exception {
+        System.out.println("alias " + alias);
 
-		// Map<String, Object> pathParams = new HashMap<String, Object>();
-		// pathParams.put("pathParameters", "");
-		String aliasTenantName = dp.rp.getTenant().getName();
-		// alias=aliasTenantName+alias;
-		String existingFQN = getPathService(alias, null, dp.rp.getTenant());
+        String aliasTenantName = dp.rp.getTenant().getName();
+        String existingFQN = getPathService(alias, null, dp.rp.getTenant());
 
-		if (!isAliasValid(fqn)) {
-			return "Failed to save. The provided fqn is incorrect.";
-		}
-
-		// String existingFQN=urlMappings.getProperty(alias);
-		Properties urlMappings = getUrlAliasMapping(dp.rp.getTenant());
-		String msg = "Saved";
-		if (existingFQN == null || existingFQN.equalsIgnoreCase(fqn)) {
-			Set<Object> sset = urlMappings.keySet();
-			for (Object setKey : sset) {
-				if (fqn.equalsIgnoreCase(urlMappings.get(setKey).toString()))
-					urlMappings.remove(setKey);
-			}
-			urlMappings.setProperty(alias, fqn);
-		} else {
-			msg = "Failed to save. The alias conflicted with the existing FQN(" + existingFQN + ").";
-			return msg;
-		}
-		// URL url = new URL(MiddlewareServer.getConfigFolderPath() +
-		// "URLAliasMapping.properties");
-		FileOutputStream fos = new FileOutputStream(
-				new File(PropertyManager.getPackagePath(dp.rp.getTenant()) + "URLAliasMapping.properties"));
-		urlMappings.store(fos, "");// save(fos, "");
-		fos.flush();
-		fos.close();
-		return msg;
-	}
+        if (!isAliasValid(alias)) {
+            return "Failed to save. The provided alias is incorrect.";
+        }
+        System.out.println("========");
 
 
-	private static boolean isAliasValid(String alias) {
+       /* if (!isAliasAvailable(alias, dp)) {
+            return "Failed to save. It already exists.";
+        }
+*/
+        Properties urlMappings = getUrlAliasMapping(dp.rp.getTenant());
 
-		if (alias.contains("?")) {
-			return false;
-		}
+        String msg = "Saved";
+        if (existingFQN == null || existingFQN.equalsIgnoreCase(fqn)) {
+            Set<Object> sset = urlMappings.keySet();
+            for (Object setKey : sset) {
+                if (fqn.equalsIgnoreCase(urlMappings.get(setKey).toString()))
+                    urlMappings.remove(setKey);
+            }
+            urlMappings.setProperty(alias, fqn);
+            FileOutputStream fos = new FileOutputStream(new File(PropertyManager.getPackagePath(dp.rp.getTenant()) + "URLAliasMapping.properties"));
+            urlMappings.store(fos, "");
+            fos.flush();
+            fos.close();
+        } else {
+            msg = "Failed to save. The alias conflicts with the existing FQN (" + existingFQN + ").";
+            return msg;
+        }
 
-		// Exclude aliases with path parameters with values
-		if (alias.contains("{") && alias.contains("}")) {
-			String[] pathSegments = alias.split("/");
-			for (String segment : pathSegments) {
-				if (segment.contains("{") && segment.contains("}")) {
-					String param = segment.substring(segment.indexOf("{") + 1, segment.indexOf("}"));
-					if (param.trim().isEmpty() || param.matches(".*[^a-zA-Z0-9_.-]+.*")) {
-						return false;
-					}
-				}
-			}
-		}
-
-		if (alias.contains("..")) {
-			return false;
-		}
-		String specialCharacters = ".*[!@#$%^&*()+=\\[\\]{}\\\\|;:\",<>/?].*";
-		if (alias.matches(specialCharacters) && !alias.contains(".") && !alias.contains("_")) {
-			return false;
-		}
-
-		return true;
-	}
+        return msg;
+    }
 
 
-	private static final void streamResponseFile(final RuntimePipeline rp, final MultiPart mp) throws SnippetException {
+    private static boolean isAliasValid(String alias) {
+        if (alias.contains("?")) {
+            return false; // Alias contains a query parameter
+        }
 
-		try {
-			handleFileResponse(rp.getExchange(), mp);
-		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO Auto-generated catch block
-			throw new SnippetException(rp.dataPipeLine, "Exception while streaming file.\n" + e.getMessage(), e);
+        // Exclude aliases with invalid characters
+        String invalidCharacters = ".*[^a-zA-Z0-9_.\\-/{}]+.*";
+        if (alias.matches(invalidCharacters)) {
+            return false; // Alias contains special characters
+        }
 
-		} /*
-			 * // Thread newThread = new Thread(() -> {
-			 *
-			 * ExecutorService threadpool = Executors.newCachedThreadPool();
-			 *
-			 * @SuppressWarnings("unchecked") Future<Long> futureTask = (Future<Long>)
-			 * threadpool.submit(() -> { try { handleFileResponse(rp.getExchange(), mp); }
-			 * catch (Exception e) { // TODO Auto-generated catch block
-			 * ServiceUtils.printException(rp.getSessionID() +
-			 * " Could not stream file thread.", e); } });
-			 *
-			 * while (!futureTask.isDone()) { //
-			 * System.out.println("FutureTask is not finished yet..."); Thread.sleep(100); }
-			 *
-			 * threadpool.shutdown();
-			 *
-			 */
-	}
+        return true;
+    }
 
-	private static void handleFileResponse(HttpServerExchange exchange, MultiPart mp) throws Exception {
-		OutputStream os = null;
-		InputStream inputStream = null;
-		try {
-			File tempFile = mp.file;
 
-			if (tempFile == null)
-				inputStream = mp.is;
-			else
-				inputStream = new FileInputStream(tempFile);
+   /* public static boolean isAliasAvailable(String alias, DataPipeline dp) {
+        Properties urlMappings = getUrlAliasMapping(dp.rp.getTenant());
+        Boolean res = urlMappings.containsKey(alias);
+        System.out.println(res);
+        return !res;
+    }
+
+*/
+    private static final void streamResponseFile(final RuntimePipeline rp, final MultiPart mp) throws SnippetException {
+
+        try {
+            handleFileResponse(rp.getExchange(), mp);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO Auto-generated catch block
+            throw new SnippetException(rp.dataPipeLine, "Exception while streaming file.\n" + e.getMessage(), e);
+
+        } /*
+         * // Thread newThread = new Thread(() -> {
+         *
+         * ExecutorService threadpool = Executors.newCachedThreadPool();
+         *
+         * @SuppressWarnings("unchecked") Future<Long> futureTask = (Future<Long>)
+         * threadpool.submit(() -> { try { handleFileResponse(rp.getExchange(), mp); }
+         * catch (Exception e) { // TODO Auto-generated catch block
+         * ServiceUtils.printException(rp.getSessionID() +
+         * " Could not stream file thread.", e); } });
+         *
+         * while (!futureTask.isDone()) { //
+         * System.out.println("FutureTask is not finished yet..."); Thread.sleep(100); }
+         *
+         * threadpool.shutdown();
+         *
+         */
+    }
+
+    private static void handleFileResponse(HttpServerExchange exchange, MultiPart mp) throws Exception {
+        OutputStream os = null;
+        InputStream inputStream = null;
+        try {
+            File tempFile = mp.file;
+
+            if (tempFile == null)
+                inputStream = mp.is;
+            else
+                inputStream = new FileInputStream(tempFile);
 //			exchange.startBlocking();
-			Set<String> headers = mp.headers.keySet();
+            Set<String> headers = mp.headers.keySet();
 
-			for (String key : headers) {
-				exchange.getResponseHeaders().put(HttpString.tryFromString(key), mp.headers.get(key).toString());
-			}
-			os = exchange.getOutputStream();
-			if (tempFile != null)
-				IOUtils.copy(inputStream, os);
-			else
-				IOUtils.copyLarge(inputStream, os);
-			os.flush();
-			os.close();
-			inputStream.close();
-			exchange.endExchange();
+            for (String key : headers) {
+                exchange.getResponseHeaders().put(HttpString.tryFromString(key), mp.headers.get(key).toString());
+            }
+            os = exchange.getOutputStream();
+            if (tempFile != null)
+                IOUtils.copy(inputStream, os);
+            else
+                IOUtils.copyLarge(inputStream, os);
+            os.flush();
+            os.close();
+            inputStream.close();
+            exchange.endExchange();
 
-		} finally {
-			if (os != null)
-				os.close();
-			if (inputStream != null)
-				inputStream.close();
-		}
-	}
+        } finally {
+            if (os != null)
+                os.close();
+            if (inputStream != null)
+                inputStream.close();
+        }
+    }
 
-	public static final void startStreaming(final RuntimePipeline rp, final MultiPart mp) throws SnippetException {
-		if (mp != null) {
-			if (mp.type.equals("file"))
-				streamResponseFile(rp, mp);
-			else if (mp.type.equals("body"))
-				streamBodyResponse(rp, mp);
-		}
-	}
+    public static final void startStreaming(final RuntimePipeline rp, final MultiPart mp) throws SnippetException {
+        if (mp != null) {
+            if (mp.type.equals("file"))
+                streamResponseFile(rp, mp);
+            else if (mp.type.equals("body"))
+                streamBodyResponse(rp, mp);
+        }
+    }
 
-	private static final void streamBodyResponse(final RuntimePipeline rp, final MultiPart mp) throws SnippetException {
-		try {
-			handleBodyResponse(rp.getExchange(), mp);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			ServiceUtils.printException(rp.getTenant(),rp.getSessionID() + " Could not stream body thread.", e);
-		}
+    private static final void streamBodyResponse(final RuntimePipeline rp, final MultiPart mp) throws SnippetException {
+        try {
+            handleBodyResponse(rp.getExchange(), mp);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            ServiceUtils.printException(rp.getTenant(), rp.getSessionID() + " Could not stream body thread.", e);
+        }
 //		try {
 //			ExecutorService threadpool = Executors.newCachedThreadPool();
 //			@SuppressWarnings("unchecked")
@@ -726,752 +720,753 @@ public class ServiceUtils {
 //			throw new SnippetException(rp.dataPipeLine, "Exception while streaming body.\n" + e.getMessage(), e);
 //
 //		}
-	}
+    }
 
-	private static void handleBodyResponse(HttpServerExchange exchange, MultiPart mp) throws Exception {
+    private static void handleBodyResponse(HttpServerExchange exchange, MultiPart mp) throws Exception {
 
-		InputStream targetStream = null;
-		OutputStream os = null;
-		try {
-			if (mp.is == null)
-				targetStream = new ByteArrayInputStream(mp.body);
-			else
-				targetStream = mp.is;
+        InputStream targetStream = null;
+        OutputStream os = null;
+        try {
+            if (mp.is == null)
+                targetStream = new ByteArrayInputStream(mp.body);
+            else
+                targetStream = mp.is;
 //		exchange.startBlocking();
-			Set<String> headers = mp.headers.keySet();
+            Set<String> headers = mp.headers.keySet();
 
-			for (String key : headers) {
-				exchange.getResponseHeaders().put(HttpString.tryFromString(key), mp.headers.get(key).toString());
-			}
-			os = exchange.getOutputStream();
-			// System.out.println("Available bytes:" + targetStream.available());
+            for (String key : headers) {
+                exchange.getResponseHeaders().put(HttpString.tryFromString(key), mp.headers.get(key).toString());
+            }
+            os = exchange.getOutputStream();
+            // System.out.println("Available bytes:" + targetStream.available());
 //		byte bytes[]=targetStream.readNBytes(200);
 //		System.out.println(new String(bytes));
-			IOUtils.copy(targetStream, os);
-			os.flush();
-			os.close();
-			// os=null;
-			targetStream.close();
-			// targetStream=null;
-			exchange.endExchange();
+            IOUtils.copy(targetStream, os);
+            os.flush();
+            os.close();
+            // os=null;
+            targetStream.close();
+            // targetStream=null;
+            exchange.endExchange();
 
-		} catch (Throwable e) {
-			e.printStackTrace();
-		} finally {
-			if (os != null)
-				os.close();
-			if (targetStream != null)
-				targetStream.close();
-		}
-	}
+        } catch (Throwable e) {
+            e.printStackTrace();
+        } finally {
+            if (os != null)
+                os.close();
+            if (targetStream != null)
+                targetStream.close();
+        }
+    }
 
-	public static byte[] getBody(DataPipeline dataPipeLine) throws SnippetException {
-		try {
-			final RuntimePipeline rp = RuntimePipeline.getPipeline(dataPipeLine.getSessionId());
-			final Map<String, Object> payload = rp.payload;
-			try {
-				rp.getExchange().getRequestReceiver().setMaxBufferSize(1024);
-				rp.getExchange().getRequestReceiver().receiveFullBytes(new FullBytesCallback() {
-					@Override
-					public void handle(HttpServerExchange exchange, byte[] body) {
-						payload.put("@body", body);
-					}
-				});
-			} catch (Exception e) {
-				e.printStackTrace();
-				ServiceUtils.printException(rp.getTenant(),rp.getSessionID() + " Could not stream body thread.", e);
-			}
+    public static byte[] getBody(DataPipeline dataPipeLine) throws SnippetException {
+        try {
+            final RuntimePipeline rp = RuntimePipeline.getPipeline(dataPipeLine.getSessionId());
+            final Map<String, Object> payload = rp.payload;
+            try {
+                rp.getExchange().getRequestReceiver().setMaxBufferSize(1024);
+                rp.getExchange().getRequestReceiver().receiveFullBytes(new FullBytesCallback() {
+                    @Override
+                    public void handle(HttpServerExchange exchange, byte[] body) {
+                        payload.put("@body", body);
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                ServiceUtils.printException(rp.getTenant(), rp.getSessionID() + " Could not stream body thread.", e);
+            }
 
-			if (payload.get("@body") != null) {
-				byte body[] = (byte[]) payload.get("@body");
-				payload.remove("@body");
-				return body;
-			}
+            if (payload.get("@body") != null) {
+                byte body[] = (byte[]) payload.get("@body");
+                payload.remove("@body");
+                return body;
+            }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new SnippetException(dataPipeLine, e.getMessage(), e);
-		}
-		return null;
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SnippetException(dataPipeLine, e.getMessage(), e);
+        }
+        return null;
+    }
 
-	public static final InputStream getBodyAsStream(final DataPipeline dataPipeLine) throws SnippetException {
-		try {
-			String sessionId = dataPipeLine.getSessionId();
-			RuntimePipeline rp = RuntimePipeline.getPipeline(sessionId);
-			final HttpServerExchange exchange = rp.getExchange();
-			rp.payload.put("@bodyStream", exchange.getInputStream());
-			if (rp.payload.get("@bodyStream") != null) {
-				InputStream is = (InputStream) rp.payload.get("@bodyStream");
-				rp.payload.remove("@bodyStream");
-				return is;
-			}
-		} catch (Exception e) {
-			throw new SnippetException(dataPipeLine, e.getMessage(), e);
-		}
-		return null;
-	}
+    public static final InputStream getBodyAsStream(final DataPipeline dataPipeLine) throws SnippetException {
+        try {
+            String sessionId = dataPipeLine.getSessionId();
+            RuntimePipeline rp = RuntimePipeline.getPipeline(sessionId);
+            final HttpServerExchange exchange = rp.getExchange();
+            rp.payload.put("@bodyStream", exchange.getInputStream());
+            if (rp.payload.get("@bodyStream") != null) {
+                InputStream is = (InputStream) rp.payload.get("@bodyStream");
+                rp.payload.remove("@bodyStream");
+                return is;
+            }
+        } catch (Exception e) {
+            throw new SnippetException(dataPipeLine, e.getMessage(), e);
+        }
+        return null;
+    }
 
-	public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation)
-			throws IOException {
-		LOGGER.info("Copying files from : " + sourceDirectoryLocation.toString());
-		LOGGER.info("Copying files to : " + destinationDirectoryLocation.toString());
+    public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation)
+            throws IOException {
+        LOGGER.info("Copying files from : " + sourceDirectoryLocation.toString());
+        LOGGER.info("Copying files to : " + destinationDirectoryLocation.toString());
 
-		FileUtils.copyDirectory(new File(sourceDirectoryLocation), new File(destinationDirectoryLocation));
-		LOGGER.info("Tenant instance created: " + destinationDirectoryLocation.toString());
-	}
-	
-	public static String setupRequestPath(HttpServerExchange exchange) {
-		
-		Cookie cookie = exchange.getRequestCookie("tenant");
-		String tenantName = null;
-		try {
-			AuthAccount acc=UserProfileManager.getUserProfileManager()
-					.getAccount(ServiceUtils.getCurrentLoggedInUserProfile(exchange));
-			tenantName=(String)acc.getAuthProfile().get("tenant");
-		} catch (Exception ignore) {
-			
-		}
-		String token=null;
-		if(cookie!=null && tenantName==null) {
-			tenantName=ServiceUtils.getTenantName(cookie);
-			token=ServiceUtils.getToken(cookie);
-		}
-		
-		String rqp = exchange.getRequestPath();
-		String rsrcTokens[]=null;
-		if(rqp!=null)
-			rsrcTokens = ("b" + rqp).split("/");
-		
-		if (rsrcTokens != null) {
-			if (rsrcTokens.length>2 && rsrcTokens[1].equalsIgnoreCase("tenant")) {
-				String tName = rsrcTokens[2];
-				if(tenantName==null)
-					tenantName=tName;
-				if(!tName.equals(tenantName))
-					exchange.setRequestPath(rqp.replace("/tenant/"+tName,"/tenant/"+tenantName));
-				ServiceUtils.setupCookie(exchange, tenantName, token);
-			}
-			if (tenantName == null) {
-				Cookie cukie = ServiceUtils.setupCookie(exchange, tenantName, token);
-				tenantName=getTenantName(cukie);
-				exchange.setRequestPath("/tenant/"+tenantName+rqp);
-				if(!ServiceUtils.isApiCall(exchange))
-					exchange.setResponseCookie(cukie);
-			}
-		}
-		return tenantName;
-	}
+        FileUtils.copyDirectory(new File(sourceDirectoryLocation), new File(destinationDirectoryLocation));
+        LOGGER.info("Tenant instance created: " + destinationDirectoryLocation.toString());
+    }
 
-	public static void manipulateHeaders(HttpServerExchange exchange) {
+    public static String setupRequestPath(HttpServerExchange exchange) {
 
-	}
-	
-	public static Cookie setupCookie(HttpServerExchange exchange,String tenantName, String token) {
-		Cookie cookie = exchange.getRequestCookie("tenant");
-		if(cookie==null || cookie.isDiscard()) {
-			if(tenantName==null)
-				tenantName="default";
-			cookie=new CookieImpl("tenant", tenantName);
-			cookie.setPath("/");
-			if(!ServiceUtils.isApiCall(exchange))
-				exchange.setResponseCookie(cookie);
-		}
-		if(tenantName==null)
-			tenantName=getTenantName(cookie);
-		else if(getToken(cookie)==null)
-			cookie.setValue(tenantName);
-		//cookie.setSecure(true);
-		if(token!=null){
-			cookie.setValue(tenantName+" "+token);
-		}
-		cookie.setPath("/");
-		//if(!ServiceUtils.isApiCall(exchange))
-			exchange.setResponseCookie(cookie);
-		//exchange.
+        Cookie cookie = exchange.getRequestCookie("tenant");
+        String tenantName = null;
+        try {
+            AuthAccount acc = UserProfileManager.getUserProfileManager()
+                    .getAccount(ServiceUtils.getCurrentLoggedInUserProfile(exchange));
+            tenantName = (String) acc.getAuthProfile().get("tenant");
+        } catch (Exception ignore) {
+
+        }
+        String token = null;
+        if (cookie != null && tenantName == null) {
+            tenantName = ServiceUtils.getTenantName(cookie);
+            token = ServiceUtils.getToken(cookie);
+        }
+
+        String rqp = exchange.getRequestPath();
+        String rsrcTokens[] = null;
+        if (rqp != null)
+            rsrcTokens = ("b" + rqp).split("/");
+
+        if (rsrcTokens != null) {
+            if (rsrcTokens.length > 2 && rsrcTokens[1].equalsIgnoreCase("tenant")) {
+                String tName = rsrcTokens[2];
+                if (tenantName == null)
+                    tenantName = tName;
+                if (!tName.equals(tenantName))
+                    exchange.setRequestPath(rqp.replace("/tenant/" + tName, "/tenant/" + tenantName));
+                ServiceUtils.setupCookie(exchange, tenantName, token);
+            }
+            if (tenantName == null) {
+                Cookie cukie = ServiceUtils.setupCookie(exchange, tenantName, token);
+                tenantName = getTenantName(cukie);
+                exchange.setRequestPath("/tenant/" + tenantName + rqp);
+                if (!ServiceUtils.isApiCall(exchange))
+                    exchange.setResponseCookie(cukie);
+            }
+        }
+        return tenantName;
+    }
+
+    public static void manipulateHeaders(HttpServerExchange exchange) {
+
+    }
+
+    public static Cookie setupCookie(HttpServerExchange exchange, String tenantName, String token) {
+        Cookie cookie = exchange.getRequestCookie("tenant");
+        if (cookie == null || cookie.isDiscard()) {
+            if (tenantName == null)
+                tenantName = "default";
+            cookie = new CookieImpl("tenant", tenantName);
+            cookie.setPath("/");
+            if (!ServiceUtils.isApiCall(exchange))
+                exchange.setResponseCookie(cookie);
+        }
+        if (tenantName == null)
+            tenantName = getTenantName(cookie);
+        else if (getToken(cookie) == null)
+            cookie.setValue(tenantName);
+        //cookie.setSecure(true);
+        if (token != null) {
+            cookie.setValue(tenantName + " " + token);
+        }
+        cookie.setPath("/");
+        //if(!ServiceUtils.isApiCall(exchange))
+        exchange.setResponseCookie(cookie);
+        //exchange.
 //		((Set<Cookie>)((DelegatingIterable<Cookie>)responseCookies()).getDelegate()).add(cookie);
 //		exchange.responseCookies().forEach(null);
 //		exchange.remove
-		
-		return cookie;
-	}
-	
-	public static void clearSession(HttpServerExchange exchange) {
-		Session session = Sessions.getSession(exchange);
-		if (session == null)
-			return;
-		HashSet<String> names = new HashSet<>(session.getAttributeNames());
-		for (String attribute : names) {
-			session.removeAttribute(attribute);
-		}
-		session.invalidate(exchange);
-	}
 
-	public static String getToken(Cookie cookie) {
-		String value=cookie.getValue();
-		String tokenize[]=value.split(" ");
-		String token=null;
-		
-		if(tokenize.length>=2)
-			token=tokenize[1];
-		
-		return token;
-	}
-	public static String getTenantName(Cookie cookie) {
-		String value=cookie.getValue();
-		String tokenize[]=value.split(" ");
-		String tenantName=tokenize[0];
-		return tenantName;
-	}
-	
+        return cookie;
+    }
 
-	public static String initNewTenant(String name, AuthAccount account) {
-		try {
-			if (Tenant.exists(name)) {
-				String msg = ("Tenant already exists or null. Tenant Name : " + name);
-				LOGGER.error(msg);
-				return msg;
-			}
-			List<String> groups = null;
-			if (account.getAuthProfile() != null)
-				groups = (List<String>) account.getAuthProfile().get("groups");
-			if (groups == null) {
-				groups = new ArrayList<String>();
-				LOGGER.warn(
-						"Claim name 'groups' and 'tenant' are required in jwt access_token to allow users to use same tenant otherwise new user will have an option to create his own tenant. Tenant:"
-								+ name);
-			}
-			account.getAuthProfile().put("tenant", name);
-			String src = PropertyManager.getPackagePath(null) + "released" + File.separator + "core";
-			String srcZip = PropertyManager.getPackagePath(null) + "released" + File.separator + "core/syncloop-distribution-latest.zip";
-			String dest = PropertyManager.getPackagePathByTenantName(name);
+    public static void clearSession(HttpServerExchange exchange) {
+        Session session = Sessions.getSession(exchange);
+        if (session == null)
+            return;
+        HashSet<String> names = new HashSet<>(session.getAttributeNames());
+        for (String attribute : names) {
+            session.removeAttribute(attribute);
+        }
+        session.invalidate(exchange);
+    }
 
-			groups.add(AuthAccount.STATIC_ADMIN_GROUP);
-			groups.add(AuthAccount.STATIC_DEVELOPER_GROUP);
-			account.getAuthProfile().put("groups", groups);
-			account.getAuthProfile().put("tenant", name);
-			UserProfileManager.addUser(account);
-			LOGGER.info("New user(" + account.getUserId() + ") added for the tenant " + name + " successfully.");
-			// }
+    public static String getToken(Cookie cookie) {
+        String value = cookie.getValue();
+        String tokenize[] = value.split(" ");
+        String token = null;
 
-			Runnable runnable = new Runnable() {
-				@Override
-				public void run() {
-					try {
+        if (tokenize.length >= 2)
+            token = tokenize[1];
+
+        return token;
+    }
+
+    public static String getTenantName(Cookie cookie) {
+        String value = cookie.getValue();
+        String tokenize[] = value.split(" ");
+        String tenantName = tokenize[0];
+        return tenantName;
+    }
+
+
+    public static String initNewTenant(String name, AuthAccount account) {
+        try {
+            if (Tenant.exists(name)) {
+                String msg = ("Tenant already exists or null. Tenant Name : " + name);
+                LOGGER.error(msg);
+                return msg;
+            }
+            List<String> groups = null;
+            if (account.getAuthProfile() != null)
+                groups = (List<String>) account.getAuthProfile().get("groups");
+            if (groups == null) {
+                groups = new ArrayList<String>();
+                LOGGER.warn(
+                        "Claim name 'groups' and 'tenant' are required in jwt access_token to allow users to use same tenant otherwise new user will have an option to create his own tenant. Tenant:"
+                                + name);
+            }
+            account.getAuthProfile().put("tenant", name);
+            String src = PropertyManager.getPackagePath(null) + "released" + File.separator + "core";
+            String srcZip = PropertyManager.getPackagePath(null) + "released" + File.separator + "core/syncloop-distribution-latest.zip";
+            String dest = PropertyManager.getPackagePathByTenantName(name);
+
+            groups.add(AuthAccount.STATIC_ADMIN_GROUP);
+            groups.add(AuthAccount.STATIC_DEVELOPER_GROUP);
+            account.getAuthProfile().put("groups", groups);
+            account.getAuthProfile().put("tenant", name);
+            UserProfileManager.addUser(account);
+            LOGGER.info("New user(" + account.getUserId() + ") added for the tenant " + name + " successfully.");
+            // }
+
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    try {
 //						copyDirectory(src, dest);
-						ServiceUtils.unzipBuildFile(srcZip, dest);
-						Security.generateKeyPair(name);
-						Security.setupTenantSecurity(name);
-						Tenant.getTenant(name).logInfo(null, "New user(" + account.getUserId() + ") added for the tenant " + name + " successfully.");
-						LOGGER.info("Starting newly created tenant(" + name + ")......................");
-						Tenant.getTenant(name).logInfo(null, "Starting newly created tenant(" + name + ")......................");
-						startTenantServices(name);
-						UserProfileManager.newTenant(name);
-						LOGGER.info("New tenant with name " + name + " created successfully.");
-						Tenant.getTenant(name).logInfo(null, "New tenant with name " + name + " created and started successfully.");
+                        ServiceUtils.unzipBuildFile(srcZip, dest);
+                        Security.generateKeyPair(name);
+                        Security.setupTenantSecurity(name);
+                        Tenant.getTenant(name).logInfo(null, "New user(" + account.getUserId() + ") added for the tenant " + name + " successfully.");
+                        LOGGER.info("Starting newly created tenant(" + name + ")......................");
+                        Tenant.getTenant(name).logInfo(null, "Starting newly created tenant(" + name + ")......................");
+                        startTenantServices(name);
+                        UserProfileManager.newTenant(name);
+                        LOGGER.info("New tenant with name " + name + " created successfully.");
+                        Tenant.getTenant(name).logInfo(null, "New tenant with name " + name + " created and started successfully.");
 
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-				}
-			};
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            };
 
-			//new Thread(runnable).start();
-			runnable.run();
+            //new Thread(runnable).start();
+            runnable.run();
 
-		} catch (Exception e) {
-			printException("Failed to create tenant with name " + name, e);
-			return e.getMessage();
-		}
-		return "Done";
-	}
+        } catch (Exception e) {
+            printException("Failed to create tenant with name " + name, e);
+            return e.getMessage();
+        }
+        return "Done";
+    }
 
-	public static void startTenantServices(String tenant) throws SnippetException {
-		Security.setupTenantSecurity(tenant);
-		String uuid = UUID.randomUUID().toString();
-		final RuntimePipeline rp = RuntimePipeline.create(Tenant.getTenant(tenant), uuid, uuid, null,
-				"packages.middleware.pub.server.core.service.main",
-				"/packages.middleware.pub.server.core.service.main");
-		LOGGER.trace("RP created for " + tenant);
-		LOGGER.trace("Executing startup servies for " + tenant);
-		rp.dataPipeLine.applyAsync("packages.middleware.pub.server.core.service");
-	}
+    public static void startTenantServices(String tenant) throws SnippetException {
+        Security.setupTenantSecurity(tenant);
+        String uuid = UUID.randomUUID().toString();
+        final RuntimePipeline rp = RuntimePipeline.create(Tenant.getTenant(tenant), uuid, uuid, null,
+                "packages.middleware.pub.server.core.service.main",
+                "/packages.middleware.pub.server.core.service.main");
+        LOGGER.trace("RP created for " + tenant);
+        LOGGER.trace("Executing startup servies for " + tenant);
+        rp.dataPipeLine.applyAsync("packages.middleware.pub.server.core.service");
+    }
 
-	public static final URL[] getClassesURLs(String path) throws Exception {
-		List<URL> urls = new ArrayList<URL>();
-		String paths[] = path.split(getSeparator());
+    public static final URL[] getClassesURLs(String path) throws Exception {
+        List<URL> urls = new ArrayList<URL>();
+        String paths[] = path.split(getSeparator());
 
-		for (String location : paths) {
-			File file = new File(location);
-			LOGGER.info("Class file path: " + file.getAbsolutePath());
-			if (file.getName().contains("ekamw"))
-				LOGGER.info(file.getAbsolutePath());
-			if (file.isFile())
-				urls.add(file.toURL());
-		}
+        for (String location : paths) {
+            File file = new File(location);
+            LOGGER.info("Class file path: " + file.getAbsolutePath());
+            if (file.getName().contains("ekamw"))
+                LOGGER.info(file.getAbsolutePath());
+            if (file.isFile())
+                urls.add(file.toURL());
+        }
 
-		if (urls.size() > 0)
-			return urls.toArray(new URL[urls.size()]);
+        if (urls.size() > 0)
+            return urls.toArray(new URL[urls.size()]);
 
-		return null;
-	}
+        return null;
+    }
 
-	public static UserProfile getCurrentLoggedInUserProfile(HttpServerExchange exchange) throws SnippetException {
-		final SecurityContext context = exchange.getSecurityContext();
-		if (context != null)
-			return ((Pac4jAccount) context.getAuthenticatedAccount()).getProfile();
-		return null;
-	}
+    public static UserProfile getCurrentLoggedInUserProfile(HttpServerExchange exchange) throws SnippetException {
+        final SecurityContext context = exchange.getSecurityContext();
+        if (context != null)
+            return ((Pac4jAccount) context.getAuthenticatedAccount()).getProfile();
+        return null;
+    }
 
-	public static AuthAccount getCurrentLoggedInAuthAccount(HttpServerExchange exchange) throws SnippetException {
-		if (getCurrentLoggedInUserProfile(exchange) == null)
-			return null;
-		return UserProfileManager.getUserProfileManager().getAccount(getCurrentLoggedInUserProfile(exchange));
-	}
+    public static AuthAccount getCurrentLoggedInAuthAccount(HttpServerExchange exchange) throws SnippetException {
+        if (getCurrentLoggedInUserProfile(exchange) == null)
+            return null;
+        return UserProfileManager.getUserProfileManager().getAccount(getCurrentLoggedInUserProfile(exchange));
+    }
 
-	public static SecretKeySpec getKey(final String myKey) {
-		SecretKeySpec secretKey=null;
-		byte[] key;
-		MessageDigest sha = null;
-		try {
-			key = myKey.getBytes("UTF-8");
-			sha = MessageDigest.getInstance("SHA-1");
-			key = sha.digest(key);
-			key = Arrays.copyOf(key, 16);
-			secretKey = new SecretKeySpec(key, "AES");
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			printException("Could not create secretKey.", e);
-		}
-		return secretKey;
-	}
+    public static SecretKeySpec getKey(final String myKey) {
+        SecretKeySpec secretKey = null;
+        byte[] key;
+        MessageDigest sha = null;
+        try {
+            key = myKey.getBytes("UTF-8");
+            sha = MessageDigest.getInstance("SHA-1");
+            key = sha.digest(key);
+            key = Arrays.copyOf(key, 16);
+            secretKey = new SecretKeySpec(key, "AES");
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            printException("Could not create secretKey.", e);
+        }
+        return secretKey;
+    }
 
-	public static String encrypt(final String strToEncrypt, final String tenantName) {
-		try {
-			//setKey(secret);
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-			cipher.init(Cipher.ENCRYPT_MODE, Tenant.getTenant(tenantName).KEY);
-			return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
-		} catch (Exception e) {
-			printException(Tenant.getTenant(tenantName), "Error while encrypting: " , e);
-		}
-		return null;
-	}
+    public static String encrypt(final String strToEncrypt, final String tenantName) {
+        try {
+            //setKey(secret);
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, Tenant.getTenant(tenantName).KEY);
+            return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+        } catch (Exception e) {
+            printException(Tenant.getTenant(tenantName), "Error while encrypting: ", e);
+        }
+        return null;
+    }
 
-	public static String decrypt(final String strToDecrypt, final String tenantName) throws Exception {
-		try {
-			//setKey(secret);
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
-			cipher.init(Cipher.DECRYPT_MODE, Tenant.getTenant(tenantName).KEY);
-			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
-		} catch (Exception e) {
-			printException(Tenant.getTenant(tenantName), "Error while decrypting: " , e);
-			throw e;
-		}
-	}
-	
-	public static Date addHoursToDate(Date date, int hours) {
-	    Calendar calendar = Calendar.getInstance();
-	    calendar.setTime(date);
-	    calendar.add(Calendar.HOUR_OF_DAY, hours);
-	    return calendar.getTime();
-	}
+    public static String decrypt(final String strToDecrypt, final String tenantName) throws Exception {
+        try {
+            //setKey(secret);
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+            cipher.init(Cipher.DECRYPT_MODE, Tenant.getTenant(tenantName).KEY);
+            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+        } catch (Exception e) {
+            printException(Tenant.getTenant(tenantName), "Error while decrypting: ", e);
+            throw e;
+        }
+    }
 
-	public static final String[] getJarPaths(String path, String packagePath) throws Exception {
-		URL urls[] = null;
-		String paths[] = null;
-		LOGGER.debug("JAR PATH: " + packagePath + path);
-		File file = new File(packagePath + path);
-		if (file.isDirectory()) {
-			File files[] = file.listFiles();
-			if (files.length > 0) {
-				urls = new URL[files.length];
-				paths = new String[files.length];
-				int indx = 0;
-				for (File fileItem : files) {
-					if (fileItem.getName().endsWith(".jar")) {
+    public static Date addHoursToDate(Date date, int hours) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY, hours);
+        return calendar.getTime();
+    }
 
-						urls[indx] = fileItem.toURL();
-						paths[indx] = fileItem.getAbsolutePath();
-						indx++;
-					}
-				}
-				if (indx > 0) {
-					LOGGER.debug("JAR PATH(" + indx + "): " + packagePath + path);
-					return paths;
-				}
-			}
-		}
-		return null;
-	}
+    public static final String[] getJarPaths(String path, String packagePath) throws Exception {
+        URL urls[] = null;
+        String paths[] = null;
+        LOGGER.debug("JAR PATH: " + packagePath + path);
+        File file = new File(packagePath + path);
+        if (file.isDirectory()) {
+            File files[] = file.listFiles();
+            if (files.length > 0) {
+                urls = new URL[files.length];
+                paths = new String[files.length];
+                int indx = 0;
+                for (File fileItem : files) {
+                    if (fileItem.getName().endsWith(".jar")) {
 
-	public static void zipFile(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
-		if (fileToZip.isHidden()) {
-			return;
-		}
-		if (fileToZip.isDirectory()) {
-			if (fileName.endsWith("/")) {
-				zipOut.putNextEntry(new ZipEntry(fileName));
-				zipOut.closeEntry();
-			} else {
-				zipOut.putNextEntry(new ZipEntry(fileName + "/"));
-				zipOut.closeEntry();
-			}
-			File[] children = fileToZip.listFiles();
-			for (File childFile : children) {
-				zipFile(childFile, fileName + "/" + childFile.getName(), zipOut);
-			}
-			return;
-		}
-		FileInputStream fis = new FileInputStream(fileToZip);
-		ZipEntry zipEntry = new ZipEntry(fileName);
-		zipOut.putNextEntry(zipEntry);
-		byte[] bytes = new byte[1024];
-		int length;
-		while ((length = fis.read(bytes)) >= 0) {
-			zipOut.write(bytes, 0, length);
-		}
-		fis.close();
-	}
+                        urls[indx] = fileItem.toURL();
+                        paths[indx] = fileItem.getAbsolutePath();
+                        indx++;
+                    }
+                }
+                if (indx > 0) {
+                    LOGGER.debug("JAR PATH(" + indx + "): " + packagePath + path);
+                    return paths;
+                }
+            }
+        }
+        return null;
+    }
 
-	public static OIDCProviderMetadata fetchMetadata(String discoveryUrl, JWSAlgorithm jwsAlgo) throws Exception {
-		URI issuerURI = new URI(discoveryUrl);
-		URL providerConfigurationURL = issuerURI.toURL();
-		InputStream stream = providerConfigurationURL.openStream();
-		// Read all data from URL
-		String providerInfo = null;
-		try (java.util.Scanner s = new java.util.Scanner(stream)) {
-			providerInfo = s.useDelimiter("\\A").hasNext() ? s.next() : "";
-		}
-		OIDCProviderMetadata oidcPM = OIDCProviderMetadata.parse(providerInfo);
-		List<JWSAlgorithm> jwsArr = oidcPM.getIDTokenJWSAlgs();
-		if (jwsArr == null)
-			jwsArr = new ArrayList<>();
-		jwsArr.add(jwsAlgo);
-		oidcPM.setIDTokenJWSAlgs(jwsArr);
-		return oidcPM;
-	}
+    public static void zipFile(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
+        if (fileToZip.isHidden()) {
+            return;
+        }
+        if (fileToZip.isDirectory()) {
+            if (fileName.endsWith("/")) {
+                zipOut.putNextEntry(new ZipEntry(fileName));
+                zipOut.closeEntry();
+            } else {
+                zipOut.putNextEntry(new ZipEntry(fileName + "/"));
+                zipOut.closeEntry();
+            }
+            File[] children = fileToZip.listFiles();
+            for (File childFile : children) {
+                zipFile(childFile, fileName + "/" + childFile.getName(), zipOut);
+            }
+            return;
+        }
+        FileInputStream fis = new FileInputStream(fileToZip);
+        ZipEntry zipEntry = new ZipEntry(fileName);
+        zipOut.putNextEntry(zipEntry);
+        byte[] bytes = new byte[1024];
+        int length;
+        while ((length = fis.read(bytes)) >= 0) {
+            zipOut.write(bytes, 0, length);
+        }
+        fis.close();
+    }
 
-	public static String replaceAllIgnoreRegx(String source, String search, String replace) {
+    public static OIDCProviderMetadata fetchMetadata(String discoveryUrl, JWSAlgorithm jwsAlgo) throws Exception {
+        URI issuerURI = new URI(discoveryUrl);
+        URL providerConfigurationURL = issuerURI.toURL();
+        InputStream stream = providerConfigurationURL.openStream();
+        // Read all data from URL
+        String providerInfo = null;
+        try (java.util.Scanner s = new java.util.Scanner(stream)) {
+            providerInfo = s.useDelimiter("\\A").hasNext() ? s.next() : "";
+        }
+        OIDCProviderMetadata oidcPM = OIDCProviderMetadata.parse(providerInfo);
+        List<JWSAlgorithm> jwsArr = oidcPM.getIDTokenJWSAlgs();
+        if (jwsArr == null)
+            jwsArr = new ArrayList<>();
+        jwsArr.add(jwsAlgo);
+        oidcPM.setIDTokenJWSAlgs(jwsArr);
+        return oidcPM;
+    }
 
-		return StringUtils.join(source.split(Pattern.quote(search)), replace);
-	}
+    public static String replaceAllIgnoreRegx(String source, String search, String replace) {
 
-	/**
-	 * @param exchange
-	 * @param path
-	 * @throws SnippetException
-	 */
-	public static void redirectRequest(HttpServerExchange exchange, String path) {
-		if(exchange==null)
-			return;
-		exchange.getResponseHeaders().clear();
-		exchange.setStatusCode(StatusCodes.FOUND);
-		exchange.getResponseHeaders().put(Headers.LOCATION, path);
-	}
+        return StringUtils.join(source.split(Pattern.quote(search)), replace);
+    }
 
-	/**
-	 * @param exchange
-	 * @return
-	 */
-	public static boolean isApiCall(HttpServerExchange exchange) {
+    /**
+     * @param exchange
+     * @param path
+     * @throws SnippetException
+     */
+    public static void redirectRequest(HttpServerExchange exchange, String path) {
+        if (exchange == null)
+            return;
+        exchange.getResponseHeaders().clear();
+        exchange.setStatusCode(StatusCodes.FOUND);
+        exchange.getResponseHeaders().put(Headers.LOCATION, path);
+    }
 
-		if (exchange.getRequestURL().endsWith(".html") || exchange.getRequestURL().endsWith(".js") ||
-				exchange.getRequestURL().endsWith(".css")) {
-			return false;
-		}
+    /**
+     * @param exchange
+     * @return
+     */
+    public static boolean isApiCall(HttpServerExchange exchange) {
 
-		return true;
-	}
-	
-	public static void logInfo(String tenantName,String serviceName, String message) {
-		Tenant.getTenant(tenantName).logError(serviceName , message);
-	}
+        if (exchange.getRequestURL().endsWith(".html") || exchange.getRequestURL().endsWith(".js") ||
+                exchange.getRequestURL().endsWith(".css")) {
+            return false;
+        }
 
-	/**
-	 * @param map
-	 * @param key
-	 * @return
-	 */
-	public static Object getCaseInsensitiveKey(Map<String, Object> map, String key) {
-		return (null == map.get(key)) ? map.get(key.toLowerCase()) : map.get(key);
-	}
+        return true;
+    }
 
-	public static String normalizeUri(String s) {
-		String r = StringUtils.stripAccents(s);
-		r = r.replace(" ", "_");
-		r = r.replaceAll("[^\\.A-Za-z0-9_]", "");
-		return r;
-	}
+    public static void logInfo(String tenantName, String serviceName, String message) {
+        Tenant.getTenant(tenantName).logError(serviceName, message);
+    }
 
-	public static String normalizeApiPath(String s) {
-		s = StringUtils.stripEnd(s, "/");
-		String path = s;//s.replaceAll("\\{", "").replaceAll("\\}", "");
+    /**
+     * @param map
+     * @param key
+     * @return
+     */
+    public static Object getCaseInsensitiveKey(Map<String, Object> map, String key) {
+        return (null == map.get(key)) ? map.get(key.toLowerCase()) : map.get(key);
+    }
 
-		String[] paths = StringUtils.split(s, "/");
-		StringBuilder pathBuilder = new StringBuilder();
-		for (int i = 0; i < paths.length; i++) {
-			if (paths.length != 1 && (i == (paths.length - 1) && !(paths[i].indexOf("}") > 0))) {
-				break;
-			}
-			pathBuilder.append("/").append(paths[i].replaceAll("\\{", "").replaceAll("\\}", "").replace(".", "_"));
-		}
+    public static String normalizeUri(String s) {
+        String r = StringUtils.stripAccents(s);
+        r = r.replace(" ", "_");
+        r = r.replaceAll("[^\\.A-Za-z0-9_]", "");
+        return r;
+    }
 
-		return pathBuilder.toString().replaceAll(Pattern.quote("."), "_").replaceAll("-", "");
-	}
+    public static String normalizeApiPath(String s) {
+        s = StringUtils.stripEnd(s, "/");
+        String path = s;//s.replaceAll("\\{", "").replaceAll("\\}", "");
 
-	public static String normalizeApiPathName(String method, String s) {
-		s = StringUtils.stripEnd(s, "/");
-		String path = s.replaceAll("\\{", "").replaceAll("\\}", "");
+        String[] paths = StringUtils.split(s, "/");
+        StringBuilder pathBuilder = new StringBuilder();
+        for (int i = 0; i < paths.length; i++) {
+            if (paths.length != 1 && (i == (paths.length - 1) && !(paths[i].indexOf("}") > 0))) {
+                break;
+            }
+            pathBuilder.append("/").append(paths[i].replaceAll("\\{", "").replaceAll("\\}", "").replace(".", "_"));
+        }
 
-		String[] paths = StringUtils.split(path, "/");
+        return pathBuilder.toString().replaceAll(Pattern.quote("."), "_").replaceAll("-", "");
+    }
 
-		path = paths[paths.length - 1];
-		return method + (path.substring(0,1).toUpperCase() + path.substring(1).toLowerCase());
-	}
+    public static String normalizeApiPathName(String method, String s) {
+        s = StringUtils.stripEnd(s, "/");
+        String path = s.replaceAll("\\{", "").replaceAll("\\}", "");
 
-	public static String toServiceSlug(String str) {
-		if (StringUtils.isBlank(str)) {
-			return "";
-		}
-		return str.toLowerCase().replaceAll("[^a-z0-9\\-]+", "_").replaceAll("^-|-$", "");
-	}
+        String[] paths = StringUtils.split(path, "/");
 
-	public static void loadCustomJar(DataPipeline dp, String packageName, String jarFileName) throws Exception {
-		String packagePath = PropertyManager.getPackagePath(dp.rp.getTenant());
-		String path = packagePath + "/packages/" + packageName + "/dependency/jars/" + jarFileName;
-		CustomClassLoader ccl = RTCompile.classLoaderMap.get(dp.rp.getTenant().getName());
-		final JarFile jar = new JarFile(new File(path));
-		List<String> classNames = ccl.loadClassFromJar(jar);
-	}
+        path = paths[paths.length - 1];
+        return method + (path.substring(0, 1).toUpperCase() + path.substring(1).toLowerCase());
+    }
 
-	public static void loadCustomJar(DataPipeline dp, String path) throws Exception {
-		CustomClassLoader ccl = RTCompile.classLoaderMap.get(dp.rp.getTenant().getName());
-		final JarFile jar = new JarFile(new File(path));
-		List<String> classNames = ccl.loadClassFromJar(jar);
-	}
+    public static String toServiceSlug(String str) {
+        if (StringUtils.isBlank(str)) {
+            return "";
+        }
+        return str.toLowerCase().replaceAll("[^a-z0-9\\-]+", "_").replaceAll("^-|-$", "");
+    }
 
-	public static void unzipBuildFile(String srcZip, String destinationBasePath) throws IOException {
-		byte[] buffer = new byte[1024];
-		ZipInputStream zis = new ZipInputStream(new FileInputStream(srcZip));
-		ZipEntry zipEntry = zis.getNextEntry();
-		while (zipEntry != null) {
-			File newFile = newFile(new File(destinationBasePath), zipEntry);
-			if (zipEntry.isDirectory()) {
-				if (!newFile.isDirectory() && !newFile.mkdirs()) {
-					throw new IOException("Failed to create directory " + newFile);
-				}
-			} else {
-				// fix for Windows-created archives
-				File parent = newFile.getParentFile();
-				if (!parent.isDirectory() && !parent.mkdirs()) {
-					throw new IOException("Failed to create directory " + parent);
-				}
+    public static void loadCustomJar(DataPipeline dp, String packageName, String jarFileName) throws Exception {
+        String packagePath = PropertyManager.getPackagePath(dp.rp.getTenant());
+        String path = packagePath + "/packages/" + packageName + "/dependency/jars/" + jarFileName;
+        CustomClassLoader ccl = RTCompile.classLoaderMap.get(dp.rp.getTenant().getName());
+        final JarFile jar = new JarFile(new File(path));
+        List<String> classNames = ccl.loadClassFromJar(jar);
+    }
 
-				// write file content
-				FileOutputStream fos = new FileOutputStream(newFile);
-				int len;
-				while ((len = zis.read(buffer)) > 0) {
-					fos.write(buffer, 0, len);
-				}
-				fos.close();
-			}
-			zipEntry = zis.getNextEntry();
-		}
-		zis.closeEntry();
-		zis.close();
-	}
+    public static void loadCustomJar(DataPipeline dp, String path) throws Exception {
+        CustomClassLoader ccl = RTCompile.classLoaderMap.get(dp.rp.getTenant().getName());
+        final JarFile jar = new JarFile(new File(path));
+        List<String> classNames = ccl.loadClassFromJar(jar);
+    }
 
-	/**
-	 * @param destinationDir
-	 * @param zipEntry
-	 * @return
-	 * @throws IOException
-	 */
-	private static File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
-		File destFile = new File(destinationDir, zipEntry.getName());
+    public static void unzipBuildFile(String srcZip, String destinationBasePath) throws IOException {
+        byte[] buffer = new byte[1024];
+        ZipInputStream zis = new ZipInputStream(new FileInputStream(srcZip));
+        ZipEntry zipEntry = zis.getNextEntry();
+        while (zipEntry != null) {
+            File newFile = newFile(new File(destinationBasePath), zipEntry);
+            if (zipEntry.isDirectory()) {
+                if (!newFile.isDirectory() && !newFile.mkdirs()) {
+                    throw new IOException("Failed to create directory " + newFile);
+                }
+            } else {
+                // fix for Windows-created archives
+                File parent = newFile.getParentFile();
+                if (!parent.isDirectory() && !parent.mkdirs()) {
+                    throw new IOException("Failed to create directory " + parent);
+                }
 
-		String destDirPath = destinationDir.getCanonicalPath();
-		String destFilePath = destFile.getCanonicalPath();
+                // write file content
+                FileOutputStream fos = new FileOutputStream(newFile);
+                int len;
+                while ((len = zis.read(buffer)) > 0) {
+                    fos.write(buffer, 0, len);
+                }
+                fos.close();
+            }
+            zipEntry = zis.getNextEntry();
+        }
+        zis.closeEntry();
+        zis.close();
+    }
 
-		// if (!destFilePath.startsWith("/" + destDirPath + File.separator)) {
-		// System.out.println(destFilePath);
-		// throw new IOException("Entry is outside of the target dir: " +
-		// zipEntry.getName());
-		// }
+    /**
+     * @param destinationDir
+     * @param zipEntry
+     * @return
+     * @throws IOException
+     */
+    private static File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
+        File destFile = new File(destinationDir, zipEntry.getName());
 
-		return destFile;
-	}
+        String destDirPath = destinationDir.getCanonicalPath();
+        String destFilePath = destFile.getCanonicalPath();
 
-	public static void beforeServiceExecution(DataPipeline dp, String fqn, Map<String, Object> passThroughData)
-			throws Exception {
-		String logRequest = null;
-		String logResponse = null;
-		String requestJson = "";
-		String responseJson = "";
-		Date dateTimeStmp = null;
-		Set<String> keys = passThroughData.keySet();
-		dp.put("*currentResourceFQN", fqn);
-		String gqlEnabled = (String) dp.getMyProperties().get("GraphQL");
-		String GraphQLDBC=(String) dp.getMyProperties().get("GraphQL.DBC");
-		String GraphQLSchema=(String) dp.getMyProperties().get("GraphQL.Schema");
-		JsonObject mainflowJsonObject = (JsonObject) passThroughData.get("mainflowJsonObject");
+        // if (!destFilePath.startsWith("/" + destDirPath + File.separator)) {
+        // System.out.println(destFilePath);
+        // throw new IOException("Entry is outside of the target dir: " +
+        // zipEntry.getName());
+        // }
 
-		Long timeout = (Long) passThroughData.get("timeout");
-		Integer resetServiceInMS = (Integer) passThroughData.get("resetServiceInMS");
-		String gql = null;
-		Object rootObject = null;
-		Map<String, Object> gqlData = new HashMap<>();
+        return destFile;
+    }
 
-		if (resetServiceInMS != null) {
+    public static void beforeServiceExecution(DataPipeline dp, String fqn, Map<String, Object> passThroughData)
+            throws Exception {
+        String logRequest = null;
+        String logResponse = null;
+        String requestJson = "";
+        String responseJson = "";
+        Date dateTimeStmp = null;
+        Set<String> keys = passThroughData.keySet();
+        dp.put("*currentResourceFQN", fqn);
+        String gqlEnabled = (String) dp.getMyProperties().get("GraphQL");
+        String GraphQLDBC = (String) dp.getMyProperties().get("GraphQL.DBC");
+        String GraphQLSchema = (String) dp.getMyProperties().get("GraphQL.Schema");
+        JsonObject mainflowJsonObject = (JsonObject) passThroughData.get("mainflowJsonObject");
 
-			String flowRef = (String) passThroughData.get("flowRef");
-			mainflowJsonObject = configureServiceStartup(dp, timeout, mainflowJsonObject, resetServiceInMS,
-					flowRef);
-			passThroughData.put("mainflowJsonObject", mainflowJsonObject);
+        Long timeout = (Long) passThroughData.get("timeout");
+        Integer resetServiceInMS = (Integer) passThroughData.get("resetServiceInMS");
+        String gql = null;
+        Object rootObject = null;
+        Map<String, Object> gqlData = new HashMap<>();
 
-			if (Boolean.valueOf(gqlEnabled)) {
-				gql = dp.getAsString("*payload/query");
-				// Setting up the graphQL introspection request
+        if (resetServiceInMS != null) {
 
-				if (StringUtils.isNotBlank(gql)) {
-					dp.drop("*payload");
-					gql = gql.replaceAll("\\\\s+", " ").replaceAll("\\\\r|\\\\n", "").trim();
-					gqlData.put("gQuery", gql);
-					gqlData.put("fqn", fqn);
-					if(StringUtils.isNotBlank(GraphQLSchema))
-						gqlData.put("schema", GraphQLSchema);
-					if(StringUtils.isNotBlank(GraphQLDBC))
-						gqlData.put("connection", GraphQLDBC);
-					String[] gqlTokens = gql.split(" ");
-					String rootName = gqlTokens[1];
+            String flowRef = (String) passThroughData.get("flowRef");
+            mainflowJsonObject = configureServiceStartup(dp, timeout, mainflowJsonObject, resetServiceInMS,
+                    flowRef);
+            passThroughData.put("mainflowJsonObject", mainflowJsonObject);
 
-					gqlData.put("rootName", rootName);
+            if (Boolean.valueOf(gqlEnabled)) {
+                gql = dp.getAsString("*payload/query");
+                // Setting up the graphQL introspection request
 
-					if (rootName.toLowerCase().equals("introspectionquery")) {
-						dp.put("*gqlData", gqlData);
-						dp.apply("packages.middleware.pub.graphQL.rest.flow.applyGraphQL");
-						rootObject = dp.get("*multiPart");
-						if (rootObject != null)
-							dp.put("*multiPart", rootObject);
-						else {
-							dp.put(rootName, dp.get("executionResult/errors"));
-						}
-						return;
-					}
-					gqlTokens = gql.split(Pattern.quote("{"));
-					if (gqlTokens.length > 1 && gqlTokens[1] != null)
-						rootName = gqlTokens[1].trim();
-					gqlData.put("rootName", rootName);
-				}
-			}
-		}
-		String stopRecursiveLogging = dp.getString("stopRecursiveLogging");
-		if (stopRecursiveLogging == null && !fqn.equalsIgnoreCase("packages.middleware.pub.service.auditLogging")) {
-			logRequest = dp.getMyConfig("logRequest");
-			logResponse = dp.getMyConfig("logResponse");
-			requestJson = "";
-			responseJson = "";
-			if ("true".equalsIgnoreCase(logRequest))
-				requestJson = dp.toJson();
-			dateTimeStmp = new Date();
-		}
-		passThroughData.put("stopRecursiveLogging", stopRecursiveLogging);
-		passThroughData.put("logRequest", logRequest);
-		passThroughData.put("logResponse", logResponse);
-		passThroughData.put("requestJson", requestJson);
-		passThroughData.put("responseJson", responseJson);
-		passThroughData.put("dateTimeStmp", dateTimeStmp);
+                if (StringUtils.isNotBlank(gql)) {
+                    dp.drop("*payload");
+                    gql = gql.replaceAll("\\\\s+", " ").replaceAll("\\\\r|\\\\n", "").trim();
+                    gqlData.put("gQuery", gql);
+                    gqlData.put("fqn", fqn);
+                    if (StringUtils.isNotBlank(GraphQLSchema))
+                        gqlData.put("schema", GraphQLSchema);
+                    if (StringUtils.isNotBlank(GraphQLDBC))
+                        gqlData.put("connection", GraphQLDBC);
+                    String[] gqlTokens = gql.split(" ");
+                    String rootName = gqlTokens[1];
 
-		// Calling the service
-		if (resetServiceInMS != null)
-			FlowResolver.execute(dp, mainflowJsonObject);
+                    gqlData.put("rootName", rootName);
 
-		if (StringUtils.isNotBlank(gql) && StringUtils.isBlank(GraphQLDBC)) {
-			dp.put("*gqlData", gqlData);
-			Map<String, Object> data = new HashMap<>();
-			String rootName = (String) gqlData.get("rootName");
-			rootObject = dp.get(rootName);
-			data.put(rootName, rootObject);
-			gqlData.put("data", data);
-			dp.apply("packages.middleware.pub.graphQL.rest.flow.applyGraphQL");
-			// dp.drop("*gqlData");
-			rootObject = dp.getValueByPointer("executionResult/rootObject");
-			if (rootObject != null)
-				dp.put(rootName, rootObject);
-			Object errors = dp.getValueByPointer("executionResult/errors");
-			if (errors != null)
-				dp.put(rootName, errors);
-			dp.drop("executionResult");
-			dp.drop("*gqlData");
-		}
-	}
+                    if (rootName.toLowerCase().equals("introspectionquery")) {
+                        dp.put("*gqlData", gqlData);
+                        dp.apply("packages.middleware.pub.graphQL.rest.flow.applyGraphQL");
+                        rootObject = dp.get("*multiPart");
+                        if (rootObject != null)
+                            dp.put("*multiPart", rootObject);
+                        else {
+                            dp.put(rootName, dp.get("executionResult/errors"));
+                        }
+                        return;
+                    }
+                    gqlTokens = gql.split(Pattern.quote("{"));
+                    if (gqlTokens.length > 1 && gqlTokens[1] != null)
+                        rootName = gqlTokens[1].trim();
+                    gqlData.put("rootName", rootName);
+                }
+            }
+        }
+        String stopRecursiveLogging = dp.getString("stopRecursiveLogging");
+        if (stopRecursiveLogging == null && !fqn.equalsIgnoreCase("packages.middleware.pub.service.auditLogging")) {
+            logRequest = dp.getMyConfig("logRequest");
+            logResponse = dp.getMyConfig("logResponse");
+            requestJson = "";
+            responseJson = "";
+            if ("true".equalsIgnoreCase(logRequest))
+                requestJson = dp.toJson();
+            dateTimeStmp = new Date();
+        }
+        passThroughData.put("stopRecursiveLogging", stopRecursiveLogging);
+        passThroughData.put("logRequest", logRequest);
+        passThroughData.put("logResponse", logResponse);
+        passThroughData.put("requestJson", requestJson);
+        passThroughData.put("responseJson", responseJson);
+        passThroughData.put("dateTimeStmp", dateTimeStmp);
 
-	public static void afterServiceExecution(DataPipeline dp, String fqn, Map<String, Object> passThroughData)
-			throws Exception {
-		Long nanoSec = (Long) passThroughData.get("nanoSec");
-		String logRequest = (String) passThroughData.get("logRequest");
-		String logResponse = (String) passThroughData.get("logResponse");
-		String requestJson = (String) passThroughData.get("requestJson");
-		String responseJson = (String) passThroughData.get("responseJson");
-		Date dateTimeStmp = (Date) passThroughData.get("dateTimeStmp");
-		Long startTime = (Long) passThroughData.get("startTime");
-		String stopRecursiveLogging = (String) passThroughData.get("stopRecursiveLogging");
-		if (stopRecursiveLogging == null && !fqn.equalsIgnoreCase("packages.middleware.pub.service.auditLogging")) {
-			if ("true".equalsIgnoreCase(logResponse))
-				responseJson = dp.toJson();
-			long endTime = System.currentTimeMillis();
-			Map<String, String> auditLog = new HashMap();
-			auditLog.put("correlationId", dp.getCorrelationId());
-			auditLog.put("sessionId", dp.getSessionId());
-			auditLog.put("dateTimeStmp", dateTimeStmp + "");
-			auditLog.put("duration", (endTime - startTime) + "");
-			if (null == dp.getString("error")) {
-				auditLog.put("error", "");
-			} else {
-				auditLog.put("error", dp.getString("error"));
-			}
+        // Calling the service
+        if (resetServiceInMS != null)
+            FlowResolver.execute(dp, mainflowJsonObject);
 
-			auditLog.put("fqn", fqn);
-			auditLog.put("request", requestJson);
-			auditLog.put("response", responseJson);
-			auditLog.put("nanoInstance", nanoSec + "");
+        if (StringUtils.isNotBlank(gql) && StringUtils.isBlank(GraphQLDBC)) {
+            dp.put("*gqlData", gqlData);
+            Map<String, Object> data = new HashMap<>();
+            String rootName = (String) gqlData.get("rootName");
+            rootObject = dp.get(rootName);
+            data.put(rootName, rootObject);
+            gqlData.put("data", data);
+            dp.apply("packages.middleware.pub.graphQL.rest.flow.applyGraphQL");
+            // dp.drop("*gqlData");
+            rootObject = dp.getValueByPointer("executionResult/rootObject");
+            if (rootObject != null)
+                dp.put(rootName, rootObject);
+            Object errors = dp.getValueByPointer("executionResult/errors");
+            if (errors != null)
+                dp.put(rootName, errors);
+            dp.drop("executionResult");
+            dp.drop("*gqlData");
+        }
+    }
 
-			try {
-				auditLog.put("hostName", InetAddress.getLocalHost().getHostName());
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			}
-			String nodeName = dp.getGlobalConfig("nodeName");
-			auditLog.put("nodeName", nodeName);
+    public static void afterServiceExecution(DataPipeline dp, String fqn, Map<String, Object> passThroughData)
+            throws Exception {
+        Long nanoSec = (Long) passThroughData.get("nanoSec");
+        String logRequest = (String) passThroughData.get("logRequest");
+        String logResponse = (String) passThroughData.get("logResponse");
+        String requestJson = (String) passThroughData.get("requestJson");
+        String responseJson = (String) passThroughData.get("responseJson");
+        Date dateTimeStmp = (Date) passThroughData.get("dateTimeStmp");
+        Long startTime = (Long) passThroughData.get("startTime");
+        String stopRecursiveLogging = (String) passThroughData.get("stopRecursiveLogging");
+        if (stopRecursiveLogging == null && !fqn.equalsIgnoreCase("packages.middleware.pub.service.auditLogging")) {
+            if ("true".equalsIgnoreCase(logResponse))
+                responseJson = dp.toJson();
+            long endTime = System.currentTimeMillis();
+            Map<String, String> auditLog = new HashMap();
+            auditLog.put("correlationId", dp.getCorrelationId());
+            auditLog.put("sessionId", dp.getSessionId());
+            auditLog.put("dateTimeStmp", dateTimeStmp + "");
+            auditLog.put("duration", (endTime - startTime) + "");
+            if (null == dp.getString("error")) {
+                auditLog.put("error", "");
+            } else {
+                auditLog.put("error", dp.getString("error"));
+            }
 
-			auditLog.put("remoteAddr", dp.getRemoteIpAddr());
-			auditLog.put("userId", dp.getCurrentUserProfile().getId());
-			auditLog.put("urlPath", dp.getUrlPath());
+            auditLog.put("fqn", fqn);
+            auditLog.put("request", requestJson);
+            auditLog.put("response", responseJson);
+            auditLog.put("nanoInstance", nanoSec + "");
 
-			Map<String, Object> asyncInputDoc = new HashMap();
-			asyncInputDoc.put("auditLog", auditLog);
-			asyncInputDoc.put("stopRecursiveLogging", "true");
-			dp.put("asyncInputDoc", asyncInputDoc);
-			dp.applyAsync("packages.middleware.pub.service.auditLogging");
-			dp.drop("asyncInputDoc");
-			dp.drop("asyncOutputDoc");
-			if (dp.rp.isExchangeInitialized())
-				dp.rp.getExchange().getResponseHeaders().put(new HttpString("CORRELATION-ID"), dp.getCorrelationId());
-		}
-	}
+            try {
+                auditLog.put("hostName", InetAddress.getLocalHost().getHostName());
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+            String nodeName = dp.getGlobalConfig("nodeName");
+            auditLog.put("nodeName", nodeName);
 
-	private static JsonObject configureServiceStartup(DataPipeline dataPipeline, Long timeout,
-													  JsonObject mainflowJsonObject, Integer resetServiceInMS, String flowRef) throws Exception {
-		Map<String, Object> chache = CacheManager.getCacheAsMap(dataPipeline.rp.getTenant());// -----reset fix
-		Boolean resetEnabled = (Boolean) chache.get("ekamw.promote.runtime.service.reload");// -----reset fix
-		if (timeout < System.currentTimeMillis() && (resetEnabled == null || resetEnabled == true))// -----reset fix
-			timeout = 0l;// -----reset fix
-		String location = PropertyManager.getPackagePath(dataPipeline.rp.getTenant());
-		flowRef = location + flowRef;
-		if (mainflowJsonObject == null || timeout == 0l) { // -----reset fix
-			timeout = System.currentTimeMillis() + resetServiceInMS; // -----reset fix
-			mainflowJsonObject = Json.createReader(new FileInputStream(new File(flowRef))).readObject();
-		}
-		return mainflowJsonObject;
-	}
+            auditLog.put("remoteAddr", dp.getRemoteIpAddr());
+            auditLog.put("userId", dp.getCurrentUserProfile().getId());
+            auditLog.put("urlPath", dp.getUrlPath());
+
+            Map<String, Object> asyncInputDoc = new HashMap();
+            asyncInputDoc.put("auditLog", auditLog);
+            asyncInputDoc.put("stopRecursiveLogging", "true");
+            dp.put("asyncInputDoc", asyncInputDoc);
+            dp.applyAsync("packages.middleware.pub.service.auditLogging");
+            dp.drop("asyncInputDoc");
+            dp.drop("asyncOutputDoc");
+            if (dp.rp.isExchangeInitialized())
+                dp.rp.getExchange().getResponseHeaders().put(new HttpString("CORRELATION-ID"), dp.getCorrelationId());
+        }
+    }
+
+    private static JsonObject configureServiceStartup(DataPipeline dataPipeline, Long timeout,
+                                                      JsonObject mainflowJsonObject, Integer resetServiceInMS, String flowRef) throws Exception {
+        Map<String, Object> chache = CacheManager.getCacheAsMap(dataPipeline.rp.getTenant());// -----reset fix
+        Boolean resetEnabled = (Boolean) chache.get("ekamw.promote.runtime.service.reload");// -----reset fix
+        if (timeout < System.currentTimeMillis() && (resetEnabled == null || resetEnabled == true))// -----reset fix
+            timeout = 0l;// -----reset fix
+        String location = PropertyManager.getPackagePath(dataPipeline.rp.getTenant());
+        flowRef = location + flowRef;
+        if (mainflowJsonObject == null || timeout == 0l) { // -----reset fix
+            timeout = System.currentTimeMillis() + resetServiceInMS; // -----reset fix
+            mainflowJsonObject = Json.createReader(new FileInputStream(new File(flowRef))).readObject();
+        }
+        return mainflowJsonObject;
+    }
 }
