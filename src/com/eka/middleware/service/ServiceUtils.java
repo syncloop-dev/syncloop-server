@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
-import java.net.URI;
-import java.net.URL;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -88,6 +85,7 @@ import io.undertow.util.Headers;
 import io.undertow.util.HttpString;
 import io.undertow.util.Sessions;
 import io.undertow.util.StatusCodes;
+import org.springframework.util.AntPathMatcher;
 
 public class ServiceUtils {
 	// private static final Properties serverProperties = new Properties();
@@ -284,16 +282,16 @@ public class ServiceUtils {
 			fqn += ".main";
 		ServiceManager.invokeJavaMethod(fqn, dataPipeLine);
 	}
-	
+
 	public static final boolean isPublicFolder(String path) {
 		//String str="/files/gui/middleware/pub/";
-		String array[]=path.split("/pub/");
-		if(array.length>=2) {
-			String preFixPath=array[0];
-			String pArray[]=preFixPath.split("/files/gui/");
-			if(pArray.length>=2) {
-				String packageName=pArray[1];
-				if(!packageName.contains("/"))
+		String array[] = path.split("/pub/");
+		if (array.length >= 2) {
+			String preFixPath = array[0];
+			String pArray[] = preFixPath.split("/files/gui/");
+			if (pArray.length >= 2) {
+				String packageName = pArray[1];
+				if (!packageName.contains("/"))
 					return true;
 			}
 		}
@@ -310,18 +308,18 @@ public class ServiceUtils {
 	}
 
 	public static final void printException(String msg, Exception e) {
-		String logLine=getLogLine(e, msg);
+		String logLine = getLogLine(e, msg);
 		LOGGER.error(logLine);
 	}
-	
-	public static final void printException(Tenant tenant,String msg, Exception e) {
-		String logLine=getLogLine(e, msg);
+
+	public static final void printException(Tenant tenant, String msg, Exception e) {
+		String logLine = getLogLine(e, msg);
 		tenant.logError(null, logLine);
 		LOGGER.error(logLine);
 	}
-	
+
 	public static final void printException(DataPipeline dp, String msg, Exception e) {
-		String logLine=getLogLine(e, msg);
+		String logLine = getLogLine(e, msg);
 		dp.log(logLine, Level.ERROR);
 		LOGGER.error(logLine);
 
@@ -332,7 +330,7 @@ public class ServiceUtils {
 		StackTraceElement[] stackTrace = e.getStackTrace();
 		sb.append(msg);
 		sb.append("\n");
-		if(e!=null)
+		if (e != null)
 			sb.append(e.getMessage());
 		else
 			sb.append("Custom error");
@@ -345,7 +343,7 @@ public class ServiceUtils {
 		}
 		return sb.toString();
 	}
-	
+
 	public static final String getServerProperty(String key) {
 		String val = null;
 		try {
@@ -396,7 +394,7 @@ public class ServiceUtils {
 			String URLAliasFilePath = PropertyManager.getPackagePath(tenant) + "URLAliasMapping.properties";
 			if (requestPath.contains("//")) {
 				LOGGER.log(Level.INFO, requestPath);
-				tenant.logInfo(null,requestPath);
+				tenant.logInfo(null, requestPath);
 				return null;
 			}
 			if (requestPath.endsWith("/")) {
@@ -452,7 +450,7 @@ public class ServiceUtils {
 			return serviceName;
 
 		} catch (Exception e) {
-			ServiceUtils.printException(tenant,"Failed during evaluating resource path", e);
+			ServiceUtils.printException(tenant, "Failed during evaluating resource path", e);
 		}
 		return null;
 	}
@@ -529,7 +527,7 @@ public class ServiceUtils {
 				MultiPart mp = new MultiPart(formDataMap);
 				rp.payload.put("*multiPartRequest", mp);
 			} catch (Exception e) {
-				ServiceUtils.printException(rp.getTenant(),rp.getSessionID() + " Could not stream file thread.", e);
+				ServiceUtils.printException(rp.getTenant(), rp.getSessionID() + " Could not stream file thread.", e);
 			}
 //				});
 //
@@ -566,14 +564,27 @@ public class ServiceUtils {
 
 	public static final String registerURLAlias(String fqn, String alias, DataPipeline dp) throws Exception {
 
-		// Map<String, Object> pathParams = new HashMap<String, Object>();
-		// pathParams.put("pathParameters", "");
 		String aliasTenantName = dp.rp.getTenant().getName();
-		// alias=aliasTenantName+alias;
 		String existingFQN = getPathService(alias, null, dp.rp.getTenant());
 
-		// String existingFQN=urlMappings.getProperty(alias);
+		if (!isAliasValid(alias)) {
+			return "Failed to save. The provided alias is incorrect.";
+		}
+
+		AntPathMatcher antPathMatcher = new AntPathMatcher();
+		if(antPathMatcher.match(alias.replace("GET","").replace("POST","").replace("PUT"," ").replace("PATCH"," "),"/restrictUrl")){
+			return "Invalid alias. Alias cannot start /{}";
+		}
+
 		Properties urlMappings = getUrlAliasMapping(dp.rp.getTenant());
+
+		for (Object key : urlMappings.keySet()) {
+			String mappedAlias = key.toString();
+			if (antPathMatcher.match(mappedAlias, alias)){
+				return "Failed to save. It already exists.";
+			}
+		}
+
 		String msg = "Saved";
 		if (existingFQN == null || existingFQN.equalsIgnoreCase(fqn)) {
 			Set<Object> sset = urlMappings.keySet();
@@ -582,18 +593,31 @@ public class ServiceUtils {
 					urlMappings.remove(setKey);
 			}
 			urlMappings.setProperty(alias, fqn);
+			FileOutputStream fos = new FileOutputStream(new File(PropertyManager.getPackagePath(dp.rp.getTenant()) + "URLAliasMapping.properties"));
+			urlMappings.store(fos, "");
+			fos.flush();
+			fos.close();
 		} else {
-			msg = "Failed to save. The alias conflicted with the existing FQN(" + existingFQN + ").";
+			msg = "Failed to save. The alias conflicts with the existing FQN (" + existingFQN + ").";
 			return msg;
 		}
-		// URL url = new URL(MiddlewareServer.getConfigFolderPath() +
-		// "URLAliasMapping.properties");
-		FileOutputStream fos = new FileOutputStream(
-				new File(PropertyManager.getPackagePath(dp.rp.getTenant()) + "URLAliasMapping.properties"));
-		urlMappings.store(fos, "");// save(fos, "");
-		fos.flush();
-		fos.close();
+
 		return msg;
+	}
+
+
+	private static boolean isAliasValid(String alias) {
+		if (alias.contains("?")) {
+			return false; // Alias contains a query parameter
+		}
+
+		// Exclude aliases with invalid characters
+		String invalidCharacters = ".*[^a-zA-Z0-9_.\\-/{}]+.*";
+		if (alias.matches(invalidCharacters)) {
+			return false; // Alias contains special characters
+		}
+
+		return true;
 	}
 
 	private static final void streamResponseFile(final RuntimePipeline rp, final MultiPart mp) throws SnippetException {
@@ -606,22 +630,22 @@ public class ServiceUtils {
 			throw new SnippetException(rp.dataPipeLine, "Exception while streaming file.\n" + e.getMessage(), e);
 
 		} /*
-			 * // Thread newThread = new Thread(() -> {
-			 *
-			 * ExecutorService threadpool = Executors.newCachedThreadPool();
-			 *
-			 * @SuppressWarnings("unchecked") Future<Long> futureTask = (Future<Long>)
-			 * threadpool.submit(() -> { try { handleFileResponse(rp.getExchange(), mp); }
-			 * catch (Exception e) { // TODO Auto-generated catch block
-			 * ServiceUtils.printException(rp.getSessionID() +
-			 * " Could not stream file thread.", e); } });
-			 *
-			 * while (!futureTask.isDone()) { //
-			 * System.out.println("FutureTask is not finished yet..."); Thread.sleep(100); }
-			 *
-			 * threadpool.shutdown();
-			 *
-			 */
+		 * // Thread newThread = new Thread(() -> {
+		 *
+		 * ExecutorService threadpool = Executors.newCachedThreadPool();
+		 *
+		 * @SuppressWarnings("unchecked") Future<Long> futureTask = (Future<Long>)
+		 * threadpool.submit(() -> { try { handleFileResponse(rp.getExchange(), mp); }
+		 * catch (Exception e) { // TODO Auto-generated catch block
+		 * ServiceUtils.printException(rp.getSessionID() +
+		 * " Could not stream file thread.", e); } });
+		 *
+		 * while (!futureTask.isDone()) { //
+		 * System.out.println("FutureTask is not finished yet..."); Thread.sleep(100); }
+		 *
+		 * threadpool.shutdown();
+		 *
+		 */
 	}
 
 	private static void handleFileResponse(HttpServerExchange exchange, MultiPart mp) throws Exception {
@@ -672,13 +696,13 @@ public class ServiceUtils {
 			handleBodyResponse(rp.getExchange(), mp);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			ServiceUtils.printException(rp.getTenant(),rp.getSessionID() + " Could not stream body thread.", e);
+			ServiceUtils.printException(rp.getTenant(), rp.getSessionID() + " Could not stream body thread.", e);
 		}
 //		try {
 //			ExecutorService threadpool = Executors.newCachedThreadPool();
 //			@SuppressWarnings("unchecked")
 //			Future<Long> futureTask = (Future<Long>) threadpool.submit(() -> {
-//				
+//
 //			});
 //
 //			while (!futureTask.isDone()) {
@@ -746,7 +770,7 @@ public class ServiceUtils {
 				});
 			} catch (Exception e) {
 				e.printStackTrace();
-				ServiceUtils.printException(rp.getTenant(),rp.getSessionID() + " Could not stream body thread.", e);
+				ServiceUtils.printException(rp.getTenant(), rp.getSessionID() + " Could not stream body thread.", e);
 			}
 
 			if (payload.get("@body") != null) {
@@ -787,43 +811,43 @@ public class ServiceUtils {
 		FileUtils.copyDirectory(new File(sourceDirectoryLocation), new File(destinationDirectoryLocation));
 		LOGGER.info("Tenant instance created: " + destinationDirectoryLocation.toString());
 	}
-	
+
 	public static String setupRequestPath(HttpServerExchange exchange) {
-		
+
 		Cookie cookie = exchange.getRequestCookie("tenant");
 		String tenantName = null;
 		try {
-			AuthAccount acc=UserProfileManager.getUserProfileManager()
+			AuthAccount acc = UserProfileManager.getUserProfileManager()
 					.getAccount(ServiceUtils.getCurrentLoggedInUserProfile(exchange));
-			tenantName=(String)acc.getAuthProfile().get("tenant");
+			tenantName = (String) acc.getAuthProfile().get("tenant");
 		} catch (Exception ignore) {
-			
+
 		}
-		String token=null;
-		if(cookie!=null && tenantName==null) {
-			tenantName=ServiceUtils.getTenantName(cookie);
-			token=ServiceUtils.getToken(cookie);
+		String token = null;
+		if (cookie != null && tenantName == null) {
+			tenantName = ServiceUtils.getTenantName(cookie);
+			token = ServiceUtils.getToken(cookie);
 		}
-		
+
 		String rqp = exchange.getRequestPath();
-		String rsrcTokens[]=null;
-		if(rqp!=null)
+		String rsrcTokens[] = null;
+		if (rqp != null)
 			rsrcTokens = ("b" + rqp).split("/");
-		
+
 		if (rsrcTokens != null) {
-			if (rsrcTokens.length>2 && rsrcTokens[1].equalsIgnoreCase("tenant")) {
+			if (rsrcTokens.length > 2 && rsrcTokens[1].equalsIgnoreCase("tenant")) {
 				String tName = rsrcTokens[2];
-				if(tenantName==null)
-					tenantName=tName;
-				if(!tName.equals(tenantName))
-					exchange.setRequestPath(rqp.replace("/tenant/"+tName,"/tenant/"+tenantName));
+				if (tenantName == null)
+					tenantName = tName;
+				if (!tName.equals(tenantName))
+					exchange.setRequestPath(rqp.replace("/tenant/" + tName, "/tenant/" + tenantName));
 				ServiceUtils.setupCookie(exchange, tenantName, token);
 			}
 			if (tenantName == null) {
 				Cookie cukie = ServiceUtils.setupCookie(exchange, tenantName, token);
-				tenantName=getTenantName(cukie);
-				exchange.setRequestPath("/tenant/"+tenantName+rqp);
-				if(!ServiceUtils.isApiCall(exchange))
+				tenantName = getTenantName(cukie);
+				exchange.setRequestPath("/tenant/" + tenantName + rqp);
+				if (!ServiceUtils.isApiCall(exchange))
 					exchange.setResponseCookie(cukie);
 			}
 		}
@@ -833,36 +857,36 @@ public class ServiceUtils {
 	public static void manipulateHeaders(HttpServerExchange exchange) {
 
 	}
-	
-	public static Cookie setupCookie(HttpServerExchange exchange,String tenantName, String token) {
+
+	public static Cookie setupCookie(HttpServerExchange exchange, String tenantName, String token) {
 		Cookie cookie = exchange.getRequestCookie("tenant");
-		if(cookie==null || cookie.isDiscard()) {
-			if(tenantName==null)
-				tenantName="default";
-			cookie=new CookieImpl("tenant", tenantName);
+		if (cookie == null || cookie.isDiscard()) {
+			if (tenantName == null)
+				tenantName = "default";
+			cookie = new CookieImpl("tenant", tenantName);
 			cookie.setPath("/");
-			if(!ServiceUtils.isApiCall(exchange))
+			if (!ServiceUtils.isApiCall(exchange))
 				exchange.setResponseCookie(cookie);
 		}
-		if(tenantName==null)
-			tenantName=getTenantName(cookie);
-		else if(getToken(cookie)==null)
+		if (tenantName == null)
+			tenantName = getTenantName(cookie);
+		else if (getToken(cookie) == null)
 			cookie.setValue(tenantName);
 		//cookie.setSecure(true);
-		if(token!=null){
-			cookie.setValue(tenantName+" "+token);
+		if (token != null) {
+			cookie.setValue(tenantName + " " + token);
 		}
 		cookie.setPath("/");
 		//if(!ServiceUtils.isApiCall(exchange))
-			exchange.setResponseCookie(cookie);
+		exchange.setResponseCookie(cookie);
 		//exchange.
 //		((Set<Cookie>)((DelegatingIterable<Cookie>)responseCookies()).getDelegate()).add(cookie);
 //		exchange.responseCookies().forEach(null);
 //		exchange.remove
-		
+
 		return cookie;
 	}
-	
+
 	public static void clearSession(HttpServerExchange exchange) {
 		Session session = Sessions.getSession(exchange);
 		if (session == null)
@@ -875,22 +899,23 @@ public class ServiceUtils {
 	}
 
 	public static String getToken(Cookie cookie) {
-		String value=cookie.getValue();
-		String tokenize[]=value.split(" ");
-		String token=null;
-		
-		if(tokenize.length>=2)
-			token=tokenize[1];
-		
+		String value = cookie.getValue();
+		String tokenize[] = value.split(" ");
+		String token = null;
+
+		if (tokenize.length >= 2)
+			token = tokenize[1];
+
 		return token;
 	}
+
 	public static String getTenantName(Cookie cookie) {
-		String value=cookie.getValue();
-		String tokenize[]=value.split(" ");
-		String tenantName=tokenize[0];
+		String value = cookie.getValue();
+		String tokenize[] = value.split(" ");
+		String tenantName = tokenize[0];
 		return tenantName;
 	}
-	
+
 
 	public static String initNewTenant(String name, AuthAccount account) {
 		try {
@@ -997,7 +1022,7 @@ public class ServiceUtils {
 	}
 
 	public static SecretKeySpec getKey(final String myKey) {
-		SecretKeySpec secretKey=null;
+		SecretKeySpec secretKey = null;
 		byte[] key;
 		MessageDigest sha = null;
 		try {
@@ -1019,7 +1044,7 @@ public class ServiceUtils {
 			cipher.init(Cipher.ENCRYPT_MODE, Tenant.getTenant(tenantName).KEY);
 			return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
 		} catch (Exception e) {
-			printException(Tenant.getTenant(tenantName), "Error while encrypting: " , e);
+			printException(Tenant.getTenant(tenantName), "Error while encrypting: ", e);
 		}
 		return null;
 	}
@@ -1031,16 +1056,16 @@ public class ServiceUtils {
 			cipher.init(Cipher.DECRYPT_MODE, Tenant.getTenant(tenantName).KEY);
 			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
 		} catch (Exception e) {
-			printException(Tenant.getTenant(tenantName), "Error while decrypting: " , e);
+			printException(Tenant.getTenant(tenantName), "Error while decrypting: ", e);
 			throw e;
 		}
 	}
-	
+
 	public static Date addHoursToDate(Date date, int hours) {
-	    Calendar calendar = Calendar.getInstance();
-	    calendar.setTime(date);
-	    calendar.add(Calendar.HOUR_OF_DAY, hours);
-	    return calendar.getTime();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.HOUR_OF_DAY, hours);
+		return calendar.getTime();
 	}
 
 	public static final String[] getJarPaths(String path, String packagePath) throws Exception {
@@ -1129,7 +1154,7 @@ public class ServiceUtils {
 	 * @throws SnippetException
 	 */
 	public static void redirectRequest(HttpServerExchange exchange, String path) {
-		if(exchange==null)
+		if (exchange == null)
 			return;
 		exchange.getResponseHeaders().clear();
 		exchange.setStatusCode(StatusCodes.FOUND);
@@ -1149,9 +1174,9 @@ public class ServiceUtils {
 
 		return true;
 	}
-	
-	public static void logInfo(String tenantName,String serviceName, String message) {
-		Tenant.getTenant(tenantName).logError(serviceName , message);
+
+	public static void logInfo(String tenantName, String serviceName, String message) {
+		Tenant.getTenant(tenantName).logError(serviceName, message);
 	}
 
 	/**
@@ -1193,7 +1218,7 @@ public class ServiceUtils {
 		String[] paths = StringUtils.split(path, "/");
 
 		path = paths[paths.length - 1];
-		return method + (path.substring(0,1).toUpperCase() + path.substring(1).toLowerCase());
+		return method + (path.substring(0, 1).toUpperCase() + path.substring(1).toLowerCase());
 	}
 
 	public static String toServiceSlug(String str) {
@@ -1279,8 +1304,8 @@ public class ServiceUtils {
 		Set<String> keys = passThroughData.keySet();
 		dp.put("*currentResourceFQN", fqn);
 		String gqlEnabled = (String) dp.getMyProperties().get("GraphQL");
-		String GraphQLDBC=(String) dp.getMyProperties().get("GraphQL.DBC");
-		String GraphQLSchema=(String) dp.getMyProperties().get("GraphQL.Schema");
+		String GraphQLDBC = (String) dp.getMyProperties().get("GraphQL.DBC");
+		String GraphQLSchema = (String) dp.getMyProperties().get("GraphQL.Schema");
 		JsonObject mainflowJsonObject = (JsonObject) passThroughData.get("mainflowJsonObject");
 
 		Long timeout = (Long) passThroughData.get("timeout");
@@ -1305,9 +1330,9 @@ public class ServiceUtils {
 					gql = gql.replaceAll("\\\\s+", " ").replaceAll("\\\\r|\\\\n", "").trim();
 					gqlData.put("gQuery", gql);
 					gqlData.put("fqn", fqn);
-					if(StringUtils.isNotBlank(GraphQLSchema))
+					if (StringUtils.isNotBlank(GraphQLSchema))
 						gqlData.put("schema", GraphQLSchema);
-					if(StringUtils.isNotBlank(GraphQLDBC))
+					if (StringUtils.isNotBlank(GraphQLDBC))
 						gqlData.put("connection", GraphQLDBC);
 					String[] gqlTokens = gql.split(" ");
 					String rootName = gqlTokens[1];
