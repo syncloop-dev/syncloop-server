@@ -562,7 +562,6 @@ public class ServiceUtils {
     }
 
     public static final String registerURLAlias(String fqn, String alias, DataPipeline dp) throws Exception {
-        System.out.println("alias " + alias);
 
         String aliasTenantName = dp.rp.getTenant().getName();
         String existingFQN = getPathService(alias, null, dp.rp.getTenant());
@@ -570,13 +569,19 @@ public class ServiceUtils {
         if (!isAliasValid(alias)) {
             return "Failed to save. The provided alias is incorrect.";
         }
-        System.out.println("========");
 
 
-       /* if (!isAliasAvailable(alias, dp)) {
+        if (!isAliasAvailable(alias, dp)) {
             return "Failed to save. It already exists.";
         }
-*/
+
+
+        if (alias.startsWith("GET/{") || alias.startsWith("PUT/{") || alias.startsWith("PATCH/{") ||
+                alias.startsWith("POST/{") || alias.startsWith("DELETE/{")) {
+            return "Invalid alias. Alias cannot start /{}";
+        }
+
+
         Properties urlMappings = getUrlAliasMapping(dp.rp.getTenant());
 
         String msg = "Saved";
@@ -615,14 +620,12 @@ public class ServiceUtils {
     }
 
 
-   /* public static boolean isAliasAvailable(String alias, DataPipeline dp) {
+    public static boolean isAliasAvailable(String alias, DataPipeline dp) {
         Properties urlMappings = getUrlAliasMapping(dp.rp.getTenant());
-        Boolean res = urlMappings.containsKey(alias);
-        System.out.println(res);
-        return !res;
+        return !urlMappings.containsKey(alias);
     }
 
-*/
+
     private static final void streamResponseFile(final RuntimePipeline rp, final MultiPart mp) throws SnippetException {
 
         try {
