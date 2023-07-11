@@ -23,6 +23,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import com.eka.middleware.server.MiddlewareServer;
+
 
 public class AutoUpdate {
 
@@ -39,65 +41,66 @@ public class AutoUpdate {
         }
 
     }
-    private static boolean importURLAliases(String UrlAliasFilepath, DataPipeline dp) throws Exception{
-        Boolean importSuccessful=true;
-        Properties prop=new Properties();
-        File file=new File(UrlAliasFilepath);
-        if(!file.exists()){
-            dp.put("msg","Alias file not found. Path: "+UrlAliasFilepath);
+
+    private static boolean importURLAliases(String UrlAliasFilepath, DataPipeline dp) throws Exception {
+        Boolean importSuccessful = true;
+        Properties prop = new Properties();
+        File file = new File(UrlAliasFilepath);
+        if (!file.exists()) {
+            dp.put("msg", "Alias file not found. Path: " + UrlAliasFilepath);
             return true;
         }
-        FileInputStream aliasFIS=new FileInputStream(file);
+        FileInputStream aliasFIS = new FileInputStream(file);
         prop.load(aliasFIS);
-        prop.forEach((k,v)->{
-            if(dp.getString("error")==null){
-                String key=(String)k;
-                String value=(String)v;
-                dp.put("fqn",value);
-                dp.put("alias",key);
-                try{
+        prop.forEach((k, v) -> {
+            if (dp.getString("error") == null) {
+                String key = (String) k;
+                String value = (String) v;
+                dp.put("fqn", value);
+                dp.put("alias", key);
+                try {
                     dp.apply("packages.middleware.pub.server.browse.registerURLAlias");
-                    String msg=dp.getString("msg");
-                    if(!"Saved".equals(msg))
-                        dp.put("error",msg);
+                    String msg = dp.getString("msg");
+                    if (!"Saved".equals(msg))
+                        dp.put("error", msg);
 
-                }catch(Exception e){
-                    dp.put("error",e.getMessage());
+                } catch (Exception e) {
+                    dp.put("error", e.getMessage());
                 }
                 dp.drop("fqn");
                 dp.drop("alias");
             }
         });
         aliasFIS.close();
-        if(dp.getString("error")!=null)
-            importSuccessful=false;
+        if (dp.getString("error") != null)
+            importSuccessful = false;
         file.delete();
         return importSuccessful;
     }
 
-    private static void unzip(String zipFilePath, String destDir,DataPipeline dp) throws Exception{
+    private static void unzip(String zipFilePath, String destDir, DataPipeline dp) throws Exception {
         File dir = new File(destDir);
-        String unZippedFolderPath=null;
+        String unZippedFolderPath = null;
         // create output directory if it doesn't exist
-        if(!dir.exists()) dir.mkdirs();
+        if (!dir.exists()) dir.mkdirs();
         FileInputStream fis;
         //buffer for read and write data to file
 
         fis = new FileInputStream(zipFilePath);
         ZipInputStream zis = new ZipInputStream(fis);
         ZipEntry ze = zis.getNextEntry();
-        while(ze != null){
+        while (ze != null) {
             String fileName = ze.getName();
-            if(unZippedFolderPath==null)
-                unZippedFolderPath=fileName;
-            else{
-                dp.log("Zipped entry "+fileName);
-                fileName=("#$"+fileName).replace("#$"+unZippedFolderPath,"");
+            if (unZippedFolderPath == null)
+                unZippedFolderPath = fileName;
+            else {
+                dp.log("Zipped entry " + fileName);
+                fileName = ("#$" + fileName).replace("#$" + unZippedFolderPath, "");
                 File newFile = new File(destDir + File.separator + fileName);
                 new File(newFile.getParent()).mkdirs();
                 byte[] buffer = new byte[1024];
                 int len = zis.read(buffer);
-                if(len>0){
+                if (len > 0) {
                     FileOutputStream fos = new FileOutputStream(newFile);
                     while (len > 0) {
                         fos.write(buffer, 0, len);
@@ -118,16 +121,16 @@ public class AutoUpdate {
         fis.close();
     }
 
-    private static void createRestorePoint(String buildName, DataPipeline dataPipeline) throws Exception{
-        String packagePath=PropertyManager.getPackagePath(dataPipeline.rp.getTenant());
-        String bkpDirPath=packagePath+"builds/backup/";
-        File dir=new File(bkpDirPath);
-        String timeStmp=System.currentTimeMillis()+"";
-        if(!dir.exists())
+    private static void createRestorePoint(String buildName, DataPipeline dataPipeline) throws Exception {
+        String packagePath = PropertyManager.getPackagePath(dataPipeline.rp.getTenant());
+        String bkpDirPath = packagePath + "builds/backup/";
+        File dir = new File(bkpDirPath);
+        String timeStmp = System.currentTimeMillis() + "";
+        if (!dir.exists())
             dir.mkdirs();
-        FileOutputStream fos = new FileOutputStream(bkpDirPath+timeStmp+"_packages_"+buildName);
+        FileOutputStream fos = new FileOutputStream(bkpDirPath + timeStmp + "_packages_" + buildName);
         ZipOutputStream zipOut = new ZipOutputStream(fos);
-        File fileToZip = new File(packagePath+"packages/");
+        File fileToZip = new File(packagePath + "packages/");
         ServiceUtils.zipFile(fileToZip, fileToZip.getName(), zipOut);
         zipOut.flush();
         zipOut.close();
@@ -139,7 +142,7 @@ public class AutoUpdate {
         String fileName = String.format("eka-distribution-tenant-v%s.zip", version);
         URL url = new URL(String.format("https://eka-distribution.s3.us-west-1.amazonaws.com/%s", fileName));
 
-        String downloadLocation = PropertyManager.getPackagePath(dataPipeline.rp.getTenant())+"builds/import/";
+        String downloadLocation = PropertyManager.getPackagePath(dataPipeline.rp.getTenant()) + "builds/import/";
 
         System.out.println("package path: " + PropertyManager.getPackagePath(dataPipeline.rp.getTenant()));
         System.err.println("downloadLocation: " + downloadLocation);
@@ -172,7 +175,7 @@ public class AutoUpdate {
 
             String jsonContent = readJsonFromUrl(returnTenantUpdateUrl());
             String extractedJsonString = extractJsonPart(jsonContent, "latest");
-            String tenantUpdateFileLocation = PropertyManager.getPackagePath(dataPipeline.rp.getTenant())+"builds/tenant-update.json";
+            String tenantUpdateFileLocation = PropertyManager.getPackagePath(dataPipeline.rp.getTenant()) + "builds/tenant-update.json";
 
             try {
                 writeJsonToFile(extractedJsonString, tenantUpdateFileLocation);
@@ -182,7 +185,7 @@ public class AutoUpdate {
             }
 
             dataPipeline.put("status", true);
-        }else{
+        } else {
             dataPipeline.put("status", false);
         }
 
@@ -191,7 +194,8 @@ public class AutoUpdate {
     public static String readJsonFromUrl(String urlString) throws IOException {
         try {
             return IOUtils.toString(new URI(urlString), StandardCharsets.UTF_8);
-        } catch (URISyntaxException e) {}
+        } catch (URISyntaxException e) {
+        }
         return null;
     }
 
@@ -241,7 +245,7 @@ public class AutoUpdate {
     public static String checkForUpdate(DataPipeline dataPipeline) throws Exception {
 
         String url = returnTenantUpdateUrl();
-        String filePath = PropertyManager.getPackagePath(dataPipeline.rp.getTenant())+"builds/tenant-update.json";
+        String filePath = PropertyManager.getPackagePath(dataPipeline.rp.getTenant()) + "builds/tenant-update.json";
 
         String filePathVersion = "0";
 
@@ -314,8 +318,14 @@ public class AutoUpdate {
     }
 
 
-    public static String returnTenantUpdateUrl() throws Exception{
-        return "https://eka-distribution.s3.us-west-1.amazonaws.com/tenant-update.json";
+    public static String returnTenantUpdateUrl() throws Exception {
+
+        boolean IS_COMMUNITY_VERSION = Boolean.parseBoolean(System.getProperty("COMMUNITY_DEPLOYMENT"));
+
+        if (IS_COMMUNITY_VERSION)
+            return "https://eka-distribution.s3.us-west-1.amazonaws.com/community-tenant-update.json";
+        else
+            return "https://eka-distribution.s3.us-west-1.amazonaws.com/tenant-update.json";
     }
 
 
