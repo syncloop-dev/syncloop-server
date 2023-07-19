@@ -26,4 +26,7 @@ public class Plugins {
     private PluginOwner owner;
 
     private PurchaseRule purchase_rule;
+
+    private boolean installed;
+    private boolean requiredUpdate;
 }
