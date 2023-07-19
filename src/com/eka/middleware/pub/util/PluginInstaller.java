@@ -43,16 +43,18 @@ public class PluginInstaller {
                    }
                 });
 
-        return null;
+        return marketPlace;
     }
 
-    public static void downloadFile(String pluginId, String version, DataPipeline dataPipeline) throws Exception {
+    public static void installPlugin(String pluginId, String version, DataPipeline dataPipeline) throws Exception {
 
         MarketPlace marketPlace = getMarketPlace();
         Optional<Plugins> pluginObj = marketPlace.getPlugins().parallelStream().filter(f -> f.getUnique_id().equals(pluginId)).findAny();
 
         if (!pluginObj.isPresent()) {
-            throw new Exception("Invalid Plugin");
+            dataPipeline.put("message", "Plugin not found!");
+            dataPipeline.put("status", false);
+            throw new Exception("Plugin not found!");
         }
 
         Plugins plugin = pluginObj.get();
@@ -61,6 +63,8 @@ public class PluginInstaller {
 
         Plugins installedPlugin = getInstalledPlugin(pluginId, dataPipeline);
         if (null != installedPlugin && existed_latest_version_number <= installedPlugin.getLatest_version_number()) {
+            dataPipeline.put("message", "Plugin already installed");
+            dataPipeline.put("status", false);
             return;
         }
 
@@ -89,8 +93,9 @@ public class PluginInstaller {
             createRestorePoint(fileName, dataPipeline);
 
             updatePackagePlugin(plugin, dataPipeline);
-
+            dataPipeline.put("status", true);
         } else {
+            dataPipeline.put("message", "Checksum Mismatched");
             dataPipeline.put("status", false);
         }
     }
