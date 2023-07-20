@@ -19,7 +19,7 @@ public class Build {
     private static final String TENANT_DISTRIBUTION_NAME = "eka-distribution-tenant-%s.zip";
     private static final String TENANT_COMMUNITY_DISTRIBUTION_NAME = "eka-distribution-community-tenant-%s.zip";
     private static final String COMMUNITY_DISTRIBUTION_NAME = "eka-distribution-community-%s.zip";
-    public static final String DISTRIBUTION_REPO = "https://eka-distribution.s3.us-west-1.amazonaws.com/";
+    public static final String DISTRIBUTION_REPO = "https://repo.syncloop.com/";
 
     /**
      * @param version
