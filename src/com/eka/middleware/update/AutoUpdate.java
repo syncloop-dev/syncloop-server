@@ -1,4 +1,4 @@
-package com.eka.middleware.pub.util;
+package com.eka.middleware.update;
 
 import com.eka.middleware.server.Build;
 import com.eka.middleware.server.MiddlewareServer;

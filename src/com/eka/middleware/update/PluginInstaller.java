@@ -1,4 +1,4 @@
-package com.eka.middleware.pub.util;
+package com.eka.middleware.update;
 
 import com.eka.middleware.server.Build;
 import com.eka.middleware.service.DataPipeline;
@@ -13,11 +13,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import static com.eka.middleware.pub.util.AutoUpdate.*;
+import static com.eka.middleware.update.AutoUpdate.*;
 
 public class PluginInstaller {
 

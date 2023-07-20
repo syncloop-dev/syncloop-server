@@ -1,4 +1,4 @@
-package com.eka.middleware.pub.util;
+package com.eka.middleware.update;
 
 import lombok.Getter;
 import lombok.Setter;
