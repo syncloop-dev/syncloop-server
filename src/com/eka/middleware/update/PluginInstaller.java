@@ -167,7 +167,7 @@ public class PluginInstaller {
 
         if (!folder.exists()) {
             if (folder.mkdirs()) {
-                //System.out.println("Folders created successfully.");
+
             }
         }
     }
