@@ -71,6 +71,8 @@ public class PluginInstaller {
 
         URL url = new URL(Build.DISTRIBUTION_REPO + "plugins/" + fileName);
         String downloadLocation = PropertyManager.getPackagePath(dataPipeline.rp.getTenant()) + "builds/import/";
+
+        createFoldersIfNotExist(downloadLocation);
         File downloadedFile = new File(downloadLocation + fileName);
 
         InputStream in = url.openStream();
@@ -160,6 +162,14 @@ public class PluginInstaller {
             return null;
         }
     }
+    public static void createFoldersIfNotExist(String path) {
+        File folder = new File(path);
 
+        if (!folder.exists()) {
+            if (folder.mkdirs()) {
+                //System.out.println("Folders created successfully.");
+            }
+        }
+    }
 
 }
