@@ -1,5 +1,6 @@
 package com.eka.middleware.update;
 
+import com.eka.middleware.pub.util.AppUpdate;
 import com.eka.middleware.pub.util.AutoUpdate;
 import com.eka.middleware.server.Build;
 import com.eka.middleware.service.DataPipeline;
@@ -15,6 +16,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
+
+import static com.eka.middleware.pub.util.AppUpdate.getStatus;
+import static com.eka.middleware.pub.util.AppUpdate.updateStatus;
 
 public class PluginInstaller {
 
@@ -169,6 +173,28 @@ public class PluginInstaller {
                 //System.out.println("Folders created successfully.");
             }
         }
+    }
+
+    public static void installPluginAsync(String pluginId, String version, DataPipeline dataPipeline) throws Exception {
+        Runnable task = () -> {
+            updateStatus(pluginId, "Start", dataPipeline);
+            try {
+                installPlugin(version,version ,dataPipeline);
+                updateStatus(pluginId, "Success", dataPipeline);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                updateStatus(pluginId, "Error" , dataPipeline);
+            }
+        };
+        Thread thread = new Thread(task);
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
