@@ -1,19 +1,23 @@
 package com.eka.middleware.server;
 
 import com.eka.middleware.service.DataPipeline;
+import com.eka.middleware.service.PropertyManager;
 import com.eka.middleware.template.SystemException;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
+import java.io.IOException;
+
 
 public class ApplicationShutdownHook implements Runnable {
 
     private static Integer EXIT_CODE = 0;
     public static String[] arg;
 
-    private static ProcessHandle lastProcess;
+//    private static ProcessHandle lastProcess;
     private static long pid;
 
+    /*
     @Override
     public void run() {
         if (EXIT_CODE == 1) {
@@ -58,5 +62,64 @@ public class ApplicationShutdownHook implements Runnable {
         pid = Long.parseLong(processName.split("@")[0]);
         ProcessHandle processHandle = ProcessHandle.of(pid).get();
         lastProcess = processHandle;
+    }*/
+
+        @Override
+        public void run() {
+            if (EXIT_CODE == 1) {
+                try {
+
+                    System.out.println("Restarting...");
+                    restartApplication();
+                    System.out.println("Application restarted.");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+
+        public static void restartServer(DataPipeline dataPipeline) throws Exception {
+            if (!Boolean.parseBoolean(System.getProperty("CONTAINER_ON_PRIM_DEPLOYMENT"))) {
+                throw new Exception("Restart is not allowed.");
+            }
+
+            if (!dataPipeline.rp.getTenant().getName().equals("default")) {
+                throw new Exception("Restart is not allowed.");
+            }
+
+            System.out.println("Restarting...");
+            restartApplication();
+            System.out.println("Application restarted.");
+        }
+
+    private static void restartApplication() throws IOException, InterruptedException {
+        String restartScriptPath = "/Users/divyansh/Desktop/Syncloop/Local_CodeBase/ekamw-distributions-main/restart-server.sh";
+
+        ProcessBuilder processBuilder;
+        if (isUnix()) {
+            processBuilder = new ProcessBuilder("sh", restartScriptPath);
+        } else if (isWindows()) {
+            processBuilder = new ProcessBuilder("cmd", "/c", restartScriptPath);
+        } else {
+            throw new UnsupportedOperationException("Unsupported OS. Cannot restart the server.");
+        }
+
+        Process process = processBuilder.start();
+        process.waitFor();
     }
+
+    private static boolean isUnix() {
+        String os = System.getProperty("os.name").toLowerCase();
+        return (os.contains("nix") || os.contains("nux") || os.contains("mac"));
+    }
+
+    private static boolean isWindows() {
+        String os = System.getProperty("os.name").toLowerCase();
+        return os.contains("win");
+    }
+
+
+
+
 }
