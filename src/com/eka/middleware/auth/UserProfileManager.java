@@ -124,7 +124,7 @@ public class UserProfileManager implements IdentityManager {
 				.map(Group::new)
 				.collect(Collectors.toList());
 		String tenant = profile.get("tenant").toString();
-		return new User(password, name, groups, email, tenant, "1");
+		return new User(email,password, name, groups, email, tenant, "1");
 	}
 
 	public static void updateUser(AuthAccount account,final byte[] pass) throws SystemException {
@@ -218,6 +218,7 @@ public class UserProfileManager implements IdentityManager {
 			if (user.get("status") != null && user.get("status").equals("0")) {
 				return false;
 			}
+
 
 			if (user.get("password") == null)
 				return false;
