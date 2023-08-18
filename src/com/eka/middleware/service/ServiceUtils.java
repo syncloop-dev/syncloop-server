@@ -20,9 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 //import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,37 +30,45 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.JarFile;
 import java.util.regex.Pattern;
-import java.util.zip.*;
+import java.util.zip.DataFormatException;
+import java.util.zip.Deflater;
+import java.util.zip.Inflater;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.json.Json;
 import javax.json.JsonObject;
 
-import com.eka.middleware.flow.FlowResolver;
-import com.eka.middleware.heap.CacheManager;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.google.common.collect.Maps;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.pac4j.core.profile.UserProfile;
-import org.pac4j.undertow.account.Pac4jAccount;
+import org.springframework.util.AntPathMatcher;
 
 import com.eka.middleware.auth.AuthAccount;
 import com.eka.middleware.auth.Security;
 import com.eka.middleware.auth.UserProfileManager;
+import com.eka.middleware.ext.CookieImpl;
+import com.eka.middleware.ext.spec.Cookie;
+import com.eka.middleware.ext.spec.HttpServerExchange;
+import com.eka.middleware.ext.spec.SecurityContext;
+import com.eka.middleware.ext.spec.Tenant;
+import com.eka.middleware.ext.spec.UserProfile;
+import com.eka.middleware.flow.FlowResolver;
+import com.eka.middleware.heap.CacheManager;
 import com.eka.middleware.heap.HashMap;
 import com.eka.middleware.pooling.ScriptEngineContextManager;
 import com.eka.middleware.server.ServiceManager;
 import com.eka.middleware.template.MultiPart;
 import com.eka.middleware.template.SnippetException;
 import com.eka.middleware.template.SystemException;
-import com.eka.middleware.template.Tenant;
 import com.eka.middleware.template.UriTemplate;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -70,25 +76,13 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import com.google.common.collect.Maps;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 
-import io.undertow.io.Receiver.FullBytesCallback;
-import io.undertow.security.api.SecurityContext;
-import io.undertow.server.HttpServerExchange;
-import io.undertow.server.handlers.Cookie;
-import io.undertow.server.handlers.CookieImpl;
 import io.undertow.server.handlers.form.FormData;
 import io.undertow.server.handlers.form.FormDataParser;
-import io.undertow.server.handlers.form.FormParserFactory;
-import io.undertow.server.handlers.form.FormParserFactory.Builder;
-import io.undertow.server.session.Session;
-import io.undertow.util.HeaderMap;
-import io.undertow.util.Headers;
-import io.undertow.util.HttpString;
-import io.undertow.util.Sessions;
 import io.undertow.util.StatusCodes;
-import org.springframework.util.AntPathMatcher;
 
 public class ServiceUtils {
 	// private static final Properties serverProperties = new Properties();
@@ -459,13 +453,7 @@ public class ServiceUtils {
 	}
 
 	public static final Map<String, Object> extractHeaders(HttpServerExchange exchange) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		HeaderMap hm = exchange.getRequestHeaders();
-		Collection<HttpString> hts = hm.getHeaderNames();
-		for (HttpString httpString : hts) {
-			map.put(httpString.toString(), hm.get(httpString).getFirst());
-		}
-		return map;
+		return exchange.extractHeaders();
 	}
 
 	public static final String getFormattedLogLine(String id, String resource, String info) {
@@ -491,9 +479,7 @@ public class ServiceUtils {
 		RuntimePipeline rp = RuntimePipeline.getPipeline(sessionId);
 		final HttpServerExchange exchange = rp.getExchange();
 
-		Builder builder = FormParserFactory.builder();
-
-		final FormDataParser formDataParser = builder.build().createParser(exchange);
+		final FormDataParser formDataParser = exchange.getFormDataParser();
 		if (formDataParser != null) {
 
 //			try {
@@ -608,35 +594,6 @@ public class ServiceUtils {
 		return msg;
 	}
 
-	public static final String deleteURLAlias(String alias, DataPipeline dp) throws Exception {
-		String aliasTenantName = dp.rp.getTenant().getName();
-		String existingFQN = getPathService(alias, null, dp.rp.getTenant());
-
-		Properties urlMappings = getUrlAliasMapping(dp.rp.getTenant());
-
-		boolean aliasFound = false;
-		for (Object key : urlMappings.keySet()) {
-			String mappedAlias = key.toString();
-			if (mappedAlias.equals(alias)) {
-				urlMappings.remove(key);
-				aliasFound = true;
-				break;
-			}
-		}
-
-		if (!aliasFound) {
-			return "Alias not found. Nothing to delete.";
-		}
-
-		FileOutputStream fos = new FileOutputStream(new File(PropertyManager.getPackagePath(dp.rp.getTenant()) + "URLAliasMapping.properties"));
-		urlMappings.store(fos, "");
-		fos.flush();
-		fos.close();
-
-		return "Alias deleted successfully.";
-	}
-
-
 	private static boolean isAliasValid(String alias) {
 		if (alias.contains("?")) {
 			return false; // Alias contains a query parameter
@@ -646,9 +603,6 @@ public class ServiceUtils {
 		String invalidCharacters = ".*[^a-zA-Z0-9_.\\-/{}]+.*";
 		if (alias.matches(invalidCharacters)) {
 			return false; // Alias contains special characters
-		}
-		if (alias.matches(".*\\{.\\}[a-zA-Z].*")) { // Alias does not contains dynamic pattern such as Y in {X}Y
-			return false;
 		}
 
 		return true;
@@ -696,7 +650,7 @@ public class ServiceUtils {
 			Set<String> headers = mp.headers.keySet();
 
 			for (String key : headers) {
-				exchange.getResponseHeaders().put(HttpString.tryFromString(key), mp.headers.get(key).toString());
+				exchange.putResponseHeaders(key, mp.headers.get(key).toString());
 			}
 			os = exchange.getOutputStream();
 			if (tempFile != null)
@@ -766,7 +720,7 @@ public class ServiceUtils {
 			Set<String> headers = mp.headers.keySet();
 
 			for (String key : headers) {
-				exchange.getResponseHeaders().put(HttpString.tryFromString(key), mp.headers.get(key).toString());
+				exchange.putResponseHeaders(key, mp.headers.get(key).toString());
 			}
 			os = exchange.getOutputStream();
 			// System.out.println("Available bytes:" + targetStream.available());
@@ -793,31 +747,11 @@ public class ServiceUtils {
 	public static byte[] getBody(DataPipeline dataPipeLine) throws SnippetException {
 		try {
 			final RuntimePipeline rp = RuntimePipeline.getPipeline(dataPipeLine.getSessionId());
-			final Map<String, Object> payload = rp.payload;
-			try {
-				rp.getExchange().getRequestReceiver().setMaxBufferSize(1024);
-				rp.getExchange().getRequestReceiver().receiveFullBytes(new FullBytesCallback() {
-					@Override
-					public void handle(HttpServerExchange exchange, byte[] body) {
-						payload.put("@body", body);
-					}
-				});
-			} catch (Exception e) {
-				e.printStackTrace();
-				ServiceUtils.printException(rp.getTenant(),rp.getSessionID() + " Could not stream body thread.", e);
-			}
-
-			if (payload.get("@body") != null) {
-				byte body[] = (byte[]) payload.get("@body");
-				payload.remove("@body");
-				return body;
-			}
-
+			return rp.getExchange().getBody(rp);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new SnippetException(dataPipeLine, e.getMessage(), e);
 		}
-		return null;
 	}
 
 	public static final InputStream getBodyAsStream(final DataPipeline dataPipeLine) throws SnippetException {
@@ -922,14 +856,7 @@ public class ServiceUtils {
 	}
 	
 	public static void clearSession(HttpServerExchange exchange) {
-		Session session = Sessions.getSession(exchange);
-		if (session == null)
-			return;
-		HashSet<String> names = new HashSet<>(session.getAttributeNames());
-		for (String attribute : names) {
-			session.removeAttribute(attribute);
-		}
-		session.invalidate(exchange);
+		exchange.clearSession();
 	}
 
 	public static String getToken(Cookie cookie) {
@@ -1043,9 +970,7 @@ public class ServiceUtils {
 
 	public static UserProfile getCurrentLoggedInUserProfile(HttpServerExchange exchange) throws SnippetException {
 		final SecurityContext context = exchange.getSecurityContext();
-		if (context != null)
-			return ((Pac4jAccount) context.getAuthenticatedAccount()).getProfile();
-		return null;
+		return exchange.getCurrentLoggedInUserProfile();
 	}
 
 	public static AuthAccount getCurrentLoggedInAuthAccount(HttpServerExchange exchange) throws SnippetException {
@@ -1074,7 +999,8 @@ public class ServiceUtils {
 		try {
 			//setKey(secret);
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-			cipher.init(Cipher.ENCRYPT_MODE, Tenant.getTenant(tenantName).KEY);
+			//cipher.init(Cipher.ENCRYPT_MODE, Tenant.getTenant(tenantName).KEY);
+			Tenant.getTenant(tenantName).initCipher(Cipher.ENCRYPT_MODE, cipher);
 			return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
 		} catch (Exception e) {
 			printException(Tenant.getTenant(tenantName), "Error while encrypting: " , e);
@@ -1086,7 +1012,8 @@ public class ServiceUtils {
 		try {
 			//setKey(secret);
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
-			cipher.init(Cipher.DECRYPT_MODE, Tenant.getTenant(tenantName).KEY);
+			//cipher.init(Cipher.DECRYPT_MODE, Tenant.getTenant(tenantName).KEY);
+			Tenant.getTenant(tenantName).initCipher(Cipher.DECRYPT_MODE, cipher);
 			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
 		} catch (Exception e) {
 			printException(Tenant.getTenant(tenantName), "Error while decrypting: " , e);
@@ -1189,9 +1116,9 @@ public class ServiceUtils {
 	public static void redirectRequest(HttpServerExchange exchange, String path) {
 		if(exchange==null)
 			return;
-		exchange.getResponseHeaders().clear();
+		exchange.clearResponseHeaders();
 		exchange.setStatusCode(StatusCodes.FOUND);
-		exchange.getResponseHeaders().put(Headers.LOCATION, path);
+		exchange.putResponseHeaders("LOCATION", path);
 	}
 
 	/**
@@ -1481,7 +1408,7 @@ public class ServiceUtils {
 			dp.drop("asyncInputDoc");
 			dp.drop("asyncOutputDoc");
 			if (dp.rp.isExchangeInitialized())
-				dp.rp.getExchange().getResponseHeaders().put(new HttpString("CORRELATION-ID"), dp.getCorrelationId());
+				dp.rp.getExchange().putResponseHeaders("CORRELATION-ID", dp.getCorrelationId());
 		}
 	}
 

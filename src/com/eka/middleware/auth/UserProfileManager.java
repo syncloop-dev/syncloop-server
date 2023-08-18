@@ -1,22 +1,31 @@
 package com.eka.middleware.auth;
 
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+//import org.pac4j.core.profile.UserProfile;
+
+import com.eka.middleware.ext.spec.UserProfile;
 import com.eka.middleware.service.PropertyManager;
 import com.eka.middleware.service.ServiceUtils;
 import com.eka.middleware.template.SystemException;
 import com.nimbusds.jwt.JWTParser;
 import com.nimbusds.oauth2.sdk.token.BearerAccessToken;
+
 import io.undertow.security.idm.Account;
 import io.undertow.security.idm.Credential;
 import io.undertow.security.idm.IdentityManager;
 import io.undertow.security.idm.PasswordCredential;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.pac4j.core.profile.UserProfile;
-
-import java.nio.charset.StandardCharsets;
-import java.security.Principal;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class UserProfileManager implements IdentityManager {
 	private static final Map<String, Object> usersMap = new ConcurrentHashMap<String, Object>();
@@ -393,158 +402,4 @@ public class UserProfileManager implements IdentityManager {
 			profile.put("tenant",tenant);
 		return profile;
 	}
-
-	public static final UserProfile SYSTEM_PROFILE = new UserProfile() {
-
-		@Override
-		public String getId() {
-			// TODO Auto-generated method stub
-			return "SYSTEM";
-		}
-
-		@Override
-		public void setId(String id) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public String getTypedId() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public String getUsername() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Object getAttribute(String name) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Map<String, Object> getAttributes() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public boolean containsAttribute(String name) {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-		@Override
-		public void addAttribute(String key, Object value) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void removeAttribute(String key) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void addAuthenticationAttribute(String key, Object value) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void removeAuthenticationAttribute(String key) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void addRole(String role) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void addRoles(Collection<String> roles) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public Set<String> getRoles() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public void addPermission(String permission) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void addPermissions(Collection<String> permissions) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public Set<String> getPermissions() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public boolean isRemembered() {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-		@Override
-		public void setRemembered(boolean rme) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public String getClientName() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public void setClientName(String clientName) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public String getLinkedId() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public void setLinkedId(String linkedId) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public boolean isExpired() {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-		@Override
-		public Principal asPrincipal() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-	};
-
 }

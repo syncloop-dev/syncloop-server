@@ -29,10 +29,10 @@ import org.pac4j.undertow.handler.SecurityHandler;
 
 import com.eka.middleware.auth.pac4j.AuthConfigFactory;
 import com.eka.middleware.auth.pac4j.AuthHandlers;
+import com.eka.middleware.ext.spec.Tenant;
 import com.eka.middleware.service.DataPipeline;
 import com.eka.middleware.service.PropertyManager;
 import com.eka.middleware.service.ServiceUtils;
-import com.eka.middleware.template.Tenant;
 
 import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.PathHandler;

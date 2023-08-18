@@ -3,10 +3,10 @@ package com.eka.middleware.logging;
 import com.eka.middleware.service.DataPipeline;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.Configurator;
-import org.springframework.util.StopWatch;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -76,7 +76,7 @@ public class AppLogger {
 		}
 		try {
 			StopWatch stopWatch = CONTEXT.get().stopTracking();
-			add("TT", stopWatch.getLastTaskTimeMillis());
+			add("TT", stopWatch.getTime());
 
 			appLogger.info(getFormattedLog());
 

@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.eka.middleware.server</groupId>
 	<artifactId>com.eka.middleware.server</artifactId>
@@ -93,7 +93,7 @@
 							<outputDirectory>${project.build.directory}/lib</outputDirectory>
 							<tasks>
 								<delete
-									file="${project.build.outputDirectory}/classes/*.java" />
+										file="${project.build.outputDirectory}/classes/*.java" />
 							</tasks>
 						</configuration>
 					</execution>
@@ -299,12 +299,12 @@
 			<artifactId>log4j-layout-template-json</artifactId>
 			<version>2.18.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.keycloak/keycloak-undertow-adapter 
-			<dependency> <groupId>org.keycloak</groupId> <artifactId>keycloak-undertow-adapter</artifactId> 
-			<version>19.0.3</version> </dependency> https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api 
-			<dependency> <groupId>javax.servlet</groupId> <artifactId>javax.servlet-api</artifactId> 
-			<version>4.0.1</version> <scope>provided</scope> </dependency> https://mvnrepository.com/artifact/org.pytorch/pytorch_java_only 
-			<dependency> <groupId>org.pytorch</groupId> <artifactId>pytorch_java_only</artifactId> 
+		<!-- https://mvnrepository.com/artifact/org.keycloak/keycloak-undertow-adapter
+			<dependency> <groupId>org.keycloak</groupId> <artifactId>keycloak-undertow-adapter</artifactId>
+			<version>19.0.3</version> </dependency> https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+			<dependency> <groupId>javax.servlet</groupId> <artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version> <scope>provided</scope> </dependency> https://mvnrepository.com/artifact/org.pytorch/pytorch_java_only
+			<dependency> <groupId>org.pytorch</groupId> <artifactId>pytorch_java_only</artifactId>
 			<version>1.12.2</version> <scope>provided</scope> </dependency> -->
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
 		<dependency>

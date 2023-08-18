@@ -63,7 +63,7 @@ public class ServiceManager {
 		String classFile = getClassFilePath(fqn, dataPipeLine);
 		String fqnClass = classFile.replace(".java", "").replace("/", ".");
 
-		final String tid = dataPipeLine.rp.getTenant().id;
+		final String tid = dataPipeLine.rp.getTenant().getID();
 
 		File file = getTenantFile(dataPipeLine, classFile);
 
@@ -76,7 +76,7 @@ public class ServiceManager {
 	}
 
 	public static void reload(final String fqn, final DataPipeline dataPipeLine, boolean forceJavaCompile) {
-		final String tid = dataPipeLine.rp.getTenant().id;
+		final String tid = dataPipeLine.rp.getTenant().getID();
 		String classID = tid + "-" + fqn;// + "." + lastChangedTime;
 		if (forceJavaCompile) {
 			try {
@@ -94,7 +94,7 @@ public class ServiceManager {
 		String classFile = getClassFilePath(fqn, dataPipeLine);
 		File file = getTenantFile(dataPipeLine, classFile);
 		long lastChangedTime = file.lastModified();
-		final String tid = dataPipeLine.rp.getTenant().id;
+		final String tid = dataPipeLine.rp.getTenant().getID();
 		String classID = tid + "-" + fqn;// + "." + lastChangedTime;
 		Long lastChangedTimeSaved = lastModified.get(classID);
 		Class cls = classMap.get(classID);

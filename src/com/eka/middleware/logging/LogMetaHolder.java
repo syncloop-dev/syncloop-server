@@ -1,9 +1,10 @@
 package com.eka.middleware.logging;
 
-import com.google.common.collect.Maps;
-import org.springframework.util.StopWatch;
-
 import java.util.Map;
+
+import org.apache.commons.lang3.time.StopWatch;
+
+import com.google.common.collect.Maps;
 
 public class LogMetaHolder {
 
@@ -24,7 +25,7 @@ public class LogMetaHolder {
     }
 
     public StopWatch stopTracking() {
-        if (stopWatch.isRunning()) {
+        if (stopWatch.isStarted()) {
             stopWatch.stop();
         }
         return stopWatch;

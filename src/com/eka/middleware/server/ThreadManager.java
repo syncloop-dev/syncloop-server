@@ -1,17 +1,11 @@
 package com.eka.middleware.server;
 
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,21 +14,15 @@ import com.eka.middleware.auth.AuthAccount;
 import com.eka.middleware.auth.ResourceAuthenticator;
 import com.eka.middleware.auth.Security;
 import com.eka.middleware.auth.UserProfileManager;
-import com.eka.middleware.auth.manager.AuthorizationRequest;
 import com.eka.middleware.auth.manager.JWT;
+import com.eka.middleware.ext.spec.Cookie;
+import com.eka.middleware.ext.spec.HttpServerExchange;
+import com.eka.middleware.ext.spec.Tenant;
 import com.eka.middleware.service.RuntimePipeline;
 import com.eka.middleware.service.ServiceUtils;
 import com.eka.middleware.template.MultiPart;
 import com.eka.middleware.template.SnippetException;
-import com.eka.middleware.template.SystemException;
-import com.eka.middleware.template.Tenant;
 
-import io.undertow.server.HttpServerExchange;
-import io.undertow.server.handlers.Cookie;
-import io.undertow.server.handlers.CookieImpl;
-import io.undertow.util.Headers;
-import io.undertow.util.HttpString;
-import io.undertow.util.PathTemplate;
 import io.undertow.util.StatusCodes;
 
 public class ThreadManager {
@@ -62,7 +50,7 @@ public class ThreadManager {
 			account = UserProfileManager.getUserProfileManager()
 					.getAccount(ServiceUtils.getCurrentLoggedInUserProfile(exchange));
 		} catch (SnippetException e1) {
-			exchange.getResponseSender().send("Could not fetch the profile for the active session");
+			exchange.send("Could not fetch the profile for the active session");
 			LOGGER.info(ServiceUtils.getFormattedLogLine(exchange.getRequestPath(), requestAddress, "Error"));
 		}
 		if (account != null) {
@@ -77,9 +65,9 @@ public class ThreadManager {
 			if (account.getUserId().equalsIgnoreCase("anonymous")) {
 				if (!Security.isPublic(pureRequestPath, tenantName)) {
 					LOGGER.info("User(" + account.getUserId() + ") active tenant mismatch or path not public. Make sure you are using right tenant name('"+tenantName+"'). Name is case sensitive. Clear your cookies retry with correct tenant name.");
-					exchange.getResponseHeaders().clear();
+					exchange.clearResponseHeaders();
 					exchange.setStatusCode(401);
-					exchange.getResponseSender()
+					exchange
 							.send("Tenant Access Denied. Path access not allowed." /*+ pureRequestPath
 									+ "\nPublic prefix paths:\n" + Security.getPublicPrefixPaths(tenantName)
 									+ "\nPublic exact paths:\n" + Security.getPublicExactPaths(tenantName)*/);
@@ -91,6 +79,7 @@ public class ThreadManager {
 				List<String> groups = new ArrayList<String>();
 //				groups.add("administrators");
 				groups.add("guest");
+				groups.add("default");
 				account.getAuthProfile().put("groups", groups);
 				if(!ServiceUtils.isApiCall(exchange))
 					exchange.setResponseCookie(cookie);
@@ -101,7 +90,7 @@ public class ThreadManager {
 						&& !((String) account.getAuthProfile().get("tenant")).equalsIgnoreCase(tenantName)) {
 					LOGGER.info("User(" + account.getUserId() + ") active tenant mismatch");
 					String profileTenantName = (String) account.getAuthProfile().get("tenant");
-					exchange.getResponseHeaders().clear();
+					exchange.clearResponseHeaders();
 					String tntName=(String) account.getAuthProfile().get("tenant");
 					String token=JWT.generate(exchange);
 					cookie.setValue(tntName+" "+token);
@@ -112,7 +101,7 @@ public class ThreadManager {
 					//exchange.getResponseHeaders().put(Headers.STATUS, 400);
 					//exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/html; charset=utf-8");
 					
-					//exchange.getResponseSender().send("<html><body><a href='/tenant/" + profileTenantName + pureRequestPath
+					//exchange.send("<html><body><a href='/tenant/" + profileTenantName + pureRequestPath
 					//		+ "'>Re-direct to my workspace.</a><body></html>");
 					exchange.endExchange();
 					return;
@@ -131,23 +120,23 @@ public class ThreadManager {
 				resource = ServiceUtils.getPathService(requestPath, pathParams, tenant);
 
 				if (resource == null) {
-					exchange.getResponseHeaders().clear();
+					exchange.clearResponseHeaders();
 
-					String content = AuthorizationRequest.getContent(exchange, requestPath.toUpperCase());
+					String content = exchange.getAuthorizationContent(requestPath); //AuthorizationRequest.getContent(exchange, requestPath.toUpperCase());
 
 					if (content != null) {
-						exchange.getResponseHeaders().add(Headers.STATUS, 200);
-						exchange.getResponseSender().send(content);
+						exchange.putResponseHeaders("STATUS", Long.toString(200));
+						exchange.send(content);
 					} else {
-						exchange.getResponseHeaders().add(Headers.STATUS, 404);
-						exchange.getResponseSender()
+						exchange.putResponseHeaders("STATUS", Long.toString(404));
+						exchange
 								.send("Server is up and running but it could not find the resource.");
 					}
 					return;
 				}
 				
 				try {
-					exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
+					exchange.putResponseHeaders("CONTENT_TYPE", "text/plain");
 					logTransaction = exchange.getQueryParameters().containsKey("logTransaction");
 
 					String uuid = UUID.randomUUID().toString();
@@ -158,12 +147,12 @@ public class ThreadManager {
 					isAllowed = ResourceAuthenticator.isConsumerAllowed(resource, account, requestPath, method);
 
 					if (!isAllowed && "default".equals(account.getAuthProfile().get("tenant")) && !account.getUserId().equalsIgnoreCase("anonymous")) {
-						exchange.getResponseHeaders().clear();
+						exchange.clearResponseHeaders();
 						exchange.setStatusCode(StatusCodes.FOUND);
 						String newUserPath = Security.gerDefaultNewUserPath(tenantName);
 						if (newUserPath == null)
 							newUserPath = Security.defaultTenantPage;
-						exchange.getResponseHeaders().put(Headers.LOCATION, "/tenant/"+tenantName+newUserPath);
+						exchange.putResponseHeaders("LOCATION", "/tenant/"+tenantName+newUserPath);
 						exchange.endExchange();
 						return;
 					}
@@ -175,9 +164,9 @@ public class ThreadManager {
 						if (logTransaction == true)
 							LOGGER.info(ServiceUtils.getFormattedLogLine(rp.getSessionID(),
 									"User(" + userId + ") is not in a consumer group.", "permission"));
-						exchange.getResponseHeaders().clear();
-						exchange.getResponseHeaders().put(Headers.STATUS, 400);
-						exchange.getResponseSender().send("Access Denied.");
+						exchange.clearResponseHeaders();
+						exchange.putResponseHeaders("STATUS", Long.toString(400));
+						exchange.send("Access Denied.");
 						return;
 					}
 					if (logTransaction == true) {
@@ -242,13 +231,13 @@ public class ThreadManager {
 					}
 
 					ServiceManager.invokeJavaMethod(resource, rp.dataPipeLine);
-					exchange.getResponseHeaders().put(HttpString.tryFromString("Access-Control-Allow-Origin"), "*");// new
-					exchange.getResponseHeaders().put(HttpString.tryFromString("Access-Control-Allow-Methods"), "*");// new
-					exchange.getResponseHeaders().put(HttpString.tryFromString("Access-Control-Allow-Headers"), "*");// new
+					exchange.putResponseHeaders("Access-Control-Allow-Origin", "*");// new
+					exchange.putResponseHeaders("Access-Control-Allow-Methods", "*");// new
+					exchange.putResponseHeaders("Access-Control-Allow-Headers", "*");// new
 																													// HttpString("Access-Control-Allow-Origin"),
 																													// "*");
-					exchange.getResponseHeaders().put(HttpString.tryFromString("X-Frame-Options"), "SAMEORIGIN");
-					exchange.getResponseHeaders().put(HttpString.tryFromString("X-Xss-Protection"), "0");
+					exchange.putResponseHeaders("X-Frame-Options", "SAMEORIGIN");
+					exchange.putResponseHeaders("X-Xss-Protection", "0");
 					if (rp.payload.get("*multiPart") != null) {
 						try {
 							MultiPart mp = (MultiPart) rp.payload.get("*multiPart");
@@ -266,27 +255,27 @@ public class ThreadManager {
 						String responsePayload = null;
 						if (acceptHeader.toLowerCase().contains("xml")) {
 							responsePayload = rp.dataPipeLine.toXml();
-							exchange.getResponseHeaders().put(HttpString.tryFromString("Content-Type"),
+							exchange.putResponseHeaders("Content-Type",
 									"application/xml");
 						} else if (acceptHeader.toLowerCase().contains("yaml")) {
 							responsePayload = rp.dataPipeLine.toYaml();
-							exchange.getResponseHeaders().put(HttpString.tryFromString("Content-Type"),
+							exchange.putResponseHeaders("Content-Type",
 									"application/x-yaml");
 						} else {
 							responsePayload = rp.dataPipeLine.toJson();
-							exchange.getResponseHeaders().put(HttpString.tryFromString("Content-Type"),
+							exchange.putResponseHeaders("Content-Type",
 									"application/json");
 						}
 						final String resPayload = responsePayload;
 						// final RuntimePipeline rpf = rp;
-						exchange.getResponseSender().send(resPayload);
+						exchange.send(resPayload);
 
 						/*
 						 * ExecutorService threadpool = Executors.newCachedThreadPool();
 						 * 
 						 * @SuppressWarnings("unchecked") Future<Long> futureTask = (Future<Long>)
 						 * threadpool.submit(() -> { exchange.startBlocking();
-						 * exchange.getResponseSender().send(resPayload);
+						 * exchange.send(resPayload);
 						 * LOGGER.info(ServiceUtils.getFormattedLogLine(rpf.getSessionID(),
 						 * requestAddress, "Ended successfully")); }); try { Thread.sleep(10); while
 						 * (!futureTask.isDone()) Thread.sleep(100); } catch (InterruptedException e) {
@@ -298,7 +287,7 @@ public class ThreadManager {
 						rp = null;
 					}
 				} catch (SnippetException e) {
-					exchange.getResponseSender()
+					exchange
 							.send("RequestId: " + rp.getSessionID() + "\nInternal Server error:-\n" + e.getMessage());
 					LOGGER.info(ServiceUtils.getFormattedLogLine(rp.getSessionID(), requestAddress, "Error"));
 
@@ -312,8 +301,8 @@ public class ThreadManager {
 				}
 			}
 		} else {
-			exchange.getResponseHeaders().clear();
-			exchange.getResponseSender().send("Access denied");
+			exchange.clearResponseHeaders();
+			exchange.send("Access denied");
 			/*
 			
 			String rqp = exchange.getRequestPath();
@@ -327,7 +316,7 @@ public class ThreadManager {
 				// cookie = new CookieImpl("tenant", tenantName);
 				cookie.setValue(tenantName);
 				exchange.setResponseCookie(cookie);
-				exchange.getResponseHeaders().clear();
+				exchange.clearResponseHeaders();
 				exchange.setStatusCode(StatusCodes.FOUND);
 				exchange.getResponseHeaders().put(Headers.LOCATION,
 						"/tenant/" + tenantName + rqp + "?" + exchange.getQueryString());

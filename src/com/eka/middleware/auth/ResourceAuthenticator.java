@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.eka.middleware.service.PropertyManager;
 import com.eka.middleware.service.ServiceUtils;
-import com.eka.middleware.template.Tenant;
 
 public class ResourceAuthenticator {
 //public static boolean isAllowed(final HttpServerExchange exchange) {
@@ -71,7 +70,7 @@ public static boolean isConsumerAllowed(String resource, AuthAccount authAccount
                     if(AuthAccount.STATIC_ADMIN_GROUP.equals(group)){
                       canConsume=true;
                       break;
-                    }else if(AuthAccount.STATIC_DEFAULT_GROUP.equals(group) && (ServiceUtils.isPublicFolder(requestPath) && method.toLowerCase().equals("get")) && requestPath.contains("tenant")) {
+                    }else if(AuthAccount.STATIC_DEFAULT_GROUP.equals(group) && (ServiceUtils.isPublicFolder(requestPath) && method.toLowerCase().equals("get"))) {
                     	canConsume=true;
                         break;
                     }

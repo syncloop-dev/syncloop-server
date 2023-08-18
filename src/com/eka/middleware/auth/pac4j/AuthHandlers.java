@@ -3,14 +3,11 @@ package com.eka.middleware.auth.pac4j;
 import java.util.Date;
 import java.util.List;
 
-import io.undertow.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.pac4j.core.client.Client;
 import org.pac4j.core.config.Config;
 import org.pac4j.core.exception.http.HttpAction;
-import org.pac4j.core.logout.handler.DefaultLogoutHandler;
-import org.pac4j.undertow.handler.LogoutHandler;
 import org.pac4j.core.profile.UserProfile;
 import org.pac4j.core.util.Pac4jConstants;
 import org.pac4j.http.client.indirect.FormClient;
@@ -23,15 +20,22 @@ import org.pac4j.undertow.http.UndertowHttpActionAdapter;
 import com.eka.middleware.auth.AuthAccount;
 import com.eka.middleware.auth.Security;
 import com.eka.middleware.auth.manager.JWT;
+import com.eka.middleware.ext.HTTPExchangeImpl;
+import com.eka.middleware.ext.spec.Cookie;
+import com.eka.middleware.ext.spec.Tenant;
 import com.eka.middleware.server.ThreadManager;
 import com.eka.middleware.service.ServiceUtils;
-import com.eka.middleware.template.Tenant;
+//import com.eka.middleware.template.Tenant;
 
 import io.undertow.security.api.SecurityContext;
 import io.undertow.security.idm.Account;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
-import io.undertow.server.handlers.Cookie;
+import io.undertow.util.HeaderMap;
+import io.undertow.util.HeaderValues;
+import io.undertow.util.Headers;
+import io.undertow.util.HttpString;
+import io.undertow.util.StatusCodes;
 
 public class AuthHandlers {
 
@@ -39,20 +43,18 @@ public class AuthHandlers {
 
 	public static HttpHandler indexHandler() {
 		return exchange -> {
-			if (handlerCORSRequest(exchange)) {
-				return ;
-			}
-			ThreadManager.processRequest(exchange);
+			ThreadManager.processRequest(new HTTPExchangeImpl(exchange));
 		};
 	}
 
 	public static HttpHandler defaultWelcomePageHandler(final String path) {
 		return exchange -> {
+			HTTPExchangeImpl exch=new HTTPExchangeImpl(exchange);
 			List<UserProfile> profiles = getProfiles(exchange);
 			String p=path;
-			String tenantName=ServiceUtils.setupRequestPath(exchange);
-			Cookie cookie=ServiceUtils.setupCookie(exchange, tenantName, null);
-			ServiceUtils.manipulateHeaders(exchange);
+			String tenantName=ServiceUtils.setupRequestPath(exch);
+			Cookie cookie=ServiceUtils.setupCookie(exch, tenantName, null);
+			ServiceUtils.manipulateHeaders(exch);
 			String token = ServiceUtils.getToken(cookie);
 			if(token!=null || profiles!=null) {
 				p=Security.defaultWorkspacePage;
@@ -76,7 +78,8 @@ public class AuthHandlers {
 	public static HttpHandler logoutHandler = new HttpHandler() {
 		public void handleRequest(final HttpServerExchange exchange) throws Exception {
 			//LogoutHandler lh=new LogoutHandler(AuthConfigFactory.getLogoutConfig(),"/?defaulturlafterlogout");
-			Cookie ck=exchange.getRequestCookie("tenant");
+			HTTPExchangeImpl exch=new HTTPExchangeImpl(exchange);
+			Cookie ck=exch.getRequestCookie("tenant");
 			ck.setValue(null);
 			ck.setDiscard(true);
 			//lh.handleRequest(exchange);
@@ -85,47 +88,29 @@ public class AuthHandlers {
 			Date expiry=new Date(System.currentTimeMillis());
 			exchange.requestCookies().forEach(k->k.setMaxAge(-27788353));
 			exchange.responseCookies().forEach(k->k.setMaxAge(-27788353));
-			ServiceUtils.redirectRequest(exchange, Security.defaultLoginPage);
-			ServiceUtils.clearSession(exchange);
+			ServiceUtils.redirectRequest(exch, Security.defaultLoginPage);
+			//ServiceUtils.clearSession(exch);
 			exchange.endExchange();
 		}
 	};
-
-	public static boolean handlerCORSRequest(final HttpServerExchange exchange) {
-		if (exchange.getRequestMethod().equals(Methods.OPTIONS)
-				&& exchange.getRequestHeaders().contains("Access-Control-Request-Method")) {
-			exchange.getResponseHeaders().put(HttpString.tryFromString("Access-Control-Allow-Origin"), "*");// new
-			exchange.getResponseHeaders().put(HttpString.tryFromString("Access-Control-Allow-Methods"), "*");// new
-			exchange.getResponseHeaders().put(HttpString.tryFromString("Access-Control-Allow-Headers"), "*");// new
-			exchange.setStatusCode(200);
-			exchange.endExchange();
-			return true;
-		}
-
-		return false;
-	}
 	
 	public static HttpHandler mainHandler = new HttpHandler() {
 		public void handleRequest(final HttpServerExchange exchange) throws Exception {
-
-			if (handlerCORSRequest(exchange)) {
-				return ;
-			}
-
 			final SecurityContext context = exchange.getSecurityContext();
+			HTTPExchangeImpl exch=new HTTPExchangeImpl(exchange);
 			//AuthAccount acc=(AuthAccount) context.getAuthenticatedAccount();
 			List<UserProfile> profiles = getProfiles(exchange);
-			String tenantName=ServiceUtils.setupRequestPath(exchange);
-			Cookie cookie=ServiceUtils.setupCookie(exchange, tenantName, null);
-			ServiceUtils.manipulateHeaders(exchange);
+			String tenantName=ServiceUtils.setupRequestPath(exch);
+			Cookie cookie=ServiceUtils.setupCookie(exch, tenantName, null);
+			ServiceUtils.manipulateHeaders(exch);
 			if (profiles != null) {
-				AuthAccount acc = ServiceUtils.getCurrentLoggedInAuthAccount(exchange);
+				AuthAccount acc = ServiceUtils.getCurrentLoggedInAuthAccount(exch);
 				String token=ServiceUtils.getToken(cookie);
 				if(token==null) {
-					token=JWT.generate(exchange);
-					cookie=ServiceUtils.setupCookie(exchange, (String)acc.getAuthProfile().get("tenant"), token);
+					token=JWT.generate(exch);
+					cookie=ServiceUtils.setupCookie(exch, (String)acc.getAuthProfile().get("tenant"), token);
 				}
-				ThreadManager.processRequest(exchange,cookie);
+				ThreadManager.processRequest(exch,cookie);
 			} else {
 				HttpHandler hh = this;
 				HeaderMap headers = exchange.getRequestHeaders();
@@ -159,8 +144,8 @@ public class AuthHandlers {
 					} catch (Exception e) {
 						cookie.setExpires(new Date(System.currentTimeMillis()-1000));
 						cookie.setDiscard(true);
-						if(!ServiceUtils.isApiCall(exchange))
-							exchange.setResponseCookie(cookie);
+						if(!ServiceUtils.isApiCall(exch))
+							exch.setResponseCookie(cookie);
 						exchange.setStatusCode(401);
 						exchange.getResponseSender().send("Token expired. Please reload/relogin page.");
 						exchange.endExchange();
@@ -178,9 +163,10 @@ public class AuthHandlers {
 	};
 
 	public static HttpHandler notProtectedIndex = exchange -> {
-		String tenantName=ServiceUtils.setupRequestPath(exchange);
-		Cookie cookie=ServiceUtils.setupCookie(exchange, tenantName, null);
-		ThreadManager.processRequest(exchange,cookie);
+		HTTPExchangeImpl exch=new HTTPExchangeImpl(exchange);
+		String tenantName=ServiceUtils.setupRequestPath(exch);
+		Cookie cookie=ServiceUtils.setupCookie(exch, tenantName, null);
+		ThreadManager.processRequest(exch,cookie);
 	};
 
 	public static HttpHandler authenticatedJsonHandler = exchange -> {

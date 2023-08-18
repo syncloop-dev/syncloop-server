@@ -1,8 +1,40 @@
 package com.eka.middleware.service;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.UUID;
+import java.util.concurrent.Future;
+import java.util.regex.Pattern;
+
+import javax.json.JsonArray;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.pac4j.core.profile.CommonProfile;
+import org.pac4j.core.util.Pac4jConstants;
+
 import com.eka.middleware.auth.AuthAccount;
 import com.eka.middleware.auth.Security;
 import com.eka.middleware.auth.UserProfileManager;
+import com.eka.middleware.ext.spec.HttpServerExchange;
+import com.eka.middleware.ext.spec.Tenant;
+import com.eka.middleware.ext.spec.UserProfile;
 import com.eka.middleware.flow.FlowUtils;
 import com.eka.middleware.flow.JsonOp;
 import com.eka.middleware.heap.HashMap;
@@ -10,23 +42,8 @@ import com.eka.middleware.pooling.DBCPDataSource;
 import com.eka.middleware.server.ServiceManager;
 import com.eka.middleware.template.MultiPart;
 import com.eka.middleware.template.SnippetException;
-import com.eka.middleware.template.Tenant;
-import io.undertow.server.HttpServerExchange;
-import io.undertow.util.HeaderValues;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.pac4j.core.profile.CommonProfile;
-import org.pac4j.core.profile.UserProfile;
-import org.pac4j.core.util.Pac4jConstants;
 
-import javax.json.JsonArray;
-import java.io.*;
-import java.nio.file.Path;
-import java.util.*;
-import java.util.concurrent.Future;
-import java.util.regex.Pattern;
+import io.undertow.util.HeaderValues;
 
 public class DataPipeline {
 	private static Logger LOGGER = LogManager.getLogger(DataPipeline.class);
@@ -880,13 +897,8 @@ public class DataPipeline {
 		log(msg, null);
 	}
 
-	@Deprecated
 	public void keyLog(String key, String value) {
-		rp.appLogger.add(key, value);
-	}
-
-	public void appLog(String key, String value) {
-		rp.appLogger.add(key, value);
+		rp.keyLogger.add(key, value);
 	}
 
 	public void log(String msg, Level level) {
@@ -967,7 +979,7 @@ public class DataPipeline {
 					return new StringTokenizer(headerValues.get(0), ",").nextToken().trim();
 				}
 
-				return httpServerExchange.getSourceAddress().getAddress().toString();
+				return httpServerExchange.getSourceAddress();
 			}
 		} catch (SnippetException e) {
 			ServiceUtils.printException(this,"Exchange not initialized..", e);
@@ -998,7 +1010,7 @@ public class DataPipeline {
 		String JWT="";
 		AuthAccount authacc=getCurrentRuntimeAccount();
 		Tenant tenant = rp.getTenant();
-		final var profile = new CommonProfile();
+		//final var profile = new CommonProfile();
 		if (null == groups || groups.isEmpty()) {
 			throw new Exception("Groups can not be empty!");
 		}
@@ -1012,20 +1024,22 @@ public class DataPipeline {
 			name = UUID;
 		}
 
-
-		profile.setId(email);
-		profile.addAttribute(Pac4jConstants.USERNAME, userId);
-		profile.addAttribute("tenant", tenant.getName());
-		profile.addAttribute("groups", groups);
-		profile.addAttribute("name", name);
-		profile.addAttribute("email", email);
-		profile.addAttribute("UUID", UUID);
-		profile.addAttribute("creation_timestamp", new Date().getTime());
+		authacc.addProfileAttribute("emailID", email);
+		authacc.addProfileAttribute("username", userId);
+		authacc.addProfileAttribute("tenant", tenant.getName());
+		authacc.addProfileAttribute("groups", groups);
+		authacc.addProfileAttribute("name", name);
+		authacc.addProfileAttribute("email", email);
+		authacc.addProfileAttribute("UUID", UUID);
+		authacc.addProfileAttribute("creation_timestamp", new Date().getTime());
+		authacc.addProfileAttribute(name, tenant);
 
 		Date expiryDate = new Date();
 		expiryDate = ServiceUtils.addHoursToDate(expiryDate, expiresAfterHours);
-		tenant.jwtGenerator.setExpirationTime(expiryDate);
-		String token = tenant.jwtGenerator.generate(profile);
+		//tenant.jwtGenerator.setExpirationTime(expiryDate);
+		tenant.setTenantJWTExpiry(expiryDate);
+		String token = tenant.generateJWTForTenant(authacc);
+		//tenant.jwtGenerator.generate(profile);
 		JWT=ServiceUtils.encrypt(token, tenant.getName());
 		return JWT;
 	}

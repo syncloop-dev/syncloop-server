@@ -29,10 +29,10 @@ import org.xnio.Options;
 import com.eka.middleware.auth.AuthAccount;
 import com.eka.middleware.auth.Security;
 import com.eka.middleware.auth.UserProfileManager;
+import com.eka.middleware.ext.spec.Tenant;
 import com.eka.middleware.service.PropertyManager;
 import com.eka.middleware.service.ServiceUtils;
 import com.eka.middleware.template.SystemException;
-import com.eka.middleware.template.Tenant;
 
 import io.undertow.Undertow;
 import io.undertow.Undertow.Builder;
@@ -66,8 +66,6 @@ public class MiddlewareServer {
 		} else {
 			LOGGER.info("No Container Deployment");
 		}
-
-		ApplicationShutdownHook.arg = args;
 
 		try {
 			PropertyManager.initConfig(args);
@@ -130,9 +128,6 @@ public class MiddlewareServer {
 						Thread.sleep(2000);
 					}
 				}
-
-				ApplicationShutdownHook.getCurrentProcess();
-				Runtime.getRuntime().addShutdownHook(new Thread(new ApplicationShutdownHook()));
 			} catch (Exception e) {
 				throw new SystemException("EKA_MWS_1008", e);
 			}

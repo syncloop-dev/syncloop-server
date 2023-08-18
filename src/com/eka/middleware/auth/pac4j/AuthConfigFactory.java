@@ -6,8 +6,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.crypto.spec.SecretKeySpec;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,10 +26,10 @@ import org.pac4j.oidc.client.OidcClient;
 import org.pac4j.oidc.config.OidcConfiguration;
 
 import com.eka.middleware.auth.manager.BasicAuthenticator;
+import com.eka.middleware.ext.spec.Tenant;
 import com.eka.middleware.service.PropertyManager;
 import com.eka.middleware.service.ServiceUtils;
 import com.eka.middleware.template.SystemException;
-import com.eka.middleware.template.Tenant;
 import com.nimbusds.jose.JWSAlgorithm;
 
 public class AuthConfigFactory implements ConfigFactory {
@@ -90,13 +88,13 @@ public class AuthConfigFactory implements ConfigFactory {
 	private static final Map<String, Config> formClientAuthClientConfigMap=new ConcurrentHashMap<>();
 	
 	public static Config getFormClientAuthConfig(String loginURL,Tenant tenant, String authenticationPath) {
-		Config formClientAuthClientConfig=formClientAuthClientConfigMap.get(tenant.id);
+		Config formClientAuthClientConfig=formClientAuthClientConfigMap.get(tenant.getID());
 		if (formClientAuthClientConfig == null) {
 			final FormClient client = new FormClient("/tenant/"+tenant.getName()+loginURL,new BasicAuthenticator());
 			client.setCallbackUrl("/tenant/"+tenant.getName()+authenticationPath);
 			//client.`
 			formClientAuthClientConfig = newConfig(client);
-			formClientAuthClientConfigMap.put(tenant.id, formClientAuthClientConfig);
+			formClientAuthClientConfigMap.put(tenant.getID(), formClientAuthClientConfig);
 		}
 		return formClientAuthClientConfig;
 	}
@@ -104,13 +102,13 @@ public class AuthConfigFactory implements ConfigFactory {
 	//private static Config JWTAuthClientConfig;
 
 	public static Config getJWTAuthClientConfig(Tenant tenant) {
-		Config JWTAuthClientConfig=tenant.JWTAuthClientConfig;
+		Config JWTAuthClientConfig=(Config) tenant.getProperties().get("JWTAuthClientConfig");
 		if (JWTAuthClientConfig == null) {
 			final HeaderClient client = new HeaderClient("Authorization",
-					new JwtAuthenticator(tenant.secConf));
+					new JwtAuthenticator((SecretSignatureConfiguration)tenant.getProperties().get("secConf")));
 			JWTAuthClientConfig = newConfig(client);
 		}
-		tenant.JWTAuthClientConfig=JWTAuthClientConfig;
+		tenant.getProperties().put("JWTAuthClientConfig", JWTAuthClientConfig);
 		return JWTAuthClientConfig;
 	}
 
