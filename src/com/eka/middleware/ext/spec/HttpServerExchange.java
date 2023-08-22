@@ -40,4 +40,6 @@ public interface HttpServerExchange {
 	public void clearSession();
 	public HeaderMap getRequestHeaders();
 	public String getSourceAddress();
+
+	public HeaderMap getResponseHeaders();
 }

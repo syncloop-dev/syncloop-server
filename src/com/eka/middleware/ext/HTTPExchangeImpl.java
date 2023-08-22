@@ -34,6 +34,7 @@ public class HTTPExchangeImpl implements HttpServerExchange {
 	private final SecurityContext context;
 	private final Map<String, Cookie> cookieMap=new HashMap<String, Cookie>();
 	private UserProfile profile=null;
+
 	public HTTPExchangeImpl(io.undertow.server.HttpServerExchange httpExchange) {
 		exchange=httpExchange;
 		context =new SecurityContextImpl(httpExchange);
@@ -225,6 +226,9 @@ public class HTTPExchangeImpl implements HttpServerExchange {
 		
 		
 		session.invalidate(exchange);
+	}
+	public HeaderMap getResponseHeaders() {
+		return  exchange.getResponseHeaders();
 	}
 	
 	public HeaderMap getRequestHeaders() {
