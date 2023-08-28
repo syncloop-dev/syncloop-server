@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import com.eka.middleware.logging.AppLogger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -52,15 +53,22 @@ public class ThreadManager {
 		//final Cookie cookie = ServiceUtils.setupCookie(exchange, null, null);
 		
 		//if()
+		AppLogger.add("processRequest" ,"process request start...");
 		final String tenantName=ServiceUtils.getTenantName(cookie);
+		AppLogger.add("processRequest" ,"process request start...");
 		String requestAddress = exchange.toString() + "@" + Integer.toHexString(System.identityHashCode(exchange));
+		AppLogger.add("requestAddress" ,requestAddress);
 		final String method = exchange.getRequestMethod().toString();
+		AppLogger.add("method" ,method);
 		String pureRequestPath = exchange.getRequestPath();
+		AppLogger.add("pureRequestPath" ,pureRequestPath);
 		String requestPath = method + pureRequestPath;
+		AppLogger.add("requestPath" ,requestPath);
 		AuthAccount account = null;
 		try {
 			account = UserProfileManager.getUserProfileManager()
 					.getAccount(ServiceUtils.getCurrentLoggedInUserProfile(exchange));
+			//AppLogger.add("account" ,account);
 		} catch (SnippetException e1) {
 			exchange.getResponseSender().send("Could not fetch the profile for the active session");
 			LOGGER.info(ServiceUtils.getFormattedLogLine(exchange.getRequestPath(), requestAddress, "Error"));
@@ -76,6 +84,7 @@ public class ThreadManager {
 
 			if (account.getUserId().equalsIgnoreCase("anonymous")) {
 				if (!Security.isPublic(pureRequestPath, tenantName)) {
+					AppLogger.add("user id" ,account.getUserId());
 					LOGGER.info("User(" + account.getUserId() + ") active tenant mismatch or path not public. Make sure you are using right tenant name('"+tenantName+"'). Name is case sensitive. Clear your cookies retry with correct tenant name.");
 					exchange.getResponseHeaders().clear();
 					exchange.setStatusCode(401);
@@ -101,6 +110,8 @@ public class ThreadManager {
 						&& !((String) account.getAuthProfile().get("tenant")).equalsIgnoreCase(tenantName)) {
 					LOGGER.info("User(" + account.getUserId() + ") active tenant mismatch");
 					String profileTenantName = (String) account.getAuthProfile().get("tenant");
+					AppLogger.add("account Auth Profile" ,account.getAuthProfile());
+					AppLogger.add("profileTenantName" ,profileTenantName);
 					exchange.getResponseHeaders().clear();
 					String tntName=(String) account.getAuthProfile().get("tenant");
 					String token=JWT.generate(exchange);
@@ -170,6 +181,7 @@ public class ThreadManager {
 
 					if (!isAllowed) {
 						if (logTransaction == true)
+							AppLogger.add("session id ",rp.getSessionID());
 							LOGGER.info(ServiceUtils.getFormattedLogLine(rp.getSessionID(), resource, "resource"));
 						String userId = account.getUserId();
 						if (logTransaction == true)

@@ -19,7 +19,7 @@ public class AppLogger {
 
 	private static final ThreadLocal<LogMetaHolder> CONTEXT = new ThreadLocal<>();
 
-	private boolean isLoggable = false;
+	private static  boolean isLoggable = false;
 
 	public AppLogger(DataPipeline dataPipeline) {
 		Map<String, Object> requestLogMap = getDefaultAttributes(dataPipeline);
@@ -54,7 +54,7 @@ public class AppLogger {
 	 * @param key
 	 * @param value
 	 */
-	public void add(String key, Object value) {
+	public static void add(String key, Object value) {
 		if(StringUtils.isBlank(key) || null == value) return;
 		if(null!=CONTEXT.get()) { 
 			if((key.contains("_TT") || key.contains("_QT")) && null != CONTEXT.get().getMAP().get(key)) {
