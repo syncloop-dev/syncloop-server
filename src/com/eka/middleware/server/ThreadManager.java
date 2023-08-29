@@ -53,22 +53,16 @@ public class ThreadManager {
 		//final Cookie cookie = ServiceUtils.setupCookie(exchange, null, null);
 		
 		//if()
-		AppLogger.add("processRequest" ,"process request start...");
+
 		final String tenantName=ServiceUtils.getTenantName(cookie);
-		AppLogger.add("processRequest" ,"process request start...");
 		String requestAddress = exchange.toString() + "@" + Integer.toHexString(System.identityHashCode(exchange));
-		AppLogger.add("requestAddress" ,requestAddress);
 		final String method = exchange.getRequestMethod().toString();
-		AppLogger.add("method" ,method);
 		String pureRequestPath = exchange.getRequestPath();
-		AppLogger.add("pureRequestPath" ,pureRequestPath);
 		String requestPath = method + pureRequestPath;
-		AppLogger.add("requestPath" ,requestPath);
 		AuthAccount account = null;
 		try {
 			account = UserProfileManager.getUserProfileManager()
 					.getAccount(ServiceUtils.getCurrentLoggedInUserProfile(exchange));
-			//AppLogger.add("account" ,account);
 		} catch (SnippetException e1) {
 			exchange.getResponseSender().send("Could not fetch the profile for the active session");
 			LOGGER.info(ServiceUtils.getFormattedLogLine(exchange.getRequestPath(), requestAddress, "Error"));
@@ -81,10 +75,9 @@ public class ThreadManager {
 				requestPath = requestPath.replace("/" + rsrcTokens[1] + "/" + rsrcTokens[2], "");
 				pureRequestPath = pureRequestPath.replace("/" + rsrcTokens[1] + "/" + rsrcTokens[2], "");
 			}
-
 			if (account.getUserId().equalsIgnoreCase("anonymous")) {
 				if (!Security.isPublic(pureRequestPath, tenantName)) {
-					AppLogger.add("user id" ,account.getUserId());
+
 					LOGGER.info("User(" + account.getUserId() + ") active tenant mismatch or path not public. Make sure you are using right tenant name('"+tenantName+"'). Name is case sensitive. Clear your cookies retry with correct tenant name.");
 					exchange.getResponseHeaders().clear();
 					exchange.setStatusCode(401);
@@ -95,7 +88,6 @@ public class ThreadManager {
 					exchange.endExchange();
 					return;
 				}
-
 				account.getAuthProfile().put("tenant", tenantName);
 				List<String> groups = new ArrayList<String>();
 //				groups.add("administrators");
@@ -103,15 +95,13 @@ public class ThreadManager {
 				account.getAuthProfile().put("groups", groups);
 				if(!ServiceUtils.isApiCall(exchange))
 					exchange.setResponseCookie(cookie);
-
 			} else {
 				if (tenantName != null && account.getAuthProfile() != null
 						&& account.getAuthProfile().get("tenant") != null
 						&& !((String) account.getAuthProfile().get("tenant")).equalsIgnoreCase(tenantName)) {
 					LOGGER.info("User(" + account.getUserId() + ") active tenant mismatch");
 					String profileTenantName = (String) account.getAuthProfile().get("tenant");
-					AppLogger.add("account Auth Profile" ,account.getAuthProfile());
-					AppLogger.add("profileTenantName" ,profileTenantName);
+
 					exchange.getResponseHeaders().clear();
 					String tntName=(String) account.getAuthProfile().get("tenant");
 					String token=JWT.generate(exchange);
@@ -132,20 +122,15 @@ public class ThreadManager {
 			Tenant tenant = Tenant.getTenant(tenantName);
 			RuntimePipeline rp = null;
 			Boolean logTransaction = true;
-
 			if (requestPath != null && requestPath.length() > 1) {
 				String resource = null;
 				Tenant.getTenant(tenantName);
 				Map<String, Object> pathParams = new HashMap<String, Object>();
 				pathParams.put("pathParameters", "");
-				
 				resource = ServiceUtils.getPathService(requestPath, pathParams, tenant);
-
 				if (resource == null) {
 					exchange.getResponseHeaders().clear();
-
 					String content = AuthorizationRequest.getContent(exchange, requestPath.toUpperCase());
-
 					if (content != null) {
 						exchange.getResponseHeaders().add(Headers.STATUS, 200);
 						exchange.getResponseSender().send(content);
@@ -156,18 +141,13 @@ public class ThreadManager {
 					}
 					return;
 				}
-				
 				try {
 					exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
 					logTransaction = exchange.getQueryParameters().containsKey("logTransaction");
-
 					String uuid = UUID.randomUUID().toString();
-
 					rp = RuntimePipeline.create(tenant, uuid, null, exchange, resource, requestPath);
-
 					boolean isAllowed = false;
 					isAllowed = ResourceAuthenticator.isConsumerAllowed(resource, account, requestPath, method);
-
 					if (!isAllowed && "default".equals(account.getAuthProfile().get("tenant")) && !account.getUserId().equalsIgnoreCase("anonymous")) {
 						exchange.getResponseHeaders().clear();
 						exchange.setStatusCode(StatusCodes.FOUND);
@@ -178,10 +158,8 @@ public class ThreadManager {
 						exchange.endExchange();
 						return;
 					}
-
 					if (!isAllowed) {
 						if (logTransaction == true)
-							AppLogger.add("session id ",rp.getSessionID());
 							LOGGER.info(ServiceUtils.getFormattedLogLine(rp.getSessionID(), resource, "resource"));
 						String userId = account.getUserId();
 						if (logTransaction == true)
@@ -227,7 +205,6 @@ public class ThreadManager {
 					Map map = null;
 					byte body[] = null;
 					String content = null;
-
 					if (contentType != null) {
 						switch (contentType.toLowerCase()) {
 						case "application/json":
@@ -252,7 +229,6 @@ public class ThreadManager {
 						if (map != null)
 							rp.dataPipeLine.put("*payload", map.get("root"));
 					}
-
 					ServiceManager.invokeJavaMethod(resource, rp.dataPipeLine);
 					exchange.getResponseHeaders().put(HttpString.tryFromString("Access-Control-Allow-Origin"), "*");// new
 					exchange.getResponseHeaders().put(HttpString.tryFromString("Access-Control-Allow-Methods"), "*");// new
@@ -348,5 +324,4 @@ public class ThreadManager {
 			}*/
 		}
 	}
-
 }

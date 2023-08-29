@@ -396,7 +396,6 @@ public class ServiceUtils {
 			return requestPath.split("/")[1];
 		try {
 			String URLAliasFilePath = PropertyManager.getPackagePath(tenant) + "URLAliasMapping.properties";
-			AppLogger.add("URLAliasFilePath" ,URLAliasFilePath);
 			if (requestPath.contains("//")) {
 				LOGGER.log(Level.INFO, requestPath);
 				tenant.logInfo(null,requestPath);
@@ -433,7 +432,6 @@ public class ServiceUtils {
 				}
 			}
 			String serviceName = urlMappings.getProperty(requestPath + "/*");
-			AppLogger.add("serviceName" ,serviceName);
 			if (serviceName == null)
 				serviceName = urlMappings.getProperty(requestPath);
 			if (serviceName == null && payload != null) {
@@ -867,11 +865,9 @@ public class ServiceUtils {
 		}
 		
 		String rqp = exchange.getRequestPath();
-		AppLogger.add("getRequestPath" ,rqp);
 		String rsrcTokens[]=null;
 		if(rqp!=null)
 			rsrcTokens = ("b" + rqp).split("/");
-		
 		if (rsrcTokens != null) {
 			if (rsrcTokens.length>2 && rsrcTokens[1].equalsIgnoreCase("tenant")) {
 				String tName = rsrcTokens[2];

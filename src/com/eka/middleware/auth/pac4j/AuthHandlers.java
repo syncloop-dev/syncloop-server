@@ -116,14 +116,11 @@ public class AuthHandlers {
 			final SecurityContext context = exchange.getSecurityContext();
 			//AuthAccount acc=(AuthAccount) context.getAuthenticatedAccount();
 			List<UserProfile> profiles = getProfiles(exchange);
-			AppLogger.add("profiles" ,profiles);
 			String tenantName=ServiceUtils.setupRequestPath(exchange);
-			AppLogger.add("tenantName" ,tenantName);
 			Cookie cookie=ServiceUtils.setupCookie(exchange, tenantName, null);
 			ServiceUtils.manipulateHeaders(exchange);
 			if (profiles != null) {
 				AuthAccount acc = ServiceUtils.getCurrentLoggedInAuthAccount(exchange);
-				AppLogger.add("AuthAccount" ,acc);
 				String token=ServiceUtils.getToken(cookie);
 				if(token==null) {
 					token=JWT.generate(exchange);
