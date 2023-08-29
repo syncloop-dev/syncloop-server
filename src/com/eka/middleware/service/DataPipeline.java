@@ -550,6 +550,7 @@ public class DataPipeline {
 	}
 	
 	public void apply(String fqnOfMethod) throws SnippetException {
+		appLog("fqnOfMethod",fqnOfMethod);
 		if(fqnOfMethod==null)
 			return;
 		boolean recursionDetected=false;
@@ -576,9 +577,13 @@ public class DataPipeline {
 //				throw new SnippetException(this, "Recursion is not allowed for method '" + fqnOfMethod + "'", e);
 //			}
 			String callingResource = currentResource;
+			appLog("callingResource", callingResource);
+
 			this.callingResource=callingResource;
 			currentResource = fqnOfMethod+"@"+recursiveDepth;
 			resourceStack.add(currentResource);
+			appLog("currentResource", currentResource);
+
 			put("*currentResource", currentResource);
 			try {
 				ServiceUtils.execute(fqnOfMethod, this);
@@ -620,6 +625,8 @@ public class DataPipeline {
 		fqnOfMethod = fqnOfMethod.replace("/", ".");
 		if (!fqnOfMethod.endsWith(".main"))
 			fqnOfMethod += ".main";
+		appLog("applyAsync_fqnOfMethod",fqnOfMethod);
+
 		final String fqnOfFunction = fqnOfMethod;
 		// String curResourceBkp = currentResource;
 		// currentResource = fqnOfFunction;
@@ -632,6 +639,8 @@ public class DataPipeline {
 		final Map<String, String> metaData = new HashMap<String, String>();
 		asyncOutputDoc.put("*metaData", metaData);
 		final String uuidAsync = UUID.randomUUID().toString();
+		appLog("uuidAsync",uuidAsync);
+
 		metaData.put("batchId", uuidAsync);
 		metaData.put("status", "Active");
 		
@@ -641,19 +650,24 @@ public class DataPipeline {
 				List<JsonOp> leaders = map.get("leaders");
 				for (JsonOp jsonValue : leaders) {
 					String srcPath=jsonValue.getFrom();
+					appLog("srcPath",srcPath);
+
 					if(srcPath.contains("*metaData") || srcPath.equals("/asyncOutputDoc"))
 						continue;
 					String keyPath=srcPath.replace("/asyncOutputDoc", "");
-					srcPath=keyPath;
+					appLog("keyPath",keyPath);
+
 					//Object val = dpAsync.getValueByPointer(srcPath);
 					///
 					//String[] keyTokens = key.split("/");
 					//String actualKey = (keyTokens[keyTokens.length - 1]);
 					
 					String typePath=jsonValue.getInTypePath();
+					appLog("typePath",typePath);
 					Object value=null;
 					String[] typeTokens = typePath.split("/");
 					String valueType = (typeTokens[typeTokens.length - 1]).toLowerCase();
+					appLog("valueType",valueType);
 					switch (valueType) {
 					case "documentlist":
 						value=new ArrayList<Object>();
@@ -673,6 +687,7 @@ public class DataPipeline {
 			throw new SnippetException(this, uuidAsync, e);
 		}
 		final String currResrc=currentResource;
+		appLog("currResrc",currResrc);
 		final Future<Map<String, Object>> futureMap = rp.getExecutor().submit(() -> {
 			RuntimePipeline rpRef=null;
 			try {
