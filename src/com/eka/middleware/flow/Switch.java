@@ -38,176 +38,94 @@ public class Switch {
 		snapCondition=data.getString("snapCondition",null);
 		comment=data.getString("comment",null);
 	}
-
+	
 	public void process(DataPipeline dp) throws SnippetException {
-		if (dp.isDestroyed())
+		if(dp.isDestroyed())
 			throw new SnippetException(dp, "User aborted the service thread", new Exception("Service runtime pipeline destroyed manually"));
-		if (disabled)
+		if(disabled)
 			return;
-
-		String snap = dp.getString("*snapshot");
+		String snap=dp.getString("*snapshot");
 		boolean canSnap = false;
-
-
-		if (snap != null || snapshot != null) {
+		if(snap!=null || snapshot!=null) {
 			canSnap = true;
-			if (snapshot != null && snapshot.equals("conditional") && snapCondition != null) {
-				canSnap = FlowUtils.evaluateCondition(snapCondition, dp);
-				if (canSnap)
-					dp.put("*snapshot", "enabled");
-			} else {
-				dp.put("*snapshot", "enabled");
-			}
+			//snap=snapshot;
+			if(snapshot!=null && snapshot.equals("conditional") && snapCondition!=null){
+				canSnap =FlowUtils.evaluateCondition(snapCondition,dp);
+				if(canSnap)
+					dp.put("*snapshot","enabled");
+			}else
+				dp.put("*snapshot","enabled");
 		}
-
-		if (!canSnap)
+		if(!canSnap)
 			dp.drop("*snapshot");
-
-		if (canSnap && snap == null) {
+		if(canSnap && snap==null) {
 			dp.snap(comment);
 		}
-
-		String text = swich.get("data").asJsonObject().getString("text", null);
-		JsonArray flows = swich.getJsonArray("children");
-		String xPathValue = null;
-		Object objVal = dp.getValueByPointer(switchXpath);
-		boolean caseMatched = false;
-		if (objVal != null) {
-			 caseMatched = false;
-
-			if (objVal instanceof List) {
-				List<?> list = (List<?>) objVal;
-
-				for (Object listItem : list) {
-					 xPathValue = listItem.toString();
-
-					for (JsonValue jsonValue : flows) {
-						JsonObject jsonData = jsonValue.asJsonObject().get("data").asJsonObject();
-						String caseLabel = jsonData.getString("case", null);
-
-						if (caseLabel == null) {
-							throw new SnippetException(dp, "Case label is required and cannot be empty.", new Exception("Exception in Switch CASE"));
-						}
-
-						if ("#default".equals(caseLabel)) {
-							continue;
-						}
-
-						String xVal = caseLabel;
-
-						if (caseLabel.startsWith("#{")) {
-							dp.log("The CASE with the xPath(" + caseLabel + ") is risky...", Level.WARN);
-							String exps[] = FlowUtils.extractExpressions(caseLabel);
-
-							if (exps.length > 0) {
-								String pointer = exps[0];
-								Object objLablVal = dp.getValueByPointer(pointer);
-
-								if (objLablVal != null) {
-									xVal = objLablVal.toString();
-								}
-							} else {
-								xVal = caseLabel;
-							}
-						}
-
-						if (xVal == null) {
-							throw new SnippetException(dp, "The CASE with the xPath(" + caseLabel + ") has a null value.", new Exception("Exception in Switch CASE with reference."));
-						}
-
-						if (xPathValue.equals(xVal)) {
-							Scope scope = new Scope(jsonValue.asJsonObject());
-							scope.process(dp);
-							caseMatched = true;
-							break;
-						}
-					}
-
-					if (caseMatched) {
-						break;
-					}
-				}
-			} else {
-				 xPathValue = objVal.toString();
-
-				for (JsonValue jsonValue : flows) {
-					JsonObject jsonData = jsonValue.asJsonObject().get("data").asJsonObject();
-					String caseLabel = jsonData.getString("case", null);
-
-					if (caseLabel == null) {
-						throw new SnippetException(dp, "Case label is required and cannot be empty.", new Exception("Exception in Switch CASE"));
-					}
-
-					if ("#default".equals(caseLabel)) {
-						continue;
-					}
-
-					String xVal = caseLabel;
-					if (caseLabel.startsWith("#{")) {
-						dp.log("The CASE with the xPath(" + caseLabel + ") is risky...", Level.WARN);
-						String exps[] = FlowUtils.extractExpressions(caseLabel);
-
-						if (exps.length > 0) {
-							String pointer = exps[0];
-							Object objLablVal = dp.getValueByPointer(pointer);
-
-							if (objLablVal != null) {
-								xVal = objLablVal.toString();
-							}
-						} else {
-							xVal = caseLabel;
-						}
-					}
-
-					if (xVal == null) {
-						throw new SnippetException(dp, "The CASE with the xPath(" + caseLabel + ") has a null value.", new Exception("Exception in Switch CASE with reference."));
-					}
-					if (xPathValue.equals(xVal)) {
-						Scope scope = new Scope(jsonValue.asJsonObject());
-						scope.process(dp);
-						caseMatched = true;
-						break;
-					}
-
-					if (xPathValue.equals("")) {
-							if (caseLabel == null || caseLabel.equals("#null")) {
-								Scope scope = new Scope(jsonValue.asJsonObject());
-								scope.process(dp);
-								caseMatched = true;
-								break;
-							}
-					}
-				}
-			}
-
-			if (!caseMatched) {
-				JsonObject defaultCase = null;
-				for (JsonValue jsonValue : flows) {
-					JsonObject jsonData = jsonValue.asJsonObject().get("data").asJsonObject();
-					String caseLabel = jsonData.getString("case", null);
-
-					if ("#default".equals(caseLabel)) {
-						defaultCase = jsonValue.asJsonObject();
-						break;
-					}
-				}
-
-				if (defaultCase != null) {
-					Scope scope = new Scope(defaultCase);
+		String text=swich.get("data").asJsonObject().getString("text",null);
+		JsonArray flows= swich.getJsonArray("children");
+		String xPathValue=null;
+		Object objVal=dp.getValueByPointer(switchXpath);// FlowUtils.placeXPathValue(switchXpath, dp);
+		if(objVal!=null)
+			xPathValue=objVal+"";
+//		if(xPathValue==null)
+//			throw new SnippetException(dp,"Switch label is null. xPath: "+switchXpath , new Exception("Exception in Switch block"));
+		JsonObject defaultCase=null;
+		JsonObject nullCase=null;
+		for (JsonValue jsonValue : flows) {
+			String caseLabel=jsonValue.asJsonObject().get("data").asJsonObject().getString("case",null);
+			if(caseLabel == null)
+				throw new SnippetException(dp,"Case label is a required field. It can not be left empty. Use #null for null comparision, use !null(empty is not null) or !empty(null is also considered empty)." , new Exception("Exception in Switch CASE"));
+			String xVal=null;
+			if(caseLabel.startsWith("#{")) {
+				dp.log("The CASE with the xPath("+caseLabel+") is risky. Please ensure that the xPath always exists and it must have a not null value. Otherwise an exception will be thrown.", Level.WARN);
+				String exps[]=FlowUtils.extractExpressions(caseLabel);
+				if(exps.length>0) {
+					String pointer=exps[0];
+					Object objLablVal=dp.getValueByPointer(pointer);// FlowUtils.placeXPathValue(switchXpath, dp);
+					if(objLablVal!=null)
+						xVal=objLablVal+"";
+				}else
+					xVal=caseLabel;
+			}else
+				xVal=caseLabel;
+			
+			if(xVal == null)
+				throw new SnippetException(dp,"The CASE with the xPath("+caseLabel+") has a null value." , new Exception("Exception in Switch CASE with reference."));
+			
+			caseLabel=xVal;
+			if("#null".equals(caseLabel) && xPathValue==null) {
+				Scope scope=new Scope(jsonValue.asJsonObject());
+				scope.process(dp);
+				return;
+			}else if(xPathValue!=null && xPathValue.equals(caseLabel)) {
+				Scope scope=new Scope(jsonValue.asJsonObject());
+				scope.process(dp);
+				return;
+			}else if(xPathValue!=null && caseLabel.toLowerCase().startsWith("#regex:")) {
+				caseLabel=caseLabel.substring(7);
+				String label=FlowUtils.placeXPathValue(caseLabel, dp);
+				boolean match=FlowUtils.patternMatches(xPathValue,label);
+				if(match) {
+					Scope scope=new Scope(jsonValue.asJsonObject());
 					scope.process(dp);
 				}
-			}
-
-			if (canSnap) {
-				dp.snap(comment);
-				dp.drop("*snapshot");
-			} else if (snap != null) {
-				dp.put("*snapshot", snap);
-			}
+				return;
+			}else if("#default".equals(caseLabel))
+				defaultCase=jsonValue.asJsonObject();
 		}
+		if(defaultCase!=null) {
+			Scope scope=new Scope(defaultCase.asJsonObject());
+			scope.process(dp);
+		}
+		if(canSnap) {
+			dp.snap(comment);
+			dp.drop("*snapshot");
+		}else if(snap!=null)
+			dp.put("*snapshot",snap);
 	}
-
-		public List<Scope> getCases() {
+	
+	
+	public List<Scope> getCases() {
 		return cases;
 	}
 	public void setCases(List<Scope> cases) {
