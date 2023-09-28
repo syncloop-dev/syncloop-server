@@ -55,6 +55,9 @@ public class Repeat implements FlowBasicInfo {
         if (StringUtils.isBlank(rt)) {
             rt = data.getString("repeat", "0");
         }
+        if ("0".equals(rt)) {
+            return;
+        }
         if (rt.startsWith("#{")) {
             rt = FlowUtils.extractExpressions(rt)[0];
         }
