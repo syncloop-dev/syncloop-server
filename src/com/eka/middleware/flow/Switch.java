@@ -87,6 +87,8 @@ public class Switch implements FlowBasicInfo {
 		Object objVal=dp.getValueByPointer(switchXpath);// FlowUtils.placeXPathValue(switchXpath, dp);
 		if(objVal!=null)
 			xPathValue=objVal+"";
+		else
+			return;
 //		if(xPathValue==null)
 //			throw new SnippetException(dp,"Switch label is null. xPath: "+switchXpath , new Exception("Exception in Switch block"));
 		JsonObject defaultCase=null;
