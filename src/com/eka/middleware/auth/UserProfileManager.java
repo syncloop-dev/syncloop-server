@@ -144,14 +144,13 @@ public class UserProfileManager implements IdentityManager {
     }
 
     //add user for tenant
-    public static void addUserForTenant(AuthAccount account,DataPipeline dataPipeline) throws SystemException {
+    public static void addUserForTenant(AuthAccount account,DataPipeline dataPipeline, byte[] password) throws SystemException {
         try {
             if (isUserExist(account.getUserId())) {
                 throw new Exception("User already exists: " + account.getUserId());
             }
             Map<String, Object> user = new HashMap();
             user.put("profile", account.getAuthProfile());
-            byte[] password = null;
             if (account.getUserId().equals("admin")) {
                 password = "admin".getBytes();
             }
