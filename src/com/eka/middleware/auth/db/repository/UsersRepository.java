@@ -175,15 +175,16 @@ public class UsersRepository {
 
     public static void updateUser(String email, Users user) throws SystemException {
         try (Connection conn = SQL.getProfileConnection(false)) {
-            String sql = "UPDATE \"users\" SET name = ?, email = ?, tenant_id = ?, status = ?, modified_date = ? WHERE email = ?";
+            String sql = "UPDATE \"users\" SET password =?, name = ?, email = ?, tenant_id = ?, status = ?, modified_date = ? WHERE email = ?";
 
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
-                statement.setString(1, user.getName());
-                statement.setString(2, user.getEmail());
-                statement.setInt(3, user.getTenant());
-                statement.setString(4, user.getStatus());
-                statement.setTimestamp(5, user.getModified_date());
-                statement.setString(6, email);
+                statement.setString(1, user.getPassword());
+                statement.setString(2, user.getName());
+                statement.setString(3, user.getEmail());
+                statement.setInt(4, user.getTenant());
+                statement.setString(5, user.getStatus());
+                statement.setTimestamp(6, user.getModified_date());
+                statement.setString(7, email);
                 statement.executeUpdate();
             }
             String userId = getUserIdByEmail(conn, user.getEmail());
@@ -287,6 +288,23 @@ public class UsersRepository {
             return resultSet.next();
         }
     }
+    public static String getExistingPassHash(String email) throws SystemException {
+        try (Connection conn = SQL.getProfileConnection(false)) {
+            String sql = "SELECT password FROM users WHERE user_id = ?";
+            try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                statement.setString(1, email);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        return resultSet.getString("password");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new SystemException("Failed to retrieve existing password hash: " + e.getMessage(), e);
+        }
+        return null;
+    }
+
 }
 
 

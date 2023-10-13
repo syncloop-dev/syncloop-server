@@ -30,8 +30,7 @@ import java.util.stream.Collectors;
 import static com.eka.middleware.auth.db.repository.GroupsRepository.*;
 import static com.eka.middleware.auth.db.repository.TenantRepository.*;
 import static com.eka.middleware.auth.db.repository.TenantRepository.getTenantIdByName;
-import static com.eka.middleware.auth.db.repository.UsersRepository.doesMappingExist;
-import static com.eka.middleware.auth.db.repository.UsersRepository.getUserById;
+import static com.eka.middleware.auth.db.repository.UsersRepository.*;
 
 public class UserProfileManager implements IdentityManager {
     public static final Map<String, Object> usersMap = new ConcurrentHashMap<String, Object>();
@@ -67,20 +66,6 @@ public class UserProfileManager implements IdentityManager {
         GroupsRepository.addGroup(group);
     }
 
-    //2- new Group for tenant
-   /* public static void createGroupForTenant(String groupName, DataPipeline dataPipeline) throws Exception {
-        String tenantName = dataPipeline.rp.getTenant().getName();
-        int tenantId = getTenantIdByName(tenantName);
-        if (tenantId != -1) {
-            Timestamp createdDate = new Timestamp(System.currentTimeMillis());
-            Groups group = new Groups(groupName, tenantId,createdDate,createdDate,0);
-            GroupsRepository.addGroup(group);
-        } else {
-            throw new Exception("Tenant not found: " + tenantName);
-        }
-    }*/
-
-    //2- new Group for tenant with support of modifying existing group
     public static void createGroupForTenant(String groupName, DataPipeline dataPipeline) throws Exception {
         String tenantName = dataPipeline.rp.getTenant().getName();
         int tenantId = getTenantIdByName(tenantName);
@@ -199,15 +184,7 @@ public class UserProfileManager implements IdentityManager {
         UsersRepository.updateUser(userFromAccount.getEmail(), userFromAccount);
     }
 
-    //update user with dataPipeline
-    public static void updateUser(AuthAccount account, final byte[] pass,DataPipeline dataPipeline) throws SystemException {
-        Users userFromAccount = createUserFromAccount(account, pass,dataPipeline);
-        Timestamp modifiedDate = new Timestamp(System.currentTimeMillis());
-        userFromAccount.setModified_date(modifiedDate);
-        UsersRepository.updateUser(userFromAccount.getEmail(), userFromAccount);
-    }
-
-    public static void updateUser(AuthAccount account, DataPipeline dataPipeline) throws SystemException {
+    public static void updateUser(AuthAccount account, final byte[] pass, DataPipeline dataPipeline) throws SystemException {
         try {
             String userId = account.getUserId();
             Map<String, Object> profile = account.getAuthProfile();
@@ -219,16 +196,20 @@ public class UserProfileManager implements IdentityManager {
                     .collect(Collectors.toList());
             String tenant = dataPipeline.rp.getTenant().getName();
             Timestamp modifiedDate = new Timestamp(System.currentTimeMillis());
-
-            System.out.println("Updating user complete...");
-            Users user = new Users(email, getTenantIdByName(tenant), name, "1", userId, groups, modifiedDate, 0);
+            String passHash = null;
+            if (pass != null) {
+                passHash = "[#]" + ServiceUtils.generateUUID(new String(pass) + userId);
+            } else {
+                passHash = getExistingPassHash(userId);
+            }
+            Users user = new Users(passHash, email, getTenantIdByName(tenant), name, "1", userId, groups, modifiedDate, 0);
             UsersRepository.updateUser(user.getEmail(), user);
+            System.out.println("Updating user complete...");
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SystemException("Failed to update user.", e);
+            throw new SystemException("Failed to update user: " + e.getMessage(), e);
         }
     }
-
 
     //update with pipeline
     public static void updateUser(AuthAccount account, final byte[] pass, String status,DataPipeline dataPipeline) throws SystemException {
