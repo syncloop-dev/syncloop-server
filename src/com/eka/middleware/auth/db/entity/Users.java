@@ -110,6 +110,7 @@ public class Users {
     public Users() {
     }
 
+    @Deprecated
     public Users(String password, String email, int tenant, String name, String status, String user_id, List<Groups> groups) {
         this.user_id = user_id;
         this.password = password;

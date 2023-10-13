@@ -43,11 +43,11 @@ public class UserProfileManager implements IdentityManager {
         return UsersRepository.getUsers();
     }
 
+    @Deprecated
     public static List<String> getGroups() throws SystemException {
         return GroupsRepository.getAllGroups();
     }
 
-    //1- getGroups for tenant
     public static List<String> getGroupsForTenant(DataPipeline dataPipeline) throws SystemException {
        String tenant= dataPipeline.rp.getTenant().getName();
         return GroupsRepository.getGroupsForTenant(getTenantIdByName(tenant));
@@ -61,6 +61,7 @@ public class UserProfileManager implements IdentityManager {
         TenantRepository.create(name);
     }
 
+    @Deprecated
     public static void newGroup(String name) throws Exception {
         Groups group = new Groups(name, 1);
         GroupsRepository.addGroup(group);
@@ -89,11 +90,11 @@ public class UserProfileManager implements IdentityManager {
         }
     }
 
+    @Deprecated
     public static void removeGroup(String name) throws Exception {
         GroupsRepository.deleteGroup(name);
     }
 
-    //3- remove group for tenant
     public static void removeGroupForTenant(String groupName,DataPipeline dataPipeline) throws Exception {
         String tenantName = dataPipeline.rp.getTenant().getName();
         int tenantId = getTenantIdByName(tenantName);
@@ -108,6 +109,7 @@ public class UserProfileManager implements IdentityManager {
         }
     }
 
+    @Deprecated
     public static void addUser(AuthAccount account) throws SystemException {
         try {
             if (isUserExist(account.getUserId())) {
@@ -128,23 +130,34 @@ public class UserProfileManager implements IdentityManager {
         }
     }
 
-    //add user for tenant
     public static void addUserForTenant(AuthAccount account,DataPipeline dataPipeline, byte[] password) throws SystemException {
         try {
             if (isUserExist(account.getUserId())) {
                 throw new Exception("User already exists: " + account.getUserId());
             }
-            Map<String, Object> user = new HashMap();
-            user.put("profile", account.getAuthProfile());
             if (account.getUserId().equals("admin")) {
                 password = "admin".getBytes();
             }
-            UsersRepository.addUser(createUserFromAccount(account, password,dataPipeline));
+            Map<String, Object> profile = account.getAuthProfile();
+            String name = profile.get("name") != null ? profile.get("name").toString() : "";
+            String email = profile.get("email") != null ? profile.get("email").toString() : "";
+            List<String> groupName = (List<String>) profile.get("groups");
+            List<Groups> groups = groupName.stream()
+                    .map(Groups::new)
+                    .collect(Collectors.toList());
+            String tenant = dataPipeline.rp.getTenant().getName();
+            String userId = account.getUserId();
+            String passHash = "[#]" + ServiceUtils.generateUUID(new String(password) + userId);
+            Timestamp createdDate = new Timestamp(System.currentTimeMillis());
+            System.out.println("create user complete........... ");
+            Users user= new Users(passHash, email, getTenantIdByName(tenant), name, "1", userId, groups, createdDate, createdDate, 0);
+            UsersRepository.addUser(user);
         } catch (Exception e) {
             throw new SystemException("EKA_MWS_1001", e);
         }
     }
 
+    @Deprecated
     private static Users createUserFromAccount(AuthAccount account, byte[] password) throws SystemException {
         Map<String, Object> profile = account.getAuthProfile();
         String name = profile.get("name") != null ? profile.get("name").toString() : "";
@@ -160,23 +173,7 @@ public class UserProfileManager implements IdentityManager {
         return new Users(passHash, email, getTenantIdByName(tenant), name, "1", userId, groups);
     }
 
-    //createUserFromAccount with datapipeline
-    private static Users createUserFromAccount(AuthAccount account, byte[] password,DataPipeline dataPipeline) throws SystemException {
-        Map<String, Object> profile = account.getAuthProfile();
-        String name = profile.get("name") != null ? profile.get("name").toString() : "";
-        String email = profile.get("email") != null ? profile.get("email").toString() : "";
-        List<String> groupName = (List<String>) profile.get("groups");
-        List<Groups> groups = groupName.stream()
-                .map(Groups::new)
-                .collect(Collectors.toList());
-        String tenant = dataPipeline.rp.getTenant().getName();
-        String userId = account.getUserId();
-        String passHash = "[#]" + ServiceUtils.generateUUID(new String(password) + userId);
-        Timestamp createdDate = new Timestamp(System.currentTimeMillis());
-        System.out.println("create user complete........... ");
-        return new Users(passHash, email, getTenantIdByName(tenant), name, "1", userId, groups, createdDate, createdDate, 0);
-    }
-
+   @Deprecated
     public static void updateUser(AuthAccount account, final byte[] pass) throws SystemException {
         Users userFromAccount = createUserFromAccount(account, pass);
         Timestamp modifiedDate = new Timestamp(System.currentTimeMillis());
@@ -210,15 +207,7 @@ public class UserProfileManager implements IdentityManager {
             throw new SystemException("Failed to update user: " + e.getMessage(), e);
         }
     }
-
-    //update with pipeline
-    public static void updateUser(AuthAccount account, final byte[] pass, String status,DataPipeline dataPipeline) throws SystemException {
-        Users userFromAccount = createUserFromAccount(account, pass,dataPipeline);
-        Timestamp modifiedDate = new Timestamp(System.currentTimeMillis());
-        userFromAccount.setModified_date(modifiedDate);
-        userFromAccount.setStatus(status);
-        UsersRepository.updateUser(userFromAccount.getEmail(), userFromAccount);
-    }
+    @Deprecated
     public static void updateUser(AuthAccount account, final byte[] pass, String status) throws SystemException {
         Users userFromAccount = createUserFromAccount(account, pass);
         Timestamp modifiedDate = new Timestamp(System.currentTimeMillis());
