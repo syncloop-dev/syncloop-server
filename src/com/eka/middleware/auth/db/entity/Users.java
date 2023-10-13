@@ -132,6 +132,19 @@ public class Users {
         this.deleted = deleted;
     }
 
+    public Users(String email, int tenant, String name, String status, String user_id, List<Groups> groups, Timestamp modified_date, int deleted) {
+        this.user_id = user_id;
+        this.name = name;
+        this.groups = groups;
+        this.email = email;
+        this.tenant = tenant;
+        this.status = status;
+        this.modified_date = modified_date;
+        this.deleted = deleted;
+
+    }
+
+
     public void addGroup(String groupName) {
         // Implement this method if needed.
     }

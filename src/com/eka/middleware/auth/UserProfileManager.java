@@ -207,6 +207,29 @@ public class UserProfileManager implements IdentityManager {
         UsersRepository.updateUser(userFromAccount.getEmail(), userFromAccount);
     }
 
+    public static void updateUser(AuthAccount account, DataPipeline dataPipeline) throws SystemException {
+        try {
+            String userId = account.getUserId();
+            Map<String, Object> profile = account.getAuthProfile();
+            String name = profile.get("name") != null ? profile.get("name").toString() : "";
+            String email = profile.get("email") != null ? profile.get("email").toString() : "";
+            List<String> groupName = (List<String>) profile.get("groups");
+            List<Groups> groups = groupName.stream()
+                    .map(Groups::new)
+                    .collect(Collectors.toList());
+            String tenant = dataPipeline.rp.getTenant().getName();
+            Timestamp modifiedDate = new Timestamp(System.currentTimeMillis());
+
+            System.out.println("Updating user complete...");
+            Users user = new Users(email, getTenantIdByName(tenant), name, "1", userId, groups, modifiedDate, 0);
+            UsersRepository.updateUser(user.getEmail(), user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SystemException("Failed to update user.", e);
+        }
+    }
+
+
     //update with pipeline
     public static void updateUser(AuthAccount account, final byte[] pass, String status,DataPipeline dataPipeline) throws SystemException {
         Users userFromAccount = createUserFromAccount(account, pass,dataPipeline);
