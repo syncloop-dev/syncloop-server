@@ -47,16 +47,19 @@ public class JobScheduler {
     }
 
     public static void activateScheduler(DataPipeline dataPipeline) throws SchedulerException {
-        Scheduler tenantScheduler =  MiddlewareServer.appSchedulerFactory.getSchedulerForTenant(dataPipeline.rp.getTenant().getName());
-        if (tenantScheduler != null ) {
-            System.out.println("scheduler started.....");
+        Scheduler tenantScheduler = MiddlewareServer.appSchedulerFactory.getSchedulerForTenant(dataPipeline.rp.getTenant().getName());
+
+        if (tenantScheduler.isInStandbyMode()) {
+            System.out.println("Scheduler is in standby mode. Starting...");
             tenantScheduler.start();
+            System.out.println("Scheduler started.");
         }
     }
 
+
     public static void deactivateScheduler(DataPipeline dataPipeline) throws SchedulerException {
         Scheduler tenantScheduler =  MiddlewareServer.appSchedulerFactory.getSchedulerForTenant(dataPipeline.rp.getTenant().getName());
-        if (tenantScheduler != null) {
+        if (tenantScheduler != null && !tenantScheduler.isInStandbyMode()) {
             System.out.println("scheduler stopped.....");
 
             tenantScheduler.standby();

@@ -77,6 +77,12 @@ public class ApplicationSchedulerFactory {
         return scheduler.getMetaData();
     }
 
+    public static boolean isSchedulerAlive(DataPipeline dataPipeline) throws SchedulerException {
+       Scheduler scheduler = getSchedulerForTenant(dataPipeline.rp.getTenant().getName());
+        return !scheduler.isInStandbyMode();
+    }
+
+
     /**
      * @return
      * @throws SchedulerException
