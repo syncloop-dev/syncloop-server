@@ -65,6 +65,7 @@ public class MiddlewareServer {
 
 	public static ApplicationSchedulerFactory appSchedulerFactory;
 
+	public static  ApplicationSchedulerFactory applicationSchedulerFactory;
 	public static void main(final String[] args) throws SystemException {
 
 		if (Boolean.parseBoolean(System.getProperty("CONTAINER_DEPLOYMENT"))) {
@@ -81,6 +82,7 @@ public class MiddlewareServer {
 		ApplicationShutdownHook.arg = args;
 
 		try {
+			applicationSchedulerFactory.initScheduler(null,"default");
 			PropertyManager.initConfig(args);
 			local_IP = PropertyManager.getLocal_IP();
 			appSchedulerFactory = ApplicationSchedulerFactory.initScheduler(null,"default");
