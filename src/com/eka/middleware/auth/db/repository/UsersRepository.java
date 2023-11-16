@@ -22,13 +22,14 @@ public class UsersRepository {
         Map<String, Object> usersMap = new HashMap<>();
 
         try (Connection conn = SQL.getProfileConnection(false)) {
-          //  String userSql = "SELECT u.* FROM users u";
+            //  String userSql = "SELECT u.* FROM users u";
             String userSql = "SELECT u.* FROM users u WHERE u.deleted = 0";
             try (PreparedStatement userStatement = conn.prepareStatement(userSql)) {
                 ResultSet userResultSet = userStatement.executeQuery();
 
                 while (userResultSet.next()) {
                     String userId = userResultSet.getString("user_id");
+                    int id = userResultSet.getInt("id");
                     int tenantId = userResultSet.getInt("tenant_id");
 
                     String passwordHash = userResultSet.getString("password");
@@ -53,7 +54,7 @@ public class UsersRepository {
                             tenantName = tenantResultSet.getString("name");
                         }
 
-                        groupStatement.setString(1, userId);
+                        groupStatement.setInt(1, id);
                         ResultSet groupResultSet = groupStatement.executeQuery();
 
                         List<String> groupNames = new ArrayList<>();
@@ -172,8 +173,8 @@ public class UsersRepository {
                 ResultSet generatedKeys = statement.getGeneratedKeys();
                 if (generatedKeys.next()) {
                     int userId = generatedKeys.getInt(1);
-                    String user_id = user.getUser_id();
-                    addGroupsForUser(conn, user_id, user.getGroups());
+                 //   String user_id = user.getUser_id();
+                    addGroupsForUser(conn, userId, user.getGroups());
                     return userId;
                 } else {
                     throw new SystemException("EKA_MWS_1002", new Exception("Failed to add user"));
@@ -228,8 +229,9 @@ public class UsersRepository {
                     statement.executeUpdate();
                 }
             }
-            String userId = getUserIdByEmail(conn, user.getEmail());
-            updateGroupsForUser(conn, userId, user.getGroups());
+            int user_Id = getUserIdByEmailAsInt(conn, user.getEmail());
+          //  String userId = getUserIdByEmail(conn, user.getEmail());
+            updateGroupsForUser(conn, user_Id, user.getGroups());
         } catch (SQLException e) {
             throw new SystemException("EKA_MWS_1001", e);
         }
@@ -261,6 +263,17 @@ public class UsersRepository {
         }
     }
 
+    public static int getUserIdByEmailAsInt(Connection conn, String email) throws SQLException {
+        String userIdSql = "SELECT id FROM \"users\" WHERE email = ?";
+        try (PreparedStatement userIdStatement = conn.prepareStatement(userIdSql)) {
+            userIdStatement.setString(1, email);
+            try (ResultSet userIdResultSet = userIdStatement.executeQuery()) {
+                return userIdResultSet.next() ? userIdResultSet.getInt("id") : -1; // Return -1 if not found
+            }
+        }
+    }
+
+
     public static boolean isUserExist(Connection conn, String userIdOrEmail) throws SQLException {
         String userIdSql = "SELECT user_id FROM \"users\" WHERE email = ? OR user_id = ?";
         try (PreparedStatement userIdStatement = conn.prepareStatement(userIdSql)) {
@@ -272,13 +285,13 @@ public class UsersRepository {
         }
     }
 
-    public static void addGroupsForUser(Connection conn, String userId, List<Groups> groups) throws SQLException {
+    public static void addGroupsForUser(Connection conn, int userId, List<Groups> groups) throws SQLException {
         String insertGroupSql = "INSERT INTO user_group_mapping (user_id, group_id) VALUES (?, ?)";
         try (PreparedStatement insertGroupStatement = conn.prepareStatement(insertGroupSql)) {
             for (Groups group : groups) {
                 int groupId = getGroupIdByName(conn, group.getGroupName());
                 if (groupId != -1) {
-                    insertGroupStatement.setString(1, userId);
+                    insertGroupStatement.setInt(1, userId);
                     insertGroupStatement.setInt(2, groupId);
                     insertGroupStatement.executeUpdate();
                 } else {
@@ -288,10 +301,10 @@ public class UsersRepository {
         }
     }
 
-    private static void updateGroupsForUser(Connection conn, String userId, List<Groups> groups) throws SQLException {
+    private static void updateGroupsForUser(Connection conn, int userId, List<Groups> groups) throws SQLException {
         String deleteGroupSql = "DELETE FROM user_group_mapping WHERE user_id = ?";
         try (PreparedStatement deleteGroupStatement = conn.prepareStatement(deleteGroupSql)) {
-            deleteGroupStatement.setString(1, userId);
+            deleteGroupStatement.setInt(1, userId);
             deleteGroupStatement.executeUpdate();
         }
 

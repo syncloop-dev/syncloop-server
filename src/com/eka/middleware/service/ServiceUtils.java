@@ -1073,7 +1073,7 @@ public class ServiceUtils {
 						GroupsRepository.addGroup(group);
 
 						try (Connection conn = SQL.getProfileConnection(false)) {
-							UsersRepository.addGroupsForUser(conn, "admin", groupList);
+							UsersRepository.addGroupsForUser(conn, 1, groupList);
 						}
 
 					} catch (Exception e) {
