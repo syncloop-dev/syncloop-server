@@ -1,6 +1,7 @@
 package com.eka.middleware.server;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -8,10 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.KeyStore;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.net.ssl.KeyManager;
@@ -83,6 +81,45 @@ public class MiddlewareServer {
 			PropertyManager.initConfig(args);
 			UserProfileManager.migrationProfiles();
 			local_IP = PropertyManager.getLocal_IP();
+
+			String filePath = PropertyManager.getConfigFolderPath() + "server.properties";
+			String propertyKey = "middleware.accessible.cluster.nodes";
+			String localIP = "";
+
+			try {
+				InetAddress localhost = InetAddress.getLocalHost();
+				localIP = localhost.getHostAddress();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				Properties properties = new Properties();
+				FileInputStream inputStream = new FileInputStream(filePath);
+				properties.load(inputStream);
+				inputStream.close();
+
+				String existingValue = properties.getProperty(propertyKey);
+
+				if (existingValue == null) {
+					properties.setProperty(propertyKey, localIP);
+				} else {
+					Set<String> values = new HashSet<>(Arrays.asList(existingValue.split(",")));
+					if (!values.contains(localIP)) {
+						values.add(localIP);
+						String updatedValue = String.join(",", values);
+						properties.setProperty(propertyKey, updatedValue);
+					}
+				}
+
+				FileOutputStream outputStream = new FileOutputStream(filePath);
+				properties.store(outputStream, null);
+				outputStream.close();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 			Scheduler scheduler = ApplicationSchedulerFactory.initScheduler(null, "default");
 			String ports[] = ServiceUtils.getServerProperty("middleware.server.http.ports").split(",");
 			String https = ServiceUtils.getServerProperty("middleware.server.https.ports");
