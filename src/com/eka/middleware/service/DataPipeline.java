@@ -452,10 +452,52 @@ public class DataPipeline {
 		if (this.rp.isExchangeInitialized()) {
 			HttpServerExchange exch = this.rp.getExchange();
 			int status = exch.getStatusCode();
-			if (map.get("*" + status) != null)
-				return (Map<String, Object>) map.get("*" + status);
+			if (map.containsKey("statusCode")) {
+				if (status >= 200 && status < 300) {
+					if (map.get("*" + status) != null) {
+						int category = status / 100;
+						String categoryKey = "*" + category + "xx";
+						map.put(categoryKey, createCategoryValue(category));
+						return (Map<String, Object>) map.get(categoryKey);
+					}
+				}
+				else if (status >= 400 && status < 500) {
+					if (map.get("*" + status) != null) {
+						int category = status / 100;
+						String categoryKey = "*" + category + "xx";
+						map.put(categoryKey, createCategoryValue(category));
+						return (Map<String, Object>) map.get(categoryKey);
+					}
+				}
+				else if (status >= 500 && status < 600) {
+					if (map.get("*" + status) != null) {
+						int category = status / 100;
+						String categoryKey = "*" + category + "xx";
+						map.put(categoryKey, createCategoryValue(category));
+						return (Map<String, Object>) map.get(categoryKey);
+					}
+				}
+			}
 		}
 		return map;
+	}
+
+	private Map<String, Object> createCategoryValue(int category) {
+		Map<String, Object> categoryValue = new HashMap<>();
+
+		switch (category) {
+			case 2:
+				categoryValue.put("status", "*2xx");
+				break;
+			case 4:
+				categoryValue.put("status", "*4xx");
+				break;
+			case 5:
+				categoryValue.put("status", "*5xx");
+				break;
+		}
+
+		return categoryValue;
 	}
 
 	public void save(String name) {
