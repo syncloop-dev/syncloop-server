@@ -176,7 +176,7 @@ public class Client {
 											 Map<String, String> reqHeaders, String payload, InputStream inputStream, Map<String, String> queryParameters, Map<String, Object> settings, boolean sslValidation) throws Exception {
 		HttpRequest.Builder builder = HttpRequest.newBuilder();
 
-		AtomicBoolean sendBlankParams = new AtomicBoolean(true);
+		AtomicBoolean sendBlankParams = new AtomicBoolean(false);
 		if (null != settings.get("sendBlankParams")) {
 			sendBlankParams.set((Boolean) settings.get("sendBlankParams"));
 		}
