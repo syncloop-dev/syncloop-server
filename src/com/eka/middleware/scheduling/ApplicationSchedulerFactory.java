@@ -1,6 +1,11 @@
 package com.eka.middleware.scheduling;
 
 import com.beust.jcommander.internal.Lists;
+import com.cronutils.mapper.CronMapper;
+import com.cronutils.model.Cron;
+import com.cronutils.model.CronType;
+import com.cronutils.model.definition.CronDefinitionBuilder;
+import com.cronutils.parser.CronParser;
 import com.eka.middleware.service.DataPipeline;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -205,7 +210,7 @@ public class ApplicationSchedulerFactory {
 
         String[] expression = cronExpression.split(" ");
 
-        if (expression.length == 5) {
+       /* if (expression.length == 5) {
             if (cronExpression.equals("* * * * *")) {
                 cronExpression = "0 " + expression[0] + " " + expression[1] + " " + "*" + " " + expression[3] + " " + "? *";
             } else if (expression[2].equals("*") && (!expression[4].equals("*"))) {
@@ -219,7 +224,7 @@ public class ApplicationSchedulerFactory {
             } else {
                 cronExpression = "0 " + cronExpression + " *";
             }
-        }
+        }*/
         JobDetail job = JobBuilder.newJob(jobClass)
                 .withIdentity(identificationName, identificationGroup).build();
 
@@ -231,13 +236,24 @@ public class ApplicationSchedulerFactory {
         jobDataMap.put("tenantName",dataPipeline.rp.getTenant().getName());
         jobDataMap.put("job_name",job_name);
 
+        String cron = unixToQuartz(cronExpression);
         Trigger trigger = TriggerBuilder
                 .newTrigger()
                 .withIdentity(identificationName, identificationGroup)
                 .withSchedule(
-                        CronScheduleBuilder.cronSchedule(cronExpression))
+                        CronScheduleBuilder.cronSchedule(cron))
                 .build();
         scheduler.scheduleJob(job, trigger);
         return job.getKey();
+    }
+
+    public static String unixToQuartz(String cron) {
+        CronParser parser = new CronParser(CronDefinitionBuilder.instanceDefinitionFor(CronType.UNIX));
+        Cron quartzCron = parser.parse(cron);
+        CronMapper cronMapper = CronMapper.fromUnixToQuartz();
+
+        Cron cron4jCron = cronMapper.map(quartzCron);
+
+        return cron4jCron.asString();
     }
 }
