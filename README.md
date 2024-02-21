@@ -102,7 +102,7 @@ After clicking the folder, the folder **DemoMessage** will be visible as the chi
 ![Syncloop](https://www.syncloop.com/assets/img/docs/quickstart/image009.png)
 
 
-Right-click on **DemoMessage** click on **New 🡪 New Folder** and create a new **API**.
+Right-click on **DemoMessage** click on **New 🡪🡪 New Folder** and create a new **API**.
 
 ![Syncloop](https://www.syncloop.com/assets/img/docs/quickstart/image010.png)
 
