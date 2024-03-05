@@ -170,6 +170,7 @@ public class PropertyManager {
 
 	public static final Properties getServerProperties(String filePath) throws SystemException {
 		String absoluteFilePath = getConfigFolderPath() + filePath;
+
 		File file = new File(absoluteFilePath);
 		// absoluteFilePath=file.getAbsolutePath();
 		Properties props = propertiesMap.get(absoluteFilePath);
@@ -195,6 +196,44 @@ public class PropertyManager {
 			throw new SystemException("EKA_MWS_1006", e);
 		}
 		return props;
+	}
+
+
+	public static final Properties getUrlMappingProperties(DataPipeline dataPipeline) throws SystemException {
+
+		//String absoluteFilePath = PropertyManager.getPackagePath(dataPipeline.rp.getTenant()) + File.separator + "URLAliasMapping.properties";
+
+		String absoluteFilePath = getUrlMappingFolderPath(dataPipeline);
+
+		File file = new File(absoluteFilePath);
+		// absoluteFilePath=file.getAbsolutePath();
+		Properties props = propertiesMap.get(absoluteFilePath);
+		try {
+			byte[] bytes = readConfigurationAbsFile(file);
+			if (bytes != null) {
+				ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+				if (props == null) {
+					props = new Properties();
+					propertiesMap.put(absoluteFilePath, props);
+				}
+				loadServerProperties(bais, props);
+				bais.close();
+			} else if (props == null) {
+				bytes = ServiceUtils.readAllBytes(new File(absoluteFilePath));
+				ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+				props = new Properties();
+				loadServerProperties(bais, props);
+				propertiesMap.put(absoluteFilePath, props);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new SystemException("EKA_MWS_1006", e);
+		}
+		return props;
+	}
+
+	public static String getUrlMappingFolderPath(DataPipeline dataPipeline){
+		return PropertyManager.getPackagePath(dataPipeline.rp.getTenant()) + File.separator + "URLAliasMapping.properties";
 	}
 
 	private static final boolean loadServerProperties(ByteArrayInputStream bais, Properties properties)

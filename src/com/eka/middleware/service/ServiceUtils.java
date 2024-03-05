@@ -105,6 +105,8 @@ import io.undertow.util.HttpString;
 import io.undertow.util.Sessions;
 import io.undertow.util.StatusCodes;
 
+import static com.eka.middleware.service.PropertyManager.getUrlMappingFolderPath;
+
 public class ServiceUtils {
 	// private static final Properties serverProperties = new Properties();
 	// private static final Properties urlMappings = new Properties();
@@ -1733,4 +1735,37 @@ public class ServiceUtils {
 		outputStream.flush();
 		outputStream.close();
 	}
+
+	public static void saveUrlMappingProperties(DataPipeline dataPipeline) throws Exception {
+		if (!dataPipeline.rp.getTenant().getName().equalsIgnoreCase("default")) {
+			throw new Exception("Server properties are not allowed to save for other tenants");
+		}
+		Map<String, Object> properties = dataPipeline.getAsMap("properties");
+
+		if (properties == null || properties.isEmpty()) {
+			return;
+		}
+
+		Properties props = new Properties();
+		String filePath = getUrlMappingFolderPath(dataPipeline);
+		//String filePath = PropertyManager.getConfigFolderPath() + "server.properties";
+		FileInputStream inputStream = new FileInputStream(filePath);
+		props.load(new FileInputStream(filePath));
+		inputStream.close();
+
+		for (Map.Entry<String, Object> entry : properties.entrySet()) {
+			String key = entry.getKey();
+			String value = entry.getValue().toString();
+
+			if (StringUtils.isNotBlank(key) && StringUtils.isNotBlank(value)) {
+				props.setProperty(key, value);
+			}
+		}
+
+		FileOutputStream outputStream = new FileOutputStream(filePath);
+		props.store(outputStream, "");
+		outputStream.flush();
+		outputStream.close();
+	}
+
 }
