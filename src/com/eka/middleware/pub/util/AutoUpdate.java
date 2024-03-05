@@ -8,6 +8,7 @@ import com.eka.middleware.service.PropertyManager;
 import com.eka.middleware.service.ServiceUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +23,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -179,6 +182,8 @@ public class AutoUpdate {
 
             String jsonValue = jsonValueFetch(returnTenantUpdateUrl(), "latest.update_core_jar");
 
+            processAndDeleteFiles(jsonContent,tenantUpdateFileLocation);
+
             boolean updatedCoreJar = false;
             boolean jarUpdated = false;
 
@@ -210,6 +215,71 @@ public class AutoUpdate {
         }
 
     }
+
+    private static void processAndDeleteFiles(String jsonString, String basePath) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(jsonString);
+
+            JsonNode latestNode = rootNode.path("latest");
+            JsonNode systemSupportedApisNode = latestNode.path("system_supported_apis");
+
+            if (systemSupportedApisNode.isArray()) {
+                ArrayNode systemSupportedApisArray = (ArrayNode) systemSupportedApisNode;
+
+                systemSupportedApisArray.forEach(apiEntry -> {
+                    JsonNode apisNode = apiEntry.path("apis");
+
+                    if (apisNode.isArray()) {
+                        ArrayNode apisArray = (ArrayNode) apisNode;
+                        List<String> filesToPreserve = new ArrayList<>();
+
+                        String packageName = apiEntry.path("package").asText();
+                        String completePath = Paths.get(basePath, packageName).toString();
+
+                        apisArray.forEach(api -> {
+                            if (api.has("file")) {
+                                String fileToPreservePath = Paths.get(completePath, api.get("file").asText()).toString();
+                                File fileToPreserve = new File(fileToPreservePath);
+                                filesToPreserve.add(fileToPreserve.getName());
+                            }
+                        });
+
+                        if (!filesToPreserve.isEmpty()) {
+                            String fullPath = Paths.get(basePath, packageName).toString();
+                            deleteFilesExcept(filesToPreserve, fullPath);
+                        }
+                    }
+                });
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteFilesExcept(List<String> filesToPreserve, String directoryPath) {
+        File directory = new File(directoryPath);
+
+        if (!directory.exists() || !directory.isDirectory()) {
+            return;
+        }
+
+        File[] allFiles = directory.listFiles();
+
+        if (allFiles != null) {
+            for (File file : allFiles) {
+                if (file.isDirectory()) {
+                    deleteFilesExcept(filesToPreserve, file.getAbsolutePath());
+                } else if (!filesToPreserve.contains(file.getName())) {
+                    if (file.delete()) {
+                    } else {
+                    }
+                }
+            }
+        }
+    }
+
+
     public static void createFoldersIfNotExist(String path) {
         File folder = new File(path);
 
