@@ -10,6 +10,7 @@ import com.eka.middleware.auth.db.entity.Users;
 import com.eka.middleware.auth.db.repository.GroupsRepository;
 import com.eka.middleware.auth.db.repository.UsersRepository;
 import com.eka.middleware.template.SystemException;
+import com.eka.middleware.template.Tenant;
 import com.nimbusds.jwt.JWTParser;
 import com.nimbusds.oauth2.sdk.token.BearerAccessToken;
 import io.undertow.security.idm.Account;
@@ -22,6 +23,13 @@ import org.ldaptive.auth.User;
 import org.pac4j.core.profile.UserProfile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.sql.*;
 import java.sql.Date;
@@ -729,4 +737,45 @@ public class UserProfileManager implements IdentityManager {
             e.printStackTrace();
         }
     }
+
+    public static void moveEkaSchedulerDBFile(Tenant tenant) throws IOException {
+
+        String sourcePath = PropertyManager.getPackagePath(tenant) + "packages" + File.separator + "ekaScheduler" + File.separator + "dependency" + File.separator + "config" + File.separator + "ekaSchedulers.db";
+        String destinationFolderPath = PropertyManager.getPackagePath(tenant) + "packages" + File.separator + "scheduler" + File.separator + "dependency" + File.separator + "config";
+
+        Path source = Paths.get(sourcePath);
+        Path destinationFolder = Paths.get(destinationFolderPath);
+
+        if (!Files.exists(destinationFolder)) {
+            return;
+        }
+
+        Path destination = destinationFolder.resolve(source.getFileName());
+
+        Files.move(source, destination, StandardCopyOption.REPLACE_EXISTING);
+    }
+    public static void refactorURLAlias(Tenant tenant) throws Exception {
+
+        String mappingFilePath = PropertyManager.getPackagePath(tenant) + File.separator + "URLAliasMapping.properties";
+
+        File file = new File(mappingFilePath);
+
+        Properties props = new Properties();
+
+        props.load(new FileInputStream(file));
+
+        Map<Object, Object> copy = new HashMap<>(props);
+
+        copy.forEach((k, v) -> {
+            String modifiedValue = v.toString().replace("ekaScheduler", "scheduler");
+            props.put(k, modifiedValue);
+        });
+
+        FileOutputStream outputStream = new FileOutputStream(file);
+
+        props.store(outputStream, "");
+
+        outputStream.close();
+    }
+
 }
