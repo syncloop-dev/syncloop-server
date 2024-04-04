@@ -1229,7 +1229,7 @@ public class ServiceUtils {
 	public static String encrypt(final String strToEncrypt, final String tenantName) {
 		try {
 			// setKey(secret);
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+			Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding", "BC");
 			cipher.init(Cipher.ENCRYPT_MODE, Tenant.getTenant(tenantName).KEY);
 			return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
 		} catch (Exception e) {
@@ -1241,7 +1241,7 @@ public class ServiceUtils {
 	public static String decrypt(final String strToDecrypt, final String tenantName) throws Exception {
 		try {
 			// setKey(secret);
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+			Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding", "BC");
 			cipher.init(Cipher.DECRYPT_MODE, Tenant.getTenant(tenantName).KEY);
 			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
 		} catch (Exception e) {

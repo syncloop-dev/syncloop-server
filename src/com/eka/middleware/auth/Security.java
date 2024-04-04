@@ -94,7 +94,7 @@ public class Security {
 			String priKeyString = props.getProperty(PRIVATE_PROPERTY_KEY_NAME);
 			//if (pubKeyString == null || priKeyString == null) {
 				KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
-				keyPairGen.initialize(515, new SecureRandom(ServiceUtils.generateUUID(System.currentTimeMillis()+"").getBytes()));
+				keyPairGen.initialize(2048, new SecureRandom(ServiceUtils.generateUUID(System.currentTimeMillis()+"").getBytes()));
 				KeyPair pair = keyPairGen.generateKeyPair();
 				PrivateKey privKey = pair.getPrivate();
 				byte[] privateKey = privKey.getEncoded();
@@ -126,7 +126,7 @@ public class Security {
 	}
 
 	public static String getSecureString(final String data,final String publicKey) throws Exception {
-		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding", "BC");
+		Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding", "BC");
 		//String publicKey = ServiceUtils.getServerProperty("middleware.server.public.key");
 		cipher.init(Cipher.ENCRYPT_MODE, getPublicKey(Base64.getDecoder().decode(publicKey.getBytes(StandardCharsets.UTF_8))));
 		cipher.update(data.getBytes());
@@ -136,7 +136,7 @@ public class Security {
 	}
 
 	public static String getNormalString(final String secureString, final String privateKey) throws Exception {
-		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding", "BC");
+		Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding", "BC");
 		//String privateKey = ServiceUtils.getServerProperty("middleware.server.private.key");
 		cipher.init(Cipher.DECRYPT_MODE, getPrivateKey(Base64.getDecoder().decode(privateKey.getBytes(StandardCharsets.UTF_8))));
 		final byte[] decipheredText = cipher.doFinal(Base64.getDecoder().decode(secureString.getBytes(StandardCharsets.UTF_8)));
