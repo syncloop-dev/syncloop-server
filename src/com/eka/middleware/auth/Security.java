@@ -93,6 +93,8 @@ public class Security {
 			String pubKeyString = props.getProperty(PUBLIC_PROPERTY_KEY_NAME);
 			String priKeyString = props.getProperty(PRIVATE_PROPERTY_KEY_NAME);
 			//if (pubKeyString == null || priKeyString == null) {
+
+				//AES can be used to improve performance here
 				KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
 				keyPairGen.initialize(2048, new SecureRandom(ServiceUtils.generateUUID(System.currentTimeMillis()+"").getBytes()));
 				KeyPair pair = keyPairGen.generateKeyPair();
