@@ -3,6 +3,8 @@ package com.eka.middleware.template;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.crypto.spec.SecretKeySpec;
 
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -29,6 +32,13 @@ import org.apache.logging.log4j.spi.LoggerContext;
 public class Tenant {
     private final String name;
     public final String id;
+
+    @Getter
+    private final PrivateKey privateKey;
+
+    @Getter
+    private final PublicKey publicKey;
+
     public final SecretSignatureConfiguration secConf;
     public final SecretKeySpec KEY;// =ServiceUtils.setKey(JWT_MASALA);
     private static Map<String, Tenant> tenantMap = new HashMap();
@@ -74,13 +84,23 @@ public class Tenant {
         secConf = null;
         KEY = null;
         jwtGenerator = null;
+        privateKey = null;
+        publicKey = null;
     }
 
     private Tenant(String name) throws Exception {
         this.name = name;
         String key = PropertyManager.getGlobalProperties(name).getProperty(Security.PRIVATE_PROPERTY_KEY_NAME);
         if (key == null)
+            throw new Exception("Tenant private key not found or tenant not found. Tenant name: " + name);
+
+        String publicKey = PropertyManager.getGlobalProperties(name).getProperty(Security.PUBLIC_PROPERTY_KEY_NAME);
+        if (publicKey == null)
             throw new Exception("Tenant public key not found or tenant not found. Tenant name: " + name);
+
+        this.publicKey = Security.getPublicKey(Base64.getDecoder().decode(publicKey));
+        this.privateKey = Security.getPrivateKey(Base64.getDecoder().decode(key));
+
         key = Base64.getEncoder().encodeToString(key.substring(0, 32).getBytes());
         this.id = key;
         secConf = new SecretSignatureConfiguration(id);

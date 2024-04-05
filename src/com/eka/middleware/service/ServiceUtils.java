@@ -14,8 +14,13 @@ import java.net.URI;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -1228,9 +1233,12 @@ public class ServiceUtils {
 
 	public static String encrypt(final String strToEncrypt, final String tenantName) {
 		try {
-			// setKey(secret);
-			Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding", "BC");
-			cipher.init(Cipher.ENCRYPT_MODE, Tenant.getTenant(tenantName).KEY);
+
+			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+			RSAPublicKey rsaPublicKey = (RSAPublicKey) keyFactory.generatePublic(new X509EncodedKeySpec(Tenant.getTenant(tenantName).getPublicKey().getEncoded()));
+
+			Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+			cipher.init(Cipher.ENCRYPT_MODE, rsaPublicKey);
 			return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
 		} catch (Exception e) {
 			printException(Tenant.getTenant(tenantName), "Error while encrypting: ", e);
@@ -1240,9 +1248,12 @@ public class ServiceUtils {
 
 	public static String decrypt(final String strToDecrypt, final String tenantName) throws Exception {
 		try {
-			// setKey(secret);
-			Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding", "BC");
-			cipher.init(Cipher.DECRYPT_MODE, Tenant.getTenant(tenantName).KEY);
+
+			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+			RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) keyFactory.generatePrivate(new PKCS8EncodedKeySpec(Tenant.getTenant(tenantName).getPrivateKey().getEncoded()));
+
+			Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+			cipher.init(Cipher.DECRYPT_MODE, rsaPrivateKey);
 			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
 		} catch (Exception e) {
 			printException(Tenant.getTenant(tenantName), "Error while decrypting: ", e);
