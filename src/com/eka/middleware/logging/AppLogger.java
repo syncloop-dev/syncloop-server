@@ -99,22 +99,24 @@ public class AppLogger {
 			isLoggable = true;
 		}
 	}
-
+// This modification ensures that the logging process only occurs when there are key-value pairs in the log context, preventing the skipping of logs when meaningful information is present.
 	public void finish() {
-		try {
-			if (CONTEXT.get().getMAP().size() == 1) {
-				return ;
-			}
-			StopWatch stopWatch = CONTEXT.get().stopTracking();
-			add("TT", stopWatch.getLastTaskTimeMillis());
+    try {
+        if (CONTEXT.get() == null || CONTEXT.get().getMAP().isEmpty()) {
+            return;
+        }
+        StopWatch stopWatch = CONTEXT.get().stopTracking();
+        add("TT", stopWatch.getLastTaskTimeMillis());
 
-			appLogger.info(getFormattedLog());
+        appLogger.info(getFormattedLog());
 
-			clear();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        clear();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+
 
 	public void clear() {
 		CONTEXT.remove();
