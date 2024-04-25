@@ -1,17 +1,11 @@
 package com.eka.middleware.server;
 
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import com.beust.jcommander.internal.Lists;
 import com.eka.middleware.licensing.License;
@@ -33,21 +27,18 @@ import com.eka.middleware.service.RuntimePipeline;
 import com.eka.middleware.service.ServiceUtils;
 import com.eka.middleware.template.MultiPart;
 import com.eka.middleware.template.SnippetException;
-import com.eka.middleware.template.SystemException;
 import com.eka.middleware.template.Tenant;
 
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.Cookie;
-import io.undertow.server.handlers.CookieImpl;
 import io.undertow.util.Headers;
 import io.undertow.util.HttpString;
-import io.undertow.util.PathTemplate;
 import io.undertow.util.StatusCodes;
 
 public class ThreadManager {
 
 	public static Logger LOGGER = LogManager.getLogger(MiddlewareServer.class);
-	
+
 	public static final void processRequest(final HttpServerExchange exchange) {
 		String tenantName=ServiceUtils.setupRequestPath(exchange);
 		Cookie cookie = ServiceUtils.setupCookie(exchange, tenantName, null);
@@ -57,7 +48,7 @@ public class ThreadManager {
 
 	public static final void processRequest(final HttpServerExchange exchange,final Cookie cookie) {
 		//final Cookie cookie = ServiceUtils.setupCookie(exchange, null, null);
-		
+
 		//if()
 		final String tenantName=ServiceUtils.getTenantName(cookie);
 		String requestAddress = exchange.toString() + "@" + Integer.toHexString(System.identityHashCode(exchange));
@@ -143,7 +134,7 @@ public class ThreadManager {
 					ServiceUtils.redirectRequest(exchange, tenantPath);
 					//exchange.getResponseHeaders().put(Headers.STATUS, 400);
 					//exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/html; charset=utf-8");
-					
+
 					//exchange.getResponseSender().send("<html><body><a href='/tenant/" + profileTenantName + pureRequestPath
 					//		+ "'>Re-direct to my workspace.</a><body></html>");
 					exchange.endExchange();
@@ -159,7 +150,7 @@ public class ThreadManager {
 				Tenant.getTenant(tenantName);
 				Map<String, Object> pathParams = new HashMap<String, Object>();
 				pathParams.put("pathParameters", "");
-				
+
 				resource = ServiceUtils.getPathService(requestPath, pathParams, tenant);
 
 				if (resource == null) {
@@ -177,7 +168,7 @@ public class ThreadManager {
 					}
 					return;
 				}
-				
+
 				try {
 					exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
 					logTransaction = exchange.getQueryParameters().containsKey("logTransaction");
@@ -269,7 +260,8 @@ public class ThreadManager {
 							body = rp.dataPipeLine.getBody();
 							content = new String(body);
 							if (content != null && content.trim().length() > 0)
-								map = ServiceUtils.xmlToMap(String.format("<root>%s</root>", content));
+								//map = ServiceUtils.xmlToMap(String.format("<root>%s</root>", content));
+                                map = ServiceUtils.xmlToMapParser(String.format("<root>%s</root>", content));
 							break;
 						case "application/yaml":
 							body = rp.dataPipeLine.getBody();
@@ -324,7 +316,7 @@ public class ThreadManager {
 
 						/*
 						 * ExecutorService threadpool = Executors.newCachedThreadPool();
-						 * 
+						 *
 						 * @SuppressWarnings("unchecked") Future<Long> futureTask = (Future<Long>)
 						 * threadpool.submit(() -> { exchange.startBlocking();
 						 * exchange.getResponseSender().send(resPayload);
@@ -332,7 +324,7 @@ public class ThreadManager {
 						 * requestAddress, "Ended successfully")); }); try { Thread.sleep(10); while
 						 * (!futureTask.isDone()) Thread.sleep(100); } catch (InterruptedException e) {
 						 * // TODO Auto-generated catch block e.printStackTrace(); }
-						 * 
+						 *
 						 * threadpool.shutdown();
 						 */
 						rp.destroy();
