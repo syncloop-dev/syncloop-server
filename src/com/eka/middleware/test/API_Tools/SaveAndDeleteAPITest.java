@@ -2,6 +2,7 @@ package com.eka.middleware.test.API_Tools;
 
 
 import com.eka.middleware.auth.AuthAccount;
+import com.eka.middleware.pub.util.rest.Client;
 import com.eka.middleware.server.MiddlewareServer;
 import com.eka.middleware.service.DataPipeline;
 import com.eka.middleware.service.PropertyManager;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -189,6 +191,12 @@ public class SaveAndDeleteAPITest {
         assertEquals("Deleted", dataPipeline.get("status"), "Status should be \"Deleted\"");
 
     }
+    @Test
+    public void test1() throws Exception {
+        Map<String, String> queryParameters = new HashMap<>();
+        Client.invoke("http://localhost:8080/flow/packages/SyncloopWorkspace/services/loop.flow", "POST", null, queryParameters, null, null, queryParameters, false);
+    }
+
 
     private static boolean deleteFile(DataPipeline dataPipeline, String location, String ext, File file) throws Exception {
         AuthAccount authAccount = dataPipeline.getCurrentRuntimeAccount();
