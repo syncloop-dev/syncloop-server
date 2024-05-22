@@ -70,6 +70,10 @@ public static void execute(DataPipeline dp,JsonObject mainflowJsonObject) throws
 				Await await=new Await(jsonValue.asJsonObject());
 				await.process(dp);
 			break;
+			case "function":
+				Function function = new Function(jsonValue.asJsonObject());
+				function.process(dp);
+				break;
 		}	
 	}
 	

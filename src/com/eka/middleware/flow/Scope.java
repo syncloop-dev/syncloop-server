@@ -185,6 +185,17 @@ public class Scope implements FlowBasicInfo {
 									await.process(dp);
 							}
 							break;
+						case "function":
+							Function function = new Function(jsonValue.asJsonObject());
+							if(!evaluateCondition) {
+								function.process(dp);
+							}else {
+								boolean canExecute =FlowUtils.evaluateCondition(function.getCondition(),dp);
+								snapMeta.put("canExecute", canExecute);
+								if(canExecute)
+									function.process(dp);
+							}
+							break;
 					}
 			}
 			dp.putGlobal("*hasError", false);

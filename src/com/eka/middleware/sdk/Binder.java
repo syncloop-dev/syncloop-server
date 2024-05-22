@@ -2,6 +2,8 @@ package com.eka.middleware.sdk;
 
 import com.eka.middleware.flow.FlowResolver;
 import com.eka.middleware.heap.CacheManager;
+import com.eka.middleware.sdk.api.SyncloopFunctionScanner;
+import com.eka.middleware.sdk.api.outline.ServiceOutline;
 import com.eka.middleware.service.DataPipeline;
 import com.eka.middleware.service.PropertyManager;
 import com.eka.middleware.service.RuntimePipeline;
@@ -10,8 +12,10 @@ import com.eka.middleware.template.SnippetException;
 import com.eka.middleware.template.Tenant;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
+import com.nimbusds.jose.shaded.gson.Gson;
 import io.undertow.util.Headers;
 import org.apache.commons.io.IOUtils;
+import test.Test;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -82,6 +86,10 @@ public class Binder {
         return CacheManager.getEmbeddedServices(Tenant.getTempTenant("default"));
     }
 
+    public Map<String, String> getSyncloopMethods() {
+        return CacheManager.getSyncloopMethods(Tenant.getTempTenant("default"));
+    }
+
     /**
      * @param serviceId
      * @return
@@ -108,6 +116,7 @@ public class Binder {
         }
         response.put("packages", children);
         response.put("embeddedServices", getEmbeddedService());
+        response.put("syncloopMethods", getSyncloopMethods());
         return response;
     }
 
@@ -157,6 +166,8 @@ public class Binder {
                 }
 
                 serviceInfo = IOUtils.toString(new FileInputStream(file));
+            } else if (location.endsWith(".function")) {
+                serviceInfo = CacheManager.getSyncloopMethod(location.replaceAll(".function", ""), Tenant.getTempTenant("default"));
             } else {
                 serviceInfo = CacheManager.getEmbeddedService(location.replaceAll("/embedded/", "").replaceAll(".api", ""), Tenant.getTempTenant("default"));
             }
@@ -166,6 +177,22 @@ public class Binder {
             return tokenData;
         } catch (Throwable e) {
             return Collections.singletonMap("error", e.getMessage());
+        }
+    }
+
+    /**
+     * @param aClass
+     * @param dataPipeline
+     */
+    public void addSyncloopMethodClass(Class<?> aClass, DataPipeline dataPipeline) {
+        List<ServiceOutline> serviceOutlines = SyncloopFunctionScanner.addClass(aClass);
+
+        for (ServiceOutline serviceOutline: serviceOutlines) {
+            CacheManager.addSyncloopMethod(
+                    String.format("%s.%s",
+                            serviceOutline.getLatest().getData().getAcn(),
+                            serviceOutline.getLatest().getData().getFunction()),
+                    new Gson().toJson(serviceOutline.getLatest() ), dataPipeline.rp.getTenant());
         }
     }
 }

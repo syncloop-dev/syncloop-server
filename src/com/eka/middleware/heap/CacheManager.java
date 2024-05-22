@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ignite.Ignite;
 
 import com.eka.middleware.distributed.offHeap.IgMap;
@@ -78,7 +79,49 @@ public static Map<String, Object> getCacheAsMap(Tenant tenant) {
 			services = new HashMap<>();
 		}
 
-		return services.get(key);
+		return services.get(StringUtils.strip(key, "/"));
+	}
+
+
+	public static void addSyncloopMethod(String key, String json, Tenant tenant) {
+
+		Map<String, Object> cache = getCacheAsMap(tenant);
+
+		Map<String, String> services = (Map<String, String>)cache.get("syncloop_method");
+		if (null == services) {
+			services = new HashMap<>();
+			cache.put("syncloop_method", services);
+		}
+
+		services.put(key, json);
+	}
+
+	/**
+	 * @param tenant
+	 * @return
+	 */
+	public static Map<String, String> getSyncloopMethods(Tenant tenant) {
+
+		Map<String, Object> cache = getCacheAsMap(tenant);
+
+		Map<String, String> services = (Map<String, String>)cache.get("syncloop_method");
+		if (null == services) {
+			services = new HashMap<>();
+		}
+
+		return services;
+	}
+
+	public static String getSyncloopMethod(String key, Tenant tenant) {
+
+		Map<String, Object> cache = getCacheAsMap(tenant);
+
+		Map<String, String> services = (Map<String, String>)cache.get("syncloop_method");
+		if (null == services) {
+			services = new HashMap<>();
+		}
+
+		return services.get(StringUtils.strip(key, "/"));
 	}
 	
 	public static Map getOrCreateNewCache(Tenant tenant,String name) {
