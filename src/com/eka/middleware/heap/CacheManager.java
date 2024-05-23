@@ -91,7 +91,7 @@ public class CacheManager {
     }
 
 
-    public static void addSyncloopMethod(String key, String json, Tenant tenant) {
+    public static void addMethod(String key, String json, Tenant tenant) {
 
         Map<String, Object> cache = getCacheAsMap(tenant);
 
@@ -108,7 +108,7 @@ public class CacheManager {
      * @param tenant
      * @return
      */
-    public static Map<String, String> getSyncloopMethods(Tenant tenant) {
+    public static Map<String, String> getMethods(Tenant tenant) {
 
         Map<String, Object> cache = getCacheAsMap(tenant);
 
@@ -120,7 +120,7 @@ public class CacheManager {
         return services;
     }
 
-    public static String getSyncloopMethod(String key, Tenant tenant) {
+    public static String getMethod(String key, Tenant tenant) {
 
         Map<String, Object> cache = getCacheAsMap(tenant);
 

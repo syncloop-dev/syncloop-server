@@ -12,7 +12,9 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Function implements FlowBasicInfo {
@@ -98,36 +100,20 @@ public class Function implements FlowBasicInfo {
                 return;
             dp.addErrorStack(this);
 
-            try {
+            String serviceFqn = "packages.middleware.pub.util.JavaFunctionExec";
 
-                String afn = data.getString("acn", null);
-                String outputArgument = data.getString("outputArgument", null);
-                String function = data.getString("function", null);
+            dp.map("*function_ref", this);
 
-                JsonArray jsonArray = data.get("argumentsWrapper").asJsonArray();
-                Class[] aClass = new Class[jsonArray.size()];
-
-                for (int i = 0 ; i < jsonArray.size() ; i++) {
-                    aClass[i] = Class.forName(jsonArray.getString(i));
-                }
-
-                FlowUtils.mapBefore(transformers, dp);
-
-                jsonArray = data.get("arguments").asJsonArray();
-                List<Object> arguments = Lists.newArrayList();
-                for (int i = 0 ; i < jsonArray.size() ; i++) {
-                    arguments.add(dp.get(jsonArray.getString(i)));
-                }
-
-                Class afnClass = Class.forName(afn);
-                Method method = afnClass.getMethod(function, aClass);
-                Object output = method.invoke(null, arguments.toArray());
-
-                dp.map("output", output);
-                FlowUtils.mapAfter(transformers, dp);
-
-            } catch ( Exception e ) {
-                e.printStackTrace();
+            if (serviceFqn != null && serviceFqn.trim().length() > 8) {
+                if ("async".equals(requestMethod))
+                    dp.applyAsync(serviceFqn.trim() + ".main", transformers);
+                else if("asyncQueue".equals(requestMethod)) {
+                    dp.applyAsyncQueue(serviceFqn.trim() + ".main", transformers,true/*enableResponse*/);//TODO enable response value should come from GUI
+                }else
+                    dp.apply(serviceFqn.trim() + ".main", transformers);
+                //if(transformers!=null)
+                //FlowUtils.mapAfter(transformers, dp);
+                dp.clearServicePayload();
             }
 
             if (createList != null)
@@ -149,6 +135,40 @@ public class Function implements FlowBasicInfo {
                 dp.put("*snapshot",snap);
         }
 
+    }
+
+    public void exec(DataPipeline dp) {
+        try {
+
+            String afn = data.getString("acn", null);
+            String outputArgument = data.getString("outputArgument", null);
+            String function = data.getString("function", null);
+
+            JsonArray jsonArray = data.get("argumentsWrapper").asJsonArray();
+            Class[] aClass = new Class[jsonArray.size()];
+
+            for (int i = 0 ; i < jsonArray.size() ; i++) {
+                aClass[i] = Class.forName(jsonArray.getString(i));
+            }
+
+            jsonArray = data.get("arguments").asJsonArray();
+            List<Object> arguments = Lists.newArrayList();
+            for (int i = 0 ; i < jsonArray.size() ; i++) {
+                arguments.add(dp.getValueByPointer("in/" + jsonArray.getString(i)));
+            }
+
+            Class afnClass = Class.forName(afn);
+            Method method = afnClass.getMethod(function, aClass);
+            Object output = method.invoke(null, arguments.toArray());
+
+            Map<String, Object> outputMap = new HashMap<>();
+            outputMap.put(outputArgument, output);
+
+            dp.put("out", outputMap);
+
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        }
     }
 
     public boolean isDisabled() {

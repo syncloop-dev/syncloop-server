@@ -7,15 +7,11 @@ import com.eka.middleware.sdk.api.outline.ServiceOutline;
 import com.eka.middleware.service.DataPipeline;
 import com.eka.middleware.service.PropertyManager;
 import com.eka.middleware.service.RuntimePipeline;
-import com.eka.middleware.template.MultiPart;
 import com.eka.middleware.template.SnippetException;
 import com.eka.middleware.template.Tenant;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Maps;
 import com.nimbusds.jose.shaded.gson.Gson;
-import io.undertow.util.Headers;
 import org.apache.commons.io.IOUtils;
-import test.Test;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -24,10 +20,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.regex.Pattern;
 
 public class Binder {
 
@@ -86,8 +80,8 @@ public class Binder {
         return CacheManager.getEmbeddedServices(Tenant.getTempTenant("default"));
     }
 
-    public Map<String, String> getSyncloopMethods() {
-        return CacheManager.getSyncloopMethods(Tenant.getTempTenant("default"));
+    public Map<String, String> getFunctions() {
+        return CacheManager.getMethods(Tenant.getTempTenant("default"));
     }
 
     /**
@@ -116,7 +110,7 @@ public class Binder {
         }
         response.put("packages", children);
         response.put("embeddedServices", getEmbeddedService());
-        response.put("syncloopMethods", getSyncloopMethods());
+        response.put("functions", getFunctions());
         return response;
     }
 
@@ -167,7 +161,7 @@ public class Binder {
 
                 serviceInfo = IOUtils.toString(new FileInputStream(file));
             } else if (location.endsWith(".function")) {
-                serviceInfo = CacheManager.getSyncloopMethod(location.replaceAll(".function", ""), Tenant.getTempTenant("default"));
+                serviceInfo = CacheManager.getMethod(location.replaceAll(".function", ""), Tenant.getTempTenant("default"));
             } else {
                 serviceInfo = CacheManager.getEmbeddedService(location.replaceAll("/embedded/", "").replaceAll(".api", ""), Tenant.getTempTenant("default"));
             }
@@ -182,13 +176,12 @@ public class Binder {
 
     /**
      * @param aClass
-     * @param dataPipeline
      */
-    public void addSyncloopMethodClass(Class<?> aClass) {
+    public void addFunctionClass(Class<?> aClass) {
         List<ServiceOutline> serviceOutlines = SyncloopFunctionScanner.addClass(aClass);
 
         for (ServiceOutline serviceOutline: serviceOutlines) {
-            CacheManager.addSyncloopMethod(
+            CacheManager.addMethod(
                     String.format("%s.%s",
                             serviceOutline.getLatest().getData().getAcn(),
                             serviceOutline.getLatest().getData().getFunction()),
