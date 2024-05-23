@@ -6,6 +6,7 @@ import com.nimbusds.jose.shaded.gson.Gson;
 import test.Test;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class SyncloopFunctionScanner {
         for (Method method: methods) {
             SyncloopFunction methodExport = method.getAnnotation(SyncloopFunction.class);
 
-            if (null == methodExport) {
+            if (null == methodExport || !Modifier.isStatic(method.getModifiers())) {
                 continue;
             }
 
@@ -57,8 +58,12 @@ public class SyncloopFunctionScanner {
             dataOutline.setArgumentsWrapper(parametersTypesStr);
             dataOutline.setOutputArguments(outputParameterName);
 
+            ApiInfoOutline apiInfoOutline = new ApiInfoOutline();
+            apiInfoOutline.setTitle(methodExport.title());
+            apiInfoOutline.setDescription(methodExport.description());
+
             LatestOutline latestOutline = new LatestOutline();
-            latestOutline.setApi_info(new ApiInfoOutline());
+            latestOutline.setApi_info(apiInfoOutline);
             latestOutline.setData(dataOutline);
 
             List<IOOutline> input = Lists.newArrayList();
@@ -68,14 +73,26 @@ public class SyncloopFunctionScanner {
                 ioOutline.setType(parameters[i].getType().getSimpleName().toLowerCase());
                 input.add(ioOutline);
             }
-            latestOutline.setInput(input);
+
+            IOOutline in = new IOOutline();
+            in.setText("in");
+            in.setType("document");
+            in.setChildren(input);
+
+            latestOutline.setInput(Lists.newArrayList(in));
 
             List<IOOutline> output = Lists.newArrayList();
             IOOutline ioOutline = new IOOutline();
             ioOutline.setText(outputParameterName);
             ioOutline.setType(returnType.getSimpleName().toLowerCase());
             output.add(ioOutline);
-            latestOutline.setOutput(output);
+
+            IOOutline out = new IOOutline();
+            out.setText("out");
+            out.setType("document");
+            out.setChildren(output);
+
+            latestOutline.setOutput(Lists.newArrayList(out));
 
             ServiceOutline serviceOutline = new ServiceOutline();
             serviceOutline.setLatest(latestOutline);

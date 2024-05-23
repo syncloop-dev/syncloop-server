@@ -122,6 +122,7 @@ public class Function implements FlowBasicInfo {
                 Class afnClass = Class.forName(afn);
                 Method method = afnClass.getMethod(function, aClass);
                 Object output = method.invoke(null, arguments.toArray());
+
                 dp.map("output", output);
                 FlowUtils.mapAfter(transformers, dp);
 

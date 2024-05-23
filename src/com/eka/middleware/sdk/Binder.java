@@ -184,7 +184,7 @@ public class Binder {
      * @param aClass
      * @param dataPipeline
      */
-    public void addSyncloopMethodClass(Class<?> aClass, DataPipeline dataPipeline) {
+    public void addSyncloopMethodClass(Class<?> aClass) {
         List<ServiceOutline> serviceOutlines = SyncloopFunctionScanner.addClass(aClass);
 
         for (ServiceOutline serviceOutline: serviceOutlines) {
@@ -192,7 +192,7 @@ public class Binder {
                     String.format("%s.%s",
                             serviceOutline.getLatest().getData().getAcn(),
                             serviceOutline.getLatest().getData().getFunction()),
-                    new Gson().toJson(serviceOutline.getLatest() ), dataPipeline.rp.getTenant());
+                    new Gson().toJson(serviceOutline.getLatest() ), Tenant.getTempTenant("default"));
         }
     }
 }

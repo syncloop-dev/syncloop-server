@@ -14,136 +14,144 @@ import com.eka.middleware.distributed.offHeap.IgNode;
 import com.eka.middleware.template.Tenant;
 
 public class CacheManager {
-	
-private static final Map<String, Map<String, Object>> tenantCache= new ConcurrentHashMap<String,  Map<String, Object>>();
 
-private static final Ignite igNode= IgNode.getIgnite();
+    private static final Map<String, Map<String, Object>> tenantCache = new ConcurrentHashMap<String, Map<String, Object>>();
 
-private static final Map<String, Map> cacheMap=new ConcurrentHashMap<>(); 
+    private static Ignite igNode= null;
 
-public static List<String> cacheList(Tenant tenant){
-	List<String> list = new ArrayList<>();
-	cacheMap.keySet().forEach(key->{
-		list.add(key.replace(tenant.getName()+"-", ""));
-	});
-	return list;
-}
+    private static final Map<String, Map> cacheMap = new ConcurrentHashMap<>();
 
-public static Map<String, Object> getCacheAsMap(Tenant tenant) {
-	Map<String, Object> tenantMap=tenantCache.get(tenant.getName());
-	if(tenantMap==null) {
-		if(igNode!=null)
-			tenantMap=new IgMap<String,  Object>(igNode,"MyTenantCache-"+tenant.getName());
-		else
-			tenantMap=new ConcurrentHashMap<String, Object>();
-		tenantCache.put(tenant.getName(), tenantMap);
-	}
-	return tenantMap;
-}
-
-	public static void addEmbeddedService(String key, String json, Tenant tenant) {
-
-		Map<String, Object> cache = getCacheAsMap(tenant);
-
-		Map<String, String> services = (Map<String, String>)cache.get("embedded_service");
-		if (null == services) {
-			services = new HashMap<>();
-			cache.put("embedded_service", services);
-		}
-
-		services.put(key, json);
-	}
-
-	/**
-	 * @param tenant
-	 * @return
-	 */
-	public static Set<String> getEmbeddedServices(Tenant tenant) {
-
-		Map<String, Object> cache = getCacheAsMap(tenant);
-
-		Map<String, String> services = (Map<String, String>)cache.get("embedded_service");
-		if (null == services) {
-			services = new HashMap<>();
-		}
-
-		return services.keySet();
-	}
-
-	public static String getEmbeddedService(String key, Tenant tenant) {
-
-		Map<String, Object> cache = getCacheAsMap(tenant);
-
-		Map<String, String> services = (Map<String, String>)cache.get("embedded_service");
-		if (null == services) {
-			services = new HashMap<>();
-		}
-
-		return services.get(StringUtils.strip(key, "/"));
-	}
-
-
-	public static void addSyncloopMethod(String key, String json, Tenant tenant) {
-
-		Map<String, Object> cache = getCacheAsMap(tenant);
-
-		Map<String, String> services = (Map<String, String>)cache.get("syncloop_method");
-		if (null == services) {
-			services = new HashMap<>();
-			cache.put("syncloop_method", services);
-		}
-
-		services.put(key, json);
-	}
-
-	/**
-	 * @param tenant
-	 * @return
-	 */
-	public static Map<String, String> getSyncloopMethods(Tenant tenant) {
-
-		Map<String, Object> cache = getCacheAsMap(tenant);
-
-		Map<String, String> services = (Map<String, String>)cache.get("syncloop_method");
-		if (null == services) {
-			services = new HashMap<>();
-		}
-
-		return services;
-	}
-
-	public static String getSyncloopMethod(String key, Tenant tenant) {
-
-		Map<String, Object> cache = getCacheAsMap(tenant);
-
-		Map<String, String> services = (Map<String, String>)cache.get("syncloop_method");
-		if (null == services) {
-			services = new HashMap<>();
-		}
-
-		return services.get(StringUtils.strip(key, "/"));
-	}
-	
-	public static Map getOrCreateNewCache(Tenant tenant,String name) {
-		Map<String, Object> tenantMap=tenantCache.get(tenant.getName());
-		name=tenant.getName()+"-"+name;
-		Map newCache=cacheMap.get(name);
-		if(newCache==null) {
-			if(IgNode.getNodeId()!=null)
-				newCache=new IgMap<>(igNode, name);
-			else
-				newCache=new ConcurrentHashMap<String, Object>();
-		}
-		return newCache;
-	}
-	
-	public static void deleteCache(Tenant tenant,String name) {
-		name=tenant.getName()+"-"+name;
-		Map newCache=cacheMap.get(name);
-		if(newCache!=null) {
-			if(IgNode.getNodeId()!=null)
-				((IgMap)newCache).close();
-			cacheMap.remove(name);
+	static {
+		try {
+			igNode = IgNode.getIgnite();
+		} catch (Throwable exception) {
+			exception.printStackTrace();
 		}
 	}
+
+    public static List<String> cacheList(Tenant tenant) {
+        List<String> list = new ArrayList<>();
+        cacheMap.keySet().forEach(key -> {
+            list.add(key.replace(tenant.getName() + "-", ""));
+        });
+        return list;
+    }
+
+    public static Map<String, Object> getCacheAsMap(Tenant tenant) {
+        Map<String, Object> tenantMap = tenantCache.get(tenant.getName());
+        if (tenantMap == null) {
+            if (igNode != null)
+                tenantMap = new IgMap<String, Object>(igNode, "MyTenantCache-" + tenant.getName());
+            else
+                tenantMap = new ConcurrentHashMap<String, Object>();
+            tenantCache.put(tenant.getName(), tenantMap);
+        }
+        return tenantMap;
+    }
+
+    public static void addEmbeddedService(String key, String json, Tenant tenant) {
+
+        Map<String, Object> cache = getCacheAsMap(tenant);
+
+        Map<String, String> services = (Map<String, String>) cache.get("embedded_service");
+        if (null == services) {
+            services = new HashMap<>();
+            cache.put("embedded_service", services);
+        }
+
+        services.put(key, json);
+    }
+
+    /**
+     * @param tenant
+     * @return
+     */
+    public static Set<String> getEmbeddedServices(Tenant tenant) {
+
+        Map<String, Object> cache = getCacheAsMap(tenant);
+
+        Map<String, String> services = (Map<String, String>) cache.get("embedded_service");
+        if (null == services) {
+            services = new HashMap<>();
+        }
+
+        return services.keySet();
+    }
+
+    public static String getEmbeddedService(String key, Tenant tenant) {
+
+        Map<String, Object> cache = getCacheAsMap(tenant);
+
+        Map<String, String> services = (Map<String, String>) cache.get("embedded_service");
+        if (null == services) {
+            services = new HashMap<>();
+        }
+
+        return services.get(StringUtils.strip(key, "/"));
+    }
+
+
+    public static void addSyncloopMethod(String key, String json, Tenant tenant) {
+
+        Map<String, Object> cache = getCacheAsMap(tenant);
+
+        Map<String, String> services = (Map<String, String>) cache.get("syncloop_method");
+        if (null == services) {
+            services = new HashMap<>();
+            cache.put("syncloop_method", services);
+        }
+
+        services.put(key, json);
+    }
+
+    /**
+     * @param tenant
+     * @return
+     */
+    public static Map<String, String> getSyncloopMethods(Tenant tenant) {
+
+        Map<String, Object> cache = getCacheAsMap(tenant);
+
+        Map<String, String> services = (Map<String, String>) cache.get("syncloop_method");
+        if (null == services) {
+            services = new HashMap<>();
+        }
+
+        return services;
+    }
+
+    public static String getSyncloopMethod(String key, Tenant tenant) {
+
+        Map<String, Object> cache = getCacheAsMap(tenant);
+
+        Map<String, String> services = (Map<String, String>) cache.get("syncloop_method");
+        if (null == services) {
+            services = new HashMap<>();
+        }
+
+        return services.get(StringUtils.strip(key, "/"));
+    }
+
+    public static Map getOrCreateNewCache(Tenant tenant, String name) {
+        Map<String, Object> tenantMap = tenantCache.get(tenant.getName());
+        name = tenant.getName() + "-" + name;
+        Map newCache = cacheMap.get(name);
+        if (newCache == null) {
+            if (IgNode.getNodeId() != null)
+                newCache = new IgMap<>(igNode, name);
+            else
+                newCache = new ConcurrentHashMap<String, Object>();
+        }
+        return newCache;
+    }
+
+    public static void deleteCache(Tenant tenant, String name) {
+        name = tenant.getName() + "-" + name;
+        Map newCache = cacheMap.get(name);
+        if (newCache != null) {
+            if (IgNode.getNodeId() != null)
+                ((IgMap) newCache).close();
+            cacheMap.remove(name);
+        }
+    }
 }
