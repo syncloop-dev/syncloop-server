@@ -18,6 +18,4 @@ public @interface SyncloopFunction {
 
     String[] in() default {};
     String out() default "";
-
-    String name() default "";
 }

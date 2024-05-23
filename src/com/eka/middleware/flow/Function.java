@@ -1,6 +1,7 @@
 package com.eka.middleware.flow;
 
 import com.beust.jcommander.internal.Lists;
+import com.eka.middleware.sdk.api.SyncloopFunctionScanner;
 import com.eka.middleware.service.DataPipeline;
 import com.eka.middleware.service.FlowBasicInfo;
 import com.eka.middleware.template.SnippetException;
@@ -148,6 +149,11 @@ public class Function implements FlowBasicInfo {
             Class[] aClass = new Class[jsonArray.size()];
 
             for (int i = 0 ; i < jsonArray.size() ; i++) {
+                Class wrapperClass = SyncloopFunctionScanner.PRIMITIVE_TYPE.get(jsonArray.getString(i));
+                if (null != wrapperClass) {
+                    aClass[i] = wrapperClass;
+                    continue;
+                }
                 aClass[i] = Class.forName(jsonArray.getString(i));
             }
 

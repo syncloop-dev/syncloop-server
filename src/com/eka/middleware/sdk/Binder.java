@@ -178,7 +178,7 @@ public class Binder {
      * @param aClass
      */
     public void addFunctionClass(Class<?> aClass) {
-        List<ServiceOutline> serviceOutlines = SyncloopFunctionScanner.addClass(aClass);
+        List<ServiceOutline> serviceOutlines = SyncloopFunctionScanner.addClass(aClass, false);
 
         for (ServiceOutline serviceOutline: serviceOutlines) {
             CacheManager.addMethod(

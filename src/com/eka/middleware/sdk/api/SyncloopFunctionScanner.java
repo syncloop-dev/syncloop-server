@@ -6,6 +6,8 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.sun.jdi.event.EventSet;
+import org.apache.commons.lang3.StringUtils;
+import org.opensaml.xmlsec.signature.P;
 import test.Test;
 
 import javax.management.AttributeList;
@@ -18,6 +20,7 @@ import javax.script.SimpleBindings;
 import javax.swing.*;
 import java.awt.*;
 import java.beans.beancontext.BeanContext;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.security.AuthProvider;
 import java.security.Provider;
@@ -31,22 +34,61 @@ public class SyncloopFunctionScanner {
 
     public static void main(String[] args) {
 
-       System.out.println(new Gson( ).toJson(addClass(Test.class)));
+       System.out.println(new Gson( ).toJson(addClass(Test.class, false)));
 
 
     }
 
 
-    public static List<ServiceOutline> addClass(Class aClass) {
+    public static List<ServiceOutline> addClass(Class aClass, boolean restrictSyncloopFunctions) {
 
         List<ServiceOutline> serviceOutlines = Lists.newArrayList();
         Method[] methods = aClass.getDeclaredMethods();
 
         for (Method method: methods) {
+
+            if (!Modifier.isStatic(method.getModifiers())) {
+                continue;
+            }
+
             SyncloopFunction methodExport = method.getAnnotation(SyncloopFunction.class);
 
-            if (null == methodExport || !Modifier.isStatic(method.getModifiers())) {
+            if (null == methodExport && !restrictSyncloopFunctions) {
                 continue;
+            } else if (null == methodExport) {
+                methodExport = new SyncloopFunction() {
+
+                    @Override
+                    public Class<? extends Annotation> annotationType() {
+                        return null;
+                    }
+
+                    @Override
+                    public String title() {
+                        return "";
+                    }
+
+                    @Override
+                    public String description() {
+                        return "";
+                    }
+
+                    @Override
+                    public String[] in() {
+                        Parameter[] parameters = method.getParameters();
+                        String[] strings = new String[method.getParameters().length];
+                        for (int i = 0; i < parameters.length ; i++) {
+                            strings[i] = parameters[i].getName();
+                        }
+                        return strings;
+                    }
+
+                    @Override
+                    public String out() {
+                        return "output";
+                    }
+
+                };
             }
 
             //TODO Generic Type, Collection & Primitive Type is pending.
@@ -122,21 +164,26 @@ public class SyncloopFunctionScanner {
 
 
     private static String mapTypeToString(Type type, boolean isSimpleType) {
-        String dataType = "object";
-        if (type == String.class && isSimpleType) {
+        String dataType = "javaObject";
+        if ((type == String.class || type == Character.class
+                || type == CharSequence.class || type == char.class) && isSimpleType) {
             dataType = "string";
-        } else if (type == Integer.class && isSimpleType) {
+        } else if ((type == Integer.class || type == int.class || type == short.class) && isSimpleType) {
             dataType = "integer";
-        } else if ((type == Double.class || type == Float.class || type == Long.class || type == Number.class) && isSimpleType) {
+        } else if ((type == Double.class || type == Float.class || type == Long.class || type == Number.class ||
+                type == double.class || type == float.class || type == long.class) && isSimpleType) {
             dataType = "number";
         } else if (type == Date.class && isSimpleType) {
             dataType = "date";
-        } else if (type == Byte.class && isSimpleType) {
+        } else if ((type == Byte.class || type == byte.class) && isSimpleType) {
             dataType = "byte";
-        } else if (type == Boolean.class && isSimpleType) {
+        } else if ((type == Boolean.class || type == boolean.class) && isSimpleType) {
             dataType = "boolean";
         } else if (MAP_CLASSES.contains(type) && isSimpleType) {
             dataType = "document";
+        } else if (type instanceof Class && ((Class<?>) type).isArray()) {
+            Class<?> arrayType = ((Class<?>) type).getComponentType();
+            dataType = mapTypeToString(arrayType, true) + "List";
         } else if (type instanceof ParameterizedType) {
             ParameterizedType parameterizedType = (ParameterizedType) type;
             Type rawType = parameterizedType.getRawType();
@@ -183,4 +230,17 @@ public class SyncloopFunctionScanner {
             RoleUnresolvedList.class,
             Stack.class, SynchronousQueue.class, TreeSet.class, Vector.class
     );
+
+    public static final Map<String, Class> PRIMITIVE_TYPE = Maps.newHashMap();
+
+    static {
+        PRIMITIVE_TYPE.put("int", int.class);
+        PRIMITIVE_TYPE.put("short", short.class);
+        PRIMITIVE_TYPE.put("void", void.class);
+        PRIMITIVE_TYPE.put("double", double.class);
+        PRIMITIVE_TYPE.put("float", float.class);
+        PRIMITIVE_TYPE.put("long", long.class);
+        PRIMITIVE_TYPE.put("boolean", boolean.class);
+        PRIMITIVE_TYPE.put("char", char.class);
+    }
 }
