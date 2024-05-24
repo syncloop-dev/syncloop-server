@@ -1,6 +1,7 @@
 package com.eka.middleware.flow;
 
 import com.beust.jcommander.internal.Lists;
+import com.eka.middleware.heap.CacheManager;
 import com.eka.middleware.sdk.api.SyncloopFunctionScanner;
 import com.eka.middleware.service.DataPipeline;
 import com.eka.middleware.service.FlowBasicInfo;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Function implements FlowBasicInfo {
+public class ContextObject implements FlowBasicInfo {
 
     private boolean disabled=false;
     private boolean sync=true;
@@ -43,7 +44,7 @@ public class Function implements FlowBasicInfo {
     @Getter
     private String guid;
 
-    public Function(JsonObject jo) {
+    public ContextObject(JsonObject jo) {
         api=jo;
         data=api.get("data").asJsonObject();
         condition=data.getString("condition",null);
@@ -98,9 +99,9 @@ public class Function implements FlowBasicInfo {
                 return;
             dp.addErrorStack(this);
 
-            String serviceFqn = "packages.middleware.pub.util.JavaFunctionExec";
+            String serviceFqn = "packages.middleware.pub.util.ContextObjectExec";
 
-            dp.map("*function_ref", this);
+            dp.map("*contextobject_ref", this);
 
             if (serviceFqn != null && serviceFqn.trim().length() > 8) {
                 if ("async".equals(requestMethod))
@@ -138,42 +139,10 @@ public class Function implements FlowBasicInfo {
     public void exec(DataPipeline dp) {
         try {
 
-            String afn = data.getString("acn", null);
-            String outputArgument = data.getString("outputArgument", null);
-            String function = data.getString("function", null);
-            boolean staticFunction = data.getBoolean("staticFunction");
+            String fqn = data.getString("fqn", null);
+            Object o = CacheManager.getContextObjects(fqn.replaceAll("contexts/", ""), dp.rp.getTenant());
 
-            JsonArray jsonArray = data.get("argumentsWrapper").asJsonArray();
-            Class[] aClass = new Class[jsonArray.size()];
-
-            for (int i = 0 ; i < jsonArray.size() ; i++) {
-                Class wrapperClass = SyncloopFunctionScanner.PRIMITIVE_TYPE.get(jsonArray.getString(i));
-                if (null != wrapperClass) {
-                    aClass[i] = wrapperClass;
-                    continue;
-                }
-                aClass[i] = Class.forName(jsonArray.getString(i));
-            }
-
-            jsonArray = data.get("arguments").asJsonArray();
-            List<Object> arguments = Lists.newArrayList();
-            for (int i = 0 ; i < jsonArray.size() ; i++) {
-                arguments.add(dp.getValueByPointer("in/" + jsonArray.getString(i)));
-            }
-
-            Object invokingObject = null;
-            if (!staticFunction) {
-                invokingObject = dp.get("invokingObject");
-            }
-
-            Class afnClass = Class.forName(afn);
-            Method method = afnClass.getMethod(function, aClass);
-            Object output = method.invoke(invokingObject, arguments.toArray());
-
-            Map<String, Object> outputMap = new HashMap<>();
-            outputMap.put(outputArgument, output);
-
-            dp.put("out", outputMap);
+            dp.put("invokingObject", o);
 
         } catch ( Exception e ) {
             e.printStackTrace();

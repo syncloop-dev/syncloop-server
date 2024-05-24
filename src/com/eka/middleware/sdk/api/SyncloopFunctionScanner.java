@@ -37,6 +37,7 @@ public class SyncloopFunctionScanner {
 
        System.out.println(new Gson( ).toJson(addClass(Student.class, true)));
 
+       System.out.println(new Student().getClass().getName());
 
     }
 
@@ -148,16 +149,10 @@ public class SyncloopFunctionScanner {
                 in.setText("in");
                 in.setType("document");
                 in.setChildren(input);
-
-
-
-
-
                 inputs.add(in);
 
             }
             latestOutline.setInput(inputs);
-
 
             String outputType = mapTypeToString(method.getGenericReturnType(), true);
 
@@ -186,6 +181,29 @@ public class SyncloopFunctionScanner {
         return serviceOutlines;
     }
 
+    public static ServiceOutline getContextObjectServiceViewConfig() {
+
+        ApiInfoOutline apiInfoOutline = new ApiInfoOutline();
+        apiInfoOutline.setTitle("");
+        apiInfoOutline.setDescription("");
+
+        LatestOutline latestOutline = new LatestOutline();
+        latestOutline.setApi_info(apiInfoOutline);
+
+        List<IOOutline> inputs = Lists.newArrayList();
+        latestOutline.setInput(inputs);
+
+        IOOutline invokingObject = new IOOutline();
+        invokingObject.setText("invokingObject");
+        invokingObject.setType("javaObject");
+
+        latestOutline.setOutput(Lists.newArrayList(invokingObject));
+
+        ServiceOutline serviceOutline = new ServiceOutline();
+        serviceOutline.setLatest(latestOutline);
+
+        return serviceOutline;
+    }
 
     private static String mapTypeToString(Type type, boolean isSimpleType) {
         String dataType = "javaObject";

@@ -74,6 +74,10 @@ public static void execute(DataPipeline dp,JsonObject mainflowJsonObject) throws
 				Function function = new Function(jsonValue.asJsonObject());
 				function.process(dp);
 				break;
+			case "object":
+				ContextObject contextObject = new ContextObject(jsonValue.asJsonObject());
+				contextObject.process(dp);
+				break;
 		}	
 	}
 	
