@@ -144,6 +144,7 @@ public class Function implements FlowBasicInfo {
             String afn = data.getString("acn", null);
             String outputArgument = data.getString("outputArgument", null);
             String function = data.getString("function", null);
+            boolean staticFunction = data.getBoolean("staticFunction");
 
             JsonArray jsonArray = data.get("argumentsWrapper").asJsonArray();
             Class[] aClass = new Class[jsonArray.size()];
@@ -163,9 +164,14 @@ public class Function implements FlowBasicInfo {
                 arguments.add(dp.getValueByPointer("in/" + jsonArray.getString(i)));
             }
 
+            Object invokingObject = null;
+            if (!staticFunction) {
+                invokingObject = dp.get("invokingObject");
+            }
+
             Class afnClass = Class.forName(afn);
             Method method = afnClass.getMethod(function, aClass);
-            Object output = method.invoke(null, arguments.toArray());
+            Object output = method.invoke(invokingObject, arguments.toArray());
 
             Map<String, Object> outputMap = new HashMap<>();
             outputMap.put(outputArgument, output);

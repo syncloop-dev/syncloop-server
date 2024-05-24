@@ -13,4 +13,6 @@ public class DataOutline {
     private String outputArguments;
     private String function;
 
+    private boolean staticFunction;
+
 }

@@ -8,6 +8,7 @@ import com.nimbusds.jose.shaded.gson.Gson;
 import com.sun.jdi.event.EventSet;
 import org.apache.commons.lang3.StringUtils;
 import org.opensaml.xmlsec.signature.P;
+import test.Student;
 import test.Test;
 
 import javax.management.AttributeList;
@@ -34,7 +35,7 @@ public class SyncloopFunctionScanner {
 
     public static void main(String[] args) {
 
-       System.out.println(new Gson( ).toJson(addClass(Test.class, false)));
+       System.out.println(new Gson( ).toJson(addClass(Student.class, true)));
 
 
     }
@@ -47,7 +48,7 @@ public class SyncloopFunctionScanner {
 
         for (Method method: methods) {
 
-            if (!Modifier.isStatic(method.getModifiers())) {
+            if (Modifier.isPrivate(method.getModifiers()) || Modifier.isProtected(method.getModifiers())) {
                 continue;
             }
 
@@ -91,13 +92,12 @@ public class SyncloopFunctionScanner {
                 };
             }
 
-            //TODO Generic Type, Collection & Primitive Type is pending.
-
             String[] parametersName = methodExport.in();
             String outputParameterName = methodExport.out();
             String methodName = method.getName();
             Class returnType = method.getReturnType();
             String packageName = method.getDeclaringClass().getPackage().getName();
+            boolean isStatic = Modifier.isStatic(method.getModifiers());
             String className = method.getDeclaringClass().getName();
             Parameter[] parameters = method.getParameters();
             Class[] parametersTypes = new Class[parameters.length];
@@ -114,6 +114,7 @@ public class SyncloopFunctionScanner {
             dataOutline.setArguments(parametersName);
             dataOutline.setReturnWrapper(returnType.getName());
             dataOutline.setArgumentsWrapper(parametersTypesStr);
+            dataOutline.setStaticFunction(isStatic);
             dataOutline.setOutputArguments(outputParameterName);
 
             ApiInfoOutline apiInfoOutline = new ApiInfoOutline();
@@ -124,34 +125,57 @@ public class SyncloopFunctionScanner {
             latestOutline.setApi_info(apiInfoOutline);
             latestOutline.setData(dataOutline);
 
-            List<IOOutline> input = Lists.newArrayList();
-            for (int i = 0 ; i < parameters.length ; i++) {
-                IOOutline ioOutline = new IOOutline();
-                ioOutline.setText(parametersName[i]);
-                //ioOutline.setType(parameters[i].getType().getSimpleName().toLowerCase());
-                ioOutline.setType(mapTypeToString(parameters[i].getParameterizedType(), true));
-                input.add(ioOutline);
+            List<IOOutline> inputs = Lists.newArrayList();
+
+            if (!isStatic) {
+                IOOutline invokingObject = new IOOutline();
+                invokingObject.setText("invokingObject");
+                invokingObject.setType("javaObject");
+                inputs.add(invokingObject);
             }
 
-            IOOutline in = new IOOutline();
-            in.setText("in");
-            in.setType("document");
-            in.setChildren(input);
+            if (parameters.length > 0) {
+                List<IOOutline> input = Lists.newArrayList();
+                for (int i = 0 ; i < parameters.length ; i++) {
+                    IOOutline ioOutline = new IOOutline();
+                    ioOutline.setText(parametersName[i]);
+                    //ioOutline.setType(parameters[i].getType().getSimpleName().toLowerCase());
+                    ioOutline.setType(mapTypeToString(parameters[i].getParameterizedType(), true));
+                    input.add(ioOutline);
+                }
 
-            latestOutline.setInput(Lists.newArrayList(in));
+                IOOutline in = new IOOutline();
+                in.setText("in");
+                in.setType("document");
+                in.setChildren(input);
+
+
+
+
+
+                inputs.add(in);
+
+            }
+            latestOutline.setInput(inputs);
+
+
+            String outputType = mapTypeToString(method.getGenericReturnType(), true);
 
             List<IOOutline> output = Lists.newArrayList();
-            IOOutline ioOutline = new IOOutline();
-            ioOutline.setText(outputParameterName);
-            ioOutline.setType(mapTypeToString(method.getGenericReturnType(), true));
-            output.add(ioOutline);
 
-            IOOutline out = new IOOutline();
-            out.setText("out");
-            out.setType("document");
-            out.setChildren(output);
+            if (StringUtils.isNotBlank(outputType)) {
+                IOOutline ioOutline = new IOOutline();
+                ioOutline.setText(outputParameterName);
+                ioOutline.setType(outputType);
+                output.add(ioOutline);
 
-            latestOutline.setOutput(Lists.newArrayList(out));
+                IOOutline out = new IOOutline();
+                out.setText("out");
+                out.setType("document");
+                out.setChildren(output);
+
+                latestOutline.setOutput(Lists.newArrayList(out));
+            }
 
             ServiceOutline serviceOutline = new ServiceOutline();
             serviceOutline.setLatest(latestOutline);
@@ -173,6 +197,8 @@ public class SyncloopFunctionScanner {
         } else if ((type == Double.class || type == Float.class || type == Long.class || type == Number.class ||
                 type == double.class || type == float.class || type == long.class) && isSimpleType) {
             dataType = "number";
+        } else if ((type == Void.class || type == void.class) && isSimpleType) {
+            dataType = "";
         } else if (type == Date.class && isSimpleType) {
             dataType = "date";
         } else if ((type == Byte.class || type == byte.class) && isSimpleType) {
