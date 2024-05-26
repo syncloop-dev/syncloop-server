@@ -5,11 +5,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static java.lang.annotation.ElementType.CONSTRUCTOR;
 import static java.lang.annotation.ElementType.METHOD;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value={METHOD})
+@Target(value={METHOD, CONSTRUCTOR})
 public @interface SyncloopFunction {
 
     String title() default "";

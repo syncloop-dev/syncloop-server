@@ -10,6 +10,7 @@ import lombok.Getter;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
@@ -142,6 +143,7 @@ public class Function implements FlowBasicInfo {
             String outputArgument = data.getString("outputArgument", null);
             String function = data.getString("function", null);
             boolean staticFunction = data.getBoolean("staticFunction");
+            boolean isConstructor = data.getBoolean("constructor");
 
             JsonArray jsonArray = data.get("argumentsWrapper").asJsonArray();
             Class[] aClass = new Class[jsonArray.size()];
@@ -167,8 +169,14 @@ public class Function implements FlowBasicInfo {
             }
 
             Class afnClass = Class.forName(afn);
-            Method method = afnClass.getMethod(function, aClass);
-            Object output = method.invoke(invokingObject, arguments.toArray());
+            Object output = null;
+            if ( isConstructor ) {
+                Constructor constructor = afnClass.getConstructor(aClass);
+                output = constructor.newInstance(arguments.toArray());
+            } else {
+                Method method = afnClass.getMethod(function, aClass);
+                output = method.invoke(invokingObject, arguments.toArray());
+            }
 
             Map<String, Object> outputMap = new HashMap<>();
             outputMap.put(outputArgument, output);
