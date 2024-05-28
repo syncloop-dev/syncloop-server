@@ -189,9 +189,10 @@ public class Binder {
 
         for (ServiceOutline serviceOutline: serviceOutlines) {
             CacheManager.addMethod(
-                    String.format("%s.%s",
+                    String.format("%s.%s_%s",
                             serviceOutline.getLatest().getData().getAcn(),
-                            serviceOutline.getLatest().getData().getFunction()),
+                            serviceOutline.getLatest().getData().getFunction(),
+                            serviceOutline.getLatest().getData().getIdentifier()),
                     new Gson().toJson(serviceOutline.getLatest() ), Tenant.getTempTenant("default"));
         }
     }
