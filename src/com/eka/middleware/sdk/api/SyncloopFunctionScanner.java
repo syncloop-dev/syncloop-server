@@ -80,7 +80,7 @@ public class SyncloopFunctionScanner {
 
             String[] parametersName = methodExport.in();
             String outputParameterName = methodExport.out();
-            String methodName = constructor.getName();
+            String methodName = "new";
             String packageName = constructor.getDeclaringClass().getPackage().getName();
             boolean isStatic = Modifier.isStatic(constructor.getModifiers());
             boolean isConstructor = true;

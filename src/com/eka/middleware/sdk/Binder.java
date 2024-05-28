@@ -196,7 +196,7 @@ public class Binder {
         }
     }
 
-    public void addContextObject(Object object) {
-        CacheManager.addContextObject(object.toString(), object, Tenant.getTempTenant("default"));
+    public void addContextObject(String objectName, Object object) {
+        CacheManager.addContextObject(objectName, object, Tenant.getTempTenant("default"));
     }
 }
