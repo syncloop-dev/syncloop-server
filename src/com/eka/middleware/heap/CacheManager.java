@@ -7,6 +7,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.eka.middleware.sdk.api.SyncloopFunctionScanner;
+import com.eka.middleware.sdk.api.outline.IOOutline;
+import com.eka.middleware.sdk.api.outline.LatestOutline;
 import com.nimbusds.jose.shaded.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ignite.Ignite;
@@ -150,8 +152,27 @@ public class CacheManager {
     /**
      * @return
      */
-    public static String getContextObjectServiceViewConfig() {
-        return new Gson().toJson(SyncloopFunctionScanner.getContextObjectServiceViewConfig().getLatest());
+    public static String getContextObjectServiceViewConfig(String objectName) {
+        LatestOutline latestOutline = SyncloopFunctionScanner.getContextObjectServiceViewConfig().getLatest();
+
+        List<IOOutline> output = new ArrayList<>();
+
+        IOOutline ioOutline = new IOOutline();
+        ioOutline.setText(objectName);
+        ioOutline.setType("javaObject");
+        output.add(ioOutline);
+
+        IOOutline out = new IOOutline();
+        out.setText("out");
+        out.setType("document");
+        out.setChildren(output);
+
+        List<IOOutline> outlines = new ArrayList();
+        outlines.add(out);
+        latestOutline.setOutput(outlines);
+
+
+        return new Gson().toJson(latestOutline);
     }
 
     public static Object getContextObjects(String key, Tenant tenant) {

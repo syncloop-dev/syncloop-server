@@ -166,7 +166,7 @@ public class Binder {
 
                 serviceInfo = IOUtils.toString(new FileInputStream(file));
             } else if (location.endsWith(".object")) {
-                serviceInfo = CacheManager.getContextObjectServiceViewConfig();
+                serviceInfo = CacheManager.getContextObjectServiceViewConfig(location.replaceAll("/contexts/", "").replaceAll(".object", ""));
             } else if (location.endsWith(".function")) {
                 serviceInfo = CacheManager.getMethod(location.replaceAll(".function", ""), Tenant.getTempTenant("default"));
             } else {
