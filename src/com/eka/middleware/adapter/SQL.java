@@ -10,6 +10,7 @@ import net.sf.jsqlparser.statement.delete.Delete;
 import net.sf.jsqlparser.statement.insert.Insert;
 import net.sf.jsqlparser.statement.update.Update;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.Level;
 
 import java.io.File;
@@ -36,7 +37,6 @@ public class SQL {
                     (parameterNamesSquare != null && parameterNamesSquare.length > 0)) {
                 //columnsType = new HashMap<>();
                 Map<String, Object> firstMap = sqlParameters.get(0);
-
                 if (parameterNames != null) {
                     for (String paramName : parameterNames) {
                         String valuePlaceholder = StringUtils.replace(("'{" + paramName + "}'"), "'", "");
@@ -55,7 +55,9 @@ public class SQL {
                         String valuePlaceholder = StringUtils.replace(("'[" + paramName + "]'"), "'", "");
                         if (firstMap.containsKey(paramName)) {
                             sqlCode = sqlCode.replace(valuePlaceholder, "?");
-                            columnsType.put(paramName, getColumnTypeForMySql(sqlCode, paramName, myCon.getMetaData()));
+                            if (isColumnsTypeEmpty) {
+                                columnsType.put(paramName, getColumnTypeForMySql(sqlCode, paramName, myCon.getMetaData()));
+                            }
                         }
                     }
                     setStatementParameters(sqlCode, sqlParameters, myCon, outputDocList, parameterNamesSquare, columnsType);

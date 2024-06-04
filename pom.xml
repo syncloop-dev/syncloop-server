@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.syncloop.middleware</groupId>
 	<artifactId>core</artifactId>
-	<version>1.6.4.1</version>
+	<version>1.6.6-beta</version>
 	<name>MiddlewareServer</name>
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
@@ -14,21 +14,6 @@
 		<undertow-pac4j.version>5.0.1</undertow-pac4j.version>
 		<undertow.version>2.3.0.Beta1</undertow.version>
 	</properties>
-
-	<profiles>
-		<profile>
-			<id>sonar</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<sonar.host.url>SONAR_HOST</sonar.host.url>
-				<sonar.login>USERNAME</sonar.login>
-				<sonar.password>PASSWORD</sonar.password>
-			</properties>
-		</profile>
-	</profiles>
-
 	<build>
 		<finalName>syncloop</finalName>
 		<sourceDirectory>src</sourceDirectory>
@@ -140,12 +125,6 @@
 		</plugins>
 	</build>
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
-		<dependency>
-			<groupId>org.sonarsource.scanner.maven</groupId>
-			<artifactId>sonar-maven-plugin</artifactId>
-			<version>3.2</version>
-		</dependency>
 		<dependency>
 			<groupId>io.undertow</groupId>
 			<artifactId>undertow-core</artifactId>

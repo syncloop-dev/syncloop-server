@@ -102,7 +102,7 @@ public class AppLogger {
 
 	public void finish() {
 		try {
-			if (CONTEXT.get().getMAP().size() == 1) {
+			if (null == CONTEXT.get() || CONTEXT.get().getMAP().size() == 1) {
 				return ;
 			}
 			StopWatch stopWatch = CONTEXT.get().stopTracking();

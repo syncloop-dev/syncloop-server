@@ -220,6 +220,14 @@ public class Loop implements FlowBasicInfo {
 									Await await=new Await(jsonValue.asJsonObject());
 									await.process(dp);
 									break;
+								case "function":
+									Function function = new Function(jsonValue.asJsonObject());
+									function.process(dp);
+									break;
+								case "object":
+									ContextObject contextObject = new ContextObject(jsonValue.asJsonObject());
+									contextObject.process(dp);
+									break;
 							}
 					}
 
