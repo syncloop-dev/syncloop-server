@@ -257,7 +257,9 @@ public class Client {
 				}
 			} else if (StringUtils.isNotBlank(payload)) {
 				bodyEntity = new ByteArrayEntity(payload.getBytes(StandardCharsets.UTF_8));
-				reqHeaders.put("Content-Type", "application/json");
+				if (StringUtils.isBlank(reqHeaders.get("Content-Type"))) {
+					reqHeaders.put("Content-Type", "application/json");
+				}
 			} else if (null != inputStream) {
 				byte[] inputBytes = IOUtils.toByteArray(inputStream);
 				bodyEntity = new ByteArrayEntity(inputBytes);

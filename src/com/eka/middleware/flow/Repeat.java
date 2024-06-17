@@ -302,6 +302,26 @@ public class Repeat implements FlowBasicInfo {
 							await.process(dp);
 					}
 				break;
+                case "function":
+                    Function function = new Function(jsonValue.asJsonObject());
+                    if(!evaluateCondition) {
+                        function.process(dp);
+                    }else {
+                        boolean canExecute =FlowUtils.evaluateCondition(function.getCondition(),dp);
+                        if(canExecute)
+                            function.process(dp);
+                    }
+                    break;
+                case "object":
+                    ContextObject contextObject = new ContextObject(jsonValue.asJsonObject());
+                    if(!evaluateCondition) {
+                        contextObject.process(dp);
+                    }else {
+                        boolean canExecute =FlowUtils.evaluateCondition(contextObject.getCondition(),dp);
+                        if(canExecute)
+                            contextObject.process(dp);
+                    }
+                    break;
             }
         }
     }
