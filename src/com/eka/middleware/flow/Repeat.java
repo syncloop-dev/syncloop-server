@@ -72,7 +72,7 @@ public class Repeat implements FlowBasicInfo {
         String sleep = data.getString("interval", null);
         if (interval == 0 && sleep != null)
             interval = Integer.parseInt(sleep);
-        repeatOn = data.getString("repeatOn", "error");
+        repeatOn = data.getString("repeatOn", "success");
         indexVar = data.getString("indexVar", "*index");
         snapshot = data.getString("snap", null);
         if (snapshot != null && snapshot.equals("disabled"))

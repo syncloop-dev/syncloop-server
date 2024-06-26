@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.syncloop.middleware</groupId>
-	<artifactId>core</artifactId>
-	<version>1.6.6-beta</version>
+	<artifactId>server</artifactId>
+	<version>1.6.7</version>
 	<name>MiddlewareServer</name>
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
